@@ -16,15 +16,13 @@ using System.Windows.Shapes;
 namespace Nuclear
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для GameCamera.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GameCamera : Page
     {
-        public MainWindow()
+        public GameCamera()
         {
             InitializeComponent();
-            StartMenu menu = new StartMenu();
-            WindowGame.NavigationService.Navigate(menu);
         }
     }
 }

@@ -1,0 +1,52 @@
+﻿<Page x:Class="Nuclear.SkillTree"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Nuclear"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SkillTree">
+
+    <Grid Background="silver">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="140"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Name="MainSkills" Grid.Column="0" Grid.Row="1" Background="gray" Content="Ячейка" Width="100" Height="100"  Click="Button_Click_1"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Name="but11" Grid.Column="1" Grid.Row="1" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click" IsEnabled="False"/>
+            <Button Name="but111" Grid.Column="2" Grid.Row="0" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_6" IsEnabled="False"/>
+            <Button Name="but1111" Grid.Column="3" Grid.Row="0" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_10" IsEnabled="False"/>
+            <Button Name="but1" Grid.Column="0" Grid.Row="2" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_2" IsEnabled="False"/>
+            <Button Name="but11TT" Grid.Column="2" Grid.Row="2" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_7" IsEnabled="False"/>
+            <Button Name="but11TT2" Grid.Column="3" Grid.Row="2" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_11" IsEnabled="False"/>
+            <Button Name="butT" Grid.Column="1" Grid.Row="3" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_4" IsEnabled="False"/>
+            <Button Name="but2" Grid.Column="0" Grid.Row="4" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_3" IsEnabled="False"/>
+            <Button Name="butT3T" Grid.Column="2" Grid.Row="4" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_8" IsEnabled="False"/>
+            <Button Name="butT3T3" Grid.Column="3" Grid.Row="4" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_12" IsEnabled="False"/>
+            <Button Name="but23" Grid.Column="1" Grid.Row="5" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_5" IsEnabled="False"/>
+            <Button Name="but234" Grid.Column="2" Grid.Row="6" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_9" IsEnabled="False"/>
+            <Button Name="but2344" Grid.Column="3" Grid.Row="6" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_13" IsEnabled="False"/>
+        </Grid>
+    </Grid>
+</Page>
