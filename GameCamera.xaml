@@ -7,4 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="1000"
       Title="GameCamera">
+    <ScrollViewer Name="Camera" Height="768" Width="1366" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible">
+        <Canvas Name="Map" Background="Lavender" Width="2000" Height="2000">
+        </Canvas>
+    </ScrollViewer>
 </Page>

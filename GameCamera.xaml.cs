@@ -20,36 +20,123 @@ namespace Nuclear
     /// </summary>
     public partial class GameCamera : Page
     {
+        //10hx20w size
+        private static int[,] PathArray = new int[,] {
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, -1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, -1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, -1, 1, 1, -1},
+            {-1, 1, 1, 1, 1, 1, -1, -1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, -1, -1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, -1, 1, -1},
+            {-1, 1, 1, 1, 1, 1, -1, -1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, 1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, 1, 1, 1, 1, 1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            };
+
+        private static int[,] ImageIDArray = new int[,] {
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, -1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, -1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, -1, 1, 1, -1},
+            {-1, 1, 1, 1, 1, 1, -1, -1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, -1, -1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, -1, 1, -1},
+            {-1, 1, 1, 1, 1, 1, -1, -1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, -1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, 1, 1, 1, 1, 1, -1},
+            {-1, 1, 1, 1, 1, 1, 1, 1, 1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            };
+
         public GameCamera()
         {
             InitializeComponent();
-            InitOldGrid();
+            MapImageGrid();
+            MapActiveGrid();
         }
 
-        public void InitOldGrid()
+        public void MapImageGrid()
         {
-            int HeightMap = 20;
-            int WidthMap = 30;
-
+            int HeightMap = 10;
+            int WidthMap = 20;
 
             Grid grid = new Grid();
             grid.ShowGridLines = true;
-            for(int i = 0; i < HeightMap; i++)
-                grid.RowDefinitions.Add(new RowDefinition());
-            for(int i = 0; i < WidthMap; i++)
-                grid.ColumnDefinitions.Add(new ColumnDefinition());
+            for (int i = 0; i < HeightMap; i++)
+            {
+                RowDefinition row = new RowDefinition();
+                row.MinHeight = 50;
+                grid.RowDefinitions.Add(row);
+            }
+            for (int i = 0; i < WidthMap; i++)
+            {
+                ColumnDefinition column = new ColumnDefinition();
+                column.MinWidth = 50;
+                grid.ColumnDefinitions.Add(column);
+            }
 
-            StackPanel testPanel = new StackPanel();
-            testPanel.Orientation = Orientation.Horizontal;
-            testPanel.HorizontalAlignment = HorizontalAlignment.Center;
-
+            /*
             Grid.SetRow(testPanel, 0);
             Grid.SetColumn(testPanel, 0);
             Grid.SetColumnSpan(testPanel, 3);
+            */
+            grid.Background = Brushes.Black;
+            Grid.SetZIndex(grid, 1);
+            this.Map.Children.Add(grid);
+        }
 
-            grid.Children.Add(testPanel);
+        public void MapActiveGrid()
+        {
+            int HeightMap = 10;
+            int WidthMap = 20;
 
-            this.Content = grid;
+            Grid gridActive = new Grid();
+            gridActive.ShowGridLines = true;
+            for (int i = 0; i < HeightMap; i++)
+            {
+                RowDefinition row = new RowDefinition();
+                row.MinHeight = 50;
+                gridActive.RowDefinitions.Add(row);
+            }
+            for (int i = 0; i < WidthMap; i++)
+            {
+                ColumnDefinition column = new ColumnDefinition();
+                column.MinWidth = 50;
+                gridActive.ColumnDefinitions.Add(column);
+            }
+
+            for (int i = 0; i < WidthMap; i++)
+                for (int j = 0; j < HeightMap; j++)
+                    if (PathArray[i,j] == -1)
+                    {
+                        Rectangle myRect = new Rectangle();
+                        myRect.Fill = Brushes.Red;
+                        Grid.SetColumn(myRect, i);
+                        Grid.SetRow(myRect, j);
+                        gridActive.Children.Add(myRect);
+                    }
+            Grid.SetZIndex(gridActive, 999);
+
+            this.Map.Children.Add(gridActive);
         }
     }
 }
