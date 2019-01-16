@@ -68,6 +68,8 @@
     <Compile Include="data\mapeditor\MapEditor.xaml.cs">
       <DependentUpon>MapEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LivingObjects.cs" />
+    <Compile Include="PlayerUser.cs" />
     <Compile Include="SkillTree.xaml.cs">
       <DependentUpon>SkillTree.xaml</DependentUpon>
     </Compile>
