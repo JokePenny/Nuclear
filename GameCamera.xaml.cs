@@ -82,13 +82,16 @@ namespace Nuclear
             };
 
         private List<Point> wave = new List<Point>();
-        private PlayerUser User = new PlayerUser(1, 1, 20);
+        private PlayerUser User = new PlayerUser(1, 1, 20, 12);
+        private int locationUserX;
+        private int locationUserY;
 
         public GameCamera()
         {
             InitializeComponent();
             MapImageGrid();
             MapActiveGrid();
+            MapHeatGrid();
             findPath(1, 1, User.GetX(), User.GetY());
         }
 
@@ -98,7 +101,7 @@ namespace Nuclear
             int WidthMap = 27;
 
             Grid grid = new Grid();
-            grid.Name = "Image";
+            grid.Name = "ImageMap";
             grid.ShowGridLines = true;
             for (int i = 0; i < HeightMap; i++)
             {
@@ -123,7 +126,7 @@ namespace Nuclear
             int WidthMap = 27;
 
             Grid gridActive = new Grid();
-            gridActive.Name = "Path";
+            gridActive.Name = "PathMap";
             gridActive.ShowGridLines = true;
             for (int i = 0; i < HeightMap; i++)
             {
@@ -144,7 +147,7 @@ namespace Nuclear
                     if (PathArray[i, j] == -1)
                     {
                         Rectangle myRect = new Rectangle();
-                        myRect.Fill = Brushes.Red;
+                        myRect.Fill = Brushes.Black;
                         Grid.SetColumn(myRect, i);
                         Grid.SetRow(myRect, j);
                         gridActive.Children.Add(myRect);
@@ -153,7 +156,7 @@ namespace Nuclear
                     {
                         Button but = new Button();
                         but.Click += but_Click;
-                        but.Opacity = 0.5;
+                        but.Opacity = 0.0;
                         Grid.SetColumn(but, i);
                         Grid.SetRow(but, j);
                         gridActive.Children.Add(but);
@@ -161,6 +164,30 @@ namespace Nuclear
                 }
             Grid.SetZIndex(gridActive, 999);
             this.Map.Children.Add(gridActive);
+        }
+
+        public void MapHeatGrid()
+        {
+            int HeightMap = 12;
+            int WidthMap = 27;
+
+            Grid gridHeat = new Grid();
+            gridHeat.Name = "HeatMap";
+            gridHeat.ShowGridLines = true;
+            for (int i = 0; i < HeightMap; i++)
+            {
+                RowDefinition row = new RowDefinition();
+                row.MinHeight = 50;
+                gridHeat.RowDefinitions.Add(row);
+            }
+            for (int i = 0; i < WidthMap; i++)
+            {
+                ColumnDefinition column = new ColumnDefinition();
+                column.MinWidth = 50;
+                gridHeat.ColumnDefinitions.Add(column);
+            }
+            Grid.SetZIndex(gridHeat, 5);
+            this.Map.Children.Add(gridHeat);
         }
 
         private void but_Click(object sender, RoutedEventArgs e)
@@ -171,13 +198,14 @@ namespace Nuclear
             User.SetXY(row, column);
             MessageBox.Show(string.Format("Button clicked at column {0}, row {1}", column, row));
             Clean_TextBlock();
+            Clean_HeatMap();
             findPath(1, 1, User.GetX(), User.GetY());
         }
 
         private void Clean_TextBlock()
         {
             foreach (Grid grid in Map.Children)
-                if (grid.Name == "Image")
+                if (grid.Name == "ImageMap")
                 {
                     UIElementCollection children1 = grid.Children;
                     var children = children1.OfType<UIElement>().ToList();
@@ -188,14 +216,30 @@ namespace Nuclear
                 }
         }
 
+        private void Clean_HeatMap()
+        {
+            foreach (Grid gridHeat in Map.Children)
+                if (gridHeat.Name == "HeatMap")
+                {
+                    UIElementCollection children1 = gridHeat.Children;
+                    var children = children1.OfType<UIElement>().ToList();
+                    foreach (Rectangle rec in children)
+                    {
+                        gridHeat.Children.Remove(rec);
+                    }
+                }
+        }
 
         public void findPath(int x, int y, int nx, int ny)
         {
+            locationUserX = nx;
+            locationUserY = ny;
             if (PathArray[y, x] == -1 || PathArray[ny, nx] == -1)
             {
                 // вывод ошибки выбора - недоступная зона (стена)
                 return;
             }
+
 
             //волновой алгоритм поиска пути (заполнение значений достижимости) начиная от конца пути
             int[,] clonePathArray = (int[,])PathArray.Clone();
@@ -222,18 +266,46 @@ namespace Nuclear
                         {
                             wave.Add(new Point(nx, ny));
                             PathArray[ny, nx] = nstep;
-                            TextBlock text = new TextBlock();
-                            text.Text = nstep.ToString();
-                            Grid.SetColumn(text, ny);
-                            Grid.SetRow(text, nx);
-                            foreach(Grid gridActive in Map.Children)
-                                if(gridActive.Name == "Image")
-                                    gridActive.Children.Add(text);
+                            foreach(Grid gridImage in Map.Children)
+                                if(gridImage.Name == "ImageMap")
+                                {
+                                    TextBlock text = new TextBlock();
+                                    text.Text = nstep.ToString();
+                                    Grid.SetColumn(text, ny);
+                                    Grid.SetRow(text, nx);
+                                    gridImage.Children.Add(text);
+                                }
+                            foreach (Grid gridHeat in Map.Children)
+                                if (gridHeat.Name == "HeatMap")
+                                {
+                                    Rectangle myRect = new Rectangle();
+                                    myRect.Opacity = 0.5;
+                                    if(User.GetMovePoints() > nstep && User.GetMovePoints() - 3 > nstep)
+                                        myRect.Fill = Brushes.Green;
+                                    else if(User.GetMovePoints() >= nstep)
+                                        myRect.Fill = Brushes.Yellow;
+                                    else if(User.GetMovePoints() < nstep)
+                                        myRect.Fill = Brushes.Red;
+                                    Grid.SetColumn(myRect, ny);
+                                    Grid.SetRow(myRect, nx);
+                                    gridHeat.Children.Add(myRect);
+                                }
                         }
                     }
                 }
                 oldWave = new List<Point>(wave);
             }
+
+            foreach (Grid gridHeat in Map.Children)
+                if (gridHeat.Name == "HeatMap")
+                {
+                    Rectangle myRect = new Rectangle();
+                    myRect.Opacity = 0.5;
+                    myRect.Fill = Brushes.Blue;
+                    Grid.SetColumn(myRect, locationUserY);
+                    Grid.SetRow(myRect, locationUserX);
+                    gridHeat.Children.Add(myRect);
+                }
 
             //волновой алгоритм поиска пути начиная от начала
             bool flag = true;
@@ -263,7 +335,6 @@ namespace Nuclear
             }
 
             PathArray = clonePathArray;
-
             wave.ForEach(delegate (Point i)
             {
                 PathArray[i.y, i.x] = 0;

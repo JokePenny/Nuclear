@@ -11,11 +11,13 @@ namespace Nuclear
         public int x;
         public int y;
         public byte health;
-        public LivingObjects(int X, int Y, byte Health)
+        public byte movePoints;
+        public LivingObjects(int X, int Y, byte Health, byte MovePoints)
         {
             x = X;
             y = Y;
             health = Health;
+            movePoints = MovePoints;
         }
         public LivingObjects(int X, int Y)
         {
@@ -39,6 +41,10 @@ namespace Nuclear
         {
             return health;
         }
+        public byte GetMovePoints()
+        {
+            return movePoints;
+        }
 
         //сеттеры
         public void SetXY(int X, int Y)
@@ -49,6 +55,10 @@ namespace Nuclear
         public void SetHealth(byte A)
         {
             health = A;
+        }
+        public void SetMovePoints(byte A)
+        {
+            movePoints = A;
         }
     }
 }
