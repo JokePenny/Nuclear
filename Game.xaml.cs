@@ -20,6 +20,7 @@ namespace Nuclear
     /// </summary>
     public partial class Game : Page
     {
+        private PlayerUser User = new PlayerUser();
         public Game()
         {
             InitializeComponent();
@@ -43,6 +44,11 @@ namespace Nuclear
         {
             Menu menu = new Menu();
             this.NavigationService.Navigate(menu);
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            User.SetMovePoints(12);
         }
     }
 }
