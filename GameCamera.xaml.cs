@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -82,9 +83,13 @@ namespace Nuclear
             };
 
         private List<Point> wave = new List<Point>();
+        private List<Point> wavePath = new List<Point>();
+        private List<Point> DopWavePath = new List<Point>();
         private PlayerUser User = new PlayerUser(1, 1, 20, 12);
         private int locationUserX;
         private int locationUserY;
+        private int locationEndX;
+        private int locationEndY;
 
         public GameCamera()
         {
@@ -192,14 +197,18 @@ namespace Nuclear
 
         private void but_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button;
-            int row = (int)btn.GetValue(Grid.RowProperty);
-            int column = (int)btn.GetValue(Grid.ColumnProperty);
-            User.SetXY(row, column);
-            MessageBox.Show(string.Format("Button clicked at column {0}, row {1}", column, row));
-            Clean_TextBlock();
-            Clean_HeatMap();
-            findPath(1, 1, User.GetX(), User.GetY());
+            if(User.GetMovePoints() > 0)
+            {
+                Button btn = sender as Button;
+                int row = (int)btn.GetValue(Grid.RowProperty);
+                int column = (int)btn.GetValue(Grid.ColumnProperty);
+                MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
+                Clean_TextBlock();
+                Clean_HeatMap();
+                locationEndX = row;
+                locationEndY = column;
+                findPath(User.GetX(), User.GetY(), row, column);
+            }
         }
 
         private void Clean_TextBlock()
@@ -230,49 +239,146 @@ namespace Nuclear
                 }
         }
 
-        public void findPath(int x, int y, int nx, int ny)
+        public async void findPath(int x, int y, int nx, int ny)
         {
-            locationUserX = nx;
-            locationUserY = ny;
+            int check = 0;
+            locationEndX = nx;
+            locationEndY = ny;
+            locationUserX = x;
+            locationUserY = y;
+            int DoplocationUserX = x;
+            int DoplocationUserY = y;
+            int[,] clonePathArray;
+            int[,] DopPathArray;
+            int[,] DopClonePathArray;
+
             if (PathArray[y, x] == -1 || PathArray[ny, nx] == -1)
-            {
-                // вывод ошибки выбора - недоступная зона (стена)
-                return;
-            }
-
-
-            //волновой алгоритм поиска пути (заполнение значений достижимости) начиная от конца пути
-            int[,] clonePathArray = (int[,])PathArray.Clone();
-            List<Point> oldWave = new List<Point>();
-            oldWave.Add(new Point(nx, ny));
-            int nstep = 0;
-            PathArray[ny, nx] = nstep;
-
-            int[] dx = { 0, 1, 0, -1 };
-            int[] dy = { -1, 0, 1, 0 };
-
-            while (oldWave.Count > 0)
-            {
-                nstep++;
-                wave.Clear();
-                foreach (Point i in oldWave)
                 {
+                    // вывод ошибки выбора - недоступная зона (стена)
+                    //return;
+                }
+            while (true)
+            {
+                //волновой алгоритм поиска пути (заполнение значений достижимости) начиная от конца пути
+                clonePathArray = (int[,])PathArray.Clone();
+                DopPathArray = (int[,])PathArray.Clone();
+                DopClonePathArray = (int[,])DopPathArray.Clone();
+                List<Point> oldWave = new List<Point>();
+                List<Point> DopOldWave = new List<Point>();
+                oldWave.Add(new Point(nx, ny));
+                DopOldWave.Add(new Point(DoplocationUserX, DoplocationUserY));
+                int nstep = 0;
+                PathArray[ny, nx] = nstep;
+                DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
+
+                int[] dx = { 0, 1, 0, -1 };
+                int[] dy = { -1, 0, 1, 0 };
+
+                while (DopOldWave.Count > 0)
+                {
+                    nstep++;
+                    DopWavePath.Clear();
+                    foreach (Point i in DopOldWave)
+                    {
+                        for (int d = 0; d < 4; d++)
+                        {
+                            DoplocationUserX = i.x + dx[d];
+                            DoplocationUserY = i.y + dy[d];
+
+                            if (DopPathArray[DoplocationUserY, DoplocationUserX] == 0)
+                            {
+                                DopWavePath.Add(new Point(DoplocationUserX, DoplocationUserY));
+                                DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
+
+                                foreach (Grid gridImage in Map.Children)
+                                    if (gridImage.Name == "ImageMap")
+                                    {
+                                        TextBlock text = new TextBlock();
+                                        text.Text = nstep.ToString();
+                                        Grid.SetColumn(text, DoplocationUserY);
+                                        Grid.SetRow(text, DoplocationUserX);
+                                        gridImage.Children.Add(text);
+                                    }
+                                foreach (Grid gridHeat in Map.Children)
+                                    if (gridHeat.Name == "HeatMap")
+                                    {
+                                        Rectangle myRect = new Rectangle();
+                                        myRect.Opacity = 0.5;
+                                        if (User.GetMovePoints() > nstep && User.GetMovePoints() - 3 > nstep)
+                                            myRect.Fill = Brushes.Green;
+                                        else if (User.GetMovePoints() >= nstep)
+                                            myRect.Fill = Brushes.Yellow;
+                                        else if (User.GetMovePoints() < nstep)
+                                            myRect.Fill = Brushes.Red;
+                                        Grid.SetColumn(myRect, DoplocationUserY);
+                                        Grid.SetRow(myRect, DoplocationUserX);
+                                        gridHeat.Children.Add(myRect);
+                                    }
+
+                            }
+                        }
+                    }
+                    DopOldWave = new List<Point>(DopWavePath);
+                }
+            
+                DopWavePath.Clear();
+                DopOldWave.Clear();
+                nstep = 0;
+                while (oldWave.Count > 0)
+                {
+                    nstep++;
+                    wave.Clear();
+                    foreach (Point i in oldWave)
+                    {
+                        for (int d = 0; d < 4; d++)
+                        {
+                            nx = i.x + dx[d];
+                            ny = i.y + dy[d];
+                            if (PathArray[ny, nx] == 0)
+                            {
+                                wave.Add(new Point(nx, ny));
+                                PathArray[ny, nx] = nstep;
+                            }
+                        }
+                    }
+                    oldWave = new List<Point>(wave);
+                }
+
+                foreach (Grid gridHeat in Map.Children)
+                    if (gridHeat.Name == "HeatMap")
+                    {
+                        Rectangle myRect = new Rectangle();
+                        myRect.Opacity = 0.5;
+                        myRect.Fill = Brushes.Blue;
+                        Grid.SetColumn(myRect, User.GetY());
+                        Grid.SetRow(myRect, User.GetX());
+                        gridHeat.Children.Add(myRect);
+                    }
+                
+                //волновой алгоритм поиска пути начиная от начала
+                bool flag = true;
+                wave.Clear();
+                while (PathArray[y, x] != 1)
+                {
+                    flag = true;
                     for (int d = 0; d < 4; d++)
                     {
-                        nx = i.x + dx[d];
-                        ny = i.y + dy[d];
-
-                        if (PathArray[ny, nx] == 0)
+                        nx = x + dx[d];
+                        ny = y + dy[d];
+                        if (PathArray[y, x] - 1 == PathArray[ny, nx])
                         {
-                            wave.Add(new Point(nx, ny));
-                            PathArray[ny, nx] = nstep;
-                            foreach(Grid gridImage in Map.Children)
-                                if(gridImage.Name == "ImageMap")
+                            x = nx;
+                            y = ny;
+                            wave.Add(new Point(x, y));
+                            flag = false;
+                            /*
+                            foreach (Grid gridImage in Map.Children)
+                                if (gridImage.Name == "ImageMap")
                                 {
                                     TextBlock text = new TextBlock();
                                     text.Text = nstep.ToString();
-                                    Grid.SetColumn(text, ny);
-                                    Grid.SetRow(text, nx);
+                                    Grid.SetColumn(text, y);
+                                    Grid.SetRow(text, x);
                                     gridImage.Children.Add(text);
                                 }
                             foreach (Grid gridHeat in Map.Children)
@@ -280,65 +386,88 @@ namespace Nuclear
                                 {
                                     Rectangle myRect = new Rectangle();
                                     myRect.Opacity = 0.5;
-                                    if(User.GetMovePoints() > nstep && User.GetMovePoints() - 3 > nstep)
+                                    if (User.GetMovePoints() > nstep && User.GetMovePoints() - 3 > nstep)
                                         myRect.Fill = Brushes.Green;
-                                    else if(User.GetMovePoints() >= nstep)
+                                    else if (User.GetMovePoints() >= nstep)
                                         myRect.Fill = Brushes.Yellow;
-                                    else if(User.GetMovePoints() < nstep)
+                                    else if (User.GetMovePoints() < nstep)
                                         myRect.Fill = Brushes.Red;
-                                    Grid.SetColumn(myRect, ny);
-                                    Grid.SetRow(myRect, nx);
+                                    Grid.SetColumn(myRect, y);
+                                    Grid.SetRow(myRect, x);
                                     gridHeat.Children.Add(myRect);
                                 }
+                                */ // показывает путь
+                            break;
                         }
                     }
-                }
-                oldWave = new List<Point>(wave);
-            }
-
-            foreach (Grid gridHeat in Map.Children)
-                if (gridHeat.Name == "HeatMap")
-                {
-                    Rectangle myRect = new Rectangle();
-                    myRect.Opacity = 0.5;
-                    myRect.Fill = Brushes.Blue;
-                    Grid.SetColumn(myRect, locationUserY);
-                    Grid.SetRow(myRect, locationUserX);
-                    gridHeat.Children.Add(myRect);
-                }
-
-            //волновой алгоритм поиска пути начиная от начала
-            bool flag = true;
-            wave.Clear();
-            wave.Add(new Point(x, y));
-            while (PathArray[y, x] != 0)
-            {
-                flag = true;
-                for (int d = 0; d < 4; d++)
-                {
-                    nx = x + dx[d];
-                    ny = y + dy[d];
-                    if (PathArray[y, x] - 1 == PathArray[ny, nx])
+                    if (flag)
                     {
-                        x = nx;
-                        y = ny;
-                        wave.Add(new Point(x, y));
-                        flag = false;
+                        // вывод ошибки, пути нет
                         break;
                     }
                 }
-                if (flag)
+                wave.Add(new Point(locationEndX, locationEndY));
+                PathArray = clonePathArray;
+                DopPathArray = DopClonePathArray;
+                /*
+                wave.ForEach(delegate (Point i)
                 {
-                    // вывод ошибки, пути нет
-                    break;
+                    PathArray[i.y, i.x] = 1;
+                });
+                */
+                if (User.GetMovePoints() > 0 && (User.GetX() != locationEndX || User.GetY() != locationEndY))
+                {
+                    User.SetMovePoints(Convert.ToByte(User.GetMovePoints() - 1));
+                    await Task.Delay(1000);
+                    Clean_TextBlock();
+                    Clean_HeatMap();
+                    List<Point> step = new List<Point>();
+                    step.Add(new Point(User.GetX(), User.GetY()));
+
+                    foreach (Point h in step)
+                    {
+                        Point c = wave.Find(i => i.x == User.GetX() && i.y == User.GetY());
+                        wave.Remove(c);
+                        if (wave.Count != 0)
+                        {
+                            c = wave.First<Point>();
+                            User.SetXY(c.x, c.y);
+                            foreach (Grid gridHeat in Map.Children)
+                                if (gridHeat.Name == "HeatMap")
+                                {
+                                    Rectangle myRect = new Rectangle();
+                                    myRect.Opacity = 0.5;
+                                    myRect.Fill = Brushes.Blue;
+                                    Grid.SetColumn(myRect, User.GetY());
+                                    Grid.SetRow(myRect, User.GetX());
+                                    gridHeat.Children.Add(myRect);
+                                }
+                            wavePath = wave;
+                        }
+                        else break;
+                    }
+                }
+                else break;
+                if(wavePath.Count == 0) break;
+                else
+                {
+                    nx = locationEndX;
+                    ny = locationEndY;
+                    x = User.GetX();
+                    y = User.GetY();
+                    DoplocationUserX = User.GetX();
+                    DoplocationUserY = User.GetY();
                 }
             }
-
-            PathArray = clonePathArray;
-            wave.ForEach(delegate (Point i)
+            if (User.GetMovePoints() == 0)
             {
-                PathArray[i.y, i.x] = 0;
-            });
+                User.SetMovePoints(0);
+                MessageBox.Show(string.Format("Очки действия кончились"));
+            }
+            else
+            {
+                MessageBox.Show(string.Format("Ход сделан"));
+            }   
         }
 
         struct Point

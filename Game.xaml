@@ -33,7 +33,7 @@
             <Button Width="70" Background="silver" Click="Button_Click_2" />
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Width="70" Background="gray" />
+            <Button Width="110" Background="gray" Content="Конец хода" Click="Button_Click_3"/>
             <Button Width="70" Background="gray" />
             <Button Width="70" Background="gray" />
             <Button Width="70" Background="gray" />
