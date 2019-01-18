@@ -57,11 +57,17 @@
     <Compile Include="Backpack.xaml.cs">
       <DependentUpon>Backpack.xaml</DependentUpon>
     </Compile>
+    <Compile Include="data\map editor\Workspace.xaml.cs">
+      <DependentUpon>Workspace.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Game.xaml.cs">
       <DependentUpon>Game.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameCamera.xaml.cs">
       <DependentUpon>GameCamera.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="data\map editor\MapEditor.xaml.cs">
+      <DependentUpon>MapEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="SkillTree.xaml.cs">
       <DependentUpon>SkillTree.xaml</DependentUpon>
@@ -70,6 +76,10 @@
       <DependentUpon>StartMenu.xaml</DependentUpon>
     </Compile>
     <Page Include="Backpack.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="data\map editor\Workspace.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -93,6 +103,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="data\map editor\MapEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SkillTree.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -128,5 +142,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

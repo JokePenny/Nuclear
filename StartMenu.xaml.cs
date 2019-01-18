@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nuclear.data.map_editor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,8 @@ namespace Nuclear
         
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            MapEditor mapEditor = new MapEditor();
+            this.NavigationService.Navigate(mapEditor);
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
