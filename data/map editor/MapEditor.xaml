@@ -8,7 +8,7 @@
       d:DesignHeight="768" d:DesignWidth="800"
       Title="MapEditor">
 
-    <Grid>
+    <Grid Name="Editor">
         <Grid.RowDefinitions>
             <RowDefinition Height="60 px"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -19,31 +19,36 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Frame x:Name="ProcessGame" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="3"/>
-        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Background="GhostWhite" BorderBrush="Silver" BorderThickness="0 0 3 0">
-            <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical" HorizontalAlignment="left" Margin ="0 0 0 0">
-                <TextBlock TextWrapping="Wrap" Margin ="10 5 10 0">
-                    <Run FontSize="16">Внешний вид карты</Run>
-                </TextBlock>
-                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Background="GhostWhite" BorderBrush="Silver" BorderThickness="3 3 3 3" Margin="10">
+        <ScrollViewer x:Name="Work" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible">
+            <Canvas Name="Map" Background="Lavender" Width="2000" Height="2000">
+            </Canvas>
+        </ScrollViewer>
+        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Background="GhostWhite" BorderBrush="Silver" BorderThickness="0 0 11 0">
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical" HorizontalAlignment="left">
+                <Menu Height="25" Width="Auto" VerticalAlignment="Top">
+                    <MenuItem Header="Файл">
+                        <MenuItem Header="Новый проект" Click="New_Workplace" ></MenuItem>
+                        <MenuItem Header="Открыть проект" ></MenuItem>
+                        <MenuItem Header="Сохранить" ></MenuItem>
+                        <MenuItem Header="Сохранить как" ></MenuItem>
+                        <Separator />
+                        <MenuItem Header="Выйти в меню" Click="Exit_MapEditor" ></MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Настройки" >
+                        <MenuItem Header="Панель внешнего вида" ></MenuItem>
+                        <MenuItem Header="Панель звуковых эффектов" ></MenuItem>
+                        <MenuItem Header="Панель системы частиц" ></MenuItem>
+                    </MenuItem>
+                </Menu>
+                <RadioButton GroupName="SelectionMap" Content="Сетка со спрайтами карты" Margin ="10 5 10 0" Checked="Choice_WorkTool"/>
+                <Border Name="Props" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Background="GhostWhite" BorderBrush="Silver" BorderThickness="3 3 3 3" Margin="10">
                     <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical" HorizontalAlignment="left" Margin ="0 0 0 0">
                         <TextBlock TextWrapping="Wrap" Margin ="20 5 20 5">
                                 <Run FontSize="16">Основные разделы</Run>
                         </TextBlock>
-                        <ComboBox Name="WallAndDecorate" Height="30" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" Margin ="20 5 20 5">
-                            <TextBlock>Стены</TextBlock>
-                            <TextBlock>Декорации</TextBlock>
-                        </ComboBox>
-                        <TextBlock Name="SelectedSection" TextWrapping="Wrap" Margin ="20 5 20 5">
-                                <Run FontSize="16">Стены</Run>
-                        </TextBlock>
-                        <ComboBox Name="FoldersSection" Height="30" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" Margin ="20 5 20 5">
-                            <TextBlock>Стена 1</TextBlock>
-                            <TextBlock>Стена 2</TextBlock>
-                            <TextBlock>Стена 3</TextBlock>
-                            <TextBlock>Стена 4</TextBlock>
-                            <TextBlock>Стена 5</TextBlock>
-                        </ComboBox>
+                        <ComboBox Name="WallAndDecorate" Height="30" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" Margin ="20 5 20 5" SelectionChanged="WallAndDecorate_Selected"/>
+                        <TextBlock Name="SelectedSection" TextWrapping="Wrap" Margin ="20 5 20 5"/>
+                        <ComboBox Name="FoldersSection" Height="30" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" Margin ="20 5 20 5"/>
                         <ScrollViewer Name="Sprits"  HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Visible" Margin ="20 5 20 5">
                             <Border Background="GhostWhite" BorderBrush="Silver" BorderThickness="3">
                                 <Grid ShowGridLines="True">
@@ -64,25 +69,32 @@
                         </ScrollViewer>
                     </StackPanel>
                 </Border>
-                <TextBlock TextWrapping="Wrap" Margin ="10 5 10 0">
-                    <Run FontSize="16">Триггеры</Run>
-                </TextBlock>
-                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Background="GhostWhite" BorderBrush="Silver" BorderThickness="3 3 3 3" Margin="10">
+                <Separator Width="200"/>
+                <RadioButton GroupName="SelectionMap" Content="Сетка с триггерами" Margin ="10 5 10 0" Checked="Choice_WorkTool"/>
+                <Border Name="Triggers" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Background="GhostWhite" BorderBrush="Silver" BorderThickness="3 3 3 3" Margin="10">
                     <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical" HorizontalAlignment="left" Margin ="0 0 0 0">
                         <TextBlock TextWrapping="Wrap" Margin ="20 5 20 5">
                             <Run FontSize="16">Основные разделы</Run>
                         </TextBlock>
-                        <RadioButton GroupName="Active" Content="Точка спауна игроков" Margin ="20 5 20 2"/>
-                        <RadioButton GroupName="Active" Content="Точка спауна протвиников" Margin ="20 5 20 2"/>
-                        <RadioButton GroupName="Active" Content="Сундук" Margin ="20 5 20 2"/>
-                        <RadioButton GroupName="Active" Content="Переход на другой уровень" Margin ="20 5 20 15"/>
+                        <RadioButton Name="SpawnPoint" GroupName="Active" Content="Точка спауна игроков" Margin ="20 5 20 2" Click="selectedTriggerID"/>
+                        <RadioButton Name="SpawnPointEnemy" GroupName="Active" Content="Точка спауна протвиников" Margin ="20 5 20 2"/>
+                        <RadioButton Name="Chest" GroupName="Active" Content="Сундук" Margin ="20 5 20 2"/>
+                        <RadioButton Name="LevelPortal" GroupName="Active" Content="Переход на другой уровень" Margin ="20 5 20 15"/>
                     </StackPanel>
                 </Border>
             </StackPanel>
         </Border>
         <Border Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Background="GhostWhite" BorderBrush="Silver" BorderThickness="0 3 0 0">
             <StackPanel Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Width="70" Background="silver"/>
+                <TextBlock Height="20" TextWrapping="Wrap" Margin ="0 0 10 0">
+                        <Run FontSize="12">Масштаб</Run>
+                </TextBlock>
+                <ComboBox Height="25" Margin="0 0 20 0" SelectedIndex="0">
+                    <ComboBoxItem>100%</ComboBoxItem>
+                    <ComboBoxItem>80%</ComboBoxItem>
+                    <ComboBoxItem>60%</ComboBoxItem>
+                    <ComboBoxItem>50%</ComboBoxItem>
+                </ComboBox>
             </StackPanel>
         </Border>
     </Grid>
