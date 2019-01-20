@@ -22,9 +22,41 @@ namespace Nuclear
     /// </summary>
     public partial class MapEditor : Page
     {
-        private int selectedObjectID;
+        private int selectedObjectID = 0;
+        private int sizeArrayX = 12;
+        private int sizeArrayY = 27;
 
         private int[,] ImageIDArray = new int[,] {
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, 0, 0, -1, -1, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, -1, -1, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1},
+            {-1, 0, 0, 0, 0, 0, -1, -1, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
+            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            };
+
+        private int[,] TriggerIDArray = new int[,] {
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
             {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
@@ -99,6 +131,63 @@ namespace Nuclear
             }
         }
 
+        private void FolderSubsetion_Selected(object sender, SelectionChangedEventArgs e)
+        {
+            
+            ComboBox comboBox = (ComboBox)sender;
+            TextBlock selectedItem = (TextBlock)comboBox.SelectedItem;
+            if (selectedItem.Text == "wall")
+            {
+                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\map editor\sprits\wall");
+                foreach (var item in dir.GetDirectories())
+                {
+                    //string Image = item.Name + ".jpg";
+                    TextBlock text = new TextBlock();
+                    text.Text = item.Name;
+                    this.WallAndDecorate.Items.Add(text);
+                }
+            }
+            else
+            {
+                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\map editor\sprits\props");
+                foreach (var item in dir.GetDirectories())
+                {
+                    //string Image = item.Name + ".jpg";
+                    TextBlock text = new TextBlock();
+                    text.Text = item.Name;
+                    this.FoldersSection.Items.Add(text);
+                }
+            }
+            selectedItem = (TextBlock)comboBox.SelectedItem;
+            if (selectedItem.Text != null)
+            {
+                string path = @"D:\01Programms\VS\Repository\Nuclear\Nuclear\bin\Debug\data\map editor\sprits\props\" + selectedItem.Text; // сделать относительный путь файла, как ниже
+                DirectoryInfo dir = new DirectoryInfo(path);
+                int column = 4;
+                int rowChange = 0;
+                int columnChange = 0;
+                foreach (var item in dir.GetFiles())
+                {
+                    Image ImageContainer = new Image();
+                    ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/map editor/sprits/props/" + selectedItem.Text + "/" + item.Name, UriKind.Absolute));
+                    ImageContainer.Source = image;
+                    Grid.SetColumn(ImageContainer, columnChange);
+                    Grid.SetRow(ImageContainer, rowChange);
+                    ContainerForImage.Children.Add(ImageContainer);
+                    if (columnChange + 1 < column)
+                        columnChange++;
+                    else
+                    {
+                        RowDefinition row = new RowDefinition();
+                        row.MinHeight = 50;
+                        ContainerForImage.RowDefinitions.Add(new RowDefinition());
+                        rowChange++;
+                        columnChange = 0;
+                    }
+                }
+            }
+        }
+
         private void Choice_WorkTool(object sender, RoutedEventArgs e)
         {
             RadioButton radioButton = (RadioButton)sender;
@@ -164,8 +253,8 @@ namespace Nuclear
             for (int i = 0; i < WidthMap; i++)
                 for (int j = 0; j < HeightMap; j++)
                 {
-                    Button but = new Button();
-                    but.Click += but_Click;
+                    Rectangle but = new Rectangle();
+                    but.MouseDown += but_Click;
                     but.Opacity = 0.0;
                     Grid.SetColumn(but, i);
                     Grid.SetRow(but, j);
@@ -202,16 +291,17 @@ namespace Nuclear
                 {
                     if (ImageIDArray[i, j] == -1)
                     {
-                        Rectangle myRect = new Rectangle();
-                        myRect.Fill = Brushes.Black;
-                        Grid.SetColumn(myRect, i);
-                        Grid.SetRow(myRect, j);
-                        gridActive.Children.Add(myRect);
+                        TextBlock but = new TextBlock();
+                        //but.IsEnabled = false;
+                        but.Background = Brushes.Black;
+                        Grid.SetColumn(but, i);
+                        Grid.SetRow(but, j);
+                        gridActive.Children.Add(but);
                     }
                     else
                     {
-                        Button but = new Button();
-                        but.Click += but_Click;
+                        TextBlock but = new TextBlock();
+                        but.MouseDown += but_Click;
                         but.Opacity = 0.0;
                         Grid.SetColumn(but, i);
                         Grid.SetRow(but, j);
@@ -224,10 +314,58 @@ namespace Nuclear
 
         private void but_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button;
+            TextBlock btn = sender as TextBlock;
             int row = (int)btn.GetValue(Grid.RowProperty);
             int column = (int)btn.GetValue(Grid.ColumnProperty);
             MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
+            foreach (Grid gridTrigger in Map.Children)
+            { 
+                if (gridTrigger.Name == "TriggerMap")
+                {
+                    UIElementCollection children1 = gridTrigger.Children;
+                    var children = children1.OfType<UIElement>().ToList();
+                    foreach (TextBlock but in children)
+                    {
+                        gridTrigger.Children.Remove(btn);
+                        break;
+                    }
+                    if (gridTrigger.Opacity == 1 && ImageIDArray[column, row] != -1)
+                    {
+                        TextBlock but = new TextBlock();
+                        but.Text = DesignationTrigger(selectedObjectID);
+                        but.MouseDown += but_Click;
+                        but.Opacity = 0.5;
+                        Grid.SetColumn(but, column);
+                        Grid.SetRow(but, row);
+                        gridTrigger.Children.Add(but);
+                    }
+                    else if (gridTrigger.Opacity == 1 && ImageIDArray[column, row] == -1)
+                    {
+                        TextBlock but = new TextBlock();
+                        but.Background = Brushes.Black;
+                        Grid.SetColumn(but, column);
+                        Grid.SetRow(but, row);
+                        gridTrigger.Children.Add(but);
+                    }
+                }
+            }
+        }
+
+        private string DesignationTrigger(int selectedObjectID)
+        {
+            switch (selectedObjectID)
+            {
+                case 1:
+                    return "SpU";
+                case 2:
+                    return "SpE";
+                case 3:
+                    return "Ch";
+                case 4:
+                    return "LP";
+                default:
+                    return "";
+            }
         }
 
         struct Point

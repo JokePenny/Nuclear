@@ -48,15 +48,12 @@
                         </TextBlock>
                         <ComboBox Name="WallAndDecorate" Height="30" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" Margin ="20 5 20 5" SelectionChanged="WallAndDecorate_Selected"/>
                         <TextBlock Name="SelectedSection" TextWrapping="Wrap" Margin ="20 5 20 5"/>
-                        <ComboBox Name="FoldersSection" Height="30" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" Margin ="20 5 20 5"/>
-                        <ScrollViewer Name="Sprits"  HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Visible" Margin ="20 5 20 5">
-                            <Border Background="GhostWhite" BorderBrush="Silver" BorderThickness="3">
-                                <Grid ShowGridLines="True">
+                        <ComboBox Name="FoldersSection" Height="30" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" Margin ="20 5 20 5" SelectionChanged="FolderSubsetion_Selected"/>
+                        <ScrollViewer Name="Sprits"  HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Visible" Margin ="20 5 20 5" MaxHeight="100">
+                            <Border Name="StackImageFromFolder" Background="GhostWhite" BorderBrush="Silver" BorderThickness="3">
+                                <Grid Name="ContainerForImage" ShowGridLines="True">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="50 px"></RowDefinition>
-                                        <RowDefinition Height="50 px"></RowDefinition>
-                                        <RowDefinition Height="50 px"></RowDefinition>
-                                        <RowDefinition Height="50 px"></RowDefinition>
+
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="50"></ColumnDefinition>
@@ -77,9 +74,9 @@
                             <Run FontSize="16">Основные разделы</Run>
                         </TextBlock>
                         <RadioButton Name="SpawnPoint" GroupName="Active" Content="Точка спауна игроков" Margin ="20 5 20 2" Click="selectedTriggerID"/>
-                        <RadioButton Name="SpawnPointEnemy" GroupName="Active" Content="Точка спауна протвиников" Margin ="20 5 20 2"/>
-                        <RadioButton Name="Chest" GroupName="Active" Content="Сундук" Margin ="20 5 20 2"/>
-                        <RadioButton Name="LevelPortal" GroupName="Active" Content="Переход на другой уровень" Margin ="20 5 20 15"/>
+                        <RadioButton Name="SpawnPointEnemy" GroupName="Active" Content="Точка спауна протвиников" Margin ="20 5 20 2" Click="selectedTriggerID"/>
+                        <RadioButton Name="Chest" GroupName="Active" Content="Сундук" Margin ="20 5 20 2" Click="selectedTriggerID"/>
+                        <RadioButton Name="LevelPortal" GroupName="Active" Content="Переход на другой уровень" Margin ="20 5 20 15" Click="selectedTriggerID"/>
                     </StackPanel>
                 </Border>
             </StackPanel>
