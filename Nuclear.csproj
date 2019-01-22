@@ -144,7 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\map editor\sprits\props\city\" />
-    <Folder Include="data\map editor\sprits\wall\" />
+    <Folder Include="data\map editor\sprits\wall\wallr\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

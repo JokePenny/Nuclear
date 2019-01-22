@@ -49,17 +49,17 @@
                         <ComboBox Name="WallAndDecorate" Height="30" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" Margin ="20 5 20 5" SelectionChanged="WallAndDecorate_Selected"/>
                         <TextBlock Name="SelectedSection" TextWrapping="Wrap" Margin ="20 5 20 5"/>
                         <ComboBox Name="FoldersSection" Height="30" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" Margin ="20 5 20 5" SelectionChanged="FolderSubsetion_Selected"/>
-                        <ScrollViewer Name="Sprits"  HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Visible" Margin ="20 5 20 5" MaxHeight="100">
+                        <ScrollViewer Name="Sprits"  HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Visible" Margin ="20 5 20 5" MaxHeight="200">
                             <Border Name="StackImageFromFolder" Background="GhostWhite" BorderBrush="Silver" BorderThickness="3">
                                 <Grid Name="ContainerForImage" ShowGridLines="True">
                                     <Grid.RowDefinitions>
-
+                                        <RowDefinition MinHeight="50" MaxHeight="50"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50"></ColumnDefinition>
-                                        <ColumnDefinition Width="50"></ColumnDefinition>
-                                        <ColumnDefinition Width="50"></ColumnDefinition>
-                                        <ColumnDefinition Width="50"></ColumnDefinition>
+                                        <ColumnDefinition MinWidth="50" MaxWidth="50"></ColumnDefinition>
+                                        <ColumnDefinition MinWidth="50" MaxWidth="50"></ColumnDefinition>
+                                        <ColumnDefinition MinWidth="50" MaxWidth="50"></ColumnDefinition>
+                                        <ColumnDefinition MinWidth="50" MaxWidth="50"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                 </Grid>
                             </Border>

@@ -22,7 +22,9 @@ namespace Nuclear
     /// </summary>
     public partial class MapEditor : Page
     {
+        private int CloneSelectedObjectID = 0;
         private int selectedObjectID = 0;
+        private string[] foldersName = new string[21];
         private int sizeArrayX = 12;
         private int sizeArrayY = 27;
 
@@ -110,19 +112,43 @@ namespace Nuclear
             if (selectedItem.Text == "wall")
             {
                 DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\map editor\sprits\wall");
+                this.FoldersSection.Items.Clear();
+                int numberFolder = 0;
                 foreach (var item in dir.GetDirectories())
                 {
+                    try
+                    {
+                        foldersName[numberFolder] = item.Name;
+                        numberFolder++;
+                    }
+                    catch (IndexOutOfRangeException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                        
                     TextBlock text = new TextBlock();
                     text.Text = item.Name;
-                    this.WallAndDecorate.Items.Add(text);
+                    this.FoldersSection.Items.Add(text);
                 }
                 SelectedSection.Text = "Стены";
             }
             else
             {
                 DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\map editor\sprits\props");
+                this.FoldersSection.Items.Clear();
+                int numberFolder = 10;
                 foreach (var item in dir.GetDirectories())
                 {
+                    try
+                    {
+                        foldersName[numberFolder] = item.Name;
+                        numberFolder++;
+                    }
+                    catch (IndexOutOfRangeException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                     TextBlock text = new TextBlock();
                     text.Text = item.Name;
                     this.FoldersSection.Items.Add(text);
@@ -136,54 +162,111 @@ namespace Nuclear
             
             ComboBox comboBox = (ComboBox)sender;
             TextBlock selectedItem = (TextBlock)comboBox.SelectedItem;
-            if (selectedItem.Text == "wall")
+            TextBlock selectedItemRootFolder = (TextBlock)WallAndDecorate.SelectedItem;
+            try
             {
-                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\map editor\sprits\wall");
-                foreach (var item in dir.GetDirectories())
+                if (selectedItem.Text != null)
                 {
-                    //string Image = item.Name + ".jpg";
-                    TextBlock text = new TextBlock();
-                    text.Text = item.Name;
-                    this.WallAndDecorate.Items.Add(text);
-                }
-            }
-            else
-            {
-                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\map editor\sprits\props");
-                foreach (var item in dir.GetDirectories())
-                {
-                    //string Image = item.Name + ".jpg";
-                    TextBlock text = new TextBlock();
-                    text.Text = item.Name;
-                    this.FoldersSection.Items.Add(text);
-                }
-            }
-            selectedItem = (TextBlock)comboBox.SelectedItem;
-            if (selectedItem.Text != null)
-            {
-                string path = @"D:\01Programms\VS\Repository\Nuclear\Nuclear\bin\Debug\data\map editor\sprits\props\" + selectedItem.Text; // сделать относительный путь файла, как ниже
-                DirectoryInfo dir = new DirectoryInfo(path);
-                int column = 4;
-                int rowChange = 0;
-                int columnChange = 0;
-                foreach (var item in dir.GetFiles())
-                {
-                    Image ImageContainer = new Image();
-                    ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/map editor/sprits/props/" + selectedItem.Text + "/" + item.Name, UriKind.Absolute));
-                    ImageContainer.Source = image;
-                    Grid.SetColumn(ImageContainer, columnChange);
-                    Grid.SetRow(ImageContainer, rowChange);
-                    ContainerForImage.Children.Add(ImageContainer);
-                    if (columnChange + 1 < column)
-                        columnChange++;
+                    string path, pathDop;
+                    if (selectedItemRootFolder.Text == "wall")
+                    {
+                        path = @"D:\01Programms\VS\Repository\Nuclear\Nuclear\bin\Debug\data\map editor\sprits\wall\" + selectedItem.Text; // сделать относительный путь файла, как ниже
+                        pathDop = "/data/map editor/sprits/wall/";
+                        selectedObjectID = 1000;
+                    } 
                     else
                     {
-                        RowDefinition row = new RowDefinition();
-                        row.MinHeight = 50;
-                        ContainerForImage.RowDefinitions.Add(new RowDefinition());
-                        rowChange++;
-                        columnChange = 0;
+                        path = @"D:\01Programms\VS\Repository\Nuclear\Nuclear\bin\Debug\data\map editor\sprits\props\" + selectedItem.Text; // сделать относительный путь файла, как ниже
+                        pathDop = "/data/map editor/sprits/props/";
+                        selectedObjectID = 100;
                     }
+                    PurposeRankID(selectedItem.Text);
+
+                    DirectoryInfo dir = new DirectoryInfo(path);
+                    int column = 4;
+                    int rowChange = 0;
+                    int columnChange = 0;
+                    foreach (var item in dir.GetFiles())
+                    {
+                        Image ImageContainer = new Image();
+                        ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + pathDop + selectedItem.Text + "/" + item.Name, UriKind.Absolute));
+                        ImageContainer.Source = image;
+                        ImageContainer.MouseDown += SelectedImageForMapImage;
+                        Grid.SetColumn(ImageContainer, columnChange);
+                        Grid.SetRow(ImageContainer, rowChange);
+                        ContainerForImage.Children.Add(ImageContainer);
+                        if (columnChange + 1 < column)
+                            columnChange++;
+                        else
+                        {
+                            RowDefinition row = new RowDefinition();
+                            row.MinHeight = 50;
+                            row.MaxHeight = 50;
+                            ContainerForImage.RowDefinitions.Add(row);
+                            rowChange++;
+                            columnChange = 0;
+                        }
+                    }
+                }
+            }
+            catch(NullReferenceException)
+            {
+                int x = ContainerForImage.RowDefinitions.Count() - 1;
+                for (int i = x; i > 0; i--)
+                    ContainerForImage.RowDefinitions.RemoveAt(i);
+                ContainerForImage.Children.Clear();
+            }
+        }
+
+        private void SelectedImageForMapImage(object sender, RoutedEventArgs e)
+        {
+
+            Image btn = sender as Image;
+            Clipboard.SetImage(new BitmapImage((btn.Source as BitmapImage).UriSource));
+            //Clipboard.SetText();
+            int row = (int)btn.GetValue(Grid.RowProperty);
+            int column = (int)btn.GetValue(Grid.ColumnProperty);
+            UIElementCollection children1 = ContainerForImage.Children;
+            var children = children1.OfType<UIElement>().ToList();
+            foreach (Image but in children)
+            {
+                int i = ContainerForImage.Children.IndexOf(btn);
+                if (selectedObjectID == CloneSelectedObjectID)
+                    selectedObjectID += i + 1;
+                else
+                {
+                    selectedObjectID = CloneSelectedObjectID;
+                    selectedObjectID += i + 1;
+                }
+                break;
+            }
+            MessageBox.Show(string.Format("Клетка {0}, {1}\n size {2}", column, row, selectedObjectID));
+        }
+
+        private void PurposeRankID(string nameFolder)
+        {
+            if (selectedObjectID == 1000)
+                for (int i = 0; i < 10; i++)
+                {
+                    if (foldersName[i] == nameFolder)
+                    {
+                        selectedObjectID = selectedObjectID + i * 100;
+                        CloneSelectedObjectID = selectedObjectID;
+                        return;
+                    }
+
+                }
+            else
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    if (foldersName[10 + i] == nameFolder)
+                    {
+                        selectedObjectID = selectedObjectID + i * 100;
+                        CloneSelectedObjectID = selectedObjectID;
+                        return;
+                    }
+
                 }
             }
         }
@@ -191,7 +274,8 @@ namespace Nuclear
         private void Choice_WorkTool(object sender, RoutedEventArgs e)
         {
             RadioButton radioButton = (RadioButton)sender;
-            if(radioButton.Content.ToString() == "Сетка со спрайтами карты")
+
+            if (radioButton.Content.ToString() == "Сетка со спрайтами карты")
             {
                 Props.IsEnabled = true;
                 Triggers.IsEnabled = false;
@@ -253,9 +337,13 @@ namespace Nuclear
             for (int i = 0; i < WidthMap; i++)
                 for (int j = 0; j < HeightMap; j++)
                 {
-                    Rectangle but = new Rectangle();
-                    but.MouseDown += but_Click;
-                    but.Opacity = 0.0;
+                    Image but = new Image();
+                    ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/map editor/sprits/wall/wallr/hhh.jpg", UriKind.Absolute));
+                    but.Source = image;
+                    but.MouseDown += DrawingImage_Click;
+                    but.Height = 50;
+                    but.Width = 50;
+                    but.Opacity = 1;
                     Grid.SetColumn(but, i);
                     Grid.SetRow(but, j);
                     grid.Children.Add(but);
@@ -263,6 +351,16 @@ namespace Nuclear
             grid.Background = Brushes.White;
             Grid.SetZIndex(grid, 1);
             this.Map.Children.Add(grid);
+        }
+
+        private void DrawingImage_Click(object sender, RoutedEventArgs e)
+        {
+            Image picture = sender as Image;
+            ImageSource image = Clipboard.GetImage();
+            picture.Source = image;
+            int row = (int)picture.GetValue(Grid.RowProperty);
+            int column = (int)picture.GetValue(Grid.ColumnProperty);
+            //MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
         }
 
         public void MapActiveGrid()
