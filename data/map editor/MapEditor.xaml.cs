@@ -29,63 +29,63 @@ namespace Nuclear
         private int sizeArrayY = 27;
 
         private int[,] ImageIDArray = new int[,] {
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             };
 
         private int[,] TriggerIDArray = new int[,] {
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             };
 
 
@@ -191,7 +191,7 @@ namespace Nuclear
                         Image ImageContainer = new Image();
                         ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + pathDop + selectedItem.Text + "/" + item.Name, UriKind.Absolute));
                         ImageContainer.Source = image;
-                        ImageContainer.MouseDown += SelectedImageForMapImage;
+                        ImageContainer.MouseDown += SelectedImageForMapImage_Click;
                         Grid.SetColumn(ImageContainer, columnChange);
                         Grid.SetRow(ImageContainer, rowChange);
                         ContainerForImage.Children.Add(ImageContainer);
@@ -218,7 +218,7 @@ namespace Nuclear
             }
         }
 
-        private void SelectedImageForMapImage(object sender, RoutedEventArgs e)
+        private void SelectedImageForMapImage_Click(object sender, RoutedEventArgs e)
         {
 
             Image btn = sender as Image;
@@ -240,7 +240,7 @@ namespace Nuclear
                 }
                 break;
             }
-            MessageBox.Show(string.Format("Клетка {0}, {1}\n size {2}", column, row, selectedObjectID));
+            //MessageBox.Show(string.Format("Клетка {0}, {1}\n size {2}", column, row, selectedObjectID));
         }
 
         private void PurposeRankID(string nameFolder)
@@ -290,6 +290,7 @@ namespace Nuclear
                     {
                         Grid.SetZIndex(gridimage, 1);
                         gridimage.Visibility = Visibility.Hidden;
+                        CheckChangeOnMapImage(gridimage);
                     }
                 }
             }
@@ -308,9 +309,56 @@ namespace Nuclear
                     {
                         Grid.SetZIndex(gridimage, 999);
                         gridimage.Visibility = Visibility.Visible;
+                        CheckChangeOnMapImage(gridimage);
                     }
                 }
             }
+        }
+
+        public void CheckChangeOnMapImage(Grid gridTrigger)
+        {
+            int x = 0, y = 0;
+            UIElementCollection children1 = gridTrigger.Children;
+            var children = children1.OfType<UIElement>().ToList();
+            foreach (TextBlock text1 in children)
+            {
+                TextBlock text = text1;
+                if (ImageIDArray[y, x] > 1000)
+                {
+                    if (text.Background == Brushes.White)
+                    {
+                        gridTrigger.Children.Remove(text);
+                        TextBlock newText = new TextBlock();
+                        newText.Background = Brushes.Black;
+                        Grid.SetColumn(newText, x);
+                        Grid.SetRow(newText, y);
+                        gridTrigger.Children.Add(newText);
+                    }
+                }
+                else
+                {
+                    if (text.Background == Brushes.Black)
+                    {
+                        gridTrigger.Children.Remove(text);
+                        TextBlock newText = new TextBlock();
+                        newText.Background = Brushes.White;
+                        text.MouseDown += but_Click;
+                        text.Opacity = 0.0;
+                        Grid.SetColumn(newText, x);
+                        Grid.SetRow(newText, y);
+                        gridTrigger.Children.Add(newText);
+                    }
+                }
+                if (y < sizeArrayY - 1)
+                    y++;
+                else if (x < sizeArrayX - 1)
+                {
+                    x++;
+                    y = 0;
+                }
+                else break;
+            }
+
         }
 
         public void MapImageGrid()
@@ -360,6 +408,7 @@ namespace Nuclear
             picture.Source = image;
             int row = (int)picture.GetValue(Grid.RowProperty);
             int column = (int)picture.GetValue(Grid.ColumnProperty);
+            ImageIDArray[row, column] = selectedObjectID;
             //MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
         }
 
@@ -400,6 +449,7 @@ namespace Nuclear
                     {
                         TextBlock but = new TextBlock();
                         but.MouseDown += but_Click;
+                        but.Background = Brushes.White;
                         but.Opacity = 0.0;
                         Grid.SetColumn(but, i);
                         Grid.SetRow(but, j);
@@ -427,7 +477,7 @@ namespace Nuclear
                         gridTrigger.Children.Remove(btn);
                         break;
                     }
-                    if (gridTrigger.Opacity == 1 && ImageIDArray[column, row] != -1)
+                    if (gridTrigger.Opacity == 1 && ImageIDArray[column, row] < 1000)
                     {
                         TextBlock but = new TextBlock();
                         but.Text = DesignationTrigger(selectedObjectID);
@@ -437,7 +487,7 @@ namespace Nuclear
                         Grid.SetRow(but, row);
                         gridTrigger.Children.Add(but);
                     }
-                    else if (gridTrigger.Opacity == 1 && ImageIDArray[column, row] == -1)
+                    else if (gridTrigger.Opacity == 1 && ImageIDArray[column, row] > 1000)
                     {
                         TextBlock but = new TextBlock();
                         but.Background = Brushes.Black;
