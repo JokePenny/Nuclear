@@ -1,8 +1,9 @@
-﻿using Nuclear.data.map_editor;
+﻿using Nuclear.data.mapeditor;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,6 +23,8 @@ namespace Nuclear
     /// </summary>
     public partial class MapEditor : Page
     {
+        Field field;
+
         private int CloneSelectedObjectID = 0;
         private int selectedObjectID = 0;
         private string[] foldersName = new string[21];
@@ -92,7 +95,7 @@ namespace Nuclear
         public MapEditor()
         {
             InitializeComponent();
-            DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\map editor\sprits");
+            DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\mapeditor\sprits");
             foreach (var item in dir.GetDirectories())
             {
                 TextBlock text = new TextBlock();
@@ -111,7 +114,7 @@ namespace Nuclear
             TextBlock selectedItem = (TextBlock)comboBox.SelectedItem;
             if (selectedItem.Text == "wall")
             {
-                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\map editor\sprits\wall");
+                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\mapeditor\sprits\wall");
                 this.FoldersSection.Items.Clear();
                 int numberFolder = 0;
                 foreach (var item in dir.GetDirectories())
@@ -134,7 +137,7 @@ namespace Nuclear
             }
             else
             {
-                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\map editor\sprits\props");
+                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\mapeditor\sprits\props");
                 this.FoldersSection.Items.Clear();
                 int numberFolder = 10;
                 foreach (var item in dir.GetDirectories())
@@ -170,14 +173,14 @@ namespace Nuclear
                     string path, pathDop;
                     if (selectedItemRootFolder.Text == "wall")
                     {
-                        path = @"D:\01Programms\VS\Repository\Nuclear\Nuclear\bin\Debug\data\map editor\sprits\wall\" + selectedItem.Text; // сделать относительный путь файла, как ниже
-                        pathDop = "/data/map editor/sprits/wall/";
+                        path = @"D:\01Programms\VS\Repository\Nuclear\Nuclear\bin\Debug\data\mapeditor\sprits\wall\" + selectedItem.Text; // сделать относительный путь файла, как ниже
+                        pathDop = "/data/mapeditor/sprits/wall/";
                         selectedObjectID = 1000;
                     } 
                     else
                     {
-                        path = @"D:\01Programms\VS\Repository\Nuclear\Nuclear\bin\Debug\data\map editor\sprits\props\" + selectedItem.Text; // сделать относительный путь файла, как ниже
-                        pathDop = "/data/map editor/sprits/props/";
+                        path = @"D:\01Programms\VS\Repository\Nuclear\Nuclear\bin\Debug\data\mapeditor\sprits\props\" + selectedItem.Text; // сделать относительный путь файла, как ниже
+                        pathDop = "/data/mapeditor/sprits/props/";
                         selectedObjectID = 100;
                     }
                     PurposeRankID(selectedItem.Text);
@@ -330,8 +333,8 @@ namespace Nuclear
                         gridTrigger.Children.Remove(text);
                         TextBlock newText = new TextBlock();
                         newText.Background = Brushes.Black;
-                        Grid.SetColumn(newText, x);
-                        Grid.SetRow(newText, y);
+                        Grid.SetColumn(newText, y);
+                        Grid.SetRow(newText, x);
                         gridTrigger.Children.Add(newText);
                     }
                 }
@@ -344,8 +347,8 @@ namespace Nuclear
                         newText.Background = Brushes.White;
                         text.MouseDown += but_Click;
                         text.Opacity = 0.0;
-                        Grid.SetColumn(newText, x);
-                        Grid.SetRow(newText, y);
+                        Grid.SetColumn(newText, y);
+                        Grid.SetRow(newText, x);
                         gridTrigger.Children.Add(newText);
                     }
                 }
@@ -386,7 +389,7 @@ namespace Nuclear
                 for (int j = 0; j < HeightMap; j++)
                 {
                     Image but = new Image();
-                    ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/map editor/sprits/wall/wallr/hhh.jpg", UriKind.Absolute));
+                    ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/mapeditor/sprits/wall/wallr/hhh.jpg", UriKind.Absolute));
                     but.Source = image;
                     but.MouseDown += DrawingImage_Click;
                     but.Height = 50;
@@ -408,7 +411,8 @@ namespace Nuclear
             picture.Source = image;
             int row = (int)picture.GetValue(Grid.RowProperty);
             int column = (int)picture.GetValue(Grid.ColumnProperty);
-            ImageIDArray[row, column] = selectedObjectID;
+            ImageIDArray[column, row] = selectedObjectID;
+
             //MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
         }
 
@@ -530,8 +534,47 @@ namespace Nuclear
 
         private void New_Workplace(object sender, RoutedEventArgs e)
         {
-            New_Workplace passwordWindow = new New_Workplace();
-            passwordWindow.ShowDialog();
+            string name;
+            switch((sender as MenuItem).Header.ToString())
+            {
+                case "Новый проект":
+                    name = "NewProject";
+                    break;
+                case "Открыть проект":
+                    name = "";
+                    break;
+                case "Сохранить как":
+                    name = "SaveAs";
+                    break;
+                case "Панель внешнего вида":
+                    name = "PanelOutsideView";
+                    break;
+                case "Панель звуковых эффектов":
+                    name = "PanelSoundEffects";
+                    break;
+                case "Панель системы частиц":
+                    name = "PanelSystemParticle";
+                    break;
+                default:
+                    name = "";
+                    break;
+            }
+            VisiblePanel(name);
+        }
+
+        private void VisiblePanel(string namePanel)
+        {
+            foreach (var panel in Editor.Children)
+            {
+                if (panel is Border)
+                {
+                    Border panelVisible = panel as Border;
+                    if (panelVisible.Name != namePanel && panelVisible.Name != "PanelBottom")
+                        panelVisible.Visibility = Visibility.Collapsed;
+                    else
+                        panelVisible.Visibility = Visibility.Visible;
+                }
+            }
         }
 
         private void Exit_MapEditor(object sender, RoutedEventArgs e)
@@ -557,9 +600,56 @@ namespace Nuclear
                 case "LevelPortal":
                     selectedObjectID = 4;
                     break;
+                case "ClearMesh":
+                    selectedObjectID = 0;
+                    break;
                 default:
                     break;
             }
+        }
+
+        private void SaveMap_Click(object sender, RoutedEventArgs e)
+        {
+            SaveMap();
+        }
+
+        private void SaveMap()
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "/data/mapcreateds/" + field.GetName() + ".dat", FileMode.OpenOrCreate))
+            {
+                formatter.Serialize(fs, field);
+                MessageBox.Show(string.Format("Объект сериализован"));
+            }
+        }
+
+        private void CreateMap_Click(object sender, RoutedEventArgs e)
+        {
+            if(Convert.ToInt32(SizeX.Text) <= 100 && Convert.ToInt32(SizeX.Text) > 0 && Convert.ToInt32(SizeY.Text) <= 100 && Convert.ToInt32(SizeY.Text) > 0 && NameMap.Text.Length < 15 && NameMap.Text.Length > 0)
+            {
+                Save_Button.IsEnabled = true;
+                SaveAs_Button.IsEnabled = true;
+                Field createMap = new Field(Convert.ToInt32(SizeX.Text), Convert.ToInt32(SizeY.Text), NameMap.Text);
+                field = createMap;
+                VisiblePanel("PanelOutsideView");
+            }
+            else MessageBox.Show(string.Format(" Ошибка!\n Проверьте введенные значения:\n Максимальная высота и ширина - 100 клеток\n Ваша Высота - {0}, Ширина - {1}\n Максимальная длина имени файла - 14 символов\n Длина заданного Вами имени - {2}", Convert.ToInt32(SizeX.Text), Convert.ToInt32(SizeY.Text), NameMap.Text.Length));  
+        }
+
+        private void Number_CheckWrite(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = "0123456789".IndexOf(e.Text) < 0;
+        }
+
+        private void SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            if (NameMap.Text.Length < 15 && NameMap.Text.Length > 0)
+            {
+                field.SetName(ChangeNameMap.Text);
+                SaveMap();
+                VisiblePanel("PanelOutsideView");
+            }
+            else MessageBox.Show(string.Format(" Ошибка!\n Проверьте введенные значения:\n Максимальная длина имени файла - 14 символов\n Длина заданного Вами имени - {0}", ChangeNameMap.Text.Length));
         }
     }
 }

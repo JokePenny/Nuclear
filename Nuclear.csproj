@@ -57,16 +57,14 @@
     <Compile Include="Backpack.xaml.cs">
       <DependentUpon>Backpack.xaml</DependentUpon>
     </Compile>
-    <Compile Include="data\map editor\New_Workplace.xaml.cs">
-      <DependentUpon>New_Workplace.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="data\mapeditor\Field.cs" />
     <Compile Include="Game.xaml.cs">
       <DependentUpon>Game.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameCamera.xaml.cs">
       <DependentUpon>GameCamera.xaml</DependentUpon>
     </Compile>
-    <Compile Include="data\map editor\MapEditor.xaml.cs">
+    <Compile Include="data\mapeditor\MapEditor.xaml.cs">
       <DependentUpon>MapEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="SkillTree.xaml.cs">
@@ -76,10 +74,6 @@
       <DependentUpon>StartMenu.xaml</DependentUpon>
     </Compile>
     <Page Include="Backpack.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="data\map editor\New_Workplace.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -103,7 +97,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="data\map editor\MapEditor.xaml">
+    <Page Include="data\mapeditor\MapEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,8 +137,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="data\map editor\sprits\props\city\" />
-    <Folder Include="data\map editor\sprits\wall\wallr\" />
+    <Folder Include="data\mapcreateds\" />
+    <Folder Include="data\mapeditor\sprits\props\city\" />
+    <Folder Include="data\mapeditor\sprits\wall\wallr\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
