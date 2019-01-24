@@ -61,7 +61,7 @@ namespace Nuclear.data.mapeditor
             return _ImageIDArray[x, y];
         }
 
-        public int GetSizeArrayX(int x, int y)
+        public int GetSizeArrayX()
         {
             return _sizeArrayX;
         }

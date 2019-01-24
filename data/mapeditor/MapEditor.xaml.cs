@@ -95,6 +95,7 @@ namespace Nuclear
         public MapEditor()
         {
             InitializeComponent();
+            /*
             DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\mapeditor\sprits");
             foreach (var item in dir.GetDirectories())
             {
@@ -102,10 +103,11 @@ namespace Nuclear
                 text.Text = item.Name;
                 this.WallAndDecorate.Items.Add(text);
             }
+            */
             Props.IsEnabled = false;
             Triggers.IsEnabled = false;
-            MapImageGrid();
-            MapActiveGrid();
+            //MapImageGrid();
+            //MapActiveGrid();
         }
 
         private void WallAndDecorate_Selected(object sender, SelectionChangedEventArgs e)
@@ -326,7 +328,7 @@ namespace Nuclear
             foreach (TextBlock text1 in children)
             {
                 TextBlock text = text1;
-                if (ImageIDArray[y, x] > 1000)
+                if (field.GetImageIDArray(x, y) > 1000)
                 {
                     if (text.Background == Brushes.White)
                     {
@@ -352,9 +354,9 @@ namespace Nuclear
                         gridTrigger.Children.Add(newText);
                     }
                 }
-                if (y < sizeArrayY - 1)
+                if (y < field.GetSizeArrayY() - 1)
                     y++;
-                else if (x < sizeArrayX - 1)
+                else if (x < field.GetSizeArrayX() - 1)
                 {
                     x++;
                     y = 0;
@@ -366,8 +368,8 @@ namespace Nuclear
 
         public void MapImageGrid()
         {
-            int HeightMap = 12;
-            int WidthMap = 27;
+            int HeightMap = field.GetSizeArrayX();
+            int WidthMap = field.GetSizeArrayY();
 
             Grid grid = new Grid();
             grid.Name = "ImageMap";
@@ -411,15 +413,14 @@ namespace Nuclear
             picture.Source = image;
             int row = (int)picture.GetValue(Grid.RowProperty);
             int column = (int)picture.GetValue(Grid.ColumnProperty);
-            ImageIDArray[column, row] = selectedObjectID;
-
+            field.SetImageIDArray(row, column, selectedObjectID);
             //MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
         }
 
         public void MapActiveGrid()
         {
-            int HeightMap = 12;
-            int WidthMap = 27;
+            int HeightMap = field.GetSizeArrayX();
+            int WidthMap = field.GetSizeArrayY();
 
             Grid gridActive = new Grid();
             gridActive.Name = "TriggerMap";
@@ -440,7 +441,7 @@ namespace Nuclear
             for (int i = 0; i < WidthMap; i++)
                 for (int j = 0; j < HeightMap; j++)
                 {
-                    if (ImageIDArray[i, j] == -1)
+                    if (field.GetImageIDArray(j, i) == -1)
                     {
                         TextBlock but = new TextBlock();
                         //but.IsEnabled = false;
@@ -481,17 +482,18 @@ namespace Nuclear
                         gridTrigger.Children.Remove(btn);
                         break;
                     }
-                    if (gridTrigger.Opacity == 1 && ImageIDArray[column, row] < 1000)
+                    if (gridTrigger.Opacity == 1 && field.GetImageIDArray(row, column) < 1000)
                     {
                         TextBlock but = new TextBlock();
                         but.Text = DesignationTrigger(selectedObjectID);
+                        field.SetTriggerIDArray(row, column, selectedObjectID);
                         but.MouseDown += but_Click;
                         but.Opacity = 0.5;
                         Grid.SetColumn(but, column);
                         Grid.SetRow(but, row);
                         gridTrigger.Children.Add(but);
                     }
-                    else if (gridTrigger.Opacity == 1 && ImageIDArray[column, row] > 1000)
+                    else if (gridTrigger.Opacity == 1 && field.GetImageIDArray(row, column) > 1000)
                     {
                         TextBlock but = new TextBlock();
                         but.Background = Brushes.Black;
@@ -541,7 +543,15 @@ namespace Nuclear
                     name = "NewProject";
                     break;
                 case "Открыть проект":
-                    name = "";
+                    name = "OpenProject";
+                    DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapcreateds/");
+                    this.NameFileMap.Items.Clear();
+                    foreach (var item in dir.GetFiles())
+                    {
+                        TextBlock text = new TextBlock();
+                        text.Text = item.Name;
+                        this.NameFileMap.Items.Add(text);
+                    }
                     break;
                 case "Сохранить как":
                     name = "SaveAs";
@@ -632,6 +642,15 @@ namespace Nuclear
                 Field createMap = new Field(Convert.ToInt32(SizeX.Text), Convert.ToInt32(SizeY.Text), NameMap.Text);
                 field = createMap;
                 VisiblePanel("PanelOutsideView");
+                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\mapeditor\sprits");
+                foreach (var item in dir.GetDirectories())
+                {
+                    TextBlock text = new TextBlock();
+                    text.Text = item.Name;
+                    this.WallAndDecorate.Items.Add(text);
+                }
+                MapImageGrid();
+                MapActiveGrid();
             }
             else MessageBox.Show(string.Format(" Ошибка!\n Проверьте введенные значения:\n Максимальная высота и ширина - 100 клеток\n Ваша Высота - {0}, Ширина - {1}\n Максимальная длина имени файла - 14 символов\n Длина заданного Вами имени - {2}", Convert.ToInt32(SizeX.Text), Convert.ToInt32(SizeY.Text), NameMap.Text.Length));  
         }
@@ -650,6 +669,27 @@ namespace Nuclear
                 VisiblePanel("PanelOutsideView");
             }
             else MessageBox.Show(string.Format(" Ошибка!\n Проверьте введенные значения:\n Максимальная длина имени файла - 14 символов\n Длина заданного Вами имени - {0}", ChangeNameMap.Text.Length));
+        }
+
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            if (NameFileMap.SelectedItem != null)
+            {
+                VisiblePanel("PanelOutsideView");
+                BinaryFormatter formatter = new BinaryFormatter();
+                TextBlock selectedFile = (TextBlock)NameFileMap.SelectedItem;
+                using (FileStream fs = new FileStream(Environment.CurrentDirectory + "/data/mapcreateds/" + selectedFile.Text, FileMode.OpenOrCreate))
+                {
+                    field = (Field)formatter.Deserialize(fs);
+                    foreach (Grid grid in Map.Children)
+                        if (grid.Name == "TriggerMap" || grid.Name == "ImageMap")
+                            grid.Children.Clear();
+                    MapImageGrid();
+                    MapActiveGrid();
+                    MessageBox.Show(string.Format("eeeeeee"));
+                }
+            }
+            else MessageBox.Show(string.Format("Выберите файл проекта"));
         }
     }
 }

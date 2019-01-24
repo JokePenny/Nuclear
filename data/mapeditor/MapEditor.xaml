@@ -26,7 +26,7 @@
         <Menu Height="25" MinWidth="290" VerticalAlignment="Top">
             <MenuItem Header="Файл">
                 <MenuItem Header="Новый проект" Click="New_Workplace" ></MenuItem>
-                <MenuItem Header="Открыть проект" ></MenuItem>
+                <MenuItem Header="Открыть проект" Click="New_Workplace"></MenuItem>
                 <MenuItem Name="Save_Button" IsEnabled="False" Header="Сохранить" Click="SaveMap_Click"></MenuItem>
                 <MenuItem Name="SaveAs_Button" IsEnabled="False" Header="Сохранить как" Click="New_Workplace"></MenuItem>
                 <Separator />
@@ -34,8 +34,8 @@
             </MenuItem>
             <MenuItem Header="Настройки" >
                 <MenuItem Header="Панель внешнего вида" Click="New_Workplace"></MenuItem>
-                <MenuItem Header="Панель звуковых эффектов" Click="New_Workplace"></MenuItem>
-                <MenuItem Header="Панель системы частиц" Click="New_Workplace"></MenuItem>
+                <MenuItem IsEnabled="False" Header="Панель звуковых эффектов" Click="New_Workplace"></MenuItem>
+                <MenuItem IsEnabled="False" Header="Панель системы частиц" Click="New_Workplace"></MenuItem>
             </MenuItem>
         </Menu>
         <!-- панель внешнего вида -->
@@ -45,7 +45,7 @@
                 <Border Name="Props" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Background="GhostWhite" BorderBrush="Silver" BorderThickness="3 3 3 3" Margin="10" Visibility="Visible">
                     <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical" HorizontalAlignment="left" Margin ="0 0 0 0">
                         <TextBlock TextWrapping="Wrap" Margin ="20 5 20 5">
-                                    <Run FontSize="16">Основные разделы</Run>
+                            <Run FontSize="16">Основные разделы</Run>
                         </TextBlock>
                         <ComboBox Name="WallAndDecorate" Height="30" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" Margin ="20 5 20 5" SelectionChanged="WallAndDecorate_Selected"/>
                         <TextBlock Name="SelectedSection" TextWrapping="Wrap" Margin ="20 5 20 5"/>
@@ -181,6 +181,24 @@
             </StackPanel>
         </Border>
         <!-- новый проект -->
+
+        <!-- открыть проект-->
+        <Border Name="OpenProject" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Background="GhostWhite" BorderBrush="Silver" BorderThickness="0 0 11 0" Padding="10" Margin="0 22 0 0" Visibility="Collapsed" >
+            <StackPanel Orientation="Vertical" HorizontalAlignment="left">
+                <Border Background="GhostWhite" BorderBrush="Silver" BorderThickness="3 3 3 3" Padding="10">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="left" MinWidth="239">
+                        <WrapPanel HorizontalAlignment="left" Margin="0 15 0 0">
+                            <TextBlock MinWidth="120">Название карты:</TextBlock>
+                            <ComboBox Name="NameFileMap" MinHeight="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left"/>
+                        </WrapPanel>
+                        <WrapPanel HorizontalAlignment="Right" Margin="0,50,0,0">
+                            <Button MinWidth="60" Margin="0 0 10 0" Click="Open_Click">Открыть</Button>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+        <!-- открыть проект -->
 
         <!-- Сохранить как-->
         <Border Name="SaveAs" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Background="GhostWhite" BorderBrush="Silver" BorderThickness="0 0 11 0" Padding="10" Margin="0 22 0 0" Visibility="Collapsed" >
