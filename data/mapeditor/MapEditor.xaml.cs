@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -24,6 +25,7 @@ namespace Nuclear
     public partial class MapEditor : Page
     {
         Field field;
+        Ellipse user;
 
         private int CloneSelectedObjectID = 0;
         private int selectedObjectID = 0;
@@ -483,12 +485,22 @@ namespace Nuclear
                     name = "SaveAs";
                     break;
                 case "Панель внешнего вида":
+                    if (Map.Children.Count != 0)
+                    {
+                        PanelOutsideView.IsEnabled = true;
+                        foreach (Grid grid in Map.Children)
+                            grid.Visibility = Visibility.Visible;
+                    }
+                    else PanelOutsideView.IsEnabled = false;
                     name = "PanelOutsideView";
                     break;
                 case "Панель звуковых эффектов":
                     name = "PanelSoundEffects";
                     break;
                 case "Панель системы частиц":
+                    foreach (Grid grid in Map.Children)
+                        grid.Visibility = Visibility.Collapsed;
+                    AddedPrototypePlayer();
                     name = "PanelSystemParticle";
                     break;
                 default:
@@ -496,6 +508,21 @@ namespace Nuclear
                     break;
             }
             VisiblePanel(name);
+        }
+
+        private int positionX = 100;
+        private int positionY = 100;
+
+        private void AddedPrototypePlayer()
+        {
+            user = new Ellipse();
+            user.Width = 50;
+            user.Height = 50;
+            user.Fill = Brushes.Black;
+            Canvas.SetZIndex(user, 999);
+            Canvas.SetLeft(user, positionX);
+            Canvas.SetTop(user, positionY);
+            Map.Children.Add(user);
         }
 
         private void VisiblePanel(string namePanel)
@@ -567,6 +594,8 @@ namespace Nuclear
                 SaveAs_Button.IsEnabled = true;
                 Field createMap = new Field(Convert.ToInt32(SizeX.Text), Convert.ToInt32(SizeY.Text), NameMap.Text);
                 field = createMap;
+                MapImageGrid();
+                MapActiveGrid();
                 VisiblePanel("PanelOutsideView");
                 DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits");
                 foreach (var item in dir.GetDirectories())
@@ -575,8 +604,6 @@ namespace Nuclear
                     text.Text = item.Name;
                     this.WallAndDecorate.Items.Add(text);
                 }
-                MapImageGrid();
-                MapActiveGrid();
             }
             else MessageBox.Show(string.Format(" Ошибка!\n Проверьте введенные значения:\n Максимальная высота и ширина - 100 клеток\n Ваша Высота - {0}, Ширина - {1}\n Максимальная длина имени файла - 14 символов\n Длина заданного Вами имени - {2}", Convert.ToInt32(SizeX.Text), Convert.ToInt32(SizeY.Text), NameMap.Text.Length));  
         }
@@ -616,6 +643,86 @@ namespace Nuclear
                 }
             }
             else MessageBox.Show(string.Format("Выберите файл проекта"));
+        }
+
+        private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ShotgunBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
+            //LongAutomaticBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
+            //ShortAutomaticBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
+            //Map.Children.Remove(lineFire);
+            //MessageBox.Show(string.Format("Клик по канвасу"));
+        }
+
+        void ShotgunBurst(double x, double y)
+        {
+            Random rnd = new Random();
+            for (int i = 0; i < 5; i++)
+            {
+                Line lineFire = new Line();
+                lineFire.Name = "Head";
+                if(rnd.Next(0,2) == 1)
+                    lineFire.X1 = x - rnd.Next(15, 30);
+                else
+                    lineFire.X1 = x + rnd.Next(15, 30);
+                if (rnd.Next(0, 2) == 1)
+                    lineFire.Y1 = y - rnd.Next(15, 30);
+                else
+                    lineFire.Y1 = y + rnd.Next(15, 30);
+                lineFire.Stroke = Brushes.Blue;
+                lineFire.X2 = positionX + 25;
+                lineFire.Y2 = positionY + 25;
+                Canvas.SetZIndex(lineFire, 999);
+                Map.Children.Add(lineFire);
+
+                DoubleAnimation BulletTrack11 = new DoubleAnimation();
+                BulletTrack11.From = lineFire.X2;
+                BulletTrack11.To = lineFire.X1;
+                BulletTrack11.Duration = TimeSpan.FromSeconds(0.1);
+                BulletTrack11.Completed += BulletTrack_Completed;
+
+                DoubleAnimation BulletTrack12 = new DoubleAnimation();
+                BulletTrack12.From = lineFire.Y2;
+                BulletTrack12.To = lineFire.Y1;
+                BulletTrack12.Duration = TimeSpan.FromSeconds(0.1);
+                BulletTrack12.Completed += BulletTrack_Completed;
+                lineFire.BeginAnimation(Line.X2Property, BulletTrack11);
+                lineFire.BeginAnimation(Line.Y2Property, BulletTrack12);
+            }
+        }
+
+        void ShortAutomaticBurst(double x, double y)
+        {
+            Line lineFire = new Line();
+            lineFire.Name = "Head";
+            lineFire.X1 = x;
+            lineFire.Y1 = y;
+            lineFire.Stroke = Brushes.Blue;
+            lineFire.X2 = positionX + 25;
+            lineFire.Y2 = positionY + 25;
+            Canvas.SetZIndex(lineFire, 999);
+            Map.Children.Add(lineFire);
+
+            DoubleAnimation BulletTrack11 = new DoubleAnimation();
+            BulletTrack11.From = lineFire.X2;
+            BulletTrack11.To = lineFire.X1;
+            BulletTrack11.Duration = TimeSpan.FromSeconds(0.1);
+            BulletTrack11.Completed += BulletTrack_Completed;
+
+            DoubleAnimation BulletTrack12 = new DoubleAnimation();
+            BulletTrack12.From = lineFire.Y2;
+            BulletTrack12.To = lineFire.Y1;
+            BulletTrack12.Duration = TimeSpan.FromSeconds(0.1);
+            BulletTrack12.Completed += BulletTrack_Completed;
+
+            lineFire.BeginAnimation(Line.X2Property, BulletTrack11);
+            lineFire.BeginAnimation(Line.Y2Property, BulletTrack12);
+        }
+
+        void BulletTrack_Completed(object sender, EventArgs e)
+        {
+            //Map.Children.Remove((sender as Line));
+            //MessageBox.Show("Анимация завершена");
         }
     }
 }
