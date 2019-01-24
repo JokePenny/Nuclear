@@ -28,86 +28,12 @@ namespace Nuclear
         private int CloneSelectedObjectID = 0;
         private int selectedObjectID = 0;
         private string[] foldersName = new string[21];
-        private int sizeArrayX = 12;
-        private int sizeArrayY = 27;
-
-        private int[,] ImageIDArray = new int[,] {
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            };
-
-        private int[,] TriggerIDArray = new int[,] {
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            };
-
 
         public MapEditor()
         {
             InitializeComponent();
-            /*
-            DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\mapeditor\sprits");
-            foreach (var item in dir.GetDirectories())
-            {
-                TextBlock text = new TextBlock();
-                text.Text = item.Name;
-                this.WallAndDecorate.Items.Add(text);
-            }
-            */
             Props.IsEnabled = false;
             Triggers.IsEnabled = false;
-            //MapImageGrid();
-            //MapActiveGrid();
         }
 
         private void WallAndDecorate_Selected(object sender, SelectionChangedEventArgs e)
@@ -116,7 +42,7 @@ namespace Nuclear
             TextBlock selectedItem = (TextBlock)comboBox.SelectedItem;
             if (selectedItem.Text == "wall")
             {
-                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\mapeditor\sprits\wall");
+                DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits/wall");
                 this.FoldersSection.Items.Clear();
                 int numberFolder = 0;
                 foreach (var item in dir.GetDirectories())
@@ -139,7 +65,7 @@ namespace Nuclear
             }
             else
             {
-                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\mapeditor\sprits\props");
+                DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits/props");
                 this.FoldersSection.Items.Clear();
                 int numberFolder = 10;
                 foreach (var item in dir.GetDirectories())
@@ -172,22 +98,22 @@ namespace Nuclear
             {
                 if (selectedItem.Text != null)
                 {
-                    string path, pathDop;
+                    string pathDop;
+                    DirectoryInfo dir; ;
                     if (selectedItemRootFolder.Text == "wall")
                     {
-                        path = @"D:\01Programms\VS\Repository\Nuclear\Nuclear\bin\Debug\data\mapeditor\sprits\wall\" + selectedItem.Text; // сделать относительный путь файла, как ниже
+                        dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits/wall/" + selectedItem.Text); // сделать относительный путь файла, как ниже
                         pathDop = "/data/mapeditor/sprits/wall/";
                         selectedObjectID = 1000;
                     } 
                     else
                     {
-                        path = @"D:\01Programms\VS\Repository\Nuclear\Nuclear\bin\Debug\data\mapeditor\sprits\props\" + selectedItem.Text; // сделать относительный путь файла, как ниже
+                        dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits/props/" + selectedItem.Text); // сделать относительный путь файла, как ниже
                         pathDop = "/data/mapeditor/sprits/props/";
                         selectedObjectID = 100;
                     }
                     PurposeRankID(selectedItem.Text);
-
-                    DirectoryInfo dir = new DirectoryInfo(path);
+             
                     int column = 4;
                     int rowChange = 0;
                     int columnChange = 0;
@@ -642,7 +568,7 @@ namespace Nuclear
                 Field createMap = new Field(Convert.ToInt32(SizeX.Text), Convert.ToInt32(SizeY.Text), NameMap.Text);
                 field = createMap;
                 VisiblePanel("PanelOutsideView");
-                DirectoryInfo dir = new DirectoryInfo(@"D:\01Programms\VS\Repository\Nuclear\Nuclear\data\mapeditor\sprits");
+                DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits");
                 foreach (var item in dir.GetDirectories())
                 {
                     TextBlock text = new TextBlock();
