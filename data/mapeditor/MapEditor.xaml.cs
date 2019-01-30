@@ -101,7 +101,7 @@ namespace Nuclear
                 if (selectedItem.Text != null)
                 {
                     string pathDop;
-                    DirectoryInfo dir; ;
+                    DirectoryInfo dir;
                     if (selectedItemRootFolder.Text == "wall")
                     {
                         dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits/wall/" + selectedItem.Text); // сделать относительный путь файла, как ниже
@@ -153,10 +153,8 @@ namespace Nuclear
 
         private void SelectedImageForMapImage_Click(object sender, RoutedEventArgs e)
         {
-
             Image btn = sender as Image;
             Clipboard.SetImage(new BitmapImage((btn.Source as BitmapImage).UriSource));
-            //Clipboard.SetText();
             int row = (int)btn.GetValue(Grid.RowProperty);
             int column = (int)btn.GetValue(Grid.ColumnProperty);
             UIElementCollection children1 = ContainerForImage.Children;
@@ -218,11 +216,13 @@ namespace Nuclear
                     {
                         Grid.SetZIndex(gridimage, 999);
                         gridimage.Opacity = 1;
+                        gridimage.IsEnabled = true;
                     }
                     if(gridimage.Name == "TriggerMap")
                     {
                         Grid.SetZIndex(gridimage, 1);
                         gridimage.Visibility = Visibility.Hidden;
+                        gridimage.IsEnabled = true;
                         CheckChangeOnMapImage(gridimage);
                     }
                 }
@@ -315,23 +315,110 @@ namespace Nuclear
                 grid.ColumnDefinitions.Add(column);
             }
 
+
+
+            DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits/wall");
+            int numberFolder = 0;
+            foreach (var item in dir.GetDirectories())
+            {
+                try
+                {
+                    foldersName[numberFolder] = item.Name;
+                    numberFolder++;
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits/props");
+            this.FoldersSection.Items.Clear();
+            numberFolder = 10;
+            foreach (var item in dir.GetDirectories())
+            {
+                try
+                {
+                    foldersName[numberFolder] = item.Name;
+                    numberFolder++;
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
             for (int i = 0; i < WidthMap; i++)
                 for (int j = 0; j < HeightMap; j++)
                 {
-                    Image but = new Image();
-                    ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/mapeditor/sprits/wall/wallr/hhh.jpg", UriKind.Absolute));
-                    but.Source = image;
-                    but.MouseDown += DrawingImage_Click;
-                    but.Height = 50;
-                    but.Width = 50;
-                    but.Opacity = 1;
-                    Grid.SetColumn(but, i);
-                    Grid.SetRow(but, j);
-                    grid.Children.Add(but);
+                    if(field.GetImageIDArray(j, i) > 1000)
+                    {
+                        grid.Children.Add(ReturnSavedImage(field.GetImageIDArray(j, i), 1000, 100, j, i, "/data/mapeditor/sprits/wall/"));
+                    }
+                    else if(field.GetImageIDArray(j, i) > 100)
+                    {
+                        grid.Children.Add(ReturnSavedImage(field.GetImageIDArray(j, i), 100, 100, j, i, "/data/mapeditor/sprits/props/"));
+                    }
+                    else
+                    {
+                        Image but = new Image();
+                        ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/mapeditor/sprits/wall/wallr/hhh.jpg", UriKind.Absolute));
+                        but.Source = image;
+                        but.MouseDown += DrawingImage_Click;
+                        but.Height = 50;
+                        but.Width = 50;
+                        but.Opacity = 1;
+                        Grid.SetColumn(but, i);
+                        Grid.SetRow(but, j);
+                        grid.Children.Add(but);
+                    }
                 }
             grid.Background = Brushes.White;
+            grid.IsEnabled = false;
             Grid.SetZIndex(grid, 1);
             this.Map.Children.Add(grid);
+        }
+
+        private Image ReturnSavedImage(int cell, int restriction, int folderIndex, int x, int y, string path)
+        {
+            string folder = "";
+            int factor = 0;
+            int cycle;
+            int k;
+            if (restriction == 1000)
+                cycle = 0;
+            else
+                cycle = 10;
+
+            for (k = 1 + cycle; k < 10 + cycle; k++)
+                if (cell < restriction + k * folderIndex)
+                {
+                    folder = foldersName[k - 1];
+                    factor = k - 1 - cycle;
+                    break;
+                }
+            DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + path + folder); // сделать относительный путь файла, как ниже
+            int indexOf = 1;
+            foreach (var item in dir.GetFiles())
+            {
+                if (cell == indexOf + (restriction + factor * folderIndex)) // indexOf - порядок пикчи в папке, 1000 - папка wall, factor * 100 - порядок папки в wall, в которой хранится пикча, - 1 потому что надо так
+                {
+                    Image ImageContainer = new Image();
+                    ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + path + folder + "/" + item.Name, UriKind.Absolute));
+                    ImageContainer.Source = image;
+                    ImageContainer.MouseDown += DrawingImage_Click;
+                    ImageContainer.Height = 50;
+                    ImageContainer.Width = 50;
+                    ImageContainer.Opacity = 1;
+                    Grid.SetColumn(ImageContainer, y);
+                    Grid.SetRow(ImageContainer, x);
+                    return ImageContainer;
+                }
+                else indexOf++;
+            }
+
+
+            Image UnreachableCode = new Image();
+            return UnreachableCode;
         }
 
         private void DrawingImage_Click(object sender, RoutedEventArgs e)
@@ -369,7 +456,17 @@ namespace Nuclear
             for (int i = 0; i < WidthMap; i++)
                 for (int j = 0; j < HeightMap; j++)
                 {
-                    if (field.GetImageIDArray(j, i) == -1)
+                    if (field.GetTriggerIDArray(j, i) > 0 && field.GetTriggerIDArray(j, i) <= 6)
+                    {
+                        TextBlock but = new TextBlock();
+                        but.Text = DesignationTrigger(field.GetTriggerIDArray(j, i));
+                        but.MouseDown += but_Click;
+                        but.Opacity = 0.5;
+                        Grid.SetColumn(but, i);
+                        Grid.SetRow(but, j);
+                        gridActive.Children.Add(but);
+                    }
+                    else if (field.GetImageIDArray(j, i) == -1)
                     {
                         TextBlock but = new TextBlock();
                         //but.IsEnabled = false;
@@ -389,6 +486,7 @@ namespace Nuclear
                         gridActive.Children.Add(but);
                     }
                 }
+            gridActive.IsEnabled = false;
             Grid.SetZIndex(gridActive, 999);
             this.Map.Children.Add(gridActive);
         }
@@ -628,6 +726,8 @@ namespace Nuclear
         {
             if (NameFileMap.SelectedItem != null)
             {
+                Save_Button.IsEnabled = true;
+                SaveAs_Button.IsEnabled = true;
                 VisiblePanel("PanelOutsideView");
                 BinaryFormatter formatter = new BinaryFormatter();
                 TextBlock selectedFile = (TextBlock)NameFileMap.SelectedItem;
@@ -639,7 +739,14 @@ namespace Nuclear
                             grid.Children.Clear();
                     MapImageGrid();
                     MapActiveGrid();
-                    MessageBox.Show(string.Format("eeeeeee"));
+                    DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits");
+                    foreach (var item in dir.GetDirectories())
+                    {
+                        TextBlock text = new TextBlock();
+                        text.Text = item.Name;
+                        this.WallAndDecorate.Items.Add(text);
+                    }
+                    MessageBox.Show(string.Format("Файл открыт"));
                 }
             }
             else MessageBox.Show(string.Format("Выберите файл проекта"));
@@ -647,48 +754,49 @@ namespace Nuclear
 
         private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ShotgunBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
+            Random rnd = new Random();
+            for (int i = 0; i < 5; i++)
+                ShotgunBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y, rnd);
             //LongAutomaticBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
             //ShortAutomaticBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
+            //PistolBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
+            //GrenadeBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
+            //SniperBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
             //Map.Children.Remove(lineFire);
             //MessageBox.Show(string.Format("Клик по канвасу"));
         }
 
-        void ShotgunBurst(double x, double y)
+        void ShotgunBurst(double x, double y, Random rnd)
         {
-            Random rnd = new Random();
-            for (int i = 0; i < 5; i++)
-            {
-                Line lineFire = new Line();
-                lineFire.Name = "Head";
-                if(rnd.Next(0,2) == 1)
-                    lineFire.X1 = x - rnd.Next(15, 30);
-                else
-                    lineFire.X1 = x + rnd.Next(15, 30);
-                if (rnd.Next(0, 2) == 1)
-                    lineFire.Y1 = y - rnd.Next(15, 30);
-                else
-                    lineFire.Y1 = y + rnd.Next(15, 30);
-                lineFire.Stroke = Brushes.Blue;
-                lineFire.X2 = positionX + 25;
-                lineFire.Y2 = positionY + 25;
-                Canvas.SetZIndex(lineFire, 999);
-                Map.Children.Add(lineFire);
+            Line lineFire = new Line();
+            lineFire.Name = "Head";
+            if(rnd.Next(0,2) == 1)
+                lineFire.X1 = x - rnd.Next(0, 40);
+            else
+                lineFire.X1 = x + rnd.Next(0, 40);
+            if (rnd.Next(0, 2) == 1)
+                lineFire.Y1 = y - rnd.Next(0, 40);
+            else
+                lineFire.Y1 = y + rnd.Next(0, 40);
+            lineFire.Stroke = Brushes.Blue;
+            lineFire.X2 = positionX + 25;
+            lineFire.Y2 = positionY + 25;
+            Canvas.SetZIndex(lineFire, 999);
+            Map.Children.Add(lineFire);
 
-                DoubleAnimation BulletTrack11 = new DoubleAnimation();
-                BulletTrack11.From = lineFire.X2;
-                BulletTrack11.To = lineFire.X1;
-                BulletTrack11.Duration = TimeSpan.FromSeconds(0.1);
-                BulletTrack11.Completed += BulletTrack_Completed;
+            DoubleAnimation BulletTrack11 = new DoubleAnimation();
+            BulletTrack11.From = lineFire.X2;
+            BulletTrack11.To = lineFire.X1;
+            BulletTrack11.Duration = TimeSpan.FromSeconds(0.1);
+            BulletTrack11.Completed += BulletTrack_Completed;
 
-                DoubleAnimation BulletTrack12 = new DoubleAnimation();
-                BulletTrack12.From = lineFire.Y2;
-                BulletTrack12.To = lineFire.Y1;
-                BulletTrack12.Duration = TimeSpan.FromSeconds(0.1);
-                BulletTrack12.Completed += BulletTrack_Completed;
-                lineFire.BeginAnimation(Line.X2Property, BulletTrack11);
-                lineFire.BeginAnimation(Line.Y2Property, BulletTrack12);
-            }
+            DoubleAnimation BulletTrack12 = new DoubleAnimation();
+            BulletTrack12.From = lineFire.Y2;
+            BulletTrack12.To = lineFire.Y1;
+            BulletTrack12.Duration = TimeSpan.FromSeconds(0.1);
+            BulletTrack12.Completed += BulletTrack_Completed;
+            lineFire.BeginAnimation(Line.X2Property, BulletTrack11);
+            lineFire.BeginAnimation(Line.Y2Property, BulletTrack12);
         }
 
         void ShortAutomaticBurst(double x, double y)

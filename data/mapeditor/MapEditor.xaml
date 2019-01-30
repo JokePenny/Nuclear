@@ -20,7 +20,7 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <ScrollViewer x:Name="Work" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible">
-            <Canvas Name="Map" Background="Lavender" Width="2000" Height="2000" MouseLeftButtonDown="Map_MouseLeftButtonDown">
+            <Canvas Name="Map" Background="Lavender" Width="2000" Height="2000">
             </Canvas>
         </ScrollViewer>
         <Menu Height="25" MinWidth="290" VerticalAlignment="Top">
