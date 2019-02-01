@@ -752,85 +752,211 @@ namespace Nuclear
             else MessageBox.Show(string.Format("Выберите файл проекта"));
         }
 
+        /* Механика стрельбы */
+        private bool rendering = false;
+
         private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Random rnd = new Random();
-            for (int i = 0; i < 5; i++)
-                ShotgunBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y, rnd);
-            //LongAutomaticBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
-            //ShortAutomaticBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
-            //PistolBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
-            //GrenadeBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
-            //SniperBurst(e.GetPosition(Map).X, e.GetPosition(Map).Y);
-            //Map.Children.Remove(lineFire);
-            //MessageBox.Show(string.Format("Клик по канвасу"));
+            clickX = e.GetPosition(Map).X;
+            clickY = e.GetPosition(Map).Y;
+            lenPath = 1000;
+            double left = 125; // координата игрока
+            double top = 125; // координата игрока
+            double catet1 = Math.Abs(clickX - left);
+            double catet2 = Math.Abs(clickY - top);
+            double len = Math.Sqrt(catet1 * catet1 + catet2 * catet2);
+            if (!rendering && len <= lenPath)
+            {
+                //Разброс пуль
+                if (lenPath / 3 >= len)
+                    spread = 0.1;
+                else if (lenPath / 2 >= len)
+                    spread = 0.3;
+                else if (lenPath / 1.5 >= len)
+                    spread = 0.6;
+                else if (lenPath / 1.5 >= len)
+                    spread = 0.9;
+
+                ellipses.Clear();
+                Map.Children.Clear();
+
+                CompositionTarget.Rendering += RenderFrame;
+                rendering = true;
+            }
         }
 
-        void ShotgunBurst(double x, double y, Random rnd)
+        private void StopRendering()
         {
-            Line lineFire = new Line();
-            lineFire.Name = "Head";
-            if(rnd.Next(0,2) == 1)
-                lineFire.X1 = x - rnd.Next(0, 40);
+            CompositionTarget.Rendering -= RenderFrame;
+            rendering = false;
+        }
+
+        private List<EllipseInfo> ellipses = new List<EllipseInfo>();
+        private List<RectangleInfo> wall = new List<RectangleInfo>();
+
+        private double accelerationY = 0.1;
+        private double speedRatio = 0.1;
+        private int ellipseRadius = 10;
+
+        private double clickX = 0;
+        private double clickY = 0;
+
+        private double lenPath;
+
+        private double spread = 0;
+
+        private void RenderFrame(object sender, EventArgs e)
+        {
+            if (ellipses.Count == 0)
+            {
+                Random rand = new Random();
+                double spreadX;
+                double spreadY;
+                int ellipseCount = 5;
+                for (int i = 0; i < ellipseCount; i++)
+                {
+                    if (rand.Next(1, 11) > 5)
+                        spreadX = clickX - spread * rand.Next(50, 100);
+                    else
+                        spreadX = clickX + spread * rand.Next(50, 100);
+                    if (rand.Next(1, 11) > 5)
+                        spreadY = clickY - spread * rand.Next(50, 100);
+                    else
+                        spreadY = clickY + spread * rand.Next(50, 100);
+
+                    Ellipse ellipse = new Ellipse();
+                    ellipse.Fill = Brushes.LimeGreen;
+                    ellipse.Width = ellipseRadius;
+                    ellipse.Height = ellipseRadius;
+                    Canvas.SetLeft(ellipse, 125);
+                    Canvas.SetTop(ellipse, 125);
+                    Map.Children.Add(ellipse);
+
+                    EllipseInfo info = new EllipseInfo(ellipse, 1, spreadX, spreadY);
+                    ellipses.Add(info);
+                }
+
+                ellipseCount = 1;
+                for (int i = 0; i < ellipseCount; i++)
+                {
+                    Rectangle rectangle = new Rectangle();
+                    rectangle.Fill = Brushes.LimeGreen;
+                    rectangle.Width = 100;
+                    rectangle.Height = 100;
+                    Canvas.SetLeft(rectangle, 325);
+                    Canvas.SetTop(rectangle, 325);
+                    Map.Children.Add(rectangle);
+
+                    RectangleInfo info = new RectangleInfo(rectangle);
+                    wall.Add(info);
+                }
+            }
             else
-                lineFire.X1 = x + rnd.Next(0, 40);
-            if (rnd.Next(0, 2) == 1)
-                lineFire.Y1 = y - rnd.Next(0, 40);
-            else
-                lineFire.Y1 = y + rnd.Next(0, 40);
-            lineFire.Stroke = Brushes.Blue;
-            lineFire.X2 = positionX + 25;
-            lineFire.Y2 = positionY + 25;
-            Canvas.SetZIndex(lineFire, 999);
-            Map.Children.Add(lineFire);
+            {
+                for (int i = ellipses.Count - 1; i >= 0; i--)
+                {
+                    EllipseInfo info = ellipses[i];
+                    double left = Canvas.GetLeft(info.Ellipse);
+                    double top = Canvas.GetTop(info.Ellipse);
+                    double catet1 = Math.Abs(info.SpreadPathBulletX - left);
+                    double catet2 = Math.Abs(info.SpreadPathBulletY - top);
+                    double len = Math.Sqrt(catet1 * catet1 + catet2 * catet2);
+                    catet1 /= len;
+                    catet2 /= len;
 
-            DoubleAnimation BulletTrack11 = new DoubleAnimation();
-            BulletTrack11.From = lineFire.X2;
-            BulletTrack11.To = lineFire.X1;
-            BulletTrack11.Duration = TimeSpan.FromSeconds(0.1);
-            BulletTrack11.Completed += BulletTrack_Completed;
+                    if (clickX > left)
+                        Canvas.SetLeft(info.Ellipse, left + catet1 * 20);
+                    else if (left > clickX)
+                        Canvas.SetLeft(info.Ellipse, left - catet1 * 20);
+                    if (clickY > top)
+                        Canvas.SetTop(info.Ellipse, top + catet2 * 20);
+                    else if (top > clickY)
+                        Canvas.SetTop(info.Ellipse, top - catet2 * 20);
 
-            DoubleAnimation BulletTrack12 = new DoubleAnimation();
-            BulletTrack12.From = lineFire.Y2;
-            BulletTrack12.To = lineFire.Y1;
-            BulletTrack12.Duration = TimeSpan.FromSeconds(0.1);
-            BulletTrack12.Completed += BulletTrack_Completed;
-            lineFire.BeginAnimation(Line.X2Property, BulletTrack11);
-            lineFire.BeginAnimation(Line.Y2Property, BulletTrack12);
+                    UIElementCollection children1 = Map.Children;
+                    var children = children1.OfType<UIElement>().ToList();
+                    foreach (var recc in children)
+                    {
+                        if (recc is Rectangle)
+                        {
+                            Rectangle rec = recc as Rectangle;
+                            double wallY = Canvas.GetTop(rec);
+                            double wallX = Canvas.GetLeft(rec);
+                            double bulletY = Canvas.GetTop(info.Ellipse);
+                            double bulletX = Canvas.GetLeft(info.Ellipse);
+
+                            if ((wallY + 100 >= bulletY && wallY <= bulletY)
+                                && (wallX + 100 >= bulletX && wallX <= bulletX))
+                            {
+                                Map.Children.Remove(info.Ellipse);
+                                ellipses.Remove(info);
+                                break;
+                            }
+                            else
+                            {
+                                if (info.SpreadPathBulletY + 16 + spread * 100 >= top && info.SpreadPathBulletY - 16 - spread * 100 <= top && info.SpreadPathBulletX + 16 + spread * 100 >= left && info.SpreadPathBulletX - 16 - spread * 100 <= left)
+                                {
+                                    Map.Children.Remove(info.Ellipse);
+                                    ellipses.Remove(info);
+                                }
+                                else
+                                {
+                                    info.VelocityY += accelerationY;
+                                }
+                            }
+                        }
+                    }
+
+                    if (ellipses.Count == 0)
+                    {
+                        StopRendering();
+                    }
+                }
+            }
         }
 
-        void ShortAutomaticBurst(double x, double y)
+        public class EllipseInfo
         {
-            Line lineFire = new Line();
-            lineFire.Name = "Head";
-            lineFire.X1 = x;
-            lineFire.Y1 = y;
-            lineFire.Stroke = Brushes.Blue;
-            lineFire.X2 = positionX + 25;
-            lineFire.Y2 = positionY + 25;
-            Canvas.SetZIndex(lineFire, 999);
-            Map.Children.Add(lineFire);
+            public Ellipse Ellipse
+            {
+                get; set;
+            }
 
-            DoubleAnimation BulletTrack11 = new DoubleAnimation();
-            BulletTrack11.From = lineFire.X2;
-            BulletTrack11.To = lineFire.X1;
-            BulletTrack11.Duration = TimeSpan.FromSeconds(0.1);
-            BulletTrack11.Completed += BulletTrack_Completed;
+            public double VelocityY
+            {
+                get; set;
+            }
 
-            DoubleAnimation BulletTrack12 = new DoubleAnimation();
-            BulletTrack12.From = lineFire.Y2;
-            BulletTrack12.To = lineFire.Y1;
-            BulletTrack12.Duration = TimeSpan.FromSeconds(0.1);
-            BulletTrack12.Completed += BulletTrack_Completed;
+            public double SpreadPathBulletY
+            {
+                get; set;
+            }
 
-            lineFire.BeginAnimation(Line.X2Property, BulletTrack11);
-            lineFire.BeginAnimation(Line.Y2Property, BulletTrack12);
+            public double SpreadPathBulletX
+            {
+                get; set;
+            }
+
+            public EllipseInfo(Ellipse ellipse, double velocityY, double spreadPathBulletX, double spreadPathBulletY)
+            {
+                SpreadPathBulletX = spreadPathBulletX;
+                SpreadPathBulletY = spreadPathBulletY;
+                VelocityY = velocityY;
+                Ellipse = ellipse;
+            }
         }
 
-        void BulletTrack_Completed(object sender, EventArgs e)
+        public class RectangleInfo
         {
-            //Map.Children.Remove((sender as Line));
-            //MessageBox.Show("Анимация завершена");
+            public Rectangle Rectangle
+            {
+                get; set;
+            }
+
+            public RectangleInfo(Rectangle rectangle)
+            {
+                Rectangle = rectangle;
+            }
         }
     }
 }
