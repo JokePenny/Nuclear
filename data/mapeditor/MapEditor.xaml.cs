@@ -774,8 +774,8 @@ namespace Nuclear
                     spread = 0.3;
                 else if (lenPath / 1.5 >= len)
                     spread = 0.6;
-                else if (lenPath / 1.5 >= len)
-                    spread = 0.9;
+                else if (lenPath >= len)
+                    spread = 1;
 
                 ellipses.Clear();
                 Map.Children.Clear();
@@ -802,8 +802,9 @@ namespace Nuclear
         private double clickY = 0;
 
         private double lenPath;
-
         private double spread = 0;
+
+        private int countBullet = 0;
 
         private void RenderFrame(object sender, EventArgs e)
         {
@@ -812,7 +813,7 @@ namespace Nuclear
                 Random rand = new Random();
                 double spreadX;
                 double spreadY;
-                int ellipseCount = 5;
+                int ellipseCount = countBullet;
                 for (int i = 0; i < ellipseCount; i++)
                 {
                     if (rand.Next(1, 11) > 5)

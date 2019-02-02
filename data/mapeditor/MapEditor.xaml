@@ -20,7 +20,7 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <ScrollViewer x:Name="Work" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible">
-            <Canvas Name="Map" Background="Lavender" Width="2000" Height="2000">
+            <Canvas Name="Map" Background="Lavender" Width="2000" Height="2000" MouseLeftButtonDown="Map_MouseLeftButtonDown">
             </Canvas>
         </ScrollViewer>
         <Menu Height="25" MinWidth="290" VerticalAlignment="Top">
@@ -118,26 +118,56 @@
         <Border Name="PanelSystemParticle" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Background="GhostWhite" BorderBrush="Silver" BorderThickness="0 0 11 0" Margin="0 22 0 0" Visibility="Collapsed">
             <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical" HorizontalAlignment="left">
                 <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Background="GhostWhite" BorderBrush="Silver" BorderThickness="3 3 3 3" Margin="5" Padding="10">
-                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical" HorizontalAlignment="left" Margin ="0,0,-3,0" MinWidth="239">
-                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="0,15,0,0">
-                            <TextBlock MinWidth="120">Локация:</TextBlock>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical" HorizontalAlignment="left" Margin ="0 0 -3 0" MinWidth="239">
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="0 15 0 0">
+                            <TextBlock MinWidth="120">Фигура:</TextBlock>
                             <ComboBox Height="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" SelectedIndex="0">
-                                <ComboBoxItem>Город</ComboBoxItem>
-                                <ComboBoxItem>Пустыня</ComboBoxItem>
-                                <ComboBoxItem>Болота</ComboBoxItem>
-                                <ComboBoxItem>Нет</ComboBoxItem>
+                                <ComboBoxItem>Круг</ComboBoxItem>
+                                <ComboBoxItem>Квадрат</ComboBoxItem>
                             </ComboBox>
                         </WrapPanel>
-                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="0,15,0,0">
-                            <TextBlock MinWidth="120">Размер вертикали:</TextBlock>
-                            <TextBox Grid.Row="1" MinWidth="25">50</TextBox>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="0 15 0 0">
+                            <TextBlock MinWidth="120">Цвет:</TextBlock>
+                            <ComboBox Height="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" SelectedIndex="0">
+                                <ComboBoxItem>Красный</ComboBoxItem>
+                                <ComboBoxItem>Белый</ComboBoxItem>
+                                <ComboBoxItem>Черный</ComboBoxItem>
+                                <ComboBoxItem>Синий</ComboBoxItem>
+                                <ComboBoxItem>Зеленый</ComboBoxItem>
+                            </ComboBox>
                         </WrapPanel>
-                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="0,15,0,0">
-                            <TextBlock MinWidth="120">Размер горизонтали:</TextBlock>
-                            <TextBox Grid.Row="1" MinWidth="25">50</TextBox>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="0 15 0 0">
+                            <TextBlock MinWidth="120">Размер:</TextBlock>
+                            <TextBox Grid.Row="1" MinWidth="25" MaxWidth="50" TextAlignment="Right" PreviewTextInput="Number_CheckWrite">50</TextBox>
                         </WrapPanel>
-                        <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0,50,0,0">
-                            <Button IsDefault="True" MinWidth="60" Margin="0,0,10,0">Создать</Button>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="0 15 0 0">
+                            <TextBlock MinWidth="120">Скорость:</TextBlock>
+                            <TextBox Grid.Row="1" MinWidth="25" MaxWidth="50" TextAlignment="Right" PreviewTextInput="Number_CheckWrite">50</TextBox>
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="0 15 0 0">
+                            <TextBlock MinWidth="120">Количество частиц:</TextBlock>
+                            <TextBox Grid.Row="1" MinWidth="25" MaxWidth="50" TextAlignment="Right" PreviewTextInput="Number_CheckWrite">50</TextBox>
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="0 15 0 0">
+                            <TextBlock MinWidth="120">Название оружия:</TextBlock>
+                            <TextBox Grid.Row="1" MinWidth="25" MaxWidth="100" TextAlignment="Right">Пистолет</TextBox>
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="0 15 0 0">
+                            <TextBlock MinWidth="120">Изображение:</TextBlock>
+                            <ComboBox Height="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" SelectedIndex="0">
+                            </ComboBox>
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0 50 0 0">
+                            <Button IsDefault="True" MinWidth="60" Margin="0 0 20 0">Сохранить</Button>
+                        </WrapPanel>
+                        <Separator Margin="0 50 0 0"/>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="0 15 0 0">
+                            <TextBlock MinWidth="120">Готовые пресеты:</TextBlock>
+                            <ComboBox Height="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" SelectedIndex="0">
+                            </ComboBox>
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0 50 0 0">
+                            <Button IsDefault="True" MinWidth="60" Margin="0 0 20 0">Открыть</Button>
                         </WrapPanel>
                     </StackPanel>
                 </Border>
@@ -173,7 +203,7 @@
                         <WrapPanel HorizontalAlignment="left" Margin="0 5 0 0">
                             <TextBox Name="NameMap" MinWidth="150" TextAlignment="Right"></TextBox>
                         </WrapPanel>
-                        <WrapPanel HorizontalAlignment="Right" Margin="0,50,0,0">
+                        <WrapPanel HorizontalAlignment="Right" Margin="0 50 0 0">
                             <Button MinWidth="60" Margin="0 0 10 0" Click="CreateMap_Click">Создать</Button>
                         </WrapPanel>
                     </StackPanel>
@@ -191,7 +221,7 @@
                             <TextBlock MinWidth="120">Название карты:</TextBlock>
                             <ComboBox Name="NameFileMap" MinHeight="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left"/>
                         </WrapPanel>
-                        <WrapPanel HorizontalAlignment="Right" Margin="0,50,0,0">
+                        <WrapPanel HorizontalAlignment="Right" Margin="0 50 0 0">
                             <Button MinWidth="60" Margin="0 0 10 0" Click="Open_Click">Открыть</Button>
                         </WrapPanel>
                     </StackPanel>
@@ -211,7 +241,7 @@
                         <WrapPanel HorizontalAlignment="left" Margin="0 5 0 0">
                             <TextBox Name="ChangeNameMap" MinWidth="150" TextAlignment="Right"></TextBox>
                         </WrapPanel>
-                        <WrapPanel HorizontalAlignment="Right" Margin="0,50,0,0">
+                        <WrapPanel HorizontalAlignment="Right" Margin="0 50 0 0">
                             <Button MinWidth="60" Margin="0 0 10 0" Click="SaveAs_Click">Сохранить</Button>
                         </WrapPanel>
                     </StackPanel>
