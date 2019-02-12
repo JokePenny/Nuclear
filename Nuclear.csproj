@@ -57,6 +57,7 @@
     <Compile Include="Backpack.xaml.cs">
       <DependentUpon>Backpack.xaml</DependentUpon>
     </Compile>
+    <Compile Include="data\mapeditor\BulletPhysics.cs" />
     <Compile Include="data\mapeditor\Field.cs" />
     <Compile Include="Game.xaml.cs">
       <DependentUpon>Game.xaml</DependentUpon>

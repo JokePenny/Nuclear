@@ -75,6 +75,5 @@ namespace Nuclear.data.mapeditor
         {
             return _nameMap;
         }
-
     }
 }

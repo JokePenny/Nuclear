@@ -25,10 +25,12 @@ namespace Nuclear
     public partial class MapEditor : Page
     {
         Field field;
+        BulletPhysics bulletPhysics;
         Ellipse user;
 
         private int CloneSelectedObjectID = 0;
         private int selectedObjectID = 0;
+        private bool clickCanvasOn = false;
         private string[] foldersName = new string[21];
 
         public MapEditor()
@@ -36,8 +38,11 @@ namespace Nuclear
             InitializeComponent();
             Props.IsEnabled = false;
             Triggers.IsEnabled = false;
+            SaveGunSettingsButton.IsEnabled = false;
         }
 
+
+        /* селекторы */
         private void WallAndDecorate_Selected(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
@@ -151,6 +156,80 @@ namespace Nuclear
             }
         }
 
+        private void Choice_WorkTool(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioButton = (RadioButton)sender;
+
+            if (radioButton.Content.ToString() == "Сетка со спрайтами карты")
+            {
+                Props.IsEnabled = true;
+                Triggers.IsEnabled = false;
+                foreach (Grid gridimage in Map.Children)
+                {
+                    if (gridimage.Name == "ImageMap")
+                    {
+                        Grid.SetZIndex(gridimage, 999);
+                        gridimage.Opacity = 1;
+                        gridimage.IsEnabled = true;
+                    }
+                    if (gridimage.Name == "TriggerMap")
+                    {
+                        Grid.SetZIndex(gridimage, 1);
+                        gridimage.Visibility = Visibility.Hidden;
+                        gridimage.IsEnabled = true;
+                        CheckChangeOnMapImage(gridimage);
+                    }
+                }
+            }
+            else
+            {
+                Props.IsEnabled = false;
+                Triggers.IsEnabled = true;
+                foreach (Grid gridimage in Map.Children)
+                {
+                    if (gridimage.Name == "ImageMap")
+                    {
+                        Grid.SetZIndex(gridimage, 1);
+                        gridimage.Opacity = 0.5;
+                    }
+                    if (gridimage.Name == "TriggerMap")
+                    {
+                        Grid.SetZIndex(gridimage, 999);
+                        gridimage.Visibility = Visibility.Visible;
+                        CheckChangeOnMapImage(gridimage);
+                    }
+                }
+            }
+        }
+
+        private void selectedTriggerID(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioButton = (object)sender as RadioButton;
+            switch (radioButton.Name)
+            {
+                case "SpawnPoint":
+                    selectedObjectID = 1;
+                    break;
+                case "SpawnPointEnemy":
+                    selectedObjectID = 2;
+                    break;
+                case "Chest":
+                    selectedObjectID = 3;
+                    break;
+                case "LevelPortal":
+                    selectedObjectID = 4;
+                    break;
+                case "ClearMesh":
+                    selectedObjectID = 0;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /* селекторы */
+
+        /* комбобоксы */
         private void SelectedImageForMapImage_Click(object sender, RoutedEventArgs e)
         {
             Image btn = sender as Image;
@@ -202,52 +281,6 @@ namespace Nuclear
             }
         }
 
-        private void Choice_WorkTool(object sender, RoutedEventArgs e)
-        {
-            RadioButton radioButton = (RadioButton)sender;
-
-            if (radioButton.Content.ToString() == "Сетка со спрайтами карты")
-            {
-                Props.IsEnabled = true;
-                Triggers.IsEnabled = false;
-                foreach(Grid gridimage in Map.Children)
-                {
-                    if (gridimage.Name == "ImageMap")
-                    {
-                        Grid.SetZIndex(gridimage, 999);
-                        gridimage.Opacity = 1;
-                        gridimage.IsEnabled = true;
-                    }
-                    if(gridimage.Name == "TriggerMap")
-                    {
-                        Grid.SetZIndex(gridimage, 1);
-                        gridimage.Visibility = Visibility.Hidden;
-                        gridimage.IsEnabled = true;
-                        CheckChangeOnMapImage(gridimage);
-                    }
-                }
-            }
-            else
-            {
-                Props.IsEnabled = false;
-                Triggers.IsEnabled = true;
-                foreach (Grid gridimage in Map.Children)
-                {
-                    if (gridimage.Name == "ImageMap")
-                    {
-                        Grid.SetZIndex(gridimage, 1);
-                        gridimage.Opacity = 0.5;
-                    }
-                    if (gridimage.Name == "TriggerMap")
-                    {
-                        Grid.SetZIndex(gridimage, 999);
-                        gridimage.Visibility = Visibility.Visible;
-                        CheckChangeOnMapImage(gridimage);
-                    }
-                }
-            }
-        }
-
         public void CheckChangeOnMapImage(Grid gridTrigger)
         {
             int x = 0, y = 0;
@@ -291,8 +324,107 @@ namespace Nuclear
                 }
                 else break;
             }
-
         }
+
+        private void New_Workplace(object sender, RoutedEventArgs e)
+        {
+            string name;
+            switch ((sender as MenuItem).Header.ToString())
+            {
+                case "Новый проект":
+                    UIElementCollection children1 = Map.Children;
+                    var children = children1.OfType<UIElement>().ToList();
+
+                    foreach (var grid in children)
+                        if (!(grid is Grid))
+                            Map.Children.Remove(grid as UIElement);
+
+                    clickCanvasOn = false;
+                    name = "NewProject";
+                    break;
+                case "Открыть проект":
+                    clickCanvasOn = false;
+                    name = "OpenProject";
+                    DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapcreateds/");
+                    this.NameFileMap.Items.Clear();
+                    foreach (var item in dir.GetFiles())
+                    {
+                        TextBlock text = new TextBlock();
+                        text.Text = item.Name;
+                        this.NameFileMap.Items.Add(text);
+                    }
+                    children1 = Map.Children;
+                    children = children1.OfType<UIElement>().ToList();
+
+                    foreach (var grid in children)
+                        if (!(grid is Grid))
+                            Map.Children.Remove(grid as UIElement);
+
+                    break;
+                case "Сохранить как":
+                    children1 = Map.Children;
+                    children = children1.OfType<UIElement>().ToList();
+
+                    foreach (var grid in children)
+                        if (!(grid is Grid))
+                            Map.Children.Remove(grid as UIElement);
+
+                    clickCanvasOn = false;
+                    name = "SaveAs";
+                    break;
+                case "Панель внешнего вида":
+                    clickCanvasOn = false;
+                    if (Map.Children.Count != 0)
+                    {
+                        PanelOutsideView.IsEnabled = true;
+                        children1 = Map.Children;
+                        children = children1.OfType<UIElement>().ToList();
+                        foreach (var grid in children)
+                        {
+                            if (grid is Grid)
+                                (grid as Grid).Visibility = Visibility.Visible;
+                            else Map.Children.Remove(grid as UIElement);
+                        }
+                    }
+                    else PanelOutsideView.IsEnabled = false;
+                    name = "PanelOutsideView";
+                    break;
+                case "Панель звуковых эффектов":
+                    clickCanvasOn = false;
+                    name = "PanelSoundEffects";
+                    break;
+                case "Панель системы частиц":
+                    foreach (Grid grid in Map.Children)
+                        grid.Visibility = Visibility.Collapsed;
+
+                    dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/particle_systems/presets_gun/");
+                    foreach (var item in dir.GetFiles())
+                    {
+                        TextBlock text = new TextBlock();
+                        text.Text = item.Name;
+                        this.BulletPreset.Items.Add(text);
+                    }
+
+                    dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/particle_systems/image_gun/");
+                    foreach (var item in dir.GetFiles())
+                    {
+                        TextBlock text = new TextBlock();
+                        text.Text = item.Name;
+                        this.BulletImage.Items.Add(text);
+                    }
+
+                    name = "PanelSystemParticle";
+                    break;
+                default:
+                    clickCanvasOn = false;
+                    name = "";
+                    break;
+            }
+            VisiblePanel(name);
+        }
+        /* комбобоксы */
+
+        /* гриды */
 
         public void MapImageGrid()
         {
@@ -302,20 +434,20 @@ namespace Nuclear
             Grid grid = new Grid();
             grid.Name = "ImageMap";
             grid.ShowGridLines = true;
+
             for (int i = 0; i < HeightMap; i++)
             {
                 RowDefinition row = new RowDefinition();
                 row.MinHeight = 50;
                 grid.RowDefinitions.Add(row);
             }
+
             for (int i = 0; i < WidthMap; i++)
             {
                 ColumnDefinition column = new ColumnDefinition();
                 column.MinWidth = 50;
                 grid.ColumnDefinitions.Add(column);
             }
-
-
 
             DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits/wall");
             int numberFolder = 0;
@@ -331,6 +463,7 @@ namespace Nuclear
                     MessageBox.Show(ex.Message);
                 }
             }
+
             dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits/props");
             this.FoldersSection.Items.Clear();
             numberFolder = 10;
@@ -372,64 +505,11 @@ namespace Nuclear
                         grid.Children.Add(but);
                     }
                 }
+
             grid.Background = Brushes.White;
             grid.IsEnabled = false;
             Grid.SetZIndex(grid, 1);
             this.Map.Children.Add(grid);
-        }
-
-        private Image ReturnSavedImage(int cell, int restriction, int folderIndex, int x, int y, string path)
-        {
-            string folder = "";
-            int factor = 0;
-            int cycle;
-            int k;
-            if (restriction == 1000)
-                cycle = 0;
-            else
-                cycle = 10;
-
-            for (k = 1 + cycle; k < 10 + cycle; k++)
-                if (cell < restriction + k * folderIndex)
-                {
-                    folder = foldersName[k - 1];
-                    factor = k - 1 - cycle;
-                    break;
-                }
-            DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + path + folder); // сделать относительный путь файла, как ниже
-            int indexOf = 1;
-            foreach (var item in dir.GetFiles())
-            {
-                if (cell == indexOf + (restriction + factor * folderIndex)) // indexOf - порядок пикчи в папке, 1000 - папка wall, factor * 100 - порядок папки в wall, в которой хранится пикча, - 1 потому что надо так
-                {
-                    Image ImageContainer = new Image();
-                    ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + path + folder + "/" + item.Name, UriKind.Absolute));
-                    ImageContainer.Source = image;
-                    ImageContainer.MouseDown += DrawingImage_Click;
-                    ImageContainer.Height = 50;
-                    ImageContainer.Width = 50;
-                    ImageContainer.Opacity = 1;
-                    Grid.SetColumn(ImageContainer, y);
-                    Grid.SetRow(ImageContainer, x);
-                    return ImageContainer;
-                }
-                else indexOf++;
-            }
-
-
-            Image UnreachableCode = new Image();
-            return UnreachableCode;
-        }
-
-        private void DrawingImage_Click(object sender, RoutedEventArgs e)
-        {
-            Image picture = sender as Image;
-            ImageSource image = Clipboard.GetImage();
-            picture.Source = image;
-            int row = (int)picture.GetValue(Grid.RowProperty);
-            int column = (int)picture.GetValue(Grid.ColumnProperty);
-            field.SetImageIDArray(row, column, selectedObjectID);
-            //MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
         }
 
         public void MapActiveGrid()
@@ -490,6 +570,19 @@ namespace Nuclear
             Grid.SetZIndex(gridActive, 999);
             this.Map.Children.Add(gridActive);
         }
+        /* гриды */
+
+        /* клики */
+        private void DrawingImage_Click(object sender, RoutedEventArgs e)
+        {
+            Image picture = sender as Image;
+            ImageSource image = Clipboard.GetImage();
+            picture.Source = image;
+            int row = (int)picture.GetValue(Grid.RowProperty);
+            int column = (int)picture.GetValue(Grid.ColumnProperty);
+            field.SetImageIDArray(row, column, selectedObjectID);
+            //MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
+        }
 
         private void but_Click(object sender, RoutedEventArgs e)
         {
@@ -498,7 +591,7 @@ namespace Nuclear
             int column = (int)btn.GetValue(Grid.ColumnProperty);
             MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
             foreach (Grid gridTrigger in Map.Children)
-            { 
+            {
                 if (gridTrigger.Name == "TriggerMap")
                 {
                     UIElementCollection children1 = gridTrigger.Children;
@@ -531,111 +624,14 @@ namespace Nuclear
             }
         }
 
-        private string DesignationTrigger(int selectedObjectID)
+        private void SaveMap_Click(object sender, RoutedEventArgs e)
         {
-            switch (selectedObjectID)
-            {
-                case 1:
-                    return "SpU";
-                case 2:
-                    return "SpE";
-                case 3:
-                    return "Ch";
-                case 4:
-                    return "LP";
-                default:
-                    return "";
-            }
+            Save(Environment.CurrentDirectory + "/data/mapcreateds/" + field.GetName() + ".dat", field);
         }
 
-        struct Point
+        private void SaveBulletPhysics_Click(object sender, RoutedEventArgs e)
         {
-            public Point(int x, int y)
-                : this()
-            {
-                this.x = x;
-                this.y = y;
-            }
-            public int x;
-            public int y;
-        }
-
-        private void New_Workplace(object sender, RoutedEventArgs e)
-        {
-            string name;
-            switch((sender as MenuItem).Header.ToString())
-            {
-                case "Новый проект":
-                    name = "NewProject";
-                    break;
-                case "Открыть проект":
-                    name = "OpenProject";
-                    DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapcreateds/");
-                    this.NameFileMap.Items.Clear();
-                    foreach (var item in dir.GetFiles())
-                    {
-                        TextBlock text = new TextBlock();
-                        text.Text = item.Name;
-                        this.NameFileMap.Items.Add(text);
-                    }
-                    break;
-                case "Сохранить как":
-                    name = "SaveAs";
-                    break;
-                case "Панель внешнего вида":
-                    if (Map.Children.Count != 0)
-                    {
-                        PanelOutsideView.IsEnabled = true;
-                        foreach (Grid grid in Map.Children)
-                            grid.Visibility = Visibility.Visible;
-                    }
-                    else PanelOutsideView.IsEnabled = false;
-                    name = "PanelOutsideView";
-                    break;
-                case "Панель звуковых эффектов":
-                    name = "PanelSoundEffects";
-                    break;
-                case "Панель системы частиц":
-                    foreach (Grid grid in Map.Children)
-                        grid.Visibility = Visibility.Collapsed;
-                    AddedPrototypePlayer();
-                    name = "PanelSystemParticle";
-                    break;
-                default:
-                    name = "";
-                    break;
-            }
-            VisiblePanel(name);
-        }
-
-        private int positionX = 100;
-        private int positionY = 100;
-
-        private void AddedPrototypePlayer()
-        {
-            user = new Ellipse();
-            user.Width = 50;
-            user.Height = 50;
-            user.Fill = Brushes.Black;
-            Canvas.SetZIndex(user, 999);
-            Canvas.SetLeft(user, positionX);
-            Canvas.SetTop(user, positionY);
-            Map.Children.Add(user);
-        }
-
-        private void VisiblePanel(string namePanel)
-        {
-            foreach (var panel in Editor.Children)
-            {
-                if (panel is Border)
-                {
-                    Border panelVisible = panel as Border;
-                    if (panelVisible.Name != namePanel && panelVisible.Name != "PanelBottom")
-                        panelVisible.Visibility = Visibility.Collapsed;
-                    else
-                        panelVisible.Visibility = Visibility.Visible;
-                }
-            }
+            Save(Environment.CurrentDirectory + "/data/mapeditor/particle_systems" + bulletPhysics.GetNameBullet() + ".dat", bulletPhysics);
         }
 
         private void Exit_MapEditor(object sender, RoutedEventArgs e)
@@ -644,71 +640,14 @@ namespace Nuclear
             this.NavigationService.Navigate(menu);
         }
 
-        private void selectedTriggerID(object sender, RoutedEventArgs e)
-        {
-            RadioButton radioButton = (object)sender as RadioButton;
-            switch (radioButton.Name)
-            {
-                case "SpawnPoint":
-                    selectedObjectID = 1;
-                    break;
-                case "SpawnPointEnemy":
-                    selectedObjectID = 2;
-                    break;
-                case "Chest":
-                    selectedObjectID = 3;
-                    break;
-                case "LevelPortal":
-                    selectedObjectID = 4;
-                    break;
-                case "ClearMesh":
-                    selectedObjectID = 0;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void SaveMap_Click(object sender, RoutedEventArgs e)
-        {
-            SaveMap();
-        }
-
-        private void SaveMap()
+        private void Save(string path, object serializbleObject)
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "/data/mapcreateds/" + field.GetName() + ".dat", FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
             {
-                formatter.Serialize(fs, field);
+                formatter.Serialize(fs, serializbleObject);
                 MessageBox.Show(string.Format("Объект сериализован"));
             }
-        }
-
-        private void CreateMap_Click(object sender, RoutedEventArgs e)
-        {
-            if(Convert.ToInt32(SizeX.Text) <= 100 && Convert.ToInt32(SizeX.Text) > 0 && Convert.ToInt32(SizeY.Text) <= 100 && Convert.ToInt32(SizeY.Text) > 0 && NameMap.Text.Length < 15 && NameMap.Text.Length > 0)
-            {
-                Save_Button.IsEnabled = true;
-                SaveAs_Button.IsEnabled = true;
-                Field createMap = new Field(Convert.ToInt32(SizeX.Text), Convert.ToInt32(SizeY.Text), NameMap.Text);
-                field = createMap;
-                MapImageGrid();
-                MapActiveGrid();
-                VisiblePanel("PanelOutsideView");
-                DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits");
-                foreach (var item in dir.GetDirectories())
-                {
-                    TextBlock text = new TextBlock();
-                    text.Text = item.Name;
-                    this.WallAndDecorate.Items.Add(text);
-                }
-            }
-            else MessageBox.Show(string.Format(" Ошибка!\n Проверьте введенные значения:\n Максимальная высота и ширина - 100 клеток\n Ваша Высота - {0}, Ширина - {1}\n Максимальная длина имени файла - 14 символов\n Длина заданного Вами имени - {2}", Convert.ToInt32(SizeX.Text), Convert.ToInt32(SizeY.Text), NameMap.Text.Length));  
-        }
-
-        private void Number_CheckWrite(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = "0123456789".IndexOf(e.Text) < 0;
         }
 
         private void SaveAs_Click(object sender, RoutedEventArgs e)
@@ -716,7 +655,7 @@ namespace Nuclear
             if (NameMap.Text.Length < 15 && NameMap.Text.Length > 0)
             {
                 field.SetName(ChangeNameMap.Text);
-                SaveMap();
+                Save(Environment.CurrentDirectory + "/data/mapcreateds/" + field.GetName() + ".dat", field);
                 VisiblePanel("PanelOutsideView");
             }
             else MessageBox.Show(string.Format(" Ошибка!\n Проверьте введенные значения:\n Максимальная длина имени файла - 14 символов\n Длина заданного Вами имени - {0}", ChangeNameMap.Text.Length));
@@ -752,38 +691,176 @@ namespace Nuclear
             else MessageBox.Show(string.Format("Выберите файл проекта"));
         }
 
-        /* Механика стрельбы */
-        private bool rendering = false;
+        private void CreateMap_Click(object sender, RoutedEventArgs e)
+        {
+            if (Convert.ToInt32(SizeX.Text) <= 100 && Convert.ToInt32(SizeX.Text) > 0 && Convert.ToInt32(SizeY.Text) <= 100 && Convert.ToInt32(SizeY.Text) > 0 && NameMap.Text.Length < 15 && NameMap.Text.Length > 0)
+            {
+                Save_Button.IsEnabled = true;
+                SaveAs_Button.IsEnabled = true;
+                field = new Field(Convert.ToInt32(SizeX.Text), Convert.ToInt32(SizeY.Text), NameMap.Text);
+                MapImageGrid();
+                MapActiveGrid();
+                VisiblePanel("PanelOutsideView");
+                DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits");
+                foreach (var item in dir.GetDirectories())
+                {
+                    TextBlock text = new TextBlock();
+                    text.Text = item.Name;
+                    this.WallAndDecorate.Items.Add(text);
+                }
+            }
+            else MessageBox.Show(string.Format(" Ошибка!\n Проверьте введенные значения:\n Максимальная высота и ширина - 100 клеток\n Ваша Высота - {0}, Ширина - {1}\n Максимальная длина имени файла - 14 символов\n Длина заданного Вами имени - {2}", Convert.ToInt32(SizeX.Text), Convert.ToInt32(SizeY.Text), NameMap.Text.Length));
+        }
+
+        private void Number_CheckWrite(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = "0123456789".IndexOf(e.Text) < 0;
+        }
 
         private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            clickX = e.GetPosition(Map).X;
-            clickY = e.GetPosition(Map).Y;
-            lenPath = 1000;
-            double left = 125; // координата игрока
-            double top = 125; // координата игрока
-            double catet1 = Math.Abs(clickX - left);
-            double catet2 = Math.Abs(clickY - top);
-            double len = Math.Sqrt(catet1 * catet1 + catet2 * catet2);
-            if (!rendering && len <= lenPath)
+            if (clickCanvasOn)
             {
-                //Разброс пуль
-                if (lenPath / 3 >= len)
-                    spread = 0.1;
-                else if (lenPath / 2 >= len)
-                    spread = 0.3;
-                else if (lenPath / 1.5 >= len)
-                    spread = 0.6;
-                else if (lenPath >= len)
-                    spread = 1;
+                clickCanvasOn = false;
+                clickX = e.GetPosition(Map).X;
+                clickY = e.GetPosition(Map).Y;
+                lenPath = 1000;
+                double left = 125; // координата игрока
+                double top = 125; // координата игрока
+                double catet1 = Math.Abs(clickX - left);
+                double catet2 = Math.Abs(clickY - top);
+                double len = Math.Sqrt(catet1 * catet1 + catet2 * catet2);
+                if (!rendering && len <= lenPath)
+                {
+                    //Разброс пуль
+                    if (lenPath / 3 >= len)
+                        spread = 0.1;
+                    else if (lenPath / 2 >= len)
+                        spread = 0.3;
+                    else if (lenPath / 1.5 >= len)
+                        spread = 0.6;
+                    else if (lenPath >= len)
+                        spread = 1;
 
-                ellipses.Clear();
-                Map.Children.Clear();
-
-                CompositionTarget.Rendering += RenderFrame;
-                rendering = true;
+                    ellipses.Clear();
+                    Map.Children.Clear();
+                    CompositionTarget.Rendering += RenderFrame;
+                    rendering = true;
+                }
             }
         }
+
+        private void ApplyValuesBullet_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkValuesBullet())
+            {
+                clickCanvasOn = true;
+                bulletPhysics = new BulletPhysics(Convert.ToInt32(VelocityBullet.Text), Convert.ToInt32(NumbersBullet.Text), Convert.ToInt32(DifficultUseGun.Text), Convert.ToInt32(SizeBullet.Text), NameGun.Text);
+                SaveGunSettingsButton.IsEnabled = true;
+                MessageBox.Show(string.Format("Кликните по рабочей области"));
+            }
+            else MessageBox.Show(string.Format("Не все поля заполнены!"));
+        }
+        /* клики */
+
+        /* обработчики */
+        private bool checkValuesBullet()
+        {
+            if (NameGun.Text != "" && NumbersBullet.Text != "" && VelocityBullet.Text != "" && SizeBullet.Text != "" && DifficultUseGun.Text != "")
+                return true;
+            else return false;
+        }
+
+        private Image ReturnSavedImage(int cell, int restriction, int folderIndex, int x, int y, string path)
+        {
+            string folder = "";
+            int factor = 0;
+            int cycle;
+            int k;
+            if (restriction == 1000)
+                cycle = 0;
+            else
+                cycle = 10;
+
+            for (k = 1 + cycle; k < 10 + cycle; k++)
+                if (cell < restriction + k * folderIndex)
+                {
+                    folder = foldersName[k - 1];
+                    factor = k - 1 - cycle;
+                    break;
+                }
+            DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + path + folder); // сделать относительный путь файла, как ниже
+            int indexOf = 1;
+            foreach (var item in dir.GetFiles())
+            {
+                if (cell == indexOf + (restriction + factor * folderIndex)) // indexOf - порядок пикчи в папке, 1000 - папка wall, factor * 100 - порядок папки в wall, в которой хранится пикча, - 1 потому что надо так
+                {
+                    Image ImageContainer = new Image();
+                    ImageSource image = new BitmapImage(new Uri(Environment.CurrentDirectory + path + folder + "/" + item.Name, UriKind.Absolute));
+                    ImageContainer.Source = image;
+                    ImageContainer.MouseDown += DrawingImage_Click;
+                    ImageContainer.Height = 50;
+                    ImageContainer.Width = 50;
+                    ImageContainer.Opacity = 1;
+                    Grid.SetColumn(ImageContainer, y);
+                    Grid.SetRow(ImageContainer, x);
+                    return ImageContainer;
+                }
+                else indexOf++;
+            }
+
+
+            Image UnreachableCode = new Image();
+            return UnreachableCode;
+        }
+
+        private string DesignationTrigger(int selectedObjectID)
+        {
+            switch (selectedObjectID)
+            {
+                case 1:
+                    return "SpU";
+                case 2:
+                    return "SpE";
+                case 3:
+                    return "Ch";
+                case 4:
+                    return "LP";
+                default:
+                    return "";
+            }
+        }
+
+        private void VisiblePanel(string namePanel)
+        {
+            foreach (var panel in Editor.Children)
+            {
+                if (panel is Border)
+                {
+                    Border panelVisible = panel as Border;
+                    if (panelVisible.Name != namePanel && panelVisible.Name != "PanelBottom")
+                        panelVisible.Visibility = Visibility.Collapsed;
+                    else
+                        panelVisible.Visibility = Visibility.Visible;
+                }
+            }
+        }
+        /* обработчики */
+
+        struct Point
+        {
+            public Point(int x, int y)
+                : this()
+            {
+                this.x = x;
+                this.y = y;
+            }
+            public int x;
+            public int y;
+        }
+
+        /* Механика стрельбы */
+        private bool rendering = false;
 
         private void StopRendering()
         {
@@ -804,7 +881,7 @@ namespace Nuclear
         private double lenPath;
         private double spread = 0;
 
-        private int countBullet = 0;
+        private int countBullet = 1;
 
         private void RenderFrame(object sender, EventArgs e)
         {
@@ -911,6 +988,7 @@ namespace Nuclear
                     if (ellipses.Count == 0)
                     {
                         StopRendering();
+                        clickCanvasOn = true;
                     }
                 }
             }
