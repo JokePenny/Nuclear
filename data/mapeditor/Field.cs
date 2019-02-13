@@ -34,16 +34,6 @@ namespace Nuclear.data.mapeditor
             _ImageIDArray[x, y] = A;
         }
 
-        public void SetSizeArrayX(int A)
-        {
-            _sizeArrayX = A;
-        }
-
-        public void SetSizeArrayY(int A)
-        {
-            _sizeArrayY = A;
-        }
-
         public void SetName(string A)
         {
             _nameMap = A;

@@ -26,7 +26,6 @@ namespace Nuclear
     {
         Field field;
         BulletPhysics bulletPhysics;
-        Ellipse user;
 
         private int CloneSelectedObjectID = 0;
         private int selectedObjectID = 0;
@@ -397,6 +396,7 @@ namespace Nuclear
                     foreach (Grid grid in Map.Children)
                         grid.Visibility = Visibility.Collapsed;
 
+                    BulletPreset.Items.Clear();
                     dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/particle_systems/presets_gun/");
                     foreach (var item in dir.GetFiles())
                     {
@@ -405,12 +405,13 @@ namespace Nuclear
                         this.BulletPreset.Items.Add(text);
                     }
 
+                    NameGun.Items.Clear();
                     dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/particle_systems/image_gun/");
                     foreach (var item in dir.GetFiles())
                     {
                         TextBlock text = new TextBlock();
                         text.Text = item.Name;
-                        this.BulletImage.Items.Add(text);
+                        this.NameGun.Items.Add(text);
                     }
 
                     name = "PanelSystemParticle";
@@ -631,7 +632,17 @@ namespace Nuclear
 
         private void SaveBulletPhysics_Click(object sender, RoutedEventArgs e)
         {
-            Save(Environment.CurrentDirectory + "/data/mapeditor/particle_systems" + bulletPhysics.GetNameBullet() + ".dat", bulletPhysics);
+            Save(Environment.CurrentDirectory + "/data/mapeditor/particle_systems/presets_gun/" + bulletPhysics.GetNameBullet() + ".dat", bulletPhysics);
+            BulletPreset.Items.Clear();
+            DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/particle_systems/presets_gun/");
+            foreach (var item in dir.GetFiles())
+            {
+                TextBlock text = new TextBlock();
+                text.Text = item.Name;
+                this.BulletPreset.Items.Add(text);
+            }
+
+            SaveGunSettingsButton.IsEnabled = false;
         }
 
         private void Exit_MapEditor(object sender, RoutedEventArgs e)
@@ -724,23 +735,22 @@ namespace Nuclear
                 clickCanvasOn = false;
                 clickX = e.GetPosition(Map).X;
                 clickY = e.GetPosition(Map).Y;
-                lenPath = 1000;
                 double left = 125; // координата игрока
                 double top = 125; // координата игрока
                 double catet1 = Math.Abs(clickX - left);
                 double catet2 = Math.Abs(clickY - top);
                 double len = Math.Sqrt(catet1 * catet1 + catet2 * catet2);
-                if (!rendering && len <= lenPath)
+                if (!rendering && len <= bulletPhysics.GetLongRange())
                 {
                     //Разброс пуль
-                    if (lenPath / 3 >= len)
-                        spread = 0.1;
-                    else if (lenPath / 2 >= len)
-                        spread = 0.3;
-                    else if (lenPath / 1.5 >= len)
-                        spread = 0.6;
-                    else if (lenPath >= len)
-                        spread = 1;
+                    if (bulletPhysics.GetLongRange() / 3 >= len)
+                        spread = 0.1 * bulletPhysics.GetDifficultUse();
+                    else if (bulletPhysics.GetLongRange() / 2 >= len)
+                        spread = 0.3 * bulletPhysics.GetDifficultUse();
+                    else if (bulletPhysics.GetLongRange() / 1.5 >= len)
+                        spread = 0.6 * bulletPhysics.GetDifficultUse();
+                    else if (bulletPhysics.GetLongRange() >= len)
+                        spread = 1 * bulletPhysics.GetDifficultUse();
 
                     ellipses.Clear();
                     Map.Children.Clear();
@@ -755,18 +765,52 @@ namespace Nuclear
             if (checkValuesBullet())
             {
                 clickCanvasOn = true;
-                bulletPhysics = new BulletPhysics(Convert.ToInt32(VelocityBullet.Text), Convert.ToInt32(NumbersBullet.Text), Convert.ToInt32(DifficultUseGun.Text), Convert.ToInt32(SizeBullet.Text), NameGun.Text);
+                bulletPhysics = new BulletPhysics(Convert.ToInt32(VelocityBullet.Text), Convert.ToInt32(CountsBullet.Text), Convert.ToInt32(DifficultUseGun.Text), Convert.ToInt32(SizeBullet.Text), Convert.ToInt32(LongRange.Text), OnBurstbullet.IsChecked.Value, NameBullet.Text, (NameGun.SelectedItem as TextBlock).Text);
                 SaveGunSettingsButton.IsEnabled = true;
                 MessageBox.Show(string.Format("Кликните по рабочей области"));
             }
             else MessageBox.Show(string.Format("Не все поля заполнены!"));
         }
+
+        private void OpenBulletPhysics_Click(object sender, RoutedEventArgs e)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            TextBlock selectedFile = (TextBlock)BulletPreset.SelectedItem;
+            try
+            {
+                using (FileStream fs = new FileStream(Environment.CurrentDirectory + "/data/mapeditor/particle_systems/presets_gun/" + selectedFile.Text, FileMode.OpenOrCreate))
+                {
+                    bulletPhysics = (BulletPhysics)formatter.Deserialize(fs);
+                    NameBullet.Text = bulletPhysics.GetNameBullet();
+                    NameGun.SelectedItem = SelectedNameGun();
+                    LongRange.Text = bulletPhysics.GetLongRange().ToString();
+                    DifficultUseGun.Text = bulletPhysics.GetDifficultUse().ToString();
+                    CountsBullet.Text = bulletPhysics.GetCountBullets().ToString();
+                    VelocityBullet.Text = bulletPhysics.GetVelocity().ToString();
+                    SizeBullet.Text = bulletPhysics.GetSizeBullet().ToString();
+                    OnBurstbullet.IsChecked = bulletPhysics.GetBurstBullet();
+                    MessageBox.Show(string.Format("Пресет открыт"));
+                }
+            }
+            catch
+            {
+                MessageBox.Show(string.Format("Пресет не выбран"));
+            }
+        }
         /* клики */
 
         /* обработчики */
+        private TextBlock SelectedNameGun()
+        {
+            foreach (TextBlock item in NameGun.Items)
+                if (item.Text == bulletPhysics.GetNameGun())
+                    return item;
+            return null;
+        }
+
         private bool checkValuesBullet()
         {
-            if (NameGun.Text != "" && NumbersBullet.Text != "" && VelocityBullet.Text != "" && SizeBullet.Text != "" && DifficultUseGun.Text != "")
+            if (NameBullet.Text != "" && CountsBullet.Text != "" && VelocityBullet.Text != "" && SizeBullet.Text != "" && DifficultUseGun.Text != "")
                 return true;
             else return false;
         }
@@ -845,6 +889,24 @@ namespace Nuclear
                 }
             }
         }
+
+        private Brush BrushesSelected()
+        {
+            ComboBoxItem item = (ComboBoxItem)ColorBullet.SelectedItem;
+            switch (item.Content)
+            {
+                case "Красный":
+                    return Brushes.Red;
+                case "Чёрный":
+                    return Brushes.Black;
+                case "Синий":
+                    return Brushes.Blue;
+                case "Зеленый":
+                    return Brushes.Green;
+                default:
+                    return Brushes.Pink;
+            }
+        }
         /* обработчики */
 
         struct Point
@@ -871,17 +933,12 @@ namespace Nuclear
         private List<EllipseInfo> ellipses = new List<EllipseInfo>();
         private List<RectangleInfo> wall = new List<RectangleInfo>();
 
-        private double accelerationY = 0.1;
-        private double speedRatio = 0.1;
-        private int ellipseRadius = 10;
+        private double accelerationY = 1;
 
         private double clickX = 0;
         private double clickY = 0;
 
-        private double lenPath;
-        private double spread = 0;
-
-        private int countBullet = 1;
+        private double spread;
 
         private void RenderFrame(object sender, EventArgs e)
         {
@@ -890,8 +947,8 @@ namespace Nuclear
                 Random rand = new Random();
                 double spreadX;
                 double spreadY;
-                int ellipseCount = countBullet;
-                for (int i = 0; i < ellipseCount; i++)
+
+                for (int i = 0; i < bulletPhysics.GetCountBullets(); i++)
                 {
                     if (rand.Next(1, 11) > 5)
                         spreadX = clickX - spread * rand.Next(50, 100);
@@ -903,22 +960,21 @@ namespace Nuclear
                         spreadY = clickY + spread * rand.Next(50, 100);
 
                     Ellipse ellipse = new Ellipse();
-                    ellipse.Fill = Brushes.LimeGreen;
-                    ellipse.Width = ellipseRadius;
-                    ellipse.Height = ellipseRadius;
+                    ellipse.Fill = BrushesSelected(); // сделать ввод из комбобокса
+                    ellipse.Width = bulletPhysics.GetSizeBullet();
+                    ellipse.Height = bulletPhysics.GetSizeBullet();
                     Canvas.SetLeft(ellipse, 125);
                     Canvas.SetTop(ellipse, 125);
                     Map.Children.Add(ellipse);
 
-                    EllipseInfo info = new EllipseInfo(ellipse, 1, spreadX, spreadY);
+                    EllipseInfo info = new EllipseInfo(ellipse, bulletPhysics.GetVelocity(), spreadX, spreadY);
                     ellipses.Add(info);
                 }
 
-                ellipseCount = 1;
-                for (int i = 0; i < ellipseCount; i++)
+                for (int i = 0; i < 1; i++)
                 {
                     Rectangle rectangle = new Rectangle();
-                    rectangle.Fill = Brushes.LimeGreen;
+                    rectangle.Fill = Brushes.Black;
                     rectangle.Width = 100;
                     rectangle.Height = 100;
                     Canvas.SetLeft(rectangle, 325);
@@ -943,13 +999,13 @@ namespace Nuclear
                     catet2 /= len;
 
                     if (clickX > left)
-                        Canvas.SetLeft(info.Ellipse, left + catet1 * 20);
+                        Canvas.SetLeft(info.Ellipse, left + catet1 * info.VelocityY);
                     else if (left > clickX)
-                        Canvas.SetLeft(info.Ellipse, left - catet1 * 20);
+                        Canvas.SetLeft(info.Ellipse, left - catet1 * info.VelocityY);
                     if (clickY > top)
-                        Canvas.SetTop(info.Ellipse, top + catet2 * 20);
+                        Canvas.SetTop(info.Ellipse, top + catet2 * info.VelocityY);
                     else if (top > clickY)
-                        Canvas.SetTop(info.Ellipse, top - catet2 * 20);
+                        Canvas.SetTop(info.Ellipse, top - catet2 * info.VelocityY);
 
                     UIElementCollection children1 = Map.Children;
                     var children = children1.OfType<UIElement>().ToList();
@@ -963,8 +1019,7 @@ namespace Nuclear
                             double bulletY = Canvas.GetTop(info.Ellipse);
                             double bulletX = Canvas.GetLeft(info.Ellipse);
 
-                            if ((wallY + 100 >= bulletY && wallY <= bulletY)
-                                && (wallX + 100 >= bulletX && wallX <= bulletX))
+                            if ((wallY + 100 >= bulletY && wallY <= bulletY) && (wallX + 100 >= bulletX && wallX <= bulletX))
                             {
                                 Map.Children.Remove(info.Ellipse);
                                 ellipses.Remove(info);
@@ -977,10 +1032,8 @@ namespace Nuclear
                                     Map.Children.Remove(info.Ellipse);
                                     ellipses.Remove(info);
                                 }
-                                else
-                                {
+                                else if(bulletPhysics.GetBurstBullet() == true && bulletPhysics.GetCountBullets() > 1 && ellipses.Count == i)
                                     info.VelocityY += accelerationY;
-                                }
                             }
                         }
                     }

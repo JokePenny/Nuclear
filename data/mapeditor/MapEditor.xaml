@@ -119,50 +119,65 @@
             <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical" HorizontalAlignment="left">
                 <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Background="GhostWhite" BorderBrush="Silver" BorderThickness="3 3 3 3" Margin="10">
                     <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical" HorizontalAlignment="left" Margin ="0 0 -3 0" MinWidth="239">
-                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 15 20 0">
-                            <TextBlock MinWidth="120">Фигура:</TextBlock>
-                            <ComboBox Height="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" SelectedIndex="0">
-                                <ComboBoxItem>Круг</ComboBoxItem>
-                                <ComboBoxItem>Квадрат</ComboBoxItem>
-                            </ComboBox>
-                        </WrapPanel>
-                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 15 20 0">
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 15 20 15">
                             <TextBlock MinWidth="120">Цвет:</TextBlock>
-                            <ComboBox Height="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" SelectedIndex="0">
+                            <ComboBox Name="ColorBullet" Height="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" SelectedIndex="0">
                                 <ComboBoxItem>Красный</ComboBoxItem>
-                                <ComboBoxItem>Белый</ComboBoxItem>
-                                <ComboBoxItem>Черный</ComboBoxItem>
+                                <ComboBoxItem>Чёрный</ComboBoxItem>
                                 <ComboBoxItem>Синий</ComboBoxItem>
                                 <ComboBoxItem>Зеленый</ComboBoxItem>
                             </ComboBox>
                         </WrapPanel>
+                        <Separator Margin="20 0 20 0"/>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 0 20 0">
+                            <TextBlock>Характеристика</TextBlock>
+                            <StackPanel Margin="32 0 0 0" Orientation="Horizontal">
+                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                            </StackPanel>
+                            <TextBlock>Знач.</TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                            </StackPanel>
+                            <TextBlock Margin="5 0 0 0">Диапозон</TextBlock>
+                        </WrapPanel>
+                        <Separator Margin="20 0 20 0"/>
                         <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 15 20 0">
                             <TextBlock MinWidth="120">Размер:</TextBlock>
-                            <TextBox Name="SizeBullet" Grid.Row="1" MinWidth="25" MaxWidth="50" TextAlignment="Right" PreviewTextInput="Number_CheckWrite"></TextBox>
-                            <TextBlock Margin="35 0 0 0">20 - 50</TextBlock>
+                            <TextBox Name="SizeBullet" Grid.Row="1" MinWidth="35" MaxWidth="35" TextAlignment="Right" PreviewTextInput="Number_CheckWrite"></TextBox>
+                            <TextBlock Margin="30 0 0 0">5 - 15</TextBlock>
                         </WrapPanel>
                         <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 15 20 0">
                             <TextBlock MinWidth="120">Скорость:</TextBlock>
-                            <TextBox Name="VelocityBullet" Grid.Row="1" MinWidth="25" MaxWidth="50" TextAlignment="Right" PreviewTextInput="Number_CheckWrite"></TextBox>
-                            <TextBlock Margin="35 0 0 0">10 - 50</TextBlock>
+                            <TextBox Name="VelocityBullet" Grid.Row="1" MinWidth="35" MaxWidth="35" TextAlignment="Right" PreviewTextInput="Number_CheckWrite"></TextBox>
+                            <TextBlock Margin="30 0 0 0">5 - 40</TextBlock>
                         </WrapPanel>
                         <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 15 20 0">
                             <TextBlock MinWidth="120">Количество частиц:</TextBlock>
-                            <TextBox Name="NumbersBullet" Grid.Row="1" MinWidth="25" MaxWidth="50" TextAlignment="Right" PreviewTextInput="Number_CheckWrite"></TextBox>
-                            <TextBlock Margin="40 0 0 0">1 - 20</TextBlock>
+                            <TextBox Name="CountsBullet" Grid.Row="1" MinWidth="35" MaxWidth="35" TextAlignment="Right" PreviewTextInput="Number_CheckWrite"></TextBox>
+                            <TextBlock Margin="30 0 0 0">1 - 20</TextBlock>
                         </WrapPanel>
                         <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 15 20 0">
                             <TextBlock MinWidth="120">Уровень сложности:</TextBlock>
-                            <TextBox Name="DifficultUseGun" Grid.Row="1" MinWidth="25" MaxWidth="50" TextAlignment="Right" PreviewTextInput="Number_CheckWrite"></TextBox>
-                            <TextBlock Margin="40 0 0 0">1 - 10</TextBlock>
+                            <TextBox Name="DifficultUseGun" Grid.Row="1" MinWidth="35" MaxWidth="35" TextAlignment="Right" PreviewTextInput="Number_CheckWrite"></TextBox>
+                            <TextBlock Margin="30 0 0 0">1 - 10</TextBlock>
                         </WrapPanel>
                         <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 15 20 0">
-                            <TextBlock MinWidth="120">Название оружия:</TextBlock>
-                            <TextBox Name="NameGun" Grid.Row="1" MinWidth="100" MaxWidth="100" TextAlignment="Left"></TextBox>
+                            <TextBlock MinWidth="120">Дальнобойность:</TextBlock>
+                            <TextBox Name="LongRange" Grid.Row="1" MinWidth="35" MaxWidth="35" TextAlignment="Right" PreviewTextInput="Number_CheckWrite"></TextBox>
+                            <TextBlock Margin="15 0 0 0">50 - 1000</TextBlock>
                         </WrapPanel>
                         <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 15 20 0">
-                            <TextBlock MinWidth="120">Изображение:</TextBlock>
-                            <ComboBox Name="BulletImage" Height="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" SelectedIndex="0">
+                            <TextBlock MinWidth="120">Название стрельбы:</TextBlock>
+                            <TextBox Name="NameBullet" Grid.Row="1" MinWidth="100" MaxWidth="100" TextAlignment="Left"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 15 20 0">
+                            <TextBlock MinWidth="120">Имитация очереди:</TextBlock>
+                            <RadioButton Name="OnBurstbullet" GroupName="SelectionBurstBullet" Content="Вкл" IsChecked="false"/>
+                            <RadioButton Content="Выкл" GroupName="SelectionBurstBullet" IsChecked="True" Margin ="20 0 0 0"/>
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="2" HorizontalAlignment="left" Margin="20 15 20 0">
+                            <TextBlock MinWidth="120">Оружие:</TextBlock>
+                            <ComboBox Name="NameGun" Height="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" SelectedIndex="0">
                             </ComboBox>
                         </WrapPanel>
                         <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="20 20 0 0">
@@ -177,7 +192,7 @@
                             <ComboBox Name="BulletPreset" Height="25" Width="100" VerticalAlignment="Stretch" HorizontalAlignment="left" SelectedIndex="0"/>
                         </WrapPanel>
                         <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="20 20 0 20">
-                            <Button IsDefault="True" MinWidth="70" Margin="0 0 20 0">Открыть</Button>
+                            <Button IsDefault="True" MinWidth="70" Margin="0 0 20 0" Click="OpenBulletPhysics_Click">Открыть</Button>
                         </WrapPanel>
                     </StackPanel>
                 </Border>
@@ -264,15 +279,6 @@
         <!-- Нижняя панель -->
         <Border Name="PanelBottom" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Background="GhostWhite" BorderBrush="Silver" BorderThickness="0 3 0 0">
             <StackPanel Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Height="20" TextWrapping="Wrap" Margin ="0 0 10 0">
-                        <Run FontSize="12">Масштаб</Run>
-                </TextBlock>
-                <ComboBox Height="25" Margin="0 0 20 0" SelectedIndex="0">
-                    <ComboBoxItem>100%</ComboBoxItem>
-                    <ComboBoxItem>80%</ComboBoxItem>
-                    <ComboBoxItem>60%</ComboBoxItem>
-                    <ComboBoxItem>50%</ComboBoxItem>
-                </ComboBox>
             </StackPanel>
         </Border>
         <!-- Нижняя панель -->
