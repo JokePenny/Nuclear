@@ -4,17 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Nuclear
@@ -46,51 +40,32 @@ namespace Nuclear
             ComboBox comboBox = (ComboBox)sender;
             TextBlock selectedItem = (TextBlock)comboBox.SelectedItem;
             if (selectedItem.Text == "wall")
-            {
-                DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits/wall");
-                this.FoldersSection.Items.Clear();
-                int numberFolder = 0;
-                foreach (var item in dir.GetDirectories())
-                {
-                    try
-                    {
-                        foldersName[numberFolder] = item.Name;
-                        numberFolder++;
-                    }
-                    catch (IndexOutOfRangeException ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                        
-                    TextBlock text = new TextBlock();
-                    text.Text = item.Name;
-                    this.FoldersSection.Items.Add(text);
-                }
-                SelectedSection.Text = "Стены";
-            }
+                WallAndDecorate_Selected_Handler("/data/mapeditor/sprits/wall", "Стены", 0);
             else
-            {
-                DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits/props");
-                this.FoldersSection.Items.Clear();
-                int numberFolder = 10;
-                foreach (var item in dir.GetDirectories())
-                {
-                    try
-                    {
-                        foldersName[numberFolder] = item.Name;
-                        numberFolder++;
-                    }
-                    catch (IndexOutOfRangeException ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                WallAndDecorate_Selected_Handler("/data/mapeditor/sprits/props", "Декорации", 10);
+        }
 
-                    TextBlock text = new TextBlock();
-                    text.Text = item.Name;
-                    this.FoldersSection.Items.Add(text);
+        private void WallAndDecorate_Selected_Handler(string path, string name, int numberFolder)
+        {
+            DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + path);
+            FoldersSection.Items.Clear();
+            foreach (var item in dir.GetDirectories())
+            {
+                try
+                {
+                    foldersName[numberFolder] = item.Name;
+                    numberFolder++;
                 }
-                SelectedSection.Text = "Декорации";
+                catch (IndexOutOfRangeException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                TextBlock text = new TextBlock();
+                text.Text = item.Name;
+                FoldersSection.Items.Add(text);
             }
+            SelectedSection.Text = name;
         }
 
         private void FolderSubsetion_Selected(object sender, SelectionChangedEventArgs e)
@@ -159,38 +134,26 @@ namespace Nuclear
             RadioButton radioButton = (RadioButton)sender;
 
             if (radioButton.Content.ToString() == "Сетка со спрайтами карты")
-            {
-                Props.IsEnabled = true;
-                Triggers.IsEnabled = false;
-                foreach (Grid gridimage in Map.Children)
-                {
-                    if (gridimage.Name == "ImageMap")
-                    {
-                        Grid.SetZIndex(gridimage, 999);
-                        gridimage.Opacity = 1;
-                    }
-                    else if (gridimage.Name == "TriggerMap")
-                    {
-                        Grid.SetZIndex(gridimage, 1);
-                        CheckChangeOnMapImage(gridimage);
-                    }
-                }
-            }
+                Choice_WorkTool_Handler(true, false, 999, 1, 1);
             else
+                Choice_WorkTool_Handler(false, true, 1, 999, 0.5);
+        }
+
+        private void Choice_WorkTool_Handler(bool props, bool triggers, int zindexOne, int zindexTwo, double opacity)
+        {
+            Props.IsEnabled = props;
+            Triggers.IsEnabled = triggers;
+            foreach (Grid gridimage in Map.Children)
             {
-                Props.IsEnabled = false;
-                Triggers.IsEnabled = true;
-                foreach (Grid gridimage in Map.Children)
+                if (gridimage.Name == "ImageMap")
                 {
-                    if (gridimage.Name == "ImageMap")
-                    {
-                        Grid.SetZIndex(gridimage, 1);
-                        gridimage.Opacity = 0.5;
-                    } else if (gridimage.Name == "TriggerMap")
-                    {
-                        Grid.SetZIndex(gridimage, 999);
-                        CheckChangeOnMapImage(gridimage);
-                    }
+                    Grid.SetZIndex(gridimage, zindexOne);
+                    gridimage.Opacity = opacity;
+                }
+                else if (gridimage.Name == "TriggerMap")
+                {
+                    Grid.SetZIndex(gridimage, zindexTwo);
+                    CheckChangeOnMapImage(gridimage);
                 }
             }
         }
@@ -325,19 +288,10 @@ namespace Nuclear
             switch ((sender as MenuItem).Header.ToString())
             {
                 case "Новый проект":
-                    UIElementCollection children1 = Map.Children;
-                    var children = children1.OfType<UIElement>().ToList();
-
-                    foreach (var grid in children)
-                        if (!(grid is Grid))
-                            Map.Children.Remove(grid as UIElement);
-
-                    clickCanvasOn = false;
+                    CleanCanvasParticles_Handler(false);
                     name = "NewProject";
                     break;
                 case "Открыть проект":
-                    clickCanvasOn = false;
-                    name = "OpenProject";
                     DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapcreateds/");
                     this.NameFileMap.Items.Clear();
                     foreach (var item in dir.GetFiles())
@@ -346,38 +300,21 @@ namespace Nuclear
                         text.Text = item.Name;
                         this.NameFileMap.Items.Add(text);
                     }
-                    children1 = Map.Children;
-                    children = children1.OfType<UIElement>().ToList();
 
-                    foreach (var grid in children)
-                        if (!(grid is Grid))
-                            Map.Children.Remove(grid as UIElement);
-
+                    CleanCanvasParticles_Handler(false);
+                    name = "OpenProject";
                     break;
                 case "Сохранить как":
-                    children1 = Map.Children;
-                    children = children1.OfType<UIElement>().ToList();
-
-                    foreach (var grid in children)
-                        if (!(grid is Grid))
-                            Map.Children.Remove(grid as UIElement);
-
-                    clickCanvasOn = false;
+                    CleanCanvasParticles_Handler(false);
                     name = "SaveAs";
                     break;
                 case "Панель внешнего вида":
-                    clickCanvasOn = false;
+                    CleanCanvasParticles_Handler(false);
                     if (Map.Children.Count != 0)
                     {
                         PanelOutsideView.IsEnabled = true;
-                        children1 = Map.Children;
-                        children = children1.OfType<UIElement>().ToList();
-                        foreach (var grid in children)
-                        {
-                            if (grid is Grid)
-                                (grid as Grid).Visibility = Visibility.Visible;
-                            else Map.Children.Remove(grid as UIElement);
-                        }
+                        foreach (Grid grid in Map.Children)
+                                grid.Visibility = Visibility.Visible;
                     }
                     else PanelOutsideView.IsEnabled = false;
                     name = "PanelOutsideView";
@@ -417,9 +354,21 @@ namespace Nuclear
             }
             VisiblePanel(name);
         }
-        /* комбобоксы */
 
-        /* гриды */
+        private void CleanCanvasParticles_Handler(bool click)
+        {
+            UIElementCollection children1 = Map.Children;
+            var children = children1.OfType<UIElement>().ToList();
+
+            foreach (var grid in children)
+                if (!(grid is Grid))
+                    Map.Children.Remove(grid as UIElement);
+
+            clickCanvasOn = click;
+        }
+            /* комбобоксы */
+
+            /* гриды */
 
         public void MapImageGrid()
         {
