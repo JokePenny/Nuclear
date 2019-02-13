@@ -40,7 +40,6 @@ namespace Nuclear
             SaveGunSettingsButton.IsEnabled = false;
         }
 
-
         /* селекторы */
         private void WallAndDecorate_Selected(object sender, SelectionChangedEventArgs e)
         {
@@ -169,13 +168,10 @@ namespace Nuclear
                     {
                         Grid.SetZIndex(gridimage, 999);
                         gridimage.Opacity = 1;
-                        gridimage.IsEnabled = true;
                     }
-                    if (gridimage.Name == "TriggerMap")
+                    else if (gridimage.Name == "TriggerMap")
                     {
                         Grid.SetZIndex(gridimage, 1);
-                        gridimage.Visibility = Visibility.Hidden;
-                        gridimage.IsEnabled = true;
                         CheckChangeOnMapImage(gridimage);
                     }
                 }
@@ -190,11 +186,9 @@ namespace Nuclear
                     {
                         Grid.SetZIndex(gridimage, 1);
                         gridimage.Opacity = 0.5;
-                    }
-                    if (gridimage.Name == "TriggerMap")
+                    } else if (gridimage.Name == "TriggerMap")
                     {
                         Grid.SetZIndex(gridimage, 999);
-                        gridimage.Visibility = Visibility.Visible;
                         CheckChangeOnMapImage(gridimage);
                     }
                 }
@@ -508,7 +502,6 @@ namespace Nuclear
                 }
 
             grid.Background = Brushes.White;
-            grid.IsEnabled = false;
             Grid.SetZIndex(grid, 1);
             this.Map.Children.Add(grid);
         }
@@ -567,7 +560,6 @@ namespace Nuclear
                         gridActive.Children.Add(but);
                     }
                 }
-            gridActive.IsEnabled = false;
             Grid.SetZIndex(gridActive, 999);
             this.Map.Children.Add(gridActive);
         }
@@ -576,13 +568,16 @@ namespace Nuclear
         /* клики */
         private void DrawingImage_Click(object sender, RoutedEventArgs e)
         {
-            Image picture = sender as Image;
-            ImageSource image = Clipboard.GetImage();
-            picture.Source = image;
-            int row = (int)picture.GetValue(Grid.RowProperty);
-            int column = (int)picture.GetValue(Grid.ColumnProperty);
-            field.SetImageIDArray(row, column, selectedObjectID);
-            //MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
+            if (Clipboard.GetImage() != null)
+            { 
+                Image picture = sender as Image;
+                ImageSource image = Clipboard.GetImage();
+                picture.Source = image;
+                int row = (int)picture.GetValue(Grid.RowProperty);
+                int column = (int)picture.GetValue(Grid.ColumnProperty);
+                field.SetImageIDArray(row, column, selectedObjectID);
+                //MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
+            }
         }
 
         private void but_Click(object sender, RoutedEventArgs e)
@@ -712,6 +707,7 @@ namespace Nuclear
                 MapImageGrid();
                 MapActiveGrid();
                 VisiblePanel("PanelOutsideView");
+                PanelOutsideView.IsEnabled = true;
                 DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory + "/data/mapeditor/sprits");
                 foreach (var item in dir.GetDirectories())
                 {
