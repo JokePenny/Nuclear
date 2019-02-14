@@ -19,21 +19,151 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Frame x:Name="ProcessGame" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
+
+        <!-- игровое поле -->
+        <ScrollViewer Name="Camera"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible">
+            <Canvas Name="Map" Background="Lavender" Width="2000" Height="2000">
+            </Canvas>
+        </ScrollViewer>
+        <!-- игровое поле -->
+        
+        <!-- дерево навыков -->
+        <ScrollViewer Name="SkillTree"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Collapsed">
+            <Grid Background="silver">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Name="MainSkills" Grid.Column="0" Grid.Row="1" Background="gray" Content="Ячейка" Width="100" Height="100"  Click="Button_Click_1"/>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Name="but11" Grid.Column="1" Grid.Row="1" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click" IsEnabled="False"/>
+                    <Button Name="but111" Grid.Column="2" Grid.Row="0" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_6" IsEnabled="False"/>
+                    <Button Name="but1111" Grid.Column="3" Grid.Row="0" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_10" IsEnabled="False"/>
+                    <Button Name="but1" Grid.Column="0" Grid.Row="2" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_2" IsEnabled="False"/>
+                    <Button Name="but11TT" Grid.Column="2" Grid.Row="2" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_7" IsEnabled="False"/>
+                    <Button Name="but11TT2" Grid.Column="3" Grid.Row="2" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_11" IsEnabled="False"/>
+                    <Button Name="butT" Grid.Column="1" Grid.Row="3" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_4" IsEnabled="False"/>
+                    <Button Name="but2" Grid.Column="0" Grid.Row="4" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_3" IsEnabled="False"/>
+                    <Button Name="butT3T" Grid.Column="2" Grid.Row="4" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_8" IsEnabled="False"/>
+                    <Button Name="butT3T3" Grid.Column="3" Grid.Row="4" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_12" IsEnabled="False"/>
+                    <Button Name="but23" Grid.Column="1" Grid.Row="5" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_5" IsEnabled="False"/>
+                    <Button Name="but234" Grid.Column="2" Grid.Row="6" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_9" IsEnabled="False"/>
+                    <Button Name="but2344" Grid.Column="3" Grid.Row="6" Background="gray" Content="Ячейка" Grid.RowSpan="2" Width="100" Height="100" Click="Button_Click_13" IsEnabled="False"/>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+        <!-- дерево навыков -->
+
+        <!-- инвентарь -->
+        <ScrollViewer Name="Backpack"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Collapsed">
+            <Grid Background="silver">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Canvas Background="Lavender" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
+                    <Button Background="AliceBlue" Content="Голова" Canvas.Top="80" Canvas.Left="130" Width="50" Height="50" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Background="AliceBlue" Content="Броня" Canvas.Top="145" Canvas.Left="115" Width="80" Height="80" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Background="AliceBlue" Content="Поножи" Canvas.Top="240" Canvas.Left="125" Width="60" Height="60" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Background="AliceBlue" Content="Ботинки" Canvas.Top="315" Canvas.Left="130" Width="50" Height="50" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Background="AliceBlue" Content="Правая р" Canvas.Top="185" Canvas.Left="50" Width="50" Height="50" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Background="AliceBlue" Content="Левая р" Canvas.Top="185" Canvas.Left="215" Width="50" Height="50" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                </Canvas>
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="1" Grid.Row="0" Background="gray" Text="ИНВЕНТАРЬ" Grid.ColumnSpan="2" TextAlignment="Center" />
+                    <Button Grid.Column="0" Grid.Row="1" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="1" Grid.Row="1" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="2" Grid.Row="1" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="3" Grid.Row="1" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="0" Grid.Row="2" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="1" Grid.Row="2" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="2" Grid.Row="2" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="3" Grid.Row="2" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="0" Grid.Row="3" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="1" Grid.Row="3" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="2" Grid.Row="3" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="3" Grid.Row="3" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="0" Grid.Row="4" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="1" Grid.Row="4" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="2" Grid.Row="4" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="3" Grid.Row="4" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="0" Grid.Row="5" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="1" Grid.Row="5" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="2" Grid.Row="5" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="3" Grid.Row="5" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="0" Grid.Row="6" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="1" Grid.Row="6" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="2" Grid.Row="6" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="3" Grid.Row="6" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="0" Grid.Row="7" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="1" Grid.Row="7" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="2" Grid.Row="7" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                    <Button Grid.Column="3" Grid.Row="7" Background="gray" Content="Ячейка" AllowDrop="True" Drop="Button_Drop" MouseDown="Button_MouseDown" />
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+        <!-- инвентарь -->
+
+        <!-- чат -->
+        <ScrollViewer Name="Chat"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Collapsed">
+
+        </ScrollViewer>
+        <!-- чат -->
+
+        <!-- интерфейс -->
         <StackPanel Grid.Row="0" Grid.Column="0">
             <ProgressBar x:Name="StaminaBar" Height="20 px" Background="orange" />
             <ProgressBar x:Name="HealthBar" Height="20 px" Background="red" />
-            <ProgressBar x:Name="VoiceBar" Height="20 px" Background="green" />
+            <ProgressBar x:Name="ArmorBar" Height="20 px" Background="green" />
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Width="150" Background="white" Content="Навыки" Click="Button_Click_1" />
-            <Button Width="150" Background="white" Content="ИНвентарь" Click="Button_Click"/>
+            <Button Width="150" Background="white" Content="Назад" Click="OpenGameField_Click"/>
+            <Button Width="150" Background="white" Content="Навыки" Click="OpenSkillTree_Click"/>
+            <Button Width="150" Background="white" Content="ИНвентарь" Click="OpenBackpack_Click"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
-            <Button Width="70" Background="silver" Click="Button_Click_2" />
+            <Button Width="70" Background="silver" Click="Exit_Game"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Width="110" Background="gray" Content="Конец хода" Click="Button_Click_3"/>
+            <Button Width="110" Background="gray" Content="Конец хода"/>
             <Button Width="70" Background="gray" />
             <Button Width="70" Background="gray" />
             <Button Width="70" Background="gray" />
@@ -41,5 +171,6 @@
             <Button Width="70" Background="gray" />
             <Button Width="70" Background="gray" />
         </StackPanel>
+        <!-- интерфейс -->
     </Grid>
 </Page>
