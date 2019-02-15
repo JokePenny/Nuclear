@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -92,11 +94,24 @@ namespace Nuclear
         private int locationEndY;
 
 
+        string userName = "Lorne"; // имя пользователя в чате
+
+
+        bool alive = false; // будет ли работать поток для приема
+        UdpClient client;
+        const int LOCALPORT = 8001; // порт для приема сообщений
+        const int REMOTEPORT = 8001; // порт для отправки сообщений
+        const int TTL = 20;
+        const string HOST = "235.5.5.1"; // хост для групповой рассылки
+        IPAddress groupAddress; // адрес для групповой рассылки
 
         //private PlayerUser User = new PlayerUser();
         public Game()
         {
+
             InitializeComponent();
+            groupAddress = IPAddress.Parse(HOST);
+            loginButton_Click();
             MapImageGrid();
             MapActiveGrid();
             MapHeatGrid();
@@ -228,9 +243,7 @@ namespace Nuclear
                     UIElementCollection children1 = grid.Children;
                     var children = children1.OfType<UIElement>().ToList();
                     foreach (TextBlock textblock in children)
-                    {
                         grid.Children.Remove(textblock);
-                    }
                 }
         }
 
@@ -242,9 +255,7 @@ namespace Nuclear
                     UIElementCollection children1 = gridHeat.Children;
                     var children = children1.OfType<UIElement>().ToList();
                     foreach (Rectangle rec in children)
-                    {
                         gridHeat.Children.Remove(rec);
-                    }
                 }
         }
 
@@ -473,10 +484,7 @@ namespace Nuclear
                 User.SetMovePoints(0);
                 MessageBox.Show(string.Format("Очки действия кончились"));
             }
-            else
-            {
-                MessageBox.Show(string.Format("Ход сделан"));
-            }
+            else  MessageBox.Show(string.Format("Ход сделан"));
         }
 
         struct Point
@@ -680,6 +688,7 @@ namespace Nuclear
             LazyCheck();
         }
         /* дерево навыков */
+
         /* инвентарь */
         private byte checkDrop = 0;
 
@@ -706,7 +715,124 @@ namespace Nuclear
             (sender as Button).Content = e.Data.GetData(DataFormats.Text);
         }
         /* инвентарь */
+
         /* чат */
+        // обработчик нажатия кнопки loginButton
+        private void loginButton_Click()
+        {
+            try
+            {
+                client = new UdpClient(LOCALPORT);
+                // присоединяемся к групповой рассылке
+                client.JoinMulticastGroup(groupAddress, TTL);
+
+                // запускаем задачу на прием сообщений
+                Task receiveTask = new Task(ReceiveMessages);
+                receiveTask.Start();
+
+                // отправляем первое сообщение о входе нового пользователя
+                string message = userName + " вошел в чат";
+                byte[] data = Encoding.Unicode.GetBytes(message);
+                client.Send(data, data.Length, HOST, REMOTEPORT);
+
+                //SendButton.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        // метод приема сообщений
+        private void ReceiveMessages()
+        {
+            alive = true;
+            try
+            {
+                while (alive)
+                {
+                    IPEndPoint remoteIp = null;
+                    byte[] data = client.Receive(ref remoteIp);
+                    string message = Encoding.Unicode.GetString(data);
+
+                    // добавляем полученное сообщение в текстовое поле
+                    Dispatcher.Invoke(delegate
+                    {
+                        string time = DateTime.Now.ToShortTimeString();
+                        ChatTextBlock.Text = time + " " + message + "\r\n" + ChatTextBlock.Text;
+                    });
+                }
+            }
+            catch (ObjectDisposedException)
+            {
+                if (!alive)
+                    return;
+                throw;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        // обработчик нажатия кнопки sendButton
+        private void SendButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string message = String.Format("{0}: {1}", userName, MessageTextBox.Text);
+                byte[] data = Encoding.Unicode.GetBytes(message);
+                client.Send(data, data.Length, HOST, REMOTEPORT);
+                MessageTextBox.Clear();
+                MessageTextBox.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        // обработчик нажатия кнопки logoutButton
+        private void logoutButton_Click(object sender, EventArgs e)
+        {
+            ExitChat();
+        }
+        // выход из чата
+        private void ExitChat()
+        {
+            string message = userName + " покидает чат";
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            client.Send(data, data.Length, HOST, REMOTEPORT);
+            client.DropMulticastGroup(groupAddress);
+
+            alive = false;
+            client.Close();
+            SendButton.IsEnabled = false;
+        }
+
+        private void SendButton_Key(object sender, KeyEventArgs e)
+        {
+            string s = e.Key.ToString();
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    string message = String.Format("{0}: {1}", userName, MessageTextBox.Text);
+                    byte[] data = Encoding.Unicode.GetBytes(message);
+                    client.Send(data, data.Length, HOST, REMOTEPORT);
+                    MessageTextBox.Clear();
+                    MessageTextBox.Focus();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        // обработчик события закрытия формы
+        /*
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (alive)
+                ExitChat();
+        }
         /* чат */
     }
 }

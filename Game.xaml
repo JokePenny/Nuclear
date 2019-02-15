@@ -10,9 +10,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60 px"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="60 px"></RowDefinition>
+            <RowDefinition Height="100 px"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -21,14 +20,14 @@
         </Grid.ColumnDefinitions>
 
         <!-- игровое поле -->
-        <ScrollViewer Name="Camera"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible">
+        <ScrollViewer Name="Camera"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Visible">
             <Canvas Name="Map" Background="Lavender" Width="2000" Height="2000">
             </Canvas>
         </ScrollViewer>
         <!-- игровое поле -->
         
         <!-- дерево навыков -->
-        <ScrollViewer Name="SkillTree"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Collapsed">
+        <ScrollViewer Name="SkillTree"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Collapsed">
             <Grid Background="silver">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -74,7 +73,7 @@
         <!-- дерево навыков -->
 
         <!-- инвентарь -->
-        <ScrollViewer Name="Backpack"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Collapsed">
+        <ScrollViewer Name="Backpack"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Collapsed">
             <Grid Background="silver">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -143,33 +142,32 @@
         <!-- инвентарь -->
 
         <!-- чат -->
-        <ScrollViewer Name="Chat"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Collapsed">
-
-        </ScrollViewer>
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+            <!--<Button Width="70" Background="silver" Click="Exit_Game"/>-->
+            <Grid Width="270" MaxWidth="270">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="70"/>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer Grid.Row="0"  Grid.ColumnSpan="2" Name="Chat"  VerticalScrollBarVisibility="Visible">
+                    <TextBlock Name="ChatTextBlock" TextWrapping="Wrap" Background="black" Foreground="Lime"/>
+                </ScrollViewer>
+                <TextBox Name="MessageTextBox" Grid.Row="1" Grid.Column="0" Background="black" Foreground="Lime" KeyDown="SendButton_Key"/>
+                <Button Name="SendButton" Grid.Row="1" Grid.Column="1" Content="Отправить" Click="SendButton_Click"/>
+            </Grid>
+        </StackPanel>
         <!-- чат -->
 
         <!-- интерфейс -->
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <ProgressBar x:Name="StaminaBar" Height="20 px" Background="orange" />
-            <ProgressBar x:Name="HealthBar" Height="20 px" Background="red" />
-            <ProgressBar x:Name="ArmorBar" Height="20 px" Background="green" />
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Width="150" Background="white" Content="Назад" Click="OpenGameField_Click"/>
-            <Button Width="150" Background="white" Content="Навыки" Click="OpenSkillTree_Click"/>
-            <Button Width="150" Background="white" Content="ИНвентарь" Click="OpenBackpack_Click"/>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
-            <Button Width="70" Background="silver" Click="Exit_Game"/>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Width="110" Background="gray" Content="Конец хода"/>
-            <Button Width="70" Background="gray" />
-            <Button Width="70" Background="gray" />
-            <Button Width="70" Background="gray" />
-            <Button Width="70" Background="gray" />
-            <Button Width="70" Background="gray" />
-            <Button Width="70" Background="gray" />
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Width="100" Background="gray" Content="Конец хода"/>
+            <Button Width="100" Background="white" Content="Назад" Click="OpenGameField_Click"/>
+            <Button Width="100" Background="white" Content="Навыки" Click="OpenSkillTree_Click"/>
+            <Button Width="100" Background="white" Content="ИНвентарь" Click="OpenBackpack_Click"/>
         </StackPanel>
         <!-- интерфейс -->
     </Grid>
