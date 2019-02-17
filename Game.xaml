@@ -11,21 +11,22 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="30 px"></RowDefinition>
             <RowDefinition Height="100 px"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition MinWidth="270" MaxWidth="270"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <!-- игровое поле -->
-        <ScrollViewer Name="Camera"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Visible">
+        <ScrollViewer Name="Camera"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Visible">
             <Canvas Name="Map" Background="Lavender" Width="2000" Height="2000">
             </Canvas>
         </ScrollViewer>
         <!-- игровое поле -->
-        
+
         <!-- дерево навыков -->
         <ScrollViewer Name="SkillTree"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Visible" Visibility="Collapsed">
             <Grid Background="silver">
@@ -142,32 +143,121 @@
         <!-- инвентарь -->
 
         <!-- чат -->
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-            <!--<Button Width="70" Background="silver" Click="Exit_Game"/>-->
-            <Grid Width="270" MaxWidth="270">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="80"></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="70"/>
-                </Grid.ColumnDefinitions>
-                <ScrollViewer Grid.Row="0"  Grid.ColumnSpan="2" Name="Chat"  VerticalScrollBarVisibility="Visible">
-                    <TextBlock Name="ChatTextBlock" TextWrapping="Wrap" Background="black" Foreground="Lime"/>
-                </ScrollViewer>
-                <TextBox Name="MessageTextBox" Grid.Row="1" Grid.Column="0" Background="black" Foreground="Lime" KeyDown="SendButton_Key"/>
-                <Button Name="SendButton" Grid.Row="1" Grid.Column="1" Content="Отправить" Click="SendButton_Click"/>
-            </Grid>
-        </StackPanel>
+        <Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" BorderBrush="Silver" BorderThickness="2 2 2 2">
+            <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Orientation="Horizontal">
+                <!--<Button Width="70" Background="silver" Click="Exit_Game"/>-->
+                <Grid Width="270" MaxWidth="270">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="188" />
+                        <ColumnDefinition Width="80"/>
+                    </Grid.ColumnDefinitions>
+                    <ScrollViewer Grid.Row="0"  Grid.ColumnSpan="2" Name="Chat"  VerticalScrollBarVisibility="Visible">
+                        <TextBlock Name="ChatTextBlock" TextWrapping="Wrap" Background="black" Foreground="Lime"/>
+                    </ScrollViewer>
+                    <TextBox Name="MessageTextBox" Grid.Row="1" Grid.Column="0" Background="black" Foreground="Lime" KeyDown="SendButton_Key" />
+                    <Button Name="SendButton" Grid.Row="1" Grid.Column="1" Content="Отправить" Click="SendButton_Click"/>
+                </Grid>
+            </StackPanel>
+        </Border>
         <!-- чат -->
 
         <!-- интерфейс -->
-        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Width="100" Background="gray" Content="Конец хода"/>
-            <Button Width="100" Background="white" Content="Назад" Click="OpenGameField_Click"/>
-            <Button Width="100" Background="white" Content="Навыки" Click="OpenSkillTree_Click"/>
-            <Button Width="100" Background="white" Content="ИНвентарь" Click="OpenBackpack_Click"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0 0 0 0">
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="0 0 0 0">
+                    <Grid Margin="0" Background="Aqua">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Background="gray" Content="Кнопка"/>
+                        <Button Grid.Row="1" Background="gray" Content="INV"/>
+                        <Button Grid.Row="2" Background="gray" Content="Чат"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="0 0 0 0">
+                    <Grid Margin="0" Background="Fuchsia">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"></RowDefinition>
+                            <RowDefinition Height="75"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Background="gray" Content="Ары"/>
+                        <Button Grid.Row="1" Background="gray" Content="Орудие"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Margin="0 0 0 0">
+                    <Grid Margin="0" Background="DarkBlue">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Background="gray" Content="кнопка"/>
+                        <Button Grid.Row="1" Background="gray" Content="хп"/>
+                        <Button Grid.Row="2" Background="gray" Content="ары"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical" Margin="0 0 0 0">
+                    <Grid Margin="0" Background="SaddleBrown">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="15"></RowDefinition>
+                            <RowDefinition Height="15"></RowDefinition>
+                            <RowDefinition Height="70"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="1"  Grid.RowSpan="2" Grid.Column="0" Orientation="Vertical" Margin="0 0 0 0">
+                            <Grid Margin="0" Background="Salmon">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="22"></RowDefinition>
+                                    <RowDefinition Height="21"></RowDefinition>
+                                    <RowDefinition Height="21"></RowDefinition>
+                                    <RowDefinition Height="21"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Row="0" Background="gray" Content="MAP"/>
+                                <Button Grid.Row="1" Background="gray" Content="CHA"/>
+                                <Button Grid.Row="2" Background="gray" Content="PIP"/>
+                                <Button Grid.Row="3" Background="gray" Content="FIX"/>
+                            </Grid>
+                        </StackPanel>
+                        <Button Grid.Row="2" Grid.Column="1" Background="gray" Content="ХОД"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            <!--
+            <Button Background="gray" Content="Конец хода"/>
+            <Button Background="white" Content="Назад" Click="OpenGameField_Click"/>
+            <Button Background="white" Content="Навыки" Click="OpenSkillTree_Click"/>
+            <Button Background="white" Content="ИНвентарь" Click="OpenBackpack_Click"/>
+            -->
         </StackPanel>
         <!-- интерфейс -->
     </Grid>
