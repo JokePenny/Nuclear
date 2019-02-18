@@ -116,9 +116,10 @@ namespace Nuclear
             MapActiveGrid();
             MapHeatGrid();
             findPath(1, 1, User.GetX(), User.GetY());
+
         }
 
-        private void Exit_Game(object sender, RoutedEventArgs e)
+    private void Exit_Game(object sender, RoutedEventArgs e)
         {
             StartMenu menu = new StartMenu();
             this.NavigationService.Navigate(menu);
