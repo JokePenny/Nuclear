@@ -160,7 +160,7 @@
         <!-- интерфейс -->
 
         <!-- умения -->
-        <Border Grid.Column="2" Width="200" MinWidth="200" MaxWidth="200" Height="500" MinHeight="500" MaxHeight="700" Background="Beige" HorizontalAlignment="Right" Margin="0 87 0 87" BorderBrush="Silver" BorderThickness="2 2 2 2">
+        <Border Grid.Column="2" Width="200" MinWidth="200" MaxWidth="200" Height="500" MinHeight="500" MaxHeight="700" Background="Beige" HorizontalAlignment="Right" Margin="0 87 0 87">
             <StackPanel>
                 <Grid Margin="0" Background="Fuchsia">
                     <Grid.RowDefinitions>
@@ -205,7 +205,7 @@
         <!-- умения -->
 
         <!-- инвентрарь -->
-        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="450" MinWidth="450" MaxWidth="450" Height="400" MinHeight="400" MaxHeight="400" Background="Beige" HorizontalAlignment="Center" BorderBrush="Silver" BorderThickness="2 2 2 2" Visibility="Collapsed">
+        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="450" MinWidth="450" MaxWidth="450" Height="400" MinHeight="400" MaxHeight="400" Background="Beige" HorizontalAlignment="Center" Visibility="Collapsed">
             <StackPanel>
                 <Grid Margin="0" Background="Fuchsia">
                     <Grid.RowDefinitions>
@@ -256,14 +256,14 @@
         <!-- инвентрарь -->
 
         <!-- характеристики -->
-        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="450" MinWidth="450" MaxWidth="450" Height="400" MinHeight="400" MaxHeight="400" Background="Beige" HorizontalAlignment="Center" BorderBrush="Silver" BorderThickness="2 2 2 2">
+        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="500" MinWidth="500" MaxWidth="500" Height="400" MinHeight="400" MaxHeight="400" Background="Beige" HorizontalAlignment="Center" Visibility="Collapsed">
             <StackPanel>
                 <Grid Margin="0" Background="Black">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="240"/>
+                        <ColumnDefinition Width="250"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
@@ -274,7 +274,7 @@
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="240"/>
+                                <ColumnDefinition Width="250"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <WrapPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
@@ -289,7 +289,7 @@
                                         <RowDefinition></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="140"/>
+                                        <ColumnDefinition Width="150"/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Row="0" Grid.Column="0">
@@ -532,7 +532,7 @@
         <!-- характеристики -->
 
         <!-- карта -->
-        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="450" MinWidth="450" MaxWidth="450" Height="400" MinHeight="400" MaxHeight="400" Background="Beige" HorizontalAlignment="Center" BorderBrush="Silver" BorderThickness="2 2 2 2">
+        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="500" MinWidth="500" MaxWidth="500" Height="400" MinHeight="400" MaxHeight="400" Background="Beige" HorizontalAlignment="Center" Visibility="Collapsed">
             <StackPanel>
                 <Grid Margin="0" Background="Black">
                     <Grid.RowDefinitions>
@@ -542,14 +542,14 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                   
+
                 </Grid>
             </StackPanel>
         </Border>
         <!-- карта -->
 
         <!-- пипбой -->
-        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="450" MinWidth="450" MaxWidth="450" Height="400" MinHeight="400" MaxHeight="400" Background="Black" HorizontalAlignment="Center" BorderBrush="Silver" BorderThickness="2 2 2 2" Visibility="Visible">
+        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="500" MinWidth="500" MaxWidth="500" Height="400" MinHeight="400" MaxHeight="400" Background="Black" HorizontalAlignment="Center" BorderBrush="Silver" BorderThickness="2 2 2 2" Visibility="Collapsed">
             <StackPanel>
                 <Grid Margin="0">
                     <Grid.RowDefinitions>
@@ -584,7 +584,7 @@
                                         <TextBlock FontSize="18" Foreground="White" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">2260</TextBlock>
                                         <TextBlock FontSize="18" Foreground="White" Margin="25 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">0728</TextBlock>
                                     </WrapPanel>
-                                    
+
                                 </Grid>
                             </StackPanel>
                             <StackPanel Grid.Row="2">
@@ -611,7 +611,7 @@
                             </StackPanel>
                         </Grid>
                     </StackPanel>
-                    <StackPanel Grid.Column="1">
+                    <StackPanel Grid.Column="1" Margin="25 0 0 0">
                         <Grid Margin="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -705,21 +705,182 @@
         <!-- меню -->
 
         <!-- диалоговое окно -->
-
+        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="640" MinWidth="640" MaxWidth="640" Height="310" MinHeight="310" MaxHeight="310" Background="Beige" HorizontalAlignment="Center" Visibility="Visible">
+            <StackPanel>
+                <Grid Margin="0" Background="Black">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="130"></RowDefinition>
+                        <RowDefinition Height="180"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Grid.Row="1">
+                        <Grid Margin="0" Background="Black">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"></RowDefinition>
+                                <RowDefinition Height="120"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <WrapPanel HorizontalAlignment="Center">
+                                <TextBlock Grid.Row="0" Foreground="White" TextWrapping="Wrap" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 30 0 0">
+                                    <Run>0</Run>
+                                    <Run>$</Run>
+                                </TextBlock>
+                            </WrapPanel>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Grid.Row="1">
+                        <TextBlock TextAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Background="Black" Foreground="Goldenrod" Margin="0 10 0 0">Бартер</TextBlock>
+                        <Ellipse Height="15" Width="15" Fill="DarkRed" Margin="0 10 0 0"/>
+                        <TextBlock TextAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Background="Black" Foreground="Goldenrod" Margin="0 10 0 0">Сказать</TextBlock>
+                        <Ellipse Height="15" Width="15" Fill="DarkRed" Margin="0 10 0 0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Grid.Row="1">
+                        <TextBlock Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="50 40 0 0">Спасибо Кенни...</TextBlock>
+                        <TextBlock Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="50 5 0 0">Как дела?</TextBlock>
+                        <TextBlock Foreground="Green" TextWrapping="Wrap" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="50 5 0 0">Продать.</TextBlock>
+                    </StackPanel>
+                    <ScrollViewer Grid.Column="1" Grid.Row="0" VerticalScrollBarVisibility="Hidden">
+                        <WrapPanel HorizontalAlignment="Left">
+                            <TextBlock Foreground="Lime" TextWrapping="Wrap" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="50 20 30 0">Я думал ты труп, на секунду точно в этом был уверен. Твое счастье, что подал признаки жизни, пришлось оттащить тебя в мою палатку, похоже кто-то пытался превратить тебя в дуршлаг, пришлось использовать на тебя все бинты, что у меня были</TextBlock>
+                        </WrapPanel>
+                    </ScrollViewer>
+                </Grid>
+            </StackPanel>
+        </Border>
         <!-- диалоговое окно -->
 
         <!-- крафт -->
-        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="450" MinWidth="450" MaxWidth="450" Height="400" MinHeight="400" MaxHeight="400" Background="Beige" HorizontalAlignment="Center" BorderBrush="Silver" BorderThickness="2 2 2 2" Visibility="Collapsed">
+        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="500" MinWidth="500" MaxWidth="500" Height="400" MinHeight="400" MaxHeight="400" Background="Beige" HorizontalAlignment="Center" Visibility="Collapsed">
             <StackPanel>
                 <Grid Margin="0" Background="Black">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="330"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-
+                    <StackPanel Grid.Column="0" Visibility="Collapsed">
+                        <TextBlock Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="50 10 0 0">Пистолет</TextBlock>
+                    </StackPanel>
+                    <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Hidden">
+                        <StackPanel>
+                            <Grid Margin="0" Background="Black">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 5 0 5">Заточенное копье</TextBlock>
+                                <TextBlock Grid.Row="1" Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 5 0 5">Изображение</TextBlock>
+                                <TextBlock Grid.Row="2" Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">Оружие бритвенной остроты. Деревко деревянное. Наконечник из закаленной стали.</TextBlock>
+                                <WrapPanel Grid.Row="3" HorizontalAlignment="Center">
+                                    <TextBlock Foreground="Lime" TextWrapping="Wrap" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 0 0 5">
+                                        <Run>Мин.сила:</Run>
+                                        <Run>4</Run>
+                                    </TextBlock>
+                                </WrapPanel>
+                                <TextBlock Grid.Row="4" Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">Инструменты:</TextBlock>
+                                <StackPanel Grid.Row="5">
+                                    <TextBlock Foreground="Green" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="40 0 40 5">Верстак</TextBlock>
+                                </StackPanel>
+                                <TextBlock Grid.Row="6" Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">Предметы:</TextBlock>
+                                <WrapPanel Grid.Row="7" HorizontalAlignment="Center">
+                                    <TextBlock Foreground="Green" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 0 0 5">
+                                       <Run>копье</Run>
+                                       <Run>и</Run>
+                                       <Run>кремень</Run>
+                                    </TextBlock>
+                                </WrapPanel>
+                                <StackPanel Grid.Row="8">
+                                    <TextBlock Foreground="green" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">изображения</TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <StackPanel Grid.Column="1">
+                        <Grid Margin="0" Background="Black">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="200"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Row="1">
+                                <Grid Margin="0" Background="Black">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="70"></RowDefinition>
+                                        <RowDefinition Height="130"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Row="0" FontSize="28" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" Margin="30 30 30 5">DONE</Button>
+                                    <StackPanel Grid.Row="1" Margin="10 10 0 0">
+                                        <WrapPanel>
+                                            <Ellipse Width="10" Height="10" Fill="DarkRed" Margin="10 0 0 0"/>
+                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">ARMOR</TextBlock>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Ellipse Width="10" Height="10" Fill="DarkRed" Margin="10 0 0 0"/>
+                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">WEAPON</TextBlock>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Ellipse Width="10" Height="10" Fill="DarkRed" Margin="10 0 0 0"/>
+                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">AMMO</TextBlock>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Ellipse Width="10" Height="10" Fill="DarkRed" Margin="10 0 0 0"/>
+                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">MISC</TextBlock>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Ellipse Width="10" Height="10" Fill="DarkRed" Margin="10 0 0 0"/>
+                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">ALL</TextBlock>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0">
+                                <Grid Margin="0" Background="Black">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="100"></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                        <RowDefinition Height="20"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Row="1" FontSize="28" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" Margin="40 5 40 5">FIX</Button>
+                                    <WrapPanel Grid.Row="2">
+                                        <TextBlock Foreground="White" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Regular" FontSize="20" Margin="70 5 0 5">0</TextBlock>
+                                        <TextBlock Foreground="White" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Regular" FontSize="20" Margin="5 5 0 5">1</TextBlock>
+                                    </WrapPanel>
+                                    <WrapPanel Grid.Row="3">
+                                        <Button Width="30" Height="20" Margin="50 0 0 0"></Button>
+                                        <Button Width="30" Height="20" Margin="5 0 00 0"></Button>
+                                    </WrapPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
         </Border>
