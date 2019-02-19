@@ -101,9 +101,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="fonts\fallout_decayed.ttf" />
-    <Resource Include="fonts\fallout_display.ttf" />
-    <Resource Include="fonts\fallout.ttf" />
+    <Resource Include="data\fonts\fallout_decayed.ttf" />
+    <Resource Include="data\fonts\fallout_display.ttf" />
+    <Resource Include="data\fonts\fallout.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -111,6 +111,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\menuClick\click_exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\menuClick\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\menuClick\back.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
