@@ -11,13 +11,13 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="30 px"></RowDefinition>
-            <RowDefinition Height="100 px"></RowDefinition>
+            <RowDefinition MinHeight="30 px" MaxHeight="30 px"></RowDefinition>
+            <RowDefinition MinHeight="100 px" MaxHeight="100 px"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="270" MaxWidth="270"></ColumnDefinition>
+            <ColumnDefinition MinWidth="370" MaxWidth="370"></ColumnDefinition>
+            <ColumnDefinition MinWidth="430" MaxWidth="430"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition MinWidth="200" MaxWidth="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <!-- игровое поле -->
@@ -28,19 +28,19 @@
         <!-- игровое поле -->
 
         <!-- чат -->
-        <Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" BorderBrush="Silver" BorderThickness="2 2 2 2">
+        <Border Grid.Row="1" Grid.Column="0" Width="370" MaxWidth="370" MinWidth="370" Grid.RowSpan="2">
             <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Orientation="Horizontal">
                 <!--<Button Width="70" Background="silver" Click="Exit_Game"/>-->
-                <Grid Width="270" MaxWidth="270">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="188" />
+                        <ColumnDefinition Width="290" />
                         <ColumnDefinition Width="80"/>
                     </Grid.ColumnDefinitions>
-                    <ScrollViewer Grid.Row="0"  Grid.ColumnSpan="2" Name="Chat"  VerticalScrollBarVisibility="Visible">
+                    <ScrollViewer Grid.Row="0"  Grid.ColumnSpan="2" Name="Chat"  VerticalScrollBarVisibility="Hidden">
                         <TextBlock Name="ChatTextBlock" TextWrapping="Wrap" Background="black" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="8"/>
                     </ScrollViewer>
                     <TextBox Name="MessageTextBox" Grid.Row="1" Grid.Column="0" Background="black" Foreground="Lime" KeyDown="SendButton_Key" />
@@ -51,7 +51,7 @@
         <!-- чат -->
 
         <!-- интерфейс -->
-        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0 0 0 0">
+        <StackPanel Grid.Row="2" Grid.Column="1" Margin="0 0 0 0">
             <Grid Margin="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"></RowDefinition>
@@ -160,45 +160,75 @@
         <!-- интерфейс -->
 
         <!-- умения -->
-        <Border Grid.Column="2" Width="200" MinWidth="200" MaxWidth="200" Height="500" MinHeight="500" MaxHeight="700" Background="Beige" HorizontalAlignment="Right" Margin="0 87 0 87">
+        <Border Grid.Column="2" Width="185" MinWidth="185" MaxWidth="185" Height="368" MinHeight="368" MaxHeight="368" Background="Beige" HorizontalAlignment="Right" Margin="0 87 0 87">
             <StackPanel>
-                <Grid Margin="0" Background="Fuchsia">
+                <Grid Margin="0" Background="Black">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40" MinHeight="40"></RowDefinition>
-                        <RowDefinition Height="40" MinHeight="40"></RowDefinition>
-                        <RowDefinition Height="40" MinHeight="40"></RowDefinition>
-                        <RowDefinition Height="40" MinHeight="40"></RowDefinition>
-                        <RowDefinition Height="40" MinHeight="40"></RowDefinition>
-                        <RowDefinition Height="40" MinHeight="40"></RowDefinition>
-                        <RowDefinition Height="40" MinHeight="40"></RowDefinition>
-                        <RowDefinition Height="40" MinHeight="40"></RowDefinition>
-                        <RowDefinition Height="40" MinHeight="40"></RowDefinition>
-                        <RowDefinition Height="40" MinHeight="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="36"></RowDefinition>
+                        <RowDefinition Height="36"></RowDefinition>
+                        <RowDefinition Height="36"></RowDefinition>
+                        <RowDefinition Height="36"></RowDefinition>
+                        <RowDefinition Height="36"></RowDefinition>
+                        <RowDefinition Height="36"></RowDefinition>
+                        <RowDefinition Height="36"></RowDefinition>
+                        <RowDefinition Height="36"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Background="gray" Foreground="Goldenrod" Content="Умения"/>
-                    <Button Grid.Row="1" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Content="Крастьcя"/>
-                    <Button Grid.Row="2" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Content="Взлом"/>
-                    <Button Grid.Row="3" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Content="Кража"/>
-                    <Button Grid.Row="4" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Content="Ловушки"/>
-                    <Button Grid.Row="5" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Content="Санитар"/>
-                    <Button Grid.Row="6" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Content="Доктор"/>
-                    <Button Grid.Row="7" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Content="Наука"/>
-                    <Button Grid.Row="8" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Content="Ремонт"/>
-
-                    <TextBlock Grid.Row="1" Grid.Column="1" Background="gray"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Background="gray"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Background="gray"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Background="gray"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" Background="gray"/>
-                    <TextBlock Grid.Row="6" Grid.Column="1" Background="gray"/>
-                    <TextBlock Grid.Row="7" Grid.Column="1" Background="gray"/>
-                    <TextBlock Grid.Row="8" Grid.Column="1" Background="gray"/>
-
-                    <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Background="gray" Foreground="Goldenrod" Content="Отмена"/>
+                    <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Background="gray" Foreground="Goldenrod" Content="Умения"/>
+                    <Button Grid.Row="1" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Крастьcя"/>
+                    <Button Grid.Row="2" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Взлом"/>
+                    <Button Grid.Row="3" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Кража"/>
+                    <Button Grid.Row="4" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Ловушки"/>
+                    <Button Grid.Row="5" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Санитар"/>
+                    <Button Grid.Row="6" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Доктор"/>
+                    <Button Grid.Row="7" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Наука"/>
+                    <Button Grid.Row="8" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Ремонт"/>
+                    <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Background="gray" Foreground="Goldenrod" Content="Отмена"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                    </TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                    </TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                    </TextBlock>
+                    <TextBlock Grid.Row="4" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                    </TextBlock>
+                    <TextBlock Grid.Row="5" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                    </TextBlock>
+                    <TextBlock Grid.Row="6" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                    </TextBlock>
+                    <TextBlock Grid.Row="7" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                    </TextBlock>
+                    <TextBlock Grid.Row="8" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                    </TextBlock>
                 </Grid>
             </StackPanel>
         </Border>
@@ -701,11 +731,27 @@
         <!-- пипбой -->
 
         <!-- меню -->
-
+        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" MinWidth="164" MaxWidth="164" MinHeight="144" MaxHeight="144" Background="Beige" HorizontalAlignment="Center" Visibility="Visible">
+            <StackPanel>
+                <Grid Margin="0" Background="Black">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Row="0" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Regular" FontSize="22" Margin="10 20 10 0">ОПЦИИ</Button>
+                    <Button Grid.Row="1" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Regular" FontSize="22" Margin="10 5 10 0">ВЫХОД</Button>
+                    <Button Grid.Row="2" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Regular" FontSize="22" Margin="10 5 10 20">ОТМЕНА</Button>
+                </Grid>
+            </StackPanel>
+        </Border>
         <!-- меню -->
 
         <!-- диалоговое окно -->
-        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="640" MinWidth="640" MaxWidth="640" Height="310" MinHeight="310" MaxHeight="310" Background="Beige" HorizontalAlignment="Center" Visibility="Visible">
+        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="640" MinWidth="640" MaxWidth="640" Height="310" MinHeight="310" MaxHeight="310" Background="Beige" HorizontalAlignment="Center" Visibility="Collapsed">
             <StackPanel>
                 <Grid Margin="0" Background="Black">
                     <Grid.RowDefinitions>
