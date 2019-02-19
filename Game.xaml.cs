@@ -119,10 +119,10 @@ namespace Nuclear
 
         }
 
-    private void Exit_Game(object sender, RoutedEventArgs e)
+        private void Opacity_ClickDown(object sender, MouseButtonEventArgs e)
         {
-            StartMenu menu = new StartMenu();
-            this.NavigationService.Navigate(menu);
+            (sender as TextBlock).Opacity = 1;
+            Mouse.Capture(sender as TextBlock);
         }
 
         public void MapImageGrid()
@@ -623,6 +623,30 @@ namespace Nuclear
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        private void Collapsed_WindowUI_Click(object sender, MouseButtonEventArgs e)
+        {
+            object tag = ((TextBlock)e.OriginalSource).Tag;
+            switch ((string)tag)
+            {
+                case "MenuGame":
+                    (sender as TextBlock).Opacity = 0;
+                    Mouse.Capture(null);
+                    MenuGame.Visibility = Visibility.Collapsed;
+                    break;
+                case "Exit":
+                    (sender as TextBlock).Opacity = 0;
+                    Mouse.Capture(null);
+                    StartMenu menu = new StartMenu();
+                    this.NavigationService.Navigate(menu);
+                    break;
+                case "Settings":
+                    (sender as TextBlock).Opacity = 0;
+                    Mouse.Capture(null);
+                    break;
+            }
+
         }
         // обработчик события закрытия формы
         /*

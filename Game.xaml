@@ -41,7 +41,7 @@
                         <ColumnDefinition Width="80"/>
                     </Grid.ColumnDefinitions>
                     <ScrollViewer Grid.Row="0"  Grid.ColumnSpan="2" Name="Chat"  VerticalScrollBarVisibility="Hidden">
-                        <TextBlock Name="ChatTextBlock" TextWrapping="Wrap" Background="black" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="8"/>
+                        <TextBlock Name="ChatTextBlock" TextWrapping="Wrap" Background="black" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="8"/>
                     </ScrollViewer>
                     <TextBox Name="MessageTextBox" Grid.Row="1" Grid.Column="0" Background="black" Foreground="Lime" KeyDown="SendButton_Key" />
                     <Button Name="SendButton" Grid.Row="1" Grid.Column="1" Content="Отправить" Click="SendButton_Click"/>
@@ -179,52 +179,52 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Background="gray" Foreground="Goldenrod" Content="Умения"/>
-                    <Button Grid.Row="1" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Крастьcя"/>
-                    <Button Grid.Row="2" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Взлом"/>
-                    <Button Grid.Row="3" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Кража"/>
-                    <Button Grid.Row="4" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Ловушки"/>
-                    <Button Grid.Row="5" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Санитар"/>
-                    <Button Grid.Row="6" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Доктор"/>
-                    <Button Grid.Row="7" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Наука"/>
-                    <Button Grid.Row="8" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Content="Ремонт"/>
+                    <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Background="gray" Foreground="Goldenrod" Content="Умения"/>
+                    <Button Grid.Row="1" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Крастьcя"/>
+                    <Button Grid.Row="2" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Взлом"/>
+                    <Button Grid.Row="3" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Кража"/>
+                    <Button Grid.Row="4" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Ловушки"/>
+                    <Button Grid.Row="5" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Санитар"/>
+                    <Button Grid.Row="6" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Доктор"/>
+                    <Button Grid.Row="7" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Наука"/>
+                    <Button Grid.Row="8" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Ремонт"/>
                     <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Background="gray" Foreground="Goldenrod" Content="Отмена"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
                         <Run>0</Run>
                         <Run>0</Run>
                         <Run>0</Run>
                     </TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                    <TextBlock Grid.Row="2" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
                         <Run>0</Run>
                         <Run>0</Run>
                         <Run>0</Run>
                     </TextBlock>
-                    <TextBlock Grid.Row="3" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                    <TextBlock Grid.Row="3" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
                         <Run>0</Run>
                         <Run>0</Run>
                         <Run>0</Run>
                     </TextBlock>
-                    <TextBlock Grid.Row="4" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                    <TextBlock Grid.Row="4" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
                         <Run>0</Run>
                         <Run>0</Run>
                         <Run>0</Run>
                     </TextBlock>
-                    <TextBlock Grid.Row="5" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                    <TextBlock Grid.Row="5" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
                         <Run>0</Run>
                         <Run>0</Run>
                         <Run>0</Run>
                     </TextBlock>
-                    <TextBlock Grid.Row="6" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                    <TextBlock Grid.Row="6" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
                         <Run>0</Run>
                         <Run>0</Run>
                         <Run>0</Run>
                     </TextBlock>
-                    <TextBlock Grid.Row="7" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                    <TextBlock Grid.Row="7" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
                         <Run>0</Run>
                         <Run>0</Run>
                         <Run>0</Run>
                     </TextBlock>
-                    <TextBlock Grid.Row="8" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">
+                    <TextBlock Grid.Row="8" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
                         <Run>0</Run>
                         <Run>0</Run>
                         <Run>0</Run>
@@ -609,10 +609,10 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <WrapPanel Grid.Row="0">
-                                        <TextBlock FontSize="18" Foreground="White" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">27</TextBlock>
-                                        <TextBlock FontSize="18" Foreground="White" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">FEB</TextBlock>
-                                        <TextBlock FontSize="18" Foreground="White" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">2260</TextBlock>
-                                        <TextBlock FontSize="18" Foreground="White" Margin="25 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Regular">0728</TextBlock>
+                                        <TextBlock FontSize="18" Foreground="White" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">27</TextBlock>
+                                        <TextBlock FontSize="18" Foreground="White" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">FEB</TextBlock>
+                                        <TextBlock FontSize="18" Foreground="White" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">2260</TextBlock>
+                                        <TextBlock FontSize="18" Foreground="White" Margin="25 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">0728</TextBlock>
                                     </WrapPanel>
 
                                 </Grid>
@@ -620,23 +620,23 @@
                             <StackPanel Grid.Row="2">
                                 <WrapPanel>
                                     <Ellipse Width="15" Height="15" Fill="Lime" Margin="10 0 0 0"/>
-                                    <TextBlock FontSize="24" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">STATUS</TextBlock>
+                                    <TextBlock FontSize="24" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed">STATUS</TextBlock>
                                 </WrapPanel>
                                 <WrapPanel>
                                     <Ellipse Width="15" Height="15" Fill="DarkGreen" Margin="10 0 0 0"/>
-                                    <TextBlock FontSize="24" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">L__GU_G_</TextBlock>
+                                    <TextBlock FontSize="24" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed">L__GU_G_</TextBlock>
                                 </WrapPanel>
                                 <WrapPanel>
                                     <Ellipse Width="15" Height="15" Fill="Lime" Margin="10 0 0 0"/>
-                                    <TextBlock FontSize="24" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">AUTOMAPS</TextBlock>
+                                    <TextBlock FontSize="24" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed">AUTOMAPS</TextBlock>
                                 </WrapPanel>
                                 <WrapPanel>
                                     <Ellipse Width="15" Height="15" Fill="Lime" Margin="10 0 0 0"/>
-                                    <TextBlock FontSize="24" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">ARCHIVES</TextBlock>
+                                    <TextBlock FontSize="24" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed">ARCHIVES</TextBlock>
                                 </WrapPanel>
                                 <WrapPanel>
                                     <Ellipse Width="15" Height="15" Fill="Lime" Margin="10 0 0 0"/>
-                                    <TextBlock FontSize="24" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">CLOSE</TextBlock>
+                                    <TextBlock FontSize="24" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed">CLOSE</TextBlock>
                                 </WrapPanel>
                             </StackPanel>
                         </Grid>
@@ -672,57 +672,57 @@
                                 <ColumnDefinition Width="50"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">----Статус-----</TextBlock>
-                            <TextBlock Grid.Row="1" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Банковский счет</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">монет</TextBlock>
-                            <TextBlock Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="3" Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 10 0 0">----Таймауты-----</TextBlock>
-                            <TextBlock Grid.Row="3" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Загрузка</TextBlock>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="3" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="4" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Джет</TextBlock>
-                            <TextBlock Grid.Row="4" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="4" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="5" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Сигареты</TextBlock>
-                            <TextBlock Grid.Row="5" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="5" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="6" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Нюка-кола</TextBlock>
-                            <TextBlock Grid.Row="6" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">----Статус-----</TextBlock>
+                            <TextBlock Grid.Row="1" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Банковский счет</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">монет</TextBlock>
+                            <TextBlock Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="3" Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="0 10 0 0">----Таймауты-----</TextBlock>
+                            <TextBlock Grid.Row="3" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Загрузка</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="4" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Джет</TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="5" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Сигареты</TextBlock>
+                            <TextBlock Grid.Row="5" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="5" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="6" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Нюка-кола</TextBlock>
+                            <TextBlock Grid.Row="6" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
                             <TextBlock Grid.Row="6" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="7" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Баффаут</TextBlock>
-                            <TextBlock Grid.Row="7" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="7" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="8" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Психо</TextBlock>
-                            <TextBlock Grid.Row="8" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="8" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="9" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Препараты</TextBlock>
-                            <TextBlock Grid.Row="9" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="9" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="10" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Репликация</TextBlock>
-                            <TextBlock Grid.Row="10" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="10" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="11" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Боевой</TextBlock>
-                            <TextBlock Grid.Row="11" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="11" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="12" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Кража</TextBlock>
-                            <TextBlock Grid.Row="12" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="12" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="13" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Взлом</TextBlock>
-                            <TextBlock Grid.Row="13" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="13" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="14" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Наука</TextBlock>
-                            <TextBlock Grid.Row="14" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="14" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="15" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Ремнонт</TextBlock>
-                            <TextBlock Grid.Row="15" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="15" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="16" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Доктор</TextBlock>
-                            <TextBlock Grid.Row="16" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
-                            <TextBlock Grid.Row="16" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="17" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">Первая помощь</TextBlock>
-                            <TextBlock Grid.Row="17" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="7" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Баффаут</TextBlock>
+                            <TextBlock Grid.Row="7" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="7" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="8" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Психо</TextBlock>
+                            <TextBlock Grid.Row="8" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="8" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="9" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Препараты</TextBlock>
+                            <TextBlock Grid.Row="9" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="9" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="10" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Репликация</TextBlock>
+                            <TextBlock Grid.Row="10" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="10" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="11" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Боевой</TextBlock>
+                            <TextBlock Grid.Row="11" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="11" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="12" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Кража</TextBlock>
+                            <TextBlock Grid.Row="12" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="12" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="13" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Взлом</TextBlock>
+                            <TextBlock Grid.Row="13" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="13" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="14" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Наука</TextBlock>
+                            <TextBlock Grid.Row="14" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="14" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="15" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Ремнонт</TextBlock>
+                            <TextBlock Grid.Row="15" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="15" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="16" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Доктор</TextBlock>
+                            <TextBlock Grid.Row="16" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
+                            <TextBlock Grid.Row="16" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
+                            <TextBlock Grid.Row="17" Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">Первая помощь</TextBlock>
+                            <TextBlock Grid.Row="17" Grid.Column="1" Foreground="Lime" HorizontalAlignment="Right" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9">0</TextBlock>
                             <TextBlock Grid.Row="17" Grid.Column="2" Foreground="Lime" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="10 0 0 0">секунд</TextBlock>
-                            <TextBlock Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="3" Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 10 0 0">----Квесты-----</TextBlock>
+                            <TextBlock Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="3" Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="0 10 0 0">----Квесты-----</TextBlock>
                         </Grid>
                     </StackPanel>
                 </Grid>
@@ -731,20 +731,33 @@
         <!-- пипбой -->
 
         <!-- меню -->
-        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" MinWidth="164" MaxWidth="164" MinHeight="144" MaxHeight="144" Background="Beige" HorizontalAlignment="Center" Visibility="Visible">
+        <Border Name="MenuGame" Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" MinWidth="164" MaxWidth="164" MinHeight="144" MaxHeight="144" HorizontalAlignment="Center" Visibility="Visible">
+            <Border.Background>
+                <ImageBrush ImageSource="data/image/mainui/menu.png"/>
+            </Border.Background>
             <StackPanel>
-                <Grid Margin="0" Background="Black">
+                <Grid Margin="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="37"></RowDefinition>
+                        <RowDefinition Height="77"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Row="0" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Regular" FontSize="22" Margin="10 20 10 0">ОПЦИИ</Button>
-                    <Button Grid.Row="1" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Regular" FontSize="22" Margin="10 5 10 0">ВЫХОД</Button>
-                    <Button Grid.Row="2" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Regular" FontSize="22" Margin="10 5 10 20">ОТМЕНА</Button>
+                    <TextBlock Grid.Row="0" Margin="13 17 15 0" Opacity="0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="Settings">
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="data/image/mainui/menuClick/settings.png"/>
+                        </TextBlock.Background></TextBlock>
+                    <TextBlock Grid.Row="1" Margin="13 3 15 1" Opacity="0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="Exit">
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="data/image/mainui/menuClick/click_exit.png"/>
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <TextBlock Grid.Row="2" Margin="13 2 15 42" Opacity="0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="MenuGame">
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="data/image/mainui/menuClick/back.png"/>
+                        </TextBlock.Background></TextBlock>
                 </Grid>
             </StackPanel>
         </Border>
@@ -773,7 +786,7 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <WrapPanel HorizontalAlignment="Center">
-                                <TextBlock Grid.Row="0" Foreground="White" TextWrapping="Wrap" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 30 0 0">
+                                <TextBlock Grid.Row="0" Foreground="White" TextWrapping="Wrap" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="0 30 0 0">
                                     <Run>0</Run>
                                     <Run>$</Run>
                                 </TextBlock>
@@ -781,19 +794,19 @@
                         </Grid>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Grid.Row="1">
-                        <TextBlock TextAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Background="Black" Foreground="Goldenrod" Margin="0 10 0 0">Бартер</TextBlock>
+                        <TextBlock TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="28" Background="Black" Foreground="Goldenrod" Margin="0 10 0 0">Бартер</TextBlock>
                         <Ellipse Height="15" Width="15" Fill="DarkRed" Margin="0 10 0 0"/>
-                        <TextBlock TextAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="28" Background="Black" Foreground="Goldenrod" Margin="0 10 0 0">Сказать</TextBlock>
+                        <TextBlock TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="28" Background="Black" Foreground="Goldenrod" Margin="0 10 0 0">Сказать</TextBlock>
                         <Ellipse Height="15" Width="15" Fill="DarkRed" Margin="0 10 0 0"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Grid.Row="1">
-                        <TextBlock Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="50 40 0 0">Спасибо Кенни...</TextBlock>
-                        <TextBlock Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="50 5 0 0">Как дела?</TextBlock>
-                        <TextBlock Foreground="Green" TextWrapping="Wrap" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="50 5 0 0">Продать.</TextBlock>
+                        <TextBlock Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="50 40 0 0">Спасибо Кенни...</TextBlock>
+                        <TextBlock Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="50 5 0 0">Как дела?</TextBlock>
+                        <TextBlock Foreground="Green" TextWrapping="Wrap" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="50 5 0 0">Продать.</TextBlock>
                     </StackPanel>
                     <ScrollViewer Grid.Column="1" Grid.Row="0" VerticalScrollBarVisibility="Hidden">
                         <WrapPanel HorizontalAlignment="Left">
-                            <TextBlock Foreground="Lime" TextWrapping="Wrap" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="50 20 30 0">Я думал ты труп, на секунду точно в этом был уверен. Твое счастье, что подал признаки жизни, пришлось оттащить тебя в мою палатку, похоже кто-то пытался превратить тебя в дуршлаг, пришлось использовать на тебя все бинты, что у меня были</TextBlock>
+                            <TextBlock Foreground="Lime" TextWrapping="Wrap" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="50 20 30 0">Я думал ты труп, на секунду точно в этом был уверен. Твое счастье, что подал признаки жизни, пришлось оттащить тебя в мою палатку, похоже кто-то пытался превратить тебя в дуршлаг, пришлось использовать на тебя все бинты, что у меня были</TextBlock>
                         </WrapPanel>
                     </ScrollViewer>
                 </Grid>
@@ -813,7 +826,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Visibility="Collapsed">
-                        <TextBlock Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="50 10 0 0">Пистолет</TextBlock>
+                        <TextBlock Foreground="Lime" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="50 10 0 0">Пистолет</TextBlock>
                     </StackPanel>
                     <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
@@ -833,29 +846,29 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 5 0 5">Заточенное копье</TextBlock>
-                                <TextBlock Grid.Row="1" Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 5 0 5">Изображение</TextBlock>
-                                <TextBlock Grid.Row="2" Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">Оружие бритвенной остроты. Деревко деревянное. Наконечник из закаленной стали.</TextBlock>
+                                <TextBlock Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="0 5 0 5">Заточенное копье</TextBlock>
+                                <TextBlock Grid.Row="1" Foreground="Green" HorizontalAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="0 5 0 5">Изображение</TextBlock>
+                                <TextBlock Grid.Row="2" Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">Оружие бритвенной остроты. Деревко деревянное. Наконечник из закаленной стали.</TextBlock>
                                 <WrapPanel Grid.Row="3" HorizontalAlignment="Center">
-                                    <TextBlock Foreground="Lime" TextWrapping="Wrap" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 0 0 5">
+                                    <TextBlock Foreground="Lime" TextWrapping="Wrap" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="0 0 0 5">
                                         <Run>Мин.сила:</Run>
                                         <Run>4</Run>
                                     </TextBlock>
                                 </WrapPanel>
-                                <TextBlock Grid.Row="4" Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">Инструменты:</TextBlock>
+                                <TextBlock Grid.Row="4" Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">Инструменты:</TextBlock>
                                 <StackPanel Grid.Row="5">
-                                    <TextBlock Foreground="Green" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="40 0 40 5">Верстак</TextBlock>
+                                    <TextBlock Foreground="Green" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="40 0 40 5">Верстак</TextBlock>
                                 </StackPanel>
-                                <TextBlock Grid.Row="6" Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">Предметы:</TextBlock>
+                                <TextBlock Grid.Row="6" Foreground="Lime" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">Предметы:</TextBlock>
                                 <WrapPanel Grid.Row="7" HorizontalAlignment="Center">
-                                    <TextBlock Foreground="Green" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="0 0 0 5">
+                                    <TextBlock Foreground="Green" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="0 0 0 5">
                                        <Run>копье</Run>
                                        <Run>и</Run>
                                        <Run>кремень</Run>
                                     </TextBlock>
                                 </WrapPanel>
                                 <StackPanel Grid.Row="8">
-                                    <TextBlock Foreground="green" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">изображения</TextBlock>
+                                    <TextBlock Foreground="green" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9" Margin="40 10 40 5">изображения</TextBlock>
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
@@ -878,27 +891,27 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Grid.Row="0" FontSize="28" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" Margin="30 30 30 5">DONE</Button>
+                                    <Button Grid.Row="0" FontSize="28" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Margin="30 30 30 5">DONE</Button>
                                     <StackPanel Grid.Row="1" Margin="10 10 0 0">
                                         <WrapPanel>
                                             <Ellipse Width="10" Height="10" Fill="DarkRed" Margin="10 0 0 0"/>
-                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">ARMOR</TextBlock>
+                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed">ARMOR</TextBlock>
                                         </WrapPanel>
                                         <WrapPanel>
                                             <Ellipse Width="10" Height="10" Fill="DarkRed" Margin="10 0 0 0"/>
-                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">WEAPON</TextBlock>
+                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed">WEAPON</TextBlock>
                                         </WrapPanel>
                                         <WrapPanel>
                                             <Ellipse Width="10" Height="10" Fill="DarkRed" Margin="10 0 0 0"/>
-                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">AMMO</TextBlock>
+                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed">AMMO</TextBlock>
                                         </WrapPanel>
                                         <WrapPanel>
                                             <Ellipse Width="10" Height="10" Fill="DarkRed" Margin="10 0 0 0"/>
-                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">MISC</TextBlock>
+                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed">MISC</TextBlock>
                                         </WrapPanel>
                                         <WrapPanel>
                                             <Ellipse Width="10" Height="10" Fill="DarkRed" Margin="10 0 0 0"/>
-                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/fonts/#Fallout Decayed">ALL</TextBlock>
+                                            <TextBlock FontSize="18" Foreground="Goldenrod" Margin="10 0 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed">ALL</TextBlock>
                                         </WrapPanel>
                                     </StackPanel>
                                 </Grid>
@@ -914,10 +927,10 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Grid.Row="1" FontSize="28" Foreground="Goldenrod" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" Margin="40 5 40 5">FIX</Button>
+                                    <Button Grid.Row="1" FontSize="28" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Margin="40 5 40 5">FIX</Button>
                                     <WrapPanel Grid.Row="2">
-                                        <TextBlock Foreground="White" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Regular" FontSize="20" Margin="70 5 0 5">0</TextBlock>
-                                        <TextBlock Foreground="White" HorizontalAlignment="Left" FontFamily="/Nuclear;component/fonts/#Fallout Regular" FontSize="20" Margin="5 5 0 5">1</TextBlock>
+                                        <TextBlock Foreground="White" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" FontSize="20" Margin="70 5 0 5">0</TextBlock>
+                                        <TextBlock Foreground="White" HorizontalAlignment="Left" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" FontSize="20" Margin="5 5 0 5">1</TextBlock>
                                     </WrapPanel>
                                     <WrapPanel Grid.Row="3">
                                         <Button Width="30" Height="20" Margin="50 0 0 0"></Button>
