@@ -121,8 +121,42 @@ namespace Nuclear
 
         private void Opacity_ClickDown(object sender, MouseButtonEventArgs e)
         {
-            (sender as TextBlock).Opacity = 1;
-            Mouse.Capture(sender as TextBlock);
+            object tag;
+            if (sender is TextBlock)
+                tag = ((TextBlock)e.OriginalSource).Tag;
+            else
+                tag = ((Ellipse)e.OriginalSource).Tag;
+            switch ((string)tag)
+            {
+                case "Done":
+                    Done.Opacity = 1;
+                    break;
+                case "ArrowUp":
+                    ArrowUp.Opacity = 1;
+                    break;
+                case "ArrowDown":
+                    ArrowDown.Opacity = 1;
+                    break;
+                case "ArrowLeft":
+                    ArrowLeft.Opacity = 1;
+                    break;
+                case "ArrowRight":
+                    ArrowRight.Opacity = 1;
+                    break;
+                case "Fix":
+                    Fix.Opacity = 1;
+                    break;
+                default:
+                    if (sender is TextBlock)
+                        (sender as TextBlock).Opacity = 1;
+                    else
+                        (sender as Ellipse).Opacity = 1;
+                    break;
+            }
+            if (sender is TextBlock)
+                Mouse.Capture(sender as TextBlock);
+            else
+                Mouse.Capture(sender as Ellipse);
         }
 
         public void MapImageGrid()
@@ -627,7 +661,11 @@ namespace Nuclear
 
         private void Collapsed_WindowUI_Click(object sender, MouseButtonEventArgs e)
         {
-            object tag = ((TextBlock)e.OriginalSource).Tag;
+            object tag;
+            if (sender is TextBlock)
+                tag = ((TextBlock)e.OriginalSource).Tag;
+            else
+                tag = ((Ellipse)e.OriginalSource).Tag;
             switch ((string)tag)
             {
                 case "MenuGame":
@@ -643,9 +681,40 @@ namespace Nuclear
                     break;
                 case "Settings":
                     (sender as TextBlock).Opacity = 0;
+                    break;
+                case "Barter":
+                    (sender as TextBlock).Opacity = 0;
+                    break;
+                case "Say":
+                    (sender as TextBlock).Opacity = 0;
+                    break;
+                case "ArrowUp":
+                    ArrowUp.Opacity = 0;
+                    break;
+                case "ArrowDown":
+                    ArrowDown.Opacity = 0;
+                    break;
+                case "ArrowRight":
+                    ArrowRight.Opacity = 0;
+                    break;
+                case "ArrowLeft":
+                    ArrowLeft.Opacity = 0;
+                    break;
+                case "Fix":
+                    Fix.Opacity = 0;
+                    break;
+                case "Done":
+                    Done.Opacity = 0;
+                    break;
+                default:
+                    if(sender is TextBlock)
+                        (sender as TextBlock).Opacity = 0;
+                    else
+                        (sender as Ellipse).Opacity = 0;
                     Mouse.Capture(null);
                     break;
             }
+            Mouse.Capture(null);
 
         }
         // обработчик события закрытия формы
