@@ -146,5 +146,23 @@
   <ItemGroup>
     <Resource Include="data\image\mainui\menuClick\back.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\dialogClick\dialog_window_button_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\dialog_window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\сraft_window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\craftClick\but_done.png" />
+    <Resource Include="data\image\mainui\craftClick\but_down_arrow.png" />
+    <Resource Include="data\image\mainui\craftClick\but_fix.png" />
+    <Resource Include="data\image\mainui\craftClick\but_left_arrow.png" />
+    <Resource Include="data\image\mainui\craftClick\but_red.png" />
+    <Resource Include="data\image\mainui\craftClick\but_right_arrow.png" />
+    <Resource Include="data\image\mainui\craftClick\but_up_arrow.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
