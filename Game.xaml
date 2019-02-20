@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Game">
 
-    <Grid>
+    <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition MinHeight="30 px" MaxHeight="30 px"></RowDefinition>
@@ -160,9 +160,12 @@
         <!-- интерфейс -->
 
         <!-- умения -->
-        <Border Grid.Column="2" Width="185" MinWidth="185" MaxWidth="185" Height="368" MinHeight="368" MaxHeight="368" Background="Beige" HorizontalAlignment="Right" Margin="0 87 0 87">
+        <Border Grid.Column="2" Width="185" MinWidth="185" MaxWidth="185" Height="368" MinHeight="368" MaxHeight="368" HorizontalAlignment="Right" Margin="0 87 0 87">
+            <Border.Background>
+                <ImageBrush ImageSource="data/image/mainui/skill_window.png"/>
+            </Border.Background>
             <StackPanel>
-                <Grid Margin="0" Background="Black">
+                <Grid Margin="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"></RowDefinition>
                         <RowDefinition Height="36"></RowDefinition>
@@ -179,55 +182,154 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Background="gray" Foreground="Goldenrod" Content="Умения"/>
-                    <Button Grid.Row="1" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Крастьcя"/>
-                    <Button Grid.Row="2" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Взлом"/>
-                    <Button Grid.Row="3" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Кража"/>
-                    <Button Grid.Row="4" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Ловушки"/>
-                    <Button Grid.Row="5" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Санитар"/>
-                    <Button Grid.Row="6" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Доктор"/>
-                    <Button Grid.Row="7" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Наука"/>
-                    <Button Grid.Row="8" Background="gray" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" Content="Ремонт"/>
-                    <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" FontFamily="/Nuclear;component/fonts/#Fallout Decayed" FontSize="20" Background="gray" Foreground="Goldenrod" Content="Отмена"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
-                        <Run>0</Run>
-                        <Run>0</Run>
-                        <Run>0</Run>
+                    <TextBlock Grid.Row="1" Margin="15 7 0 0" Panel.ZIndex="10" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="Steal"/>
+                    <TextBlock Name="Steal" Grid.Row="1" Margin="15 6 0 0" Opacity="0">
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="data/image/mainui/skillClick/but_on.png"/>
+                        </TextBlock.Background>
                     </TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
-                        <Run>0</Run>
-                        <Run>0</Run>
-                        <Run>0</Run>
+                    <TextBlock Grid.Row="1" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" TextAlignment="Center" Text="Крастьcя" Margin="15 8 0 0"/>
+                    <TextBlock Grid.Row="2" Margin="15 7 0 0" Panel.ZIndex="10" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="BreakIn"/>
+                    <TextBlock Name="BreakIn" Grid.Row="2" Margin="15 6 0 0" Opacity="0">
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="data/image/mainui/skillClick/but_on.png"/>
+                        </TextBlock.Background>
                     </TextBlock>
-                    <TextBlock Grid.Row="3" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
-                        <Run>0</Run>
-                        <Run>0</Run>
-                        <Run>0</Run>
+                    <TextBlock Grid.Row="2" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" TextAlignment="Center" Text="Взлом" Margin="15 8 0 0"/>
+                    <TextBlock Grid.Row="3" Margin="15 7 0 0" Panel.ZIndex="10" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="Theft"/>
+                    <TextBlock Name="Theft" Grid.Row="3" Margin="15 6 0 0" Opacity="0">
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="data/image/mainui/skillClick/but_on.png"/>
+                        </TextBlock.Background>
                     </TextBlock>
-                    <TextBlock Grid.Row="4" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
-                        <Run>0</Run>
-                        <Run>0</Run>
-                        <Run>0</Run>
+                    <TextBlock Grid.Row="3" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" TextAlignment="Center" Text="Кража" Margin="15 8 0 0"/>
+                    <TextBlock Grid.Row="4" Margin="15 7 0 0" Panel.ZIndex="10" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="Traps"/>
+                    <TextBlock Name="Traps" Grid.Row="4" Margin="15 6 0 0" Opacity="0">
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="data/image/mainui/skillClick/but_on.png"/>
+                        </TextBlock.Background>
                     </TextBlock>
-                    <TextBlock Grid.Row="5" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
-                        <Run>0</Run>
-                        <Run>0</Run>
-                        <Run>0</Run>
+                    <TextBlock Grid.Row="4" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" TextAlignment="Center" Text="Ловушки" Margin="15 8 0 0"/>
+                    <TextBlock Grid.Row="5" Margin="15 7 0 0" Panel.ZIndex="10" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="Nurse"/>
+                    <TextBlock Name="Nurse" Grid.Row="5" Margin="15 6 0 0" Opacity="0">
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="data/image/mainui/skillClick/but_on.png"/>
+                        </TextBlock.Background>
                     </TextBlock>
-                    <TextBlock Grid.Row="6" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
-                        <Run>0</Run>
-                        <Run>0</Run>
-                        <Run>0</Run>
+                    <TextBlock Grid.Row="5" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" TextAlignment="Center" Text="Санитар" Margin="15 8 0 0"/>
+                    <TextBlock Grid.Row="6" Margin="15 7 0 0" Panel.ZIndex="10" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="Doctor"/>
+                    <TextBlock Name="Doctor" Grid.Row="6" Margin="15 6 0 0" Opacity="0">
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="data/image/mainui/skillClick/but_on.png"/>
+                        </TextBlock.Background>
                     </TextBlock>
-                    <TextBlock Grid.Row="7" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
-                        <Run>0</Run>
-                        <Run>0</Run>
-                        <Run>0</Run>
+                    <TextBlock Grid.Row="6" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" TextAlignment="Center" Text="Доктор" Margin="15 8 0 0"/>
+                    <TextBlock Grid.Row="7" Margin="15 7 0 0" Panel.ZIndex="10" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="Science"/>
+                    <TextBlock Name="Science" Grid.Row="7" Margin="15 6 0 0" Opacity="0">
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="data/image/mainui/skillClick/but_on.png"/>
+                        </TextBlock.Background>
                     </TextBlock>
-                    <TextBlock Grid.Row="8" Grid.Column="1" FontSize="18" Foreground="White" Margin="15 10 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
+                    <TextBlock Grid.Row="7" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" TextAlignment="Center" Text="Наука" Margin="15 8 0 0"/>
+                    <TextBlock Grid.Row="8" Margin="15 7 0 0" Panel.ZIndex="10" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="Repairs"/>
+                    <TextBlock Name="Repairs" Grid.Row="8" Margin="15 6 0 0" Opacity="0">
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="data/image/mainui/skillClick/but_on.png"/>
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <TextBlock Grid.Row="8" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20" TextAlignment="Center" Text="Ремонт" Margin="15 8 0 0"/>
+                    <Ellipse Grid.Row="9" Height="15" Width="15" Margin="11 -4 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="data/image/mainui/craftClick/but_red.png"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="18" Margin="18 11 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
                         <Run>0</Run>
                         <Run>0</Run>
                         <Run>0</Run>
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                <GradientStop Color="White" Offset="1"></GradientStop>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="1" FontSize="18" Margin="18 11 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                <GradientStop Color="White" Offset="1"></GradientStop>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="1" FontSize="18" Margin="18 11 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                <GradientStop Color="White" Offset="1"></GradientStop>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Grid.Row="4" Grid.Column="1" FontSize="18" Margin="18 11 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                <GradientStop Color="White" Offset="1"></GradientStop>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Grid.Row="5" Grid.Column="1" FontSize="18" Margin="18 11 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                <GradientStop Color="White" Offset="1"></GradientStop>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Grid.Row="6" Grid.Column="1" FontSize="18" Margin="18 11 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                <GradientStop Color="White" Offset="1"></GradientStop>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Grid.Row="7" Grid.Column="1" FontSize="18" Margin="18 11 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                <GradientStop Color="White" Offset="1"></GradientStop>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Grid.Row="8" Grid.Column="1" FontSize="18" Margin="18 11 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular">
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <Run>0</Run>
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                <GradientStop Color="White" Offset="1"></GradientStop>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground>
                     </TextBlock>
                 </Grid>
             </StackPanel>
@@ -824,7 +926,7 @@
         <!-- диалоговое окно -->
 
         <!-- крафт -->
-        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="500" MinWidth="500" MaxWidth="500" Height="400" MinHeight="400" MaxHeight="400" HorizontalAlignment="Center" Visibility="Visible">
+        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="500" MinWidth="500" MaxWidth="500" Height="400" MinHeight="400" MaxHeight="400" HorizontalAlignment="Center" Visibility="Collapsed">
             <Border.Background>
                 <ImageBrush ImageSource="data/image/mainui/сraft_window.png"/>
             </Border.Background>
@@ -907,7 +1009,8 @@
                                     <TextBlock Name="Done" Grid.Row="0" Opacity="0" Margin="70 23 26 10">
                                         <TextBlock.Background>
                                             <ImageBrush ImageSource="data/image/mainui/craftClick/but_done.png"/>
-                                        </TextBlock.Background></TextBlock>
+                                        </TextBlock.Background>
+                                    </TextBlock>
                                     <StackPanel Grid.Row="1" Margin="0">
                                         <Ellipse Width="14" Height="14" Opacity="0" Margin="0 0 22 0"  MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="Armor">
                                             <Ellipse.Fill>
@@ -986,7 +1089,7 @@
                                                     <GradientStop Color="Gray" Offset="0"></GradientStop>
                                                     <GradientStop Color="White" Offset="1"></GradientStop>
                                                 </LinearGradientBrush>
-                                            </TextBlock.Foreground>                       
+                                            </TextBlock.Foreground>
                                         </TextBlock>
                                         <TextBlock Name="NumberOne" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" FontSize="19" Margin="3 2 0 0">1
                                             <TextBlock.Foreground>

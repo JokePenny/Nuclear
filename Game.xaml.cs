@@ -126,8 +126,33 @@ namespace Nuclear
                 tag = ((TextBlock)e.OriginalSource).Tag;
             else
                 tag = ((Ellipse)e.OriginalSource).Tag;
+            
             switch ((string)tag)
             {
+                case "Steal":
+                    Steal.Opacity = 1;
+                    break;
+                case "BreakIn":
+                    BreakIn.Opacity = 1;
+                    break;
+                case "Theft":
+                    Theft.Opacity = 1;
+                    break;
+                case "Traps":
+                    Traps.Opacity = 1;
+                    break;
+                case "Nurse":
+                    Nurse.Opacity = 1;
+                    break;
+                case "Doctor":
+                    Doctor.Opacity = 1;
+                    break;
+                case "Science":
+                    Science.Opacity = 1;
+                    break;
+                case "Repairs":
+                    Repairs.Opacity = 1;
+                    break;
                 case "Done":
                     Done.Opacity = 1;
                     break;
@@ -705,6 +730,30 @@ namespace Nuclear
                     break;
                 case "Done":
                     Done.Opacity = 0;
+                    break;
+                case "Steal":
+                    Steal.Opacity = 0;
+                    break;
+                case "BreakIn":
+                    BreakIn.Opacity = 0;
+                    break;
+                case "Theft":
+                    Theft.Opacity = 0;
+                    break;
+                case "Traps":
+                    Traps.Opacity = 0;
+                    break;
+                case "Nurse":
+                    Nurse.Opacity = 0;
+                    break;
+                case "Doctor":
+                    Doctor.Opacity = 0;
+                    break;
+                case "Science":
+                    Science.Opacity = 0;
+                    break;
+                case "Repairs":
+                    Repairs.Opacity = 0;
                     break;
                 default:
                     if(sender is TextBlock)

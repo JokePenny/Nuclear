@@ -142,5 +142,11 @@
     <Resource Include="data\image\mainui\craftClick\but_right_arrow.png" />
     <Resource Include="data\image\mainui\craftClick\but_up_arrow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\skill_window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\skillClick\but_on.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
