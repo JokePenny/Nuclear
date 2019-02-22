@@ -151,9 +151,17 @@
   <ItemGroup>
     <Resource Include="data\image\mainui\map_window.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="data\image\mainui\charact_window.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="data\image\mainui\mapClick\but_switch.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="data\image\mainui\charactClick\bonus_panel.png" />
+    <Resource Include="data\image\mainui\charactClick\karma_panel.png" />
+    <Resource Include="data\image\mainui\charactClick\killed_panel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
