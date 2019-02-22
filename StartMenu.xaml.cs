@@ -51,5 +51,20 @@ namespace Nuclear
         {
             Application.Current.Shutdown();
         }
+
+        private void MoveMouse_but(object sender, MouseEventArgs e)
+        {
+            (sender as TextBlock).Opacity = 0.8;
+            ImageBrush das = new ImageBrush();
+            das.ImageSource = new BitmapImage(new Uri(@"data/image/mainui/startClick/backlight.png", UriKind.Relative));
+            (sender as TextBlock).Background = das;
+        }
+
+        private void MoveLeave_but(object sender, MouseEventArgs e)
+        {
+            (sender as TextBlock).Opacity = 0.6;
+            ImageBrush das = new ImageBrush();
+            (sender as TextBlock).Background = das;
+        }
     }
 }

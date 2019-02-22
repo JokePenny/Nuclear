@@ -24,6 +24,8 @@ namespace Nuclear
         {
             InitializeComponent();
             StartMenu menu = new StartMenu();
+            WindowState = WindowState.Maximized;
+
             WindowGame.NavigationService.Navigate(menu);
         }
     }
