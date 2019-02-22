@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Nuclear"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="768" d:DesignWidth="1368"
       Title="Game">
 
     <Grid Name="MainGrid">
@@ -388,256 +388,354 @@
         <!-- инвентрарь -->
 
         <!-- характеристики -->
-        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="500" MinWidth="500" MaxWidth="500" Height="400" MinHeight="400" MaxHeight="400" Background="Beige" HorizontalAlignment="Center" Visibility="Collapsed">
+        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="640" MinWidth="640" MaxWidth="640" Height="480" MinHeight="480" MaxHeight="480" HorizontalAlignment="Center" Visibility="Visible">
+            <Border.Background>
+                <ImageBrush ImageSource="data/image/mainui/charact_window.png"/>
+            </Border.Background>
             <StackPanel>
-                <Grid Margin="0" Background="Black">
+                <Grid Margin="0">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="330"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
-                        <Grid Margin="0" Background="Black">
+                        <Grid Margin="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="32"></RowDefinition>
+                                <RowDefinition Height="233"></RowDefinition>
+                                <RowDefinition Height="60"></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="190"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <WrapPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                                <TextBlock Width="80" Background="Black" Foreground="Lime" FontSize="20"  Text="ГАРПУН"/>
-                                <TextBlock Width="40" Background="Black" HorizontalAlignment="Center" Foreground="Lime" FontSize="20"  Text="34"/>
-                                <TextBlock Width="80" Background="Black" Foreground="Lime" FontSize="20"  Text="МУЖ."/>
-                            </WrapPanel>
-                            <StackPanel Grid.Row="1" Grid.Column="0">
-                                <Grid Margin="0" Background="Black">
+                                <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition></RowDefinition>
                                         <RowDefinition></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="155"/>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="80"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Margin="0 3 0 0" HorizontalAlignment="Center" Foreground="Goldenrod" FontSize="20" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed"  Text="ГАРПУН"/>
+                                    <TextBlock Grid.Column="1" Margin="0 3 0 0" HorizontalAlignment="Center" Foreground="Goldenrod" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" FontSize="20"  Text="34"/>
+                                    <TextBlock Grid.Column="2" Margin="0 3 0 0" HorizontalAlignment="Center" Foreground="Goldenrod" FontSize="20" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed"  Text="МУЖ."/>
+                                </Grid>
+                            </WrapPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0">
+                                <Grid Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="33"></RowDefinition>
+                                        <RowDefinition Height="33"></RowDefinition>
+                                        <RowDefinition Height="33"></RowDefinition>
+                                        <RowDefinition Height="33"></RowDefinition>
+                                        <RowDefinition Height="33"></RowDefinition>
+                                        <RowDefinition Height="33"></RowDefinition>
+                                        <RowDefinition Height="33"></RowDefinition>
+                                        <RowDefinition Height="33"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Row="0" Grid.Column="0">
-                                        <Grid Margin="0" Background="Black">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
-                                            <WrapPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="СЛ"/>
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="05"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Средне"/>
-                                            </WrapPanel>
-                                            <WrapPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="ВС"/>
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="05"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Средне"/>
-                                            </WrapPanel>
-                                            <WrapPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="ВН"/>
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="05"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Средне"/>
-                                            </WrapPanel>
-                                            <WrapPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="ОБ"/>
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="05"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Средне"/>
-                                            </WrapPanel>
-                                            <WrapPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal">
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="ИН"/>
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="05"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Средне"/>
-                                            </WrapPanel>
-                                            <WrapPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal">
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="ЛВ"/>
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="05"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Средне"/>
-                                            </WrapPanel>
-                                            <WrapPanel Grid.Row="6" Grid.Column="0" Orientation="Horizontal">
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="УД"/>
-                                                <TextBlock Width="40" Background="Black" Foreground="Lime" FontSize="20"  Text="05"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Средне"/>
-                                            </WrapPanel>
-                                        </Grid>
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
-                                        <Grid Margin="0" Background="Fuchsia">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Grid.Row="0" Orientation="Vertical">
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Жизни"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Отравление"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Облучение"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Ранение в глаз"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана прав. рука"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. рука"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана пр. нога"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. нога"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="1" Orientation="Vertical">
-                                                <Grid Margin="0" Background="Black">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="75"/>
-                                                        <ColumnDefinition/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <StackPanel Grid.Row="0" Grid.Column="0">
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Класс брони"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Очки действия"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Макс. груз"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Рукоп. повр."/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Уст. к повр."/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Уст. к яду"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Уст. к рад."/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Уровень лечен."/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Шанс на крит."/>
-                                                    </StackPanel>
-                                                    <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                        <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                    </StackPanel>
-                                                </Grid>
-                                            </StackPanel>
-                                        </Grid>
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="1" Grid.RowSpan="2">
-                                        <Grid Margin="0" Background="Black">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Grid.Row="1" Grid.Column="0">
-                                                <WrapPanel>
-                                                    <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Уровень: "/>
-                                                    <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="1"/>
-                                                </WrapPanel>
-                                                <WrapPanel>
-                                                    <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Опыт: "/>
-                                                    <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                </WrapPanel>
-                                                <WrapPanel>
-                                                    <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="След. ур.:"/>
-                                                    <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="1000"/>
-                                                </WrapPanel>
-                                            </StackPanel>
-                                        </Grid>
-                                    </StackPanel>
+                                    <WrapPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
+                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
+                                    </WrapPanel>
+                                    <WrapPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
+                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
+                                    </WrapPanel>
+                                    <WrapPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
+                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
+                                    </WrapPanel>
+                                    <WrapPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
+                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
+                                    </WrapPanel>
+                                    <WrapPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
+                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
+                                    </WrapPanel>
+                                    <WrapPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
+                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
+                                    </WrapPanel>
+                                    <WrapPanel Grid.Row="6" Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
+                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
+                                    </WrapPanel>
                                 </Grid>
                             </StackPanel>
-                            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
-                                <Button Background="gray" Content="Ремонт"/>
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                    <StackPanel Grid.Row="0" Grid.Column="1">
-                        <Grid Margin="0" Background="Black">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Row="0" Grid.Column="1">
-                                <Grid Margin="0" Background="Black">
+                            <StackPanel Grid.Row="1" Grid.RowSpan="3" Grid.Column="1">
+                                <Grid Margin="0">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="140"></RowDefinition>
                                         <RowDefinition></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Row="0">
-                                        <Grid Margin="0" Background="Black">
+                                        <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 12 0 0"  Text="Жизни"/>
+                                        <TextBlock Foreground="Green" Margin="0 5 0 0" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Отравление"/>
+                                        <TextBlock Foreground="Green" Margin="0 3 0 0" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Облучение"/>
+                                        <TextBlock Foreground="Green" Margin="0 3 0 0" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Ранение в глаз"/>
+                                        <TextBlock Foreground="Green" Margin="0 3 0 0" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Сломана прав. рука"/>
+                                        <TextBlock Foreground="Green" Margin="0 3 0 0" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Сломана левая. рука"/>
+                                        <TextBlock Foreground="Green" Margin="0 3 0 0" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Сломана пр. нога"/>
+                                        <TextBlock Foreground="Green" Margin="0 3 0 0" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Сломана левая. нога"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1">
+                                        <Grid Margin="0">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition></RowDefinition>
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="105"/>
+                                                <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
-                                            <StackPanel Grid.Row="0" Orientation="Vertical">
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Жизни"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Отравление"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Облучение"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Ранение в глаз"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана прав. рука"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. рука"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана пр. нога"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. нога"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. нога"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. нога"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. нога"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. нога"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. нога"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. нога"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. нога"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. нога"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="Сломана левая. нога"/>
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Foreground="Lime" FontSize="10" Margin="0 10 0 0"  Text="Класс брони"/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="Очки действия"/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="Макс. груз"/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="Рукоп. повр."/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="Уст. к повр."/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="Уст. к яду"/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="Уст. к рад."/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="Уровень лечен."/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="Шанс на крит."/>
                                             </StackPanel>
-                                            <StackPanel Grid.Row="0"  Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Right">
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
-                                                <TextBlock Background="Black" Foreground="Lime" FontSize="10"  Text="0"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Foreground="Lime" FontSize="10" Margin="0 10 0 0" Text="0"/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="0"/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="0"/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="0"/>
+                                                <WrapPanel>
+                                                    <TextBlock Foreground="Lime" FontSize="10"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="10"  Text="%"/>
+                                                </WrapPanel>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="0"/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="0"/>
+                                                <TextBlock Foreground="Lime" FontSize="10"  Text="0"/>
+                                                <WrapPanel>
+                                                    <TextBlock Foreground="Lime" FontSize="10"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="10"  Text="%"/>
+                                                </WrapPanel>
                                             </StackPanel>
                                         </Grid>
                                     </StackPanel>
-                                    <WrapPanel Grid.Row="1">
-                                        <Button Background="gray" Content="Ремонт"/>
-                                        <Button Background="gray" Content="Ремонт"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.RowSpan="2">
+                                <Grid Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Row="1" Grid.Column="0">
+                                        <WrapPanel Margin="35 15 0 0">
+                                            <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Уровень: "/>
+                                            <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="1"/>
+                                        </WrapPanel>
+                                        <WrapPanel Margin="35 0 0 0">
+                                            <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Опыт: "/>
+                                            <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                        </WrapPanel>
+                                        <WrapPanel Margin="35 0 0 0">
+                                            <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="След. ур.: "/>
+                                            <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="1000"/>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="36"></RowDefinition>
+                                        <RowDefinition Height="120"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="15"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Name="KilledPanel" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Opacity="0">
+                                        <TextBlock.Background>
+                                            <ImageBrush ImageSource="data/image/mainui/charactClick/killed_panel.png"/>
+                                        </TextBlock.Background>
+                                    </TextBlock>
+                                    <TextBlock Name="KarmaPanel" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Opacity="0">
+                                        <TextBlock.Background>
+                                            <ImageBrush ImageSource="data/image/mainui/charactClick/karma_panel.png"/>
+                                        </TextBlock.Background>
+                                    </TextBlock>
+                                    <TextBlock Name="BonusPanel" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Opacity="1">
+                                        <TextBlock.Background>
+                                            <ImageBrush ImageSource="data/image/mainui/charactClick/bonus_panel.png"/>
+                                        </TextBlock.Background>
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Opacity="0" MouseLeftButtonDown="Opacity_ClickDown" Tag="BonusPanel"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" Opacity="0" MouseLeftButtonDown="Opacity_ClickDown" Tag="KarmaPanel"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" Opacity="0" MouseLeftButtonDown="Opacity_ClickDown" Tag="KilledPanel"/>
+                                    <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                                        <TextBlock Foreground="Lime" TextWrapping="Wrap" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="8" Margin="30 5 0 0">
+                                            текст  текст текст текст текст текст текст текст текст текст текст текст текст текст
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="1">
+                        <Grid Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="190"></RowDefinition>
+                                <RowDefinition Height="35"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Row="0" Grid.Column="1">
+                                <Grid Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Margin="43 0 0 0" Grid.Row="0">
+                                        <Grid Margin="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="215"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Row="0" Orientation="Vertical">
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 25 0 0"  Text="Легкое оружие"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Тяжелое оружие"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Энергооружие"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Ближний бой"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Скавенжинг"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Метательное оружие"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Санитар"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Доктор"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Скрытность"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Взлом замков"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Воровство"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Ловушки"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Наука"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Ремонт"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Красноречие"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Торговля"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Азартные игры"/>
+                                                <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Margin="0 1 0 0"  Text="Скиталец"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="0"  Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left">
+                                                <WrapPanel Margin="0 25 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                                <WrapPanel Margin="0 1 0 0">
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="0"/>
+                                                    <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
+                                                </WrapPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
+                                    <WrapPanel Grid.Row="1" Margin="198 10 0 0">
+                                        <TextBlock Foreground="White" FontSize="20" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="0"/>
+                                        <TextBlock Foreground="White" FontSize="20" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Margin="3 0 0 0"  Text="0"/>
                                     </WrapPanel>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0">
-                                <Grid Margin="0" Background="AliceBlue">
+                                <Grid Margin="0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition></RowDefinition>
                                         <RowDefinition></RowDefinition>
@@ -646,15 +744,27 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Grid.Row="0" Grid.Column="0" Height="30" Grid.ColumnSpan="2" Background="gray" Content="Ремонт"/>
-                                    <Button Grid.Row="1" Grid.Column="0" Height="95" Background="gray" Content="Ремонт"/>
-                                    <Button Grid.Row="1" Grid.Column="1" Height="95" Background="gray" Content="Ремонт"/>
+                                    <TextBlock Grid.Row="0" Margin="0 15 0 0" HorizontalAlignment="Center" Foreground="Wheat" Grid.Column="0" Height="30" Grid.ColumnSpan="2" Text="ssssssss"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Height="95" HorizontalAlignment="Center" Foreground="Wheat" Text="ssssssss"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Height="95" HorizontalAlignment="Center" Foreground="Wheat" Text="ssssssss"/>
                                 </Grid>
                             </StackPanel>
                             <WrapPanel Grid.Row="2">
-                                <Button Width="66" Height="25" Background="gray" Content="Ремонт"/>
-                                <Button Width="70" Background="gray" Content="Ремонт"/>
-                                <Button Width="70" Background="gray" Content="Ремонт"/>
+                                <Ellipse Margin="13 11 0 0" Width="18" Height="17" Opacity="0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="data/image/mainui/craftClick/but_red.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Ellipse Margin="94 11 0 0" Width="18" Height="17" Opacity="0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="data/image/mainui/craftClick/but_red.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Ellipse Margin="79 11 0 0" Width="18" Height="17" Opacity="0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="data/image/mainui/craftClick/but_red.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
                             </WrapPanel>
                         </Grid>
                     </StackPanel>
@@ -664,7 +774,7 @@
         <!-- характеристики -->
 
         <!-- карта -->
-        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="520" MinWidth="520" MaxWidth="520" Height="480" MinHeight="480" MaxHeight="480" HorizontalAlignment="Center" Visibility="Visible">
+        <Border Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="520" MinWidth="520" MaxWidth="520" Height="480" MinHeight="480" MaxHeight="480" HorizontalAlignment="Center" Visibility="Collapsed">
             <Border.Background>
                 <ImageBrush ImageSource="data/image/mainui/map_window.png"/>
             </Border.Background>

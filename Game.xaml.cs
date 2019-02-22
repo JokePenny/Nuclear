@@ -129,6 +129,18 @@ namespace Nuclear
             
             switch ((string)tag)
             {
+                case "BonusPanel":
+                    BonusPanel.Opacity = 1;
+                    break;
+                case "KarmaPanel":
+                    KarmaPanel.Opacity = 1;
+                    BonusPanel.Opacity = 0;
+                    break;
+                case "KilledPanel":
+                    KilledPanel.Opacity = 1;
+                    KarmaPanel.Opacity = 0;
+                    BonusPanel.Opacity = 0;
+                    break;
                 case "Steal":
                     Steal.Opacity = 1;
                     break;
@@ -178,10 +190,13 @@ namespace Nuclear
                         (sender as Ellipse).Opacity = 1;
                     break;
             }
-            if (sender is TextBlock)
-                Mouse.Capture(sender as TextBlock);
-            else
-                Mouse.Capture(sender as Ellipse);
+            if ((string)tag != "BonusPanel" && (string)tag != "KilledPanel" && (string)tag != "KarmaPanel")
+            {
+                if (sender is TextBlock)
+                    Mouse.Capture(sender as TextBlock);
+                else
+                    Mouse.Capture(sender as Ellipse);
+            }
         }
 
         public void MapImageGrid()
