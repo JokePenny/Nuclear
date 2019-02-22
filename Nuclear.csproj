@@ -157,7 +157,9 @@
   <ItemGroup>
     <Resource Include="data\image\mainui\mapClick\but_switch.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="data\image\mainui\startClick\backlight.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="data\image\mainui\charactClick\bonus_panel.png" />
     <Resource Include="data\image\mainui\charactClick\karma_panel.png" />
