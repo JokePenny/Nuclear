@@ -194,5 +194,11 @@
     <Resource Include="data\image\mainui\charactClick\but_plus.png" />
     <Resource Include="data\image\mainui\charactClick\pointer.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\inventoryClick\but_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\inventory_window.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
