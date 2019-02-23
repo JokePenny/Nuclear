@@ -165,7 +165,7 @@ namespace Nuclear
                 case "Repairs":
                     Repairs.Opacity = 1;
                     break;
-                case "Done":
+                case "Craft":
                     Done.Opacity = 1;
                     break;
                 case "ArrowUp":
@@ -707,10 +707,65 @@ namespace Nuclear
                 tag = ((Ellipse)e.OriginalSource).Tag;
             switch ((string)tag)
             {
+                case "MenuOpen":
+                    (sender as TextBlock).Opacity = 0;
+                    Mouse.Capture(null);
+                    MenuGame.Visibility = Visibility.Visible;
+                    break;
+                case "InventoryOpen":
+                    (sender as TextBlock).Opacity = 0;
+                    Mouse.Capture(null);
+                    Inventory.Visibility = Visibility.Visible;
+                    break;
+                case "SkillOpen":
+                    (sender as Ellipse).Opacity = 0;
+                    Mouse.Capture(null);
+                    Skill.Visibility = Visibility.Visible;
+                    break;
+                case "MapWindowOpen":
+                    (sender as TextBlock).Opacity = 0;
+                    Mouse.Capture(null);
+                    MapWindow.Visibility = Visibility.Visible;
+                    break;
+                case "CharacteristicOpen":
+                    (sender as TextBlock).Opacity = 0;
+                    Mouse.Capture(null);
+                    Characteristic.Visibility = Visibility.Visible;
+                    break;
+                case "CraftOpen":
+                    (sender as TextBlock).Opacity = 0;
+                    Mouse.Capture(null);
+                    Craft.Visibility = Visibility.Visible;
+                    break;
                 case "MenuGame":
                     (sender as TextBlock).Opacity = 0;
                     Mouse.Capture(null);
                     MenuGame.Visibility = Visibility.Collapsed;
+                    break;
+                case "Characteristic":
+                    (sender as Ellipse).Opacity = 0;
+                    Mouse.Capture(null);
+                    Characteristic.Visibility = Visibility.Collapsed;
+                    break;
+                case "MapWindow":
+                    (sender as Ellipse).Opacity = 0;
+                    Mouse.Capture(null);
+                    MapWindow.Visibility = Visibility.Collapsed;
+                    break;
+                case "Inventory":
+                    (sender as TextBlock).Opacity = 0;
+                    Mouse.Capture(null);
+                    Inventory.Visibility = Visibility.Collapsed;
+                    break;
+                case "Craft":
+                    Done.Opacity = 0;
+                    Mouse.Capture(null);
+                    Craft.Visibility = Visibility.Collapsed;
+                    break;
+                case "Skill":
+                    (sender as Ellipse).Opacity = 0;
+                    Mouse.Capture(null);
+                    Skill.Visibility = Visibility.Collapsed;
                     break;
                 case "Exit":
                     (sender as TextBlock).Opacity = 0;
@@ -741,9 +796,6 @@ namespace Nuclear
                     break;
                 case "Fix":
                     Fix.Opacity = 0;
-                    break;
-                case "Done":
-                    Done.Opacity = 0;
                     break;
                 case "Steal":
                     Steal.Opacity = 0;
