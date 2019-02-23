@@ -165,5 +165,12 @@
     <Resource Include="data\image\mainui\charactClick\karma_panel.png" />
     <Resource Include="data\image\mainui\charactClick\killed_panel.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\charactClick\but_arrow_down.png" />
+    <Resource Include="data\image\mainui\charactClick\but_arrow_up.png" />
+    <Resource Include="data\image\mainui\charactClick\but_minus.png" />
+    <Resource Include="data\image\mainui\charactClick\but_plus.png" />
+    <Resource Include="data\image\mainui\charactClick\pointer.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

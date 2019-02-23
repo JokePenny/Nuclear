@@ -444,38 +444,136 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <WrapPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
-                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
                                         <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
                                     </WrapPanel>
                                     <WrapPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
-                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
                                         <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
                                     </WrapPanel>
                                     <WrapPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
-                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
-                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
                                         <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
                                     </WrapPanel>
                                     <WrapPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
-                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
-                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
                                         <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
                                     </WrapPanel>
                                     <WrapPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal">
-                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
-                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
                                         <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
                                     </WrapPanel>
                                     <WrapPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal">
-                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
-                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
                                         <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
                                     </WrapPanel>
                                     <WrapPanel Grid.Row="6" Grid.Column="0" Orientation="Horizontal">
-                                        <TextBlock Foreground="White" FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0"/>
-                                        <TextBlock Foreground="White" FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5"/>
+                                        <TextBlock FontSize="20" Margin="64 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" Text="0">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock FontSize="20" Margin="3 7 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="5">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
                                         <TextBlock Foreground="Lime" FontSize="8" Margin="17 13 0 0" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="Средне"/>
                                     </WrapPanel>
                                 </Grid>
@@ -600,6 +698,18 @@
                                             текст  текст текст текст текст текст текст текст текст текст текст текст текст текст
                                         </TextBlock>
                                     </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3">
+                                        <TextBlock Height="14" Width="11" Opacity="0" Margin="-2 8 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                            <TextBlock.Background>
+                                                <ImageBrush ImageSource="data/image/mainui/charactClick/but_arrow_up.png"/>
+                                            </TextBlock.Background>
+                                        </TextBlock>
+                                        <TextBlock Height="14" Width="11" Opacity="0" Margin="-2 1 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                            <TextBlock.Background>
+                                                <ImageBrush ImageSource="data/image/mainui/charactClick/but_arrow_down.png"/>
+                                            </TextBlock.Background>
+                                        </TextBlock>
+                                    </StackPanel>
                                 </Grid>
                             </StackPanel>
                         </Grid>
@@ -629,7 +739,8 @@
                                                 <RowDefinition></RowDefinition>
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="215"/>
+                                                <ColumnDefinition Width="210"/>
+                                                <ColumnDefinition Width="30"/>
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Grid.Row="0" Orientation="Vertical">
@@ -726,11 +837,42 @@
                                                     <TextBlock Foreground="Lime" FontSize="8" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"  Text="%"/>
                                                 </WrapPanel>
                                             </StackPanel>
+                                            <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical">
+                                                <TextBlock Height="29" Width="43" Margin="8 15 0 0">
+                                                    <TextBlock.Background>
+                                                        <ImageBrush ImageSource="data/image/mainui/charactClick/pointer.png"/>
+                                                    </TextBlock.Background>
+                                                </TextBlock>
+                                                <TextBlock Height="11" Width="17" Opacity="0" Margin="26 -40 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                                    <TextBlock.Background>
+                                                        <ImageBrush ImageSource="data/image/mainui/charactClick/but_plus.png"/>
+                                                    </TextBlock.Background>
+                                                </TextBlock>
+                                                <TextBlock Height="12" Width="17" Opacity="0" Margin="26 -17 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                                    <TextBlock.Background>
+                                                        <ImageBrush ImageSource="data/image/mainui/charactClick/but_minus.png"/>
+                                                    </TextBlock.Background>
+                                                </TextBlock>
+                                            </StackPanel>
                                         </Grid>
                                     </StackPanel>
                                     <WrapPanel Grid.Row="1" Margin="198 10 0 0">
-                                        <TextBlock Foreground="White" FontSize="20" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="0"/>
-                                        <TextBlock Foreground="White" FontSize="20" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Margin="3 0 0 0"  Text="0"/>
+                                        <TextBlock FontSize="20" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Text="0">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock FontSize="20" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular"  Margin="3 0 0 0"  Text="0">
+                                            <TextBlock.Foreground>
+                                                <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                                </LinearGradientBrush>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
                                     </WrapPanel>
                                 </Grid>
                             </StackPanel>
