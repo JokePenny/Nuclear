@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HexGridControl;
 
 namespace Nuclear
 {
@@ -110,12 +111,12 @@ namespace Nuclear
         {
 
             InitializeComponent();
-            groupAddress = IPAddress.Parse(HOST);
-            loginButton_Click();
+            //groupAddress = IPAddress.Parse(HOST);
+            //loginButton_Click();
             MapImageGrid();
-            MapActiveGrid();
-            MapHeatGrid();
-            findPath(1, 1, User.GetX(), User.GetY());
+            //MapActiveGrid();
+            //MapHeatGrid();
+            //findPath(1, 1, User.GetX(), User.GetY());
 
         }
 
@@ -201,12 +202,16 @@ namespace Nuclear
 
         public void MapImageGrid()
         {
-            int HeightMap = 12;
+            int HeightMap = 27;
             int WidthMap = 27;
 
             Grid grid = new Grid();
+            HexGrid hexGrid = new HexGrid();
+            hexGrid.RowCount = 27;
+            hexGrid.ColumnCount = 27;
+            hexGrid.Orientation = Orientation.Vertical;
+
             grid.Name = "ImageMap";
-            grid.ShowGridLines = false;
             for (int i = 0; i < HeightMap; i++)
             {
                 RowDefinition row = new RowDefinition();
@@ -219,8 +224,26 @@ namespace Nuclear
                 column.MinWidth = 50;
                 grid.ColumnDefinitions.Add(column);
             }
+            for (int i = 0; i < HeightMap; i++)
+            {
+                for (int j = 0; j < WidthMap; j++)
+                {
+                    HexItem sss = new HexItem();
+                    sss.Background = Brushes.Blue;
+                    sss.Margin = new Thickness(0, 0, 0, 0);
+                    sss.BorderBrush = null;
+                    sss.BorderThickness = new Thickness(0);
+                    sss.Width = 50;
+                    sss.Height = 25;
+                    Grid.SetColumn(sss, j);
+                    Grid.SetRow(sss, i);
+                    hexGrid.Children.Add(sss);
+                }
+            }
             grid.Background = Brushes.White;
             Grid.SetZIndex(grid, 1);
+            Grid.SetZIndex(hexGrid, 99);
+            this.Map.Children.Add(hexGrid);
             this.Map.Children.Add(grid);
         }
 
