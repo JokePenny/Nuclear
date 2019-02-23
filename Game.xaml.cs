@@ -336,7 +336,6 @@ namespace Nuclear
 
         public async void findPath(int x, int y, int nx, int ny)
         {
-            int check = 0;
             locationEndX = nx;
             locationEndY = ny;
             locationUserX = x;
