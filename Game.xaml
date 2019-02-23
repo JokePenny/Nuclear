@@ -11,12 +11,12 @@
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
-            <RowDefinition MinHeight="30 px" MaxHeight="30 px"></RowDefinition>
-            <RowDefinition MinHeight="100 px" MaxHeight="100 px"></RowDefinition>
+            <RowDefinition MinHeight="30" MaxHeight="30"></RowDefinition>
+            <RowDefinition MinHeight="100" MaxHeight="100"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="370" MaxWidth="370"></ColumnDefinition>
-            <ColumnDefinition MinWidth="430" MaxWidth="430"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition MinWidth="800" MaxWidth="800"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
@@ -26,136 +26,196 @@
             </Canvas>
         </ScrollViewer>
         <!-- игровое поле -->
-
-        <!-- чат -->
-        <Border Grid.Row="1" Grid.Column="0" Width="370" MaxWidth="370" MinWidth="370" Grid.RowSpan="2">
-            <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Orientation="Horizontal">
-                <!--<Button Width="70" Background="silver" Click="Exit_Game"/>-->
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="290" />
-                        <ColumnDefinition Width="80"/>
-                    </Grid.ColumnDefinitions>
-                    <ScrollViewer Grid.Row="0"  Grid.ColumnSpan="2" Name="Chat"  VerticalScrollBarVisibility="Hidden">
-                        <TextBlock Name="ChatTextBlock" TextWrapping="Wrap" Background="black" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="8"/>
-                    </ScrollViewer>
-                    <TextBox Name="MessageTextBox" Grid.Row="1" Grid.Column="0" Background="black" Foreground="Lime" KeyDown="SendButton_Key" />
-                    <Button Name="SendButton" Grid.Row="1" Grid.Column="1" Content="Отправить" Click="SendButton_Click"/>
-                </Grid>
-            </StackPanel>
-        </Border>
-        <!-- чат -->
-
+        
         <!-- интерфейс -->
-        <StackPanel Grid.Row="2" Grid.Column="1" Margin="0 0 0 0">
-            <Grid Margin="0">
+        <StackPanel Grid.Row="1" Grid.RowSpan="2" Grid.Column="1">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="data/image/mainui/interface.png"/>
+            </StackPanel.Background>
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition MinHeight="30" MaxHeight="30"></RowDefinition>
+                    <RowDefinition MinHeight="100" MaxHeight="100"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="300"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="0 0 0 0">
-                    <Grid Margin="0" Background="Aqua">
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 0 0 0">
+                    <Grid Margin="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="40"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="190"/>
+                            <ColumnDefinition Width="68"/>
+                            <ColumnDefinition Width="110"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Row="0" Background="gray" Content="Кнопка"/>
-                        <Button Grid.Row="1" Background="gray" Content="INV"/>
-                        <Button Grid.Row="2" Background="gray" Content="меню"/>
-                    </Grid>
-                </StackPanel>
-                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="0 0 0 0">
-                    <Grid Margin="0" Background="Black">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="25"></RowDefinition>
-                            <RowDefinition Height="75"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="7">
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="Lime"/>
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="Lime"/>
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="Lime"/>
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="Lime"/>
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="Lime"/>
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="Lime"/>
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="Lime"/>
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="Green"/>
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="Green"/>
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="Green"/>
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="Green" Visibility="Hidden"/>
-                            <Ellipse Grid.Row="0" Width="10" Height="10" Fill="DarkRed"/>
-                        </WrapPanel>
-                        <Button Grid.Row="1" Background="gray" Content="Орудие"/>
-                    </Grid>
-                </StackPanel>
-                <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Margin="0 0 0 0">
-                    <Grid Margin="0" Background="DarkBlue">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="30"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Row="0" Background="gray" Content="скилл"/>
-                        <Button Grid.Row="1" Background="gray" Content="хп"/>
-                        <Button Grid.Row="2" Background="gray" Content="ары"/>
-                    </Grid>
-                </StackPanel>
-                <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical" Margin="0 0 0 0">
-                    <Grid Margin="0" Background="SaddleBrown">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="15"></RowDefinition>
-                            <RowDefinition Height="15"></RowDefinition>
-                            <RowDefinition Height="70"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Row="1"  Grid.RowSpan="2" Grid.Column="0" Orientation="Vertical" Margin="0 0 0 0">
-                            <Grid Margin="0" Background="Salmon">
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+                            <Ellipse Grid.Row="0" Height="22" Width="22" Opacity="0" Margin="7 0 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_red_interface.png"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <TextBlock Height="22" Width="33" Grid.Row="1" Opacity="0" Margin="1 14 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                <TextBlock.Background>
+                                    <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_inv_interface.png"/>
+                                </TextBlock.Background>
+                            </TextBlock>
+                            <TextBlock Height="34" Width="32" Grid.Row="2" Opacity="0" Margin="3 3 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                <TextBlock.Background>
+                                    <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_menu_interface.png"/>
+                                </TextBlock.Background>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="0 0 0 0">
+                            <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="22"></RowDefinition>
-                                    <RowDefinition Height="21"></RowDefinition>
-                                    <RowDefinition Height="21"></RowDefinition>
-                                    <RowDefinition Height="21"></RowDefinition>
+                                    <RowDefinition Height="25"></RowDefinition>
+                                    <RowDefinition Height="75"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Row="0" Background="gray" Content="MAP"/>
-                                <Button Grid.Row="1" Background="gray" Content="CHA"/>
-                                <Button Grid.Row="2" Background="gray" Content="PIP"/>
-                                <Button Grid.Row="3" Background="gray" Content="FIX"/>
+                                <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="7">
+                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="4 0 0 0" >
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_lamp_interface.png"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_lamp_interface.png"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_lamp_interface.png"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_lamp_interface.png"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="2 0 0 0">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_lamp_interface.png"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_lamp_interface.png"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_lamp_interface.png"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_lamp_interface.png"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_lamp_interface.png"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="0" Margin="1 0 0 0">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_lamp_interface.png"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                </WrapPanel>
+                                <TextBlock Grid.Row="1" Text="Орудие"/>
                             </Grid>
                         </StackPanel>
-                        <Button Grid.Row="2" Grid.Column="1" Background="gray" Content="ХОД"/>
+                        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Margin="0 0 0 0">
+                            <Ellipse Grid.Row="0" Height="22" Width="22" Opacity="0" Margin="-1 0 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_red_interface.png"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <TextBlock Height="14" Width="35" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" FontSize="14" Margin="5 22 0 0" Text="120">
+                                <TextBlock.Foreground>
+                                    <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                        <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                        <GradientStop Color="White" Offset="1"></GradientStop>
+                                    </LinearGradientBrush>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                            <TextBlock Height="14" Width="35" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" FontSize="14" Margin="5 19 0 0" Text="7">
+                                <TextBlock.Foreground>
+                                    <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
+                                        <GradientStop Color="Gray" Offset="0"></GradientStop>
+                                        <GradientStop Color="White" Offset="1"></GradientStop>
+                                    </LinearGradientBrush>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical" Margin="0 0 0 0">
+                            <Grid Margin="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="15"></RowDefinition>
+                                    <RowDefinition Height="15"></RowDefinition>
+                                    <RowDefinition Height="70"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Row="1"  Grid.RowSpan="2" Grid.Column="0" Orientation="Vertical">
+                                    <TextBlock Height="19" Width="40" Opacity="0" Margin="-6 0 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                        <TextBlock.Background>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_map_interface.png"/>
+                                        </TextBlock.Background>
+                                    </TextBlock>
+                                    <TextBlock Height="19" Width="40" Opacity="0" Margin="-6 2 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                        <TextBlock.Background>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_cha_interface.png"/>
+                                        </TextBlock.Background>
+                                    </TextBlock>
+                                    <TextBlock Height="19" Width="40" Opacity="0" Margin="-6 2 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                        <TextBlock.Background>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_pip_interface.png"/>
+                                        </TextBlock.Background>
+                                    </TextBlock>
+                                    <TextBlock Height="19" Width="40" Opacity="0" Margin="-6 2 0 0" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click">
+                                        <TextBlock.Background>
+                                            <ImageBrush ImageSource="data/image/mainui/interfaceClick/but_fix_interface.png"/>
+                                        </TextBlock.Background>
+                                    </TextBlock>
+                                </StackPanel>
+                                <TextBlock Grid.Row="2" Grid.Column="1"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <!--
+                        <Button Background="gray" Content="Конец хода"/>
+                        <Button Background="white" Content="Назад" Click="OpenGameField_Click"/>
+                        <Button Background="white" Content="Навыки" Click="OpenSkillTree_Click"/>
+                        <Button Background="white" Content="ИНвентарь" Click="OpenBackpack_Click"/>
+                        -->
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
+                    <!--<Button Width="70" Background="silver" Click="Exit_Game"/>-->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="130"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <ScrollViewer Grid.Row="0"  Grid.ColumnSpan="2" Name="Chat"  VerticalScrollBarVisibility="Hidden" Padding="0 30 0 30">
+                            <TextBlock Margin="25 0 10 0" Name="ChatTextBlock" TextWrapping="Wrap" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="8"/>
+                        </ScrollViewer>
+                        <TextBox Height="20" Margin="30 95 20 0" Name="MessageTextBox" Grid.Row="0" Grid.Column="0" Foreground="Lime" KeyDown="SendButton_Key" Background="{x:Null}" />
                     </Grid>
                 </StackPanel>
             </Grid>
-            <!--
-            <Button Background="gray" Content="Конец хода"/>
-            <Button Background="white" Content="Назад" Click="OpenGameField_Click"/>
-            <Button Background="white" Content="Навыки" Click="OpenSkillTree_Click"/>
-            <Button Background="white" Content="ИНвентарь" Click="OpenBackpack_Click"/>
-            -->
         </StackPanel>
         <!-- интерфейс -->
 
