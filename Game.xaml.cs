@@ -676,7 +676,6 @@ namespace Nuclear
 
             alive = false;
             client.Close();
-            SendButton.IsEnabled = false;
         }
 
         private void SendButton_Key(object sender, KeyEventArgs e)

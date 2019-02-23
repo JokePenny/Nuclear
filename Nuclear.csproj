@@ -178,5 +178,20 @@
   <ItemGroup>
     <Resource Include="data\image\mainui\inventory_window.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\interface.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\interfaceClick\but_menu_interface.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\interfaceClick\but_cha_interface.png" />
+    <Resource Include="data\image\mainui\interfaceClick\but_fix_interface.png" />
+    <Resource Include="data\image\mainui\interfaceClick\but_inv_interface.png" />
+    <Resource Include="data\image\mainui\interfaceClick\but_lamp_interface.png" />
+    <Resource Include="data\image\mainui\interfaceClick\but_map_interface.png" />
+    <Resource Include="data\image\mainui\interfaceClick\but_pip_interface.png" />
+    <Resource Include="data\image\mainui\interfaceClick\but_red_interface.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
