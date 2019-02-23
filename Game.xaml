@@ -626,7 +626,7 @@
         <!-- инвентрарь -->
 
         <!-- характеристики -->
-        <Border Name="Characteristic" Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="640" MinWidth="640" MaxWidth="640" Height="480" MinHeight="480" MaxHeight="480" HorizontalAlignment="Center" Visibility="Visible">
+        <Border Name="Characteristic" Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="640" MinWidth="640" MaxWidth="640" Height="480" MinHeight="480" MaxHeight="480" HorizontalAlignment="Center" Visibility="Collapsed">
             <Border.Background>
                 <ImageBrush ImageSource="data/image/mainui/charact_window.png"/>
             </Border.Background>
