@@ -106,6 +106,8 @@ namespace Nuclear
         const string HOST = "235.5.5.1"; // хост для групповой рассылки
         IPAddress groupAddress; // адрес для групповой рассылки
 
+        public object gridHeat { get; private set; }
+
         //private PlayerUser User = new PlayerUser();
         public Game()
         {
@@ -114,9 +116,9 @@ namespace Nuclear
             //groupAddress = IPAddress.Parse(HOST);
             //loginButton_Click();
             MapImageGrid();
-            //MapActiveGrid();
-            //MapHeatGrid();
-            //findPath(1, 1, User.GetX(), User.GetY());
+            MapActiveGrid();
+            MapHeatGrid();
+            findPath(1, 1, User.GetX(), User.GetY());
 
         }
 
@@ -202,28 +204,15 @@ namespace Nuclear
 
         public void MapImageGrid()
         {
-            int HeightMap = 27;
+            int HeightMap = 12;
             int WidthMap = 27;
 
-            Grid grid = new Grid();
             HexGrid hexGrid = new HexGrid();
-            hexGrid.RowCount = 27;
-            hexGrid.ColumnCount = 27;
+            hexGrid.RowCount = HeightMap;
+            hexGrid.ColumnCount = WidthMap;
             hexGrid.Orientation = Orientation.Vertical;
+            hexGrid.Name = "ImageMap";
 
-            grid.Name = "ImageMap";
-            for (int i = 0; i < HeightMap; i++)
-            {
-                RowDefinition row = new RowDefinition();
-                row.MinHeight = 50;
-                grid.RowDefinitions.Add(row);
-            }
-            for (int i = 0; i < WidthMap; i++)
-            {
-                ColumnDefinition column = new ColumnDefinition();
-                column.MinWidth = 50;
-                grid.ColumnDefinitions.Add(column);
-            }
             for (int i = 0; i < HeightMap; i++)
             {
                 for (int j = 0; j < WidthMap; j++)
@@ -240,11 +229,8 @@ namespace Nuclear
                     hexGrid.Children.Add(sss);
                 }
             }
-            grid.Background = Brushes.White;
-            Grid.SetZIndex(grid, 1);
-            Grid.SetZIndex(hexGrid, 99);
+            Grid.SetZIndex(hexGrid, 1);
             this.Map.Children.Add(hexGrid);
-            this.Map.Children.Add(grid);
         }
 
         public void MapActiveGrid()
@@ -252,45 +238,52 @@ namespace Nuclear
             int HeightMap = 12;
             int WidthMap = 27;
 
-            Grid gridActive = new Grid();
-            gridActive.Name = "PathMap";
-            gridActive.ShowGridLines = false;
+            HexGrid hexGrid = new HexGrid();
+            hexGrid.RowCount = HeightMap;
+            hexGrid.ColumnCount = WidthMap;
+            hexGrid.Orientation = Orientation.Vertical;
+            hexGrid.Name = "PathMap";
+
             for (int i = 0; i < HeightMap; i++)
             {
-                RowDefinition row = new RowDefinition();
-                row.MinHeight = 50;
-                gridActive.RowDefinitions.Add(row);
-            }
-            for (int i = 0; i < WidthMap; i++)
-            {
-                ColumnDefinition column = new ColumnDefinition();
-                column.MinWidth = 50;
-                gridActive.ColumnDefinitions.Add(column);
-            }
-
-            for (int i = 0; i < WidthMap; i++)
-                for (int j = 0; j < HeightMap; j++)
+                for (int j = 0; j < WidthMap; j++)
                 {
-                    if (PathArray[i, j] == -1)
+                    Style style = new Style();
+                    style.Setters.Add(new Setter { Property = Control.MinHeightProperty, Value = (double)25 });
+                    style.Setters.Add(new Setter { Property = Control.MinWidthProperty, Value = (double)50 });
+                    style.Setters.Add(new Setter { Property = Control.MarginProperty, Value = new Thickness(0, 0, 0, 0) });
+                    style.Setters.Add(new Setter { Property = Control.BorderThicknessProperty, Value = new Thickness(0, 0, 0, 0) });
+                    style.Setters.Add(new Setter { Property = Control.BorderBrushProperty, Value = null });
+                    HexItem sss = new HexItem();
+                    if (PathArray[j, i] == -1)
                     {
-                        Rectangle myRect = new Rectangle();
-                        myRect.Fill = Brushes.Black;
-                        Grid.SetColumn(myRect, i);
-                        Grid.SetRow(myRect, j);
-                        gridActive.Children.Add(myRect);
+                        style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = new SolidColorBrush(Colors.Black) });
                     }
                     else
                     {
-                        Button but = new Button();
-                        but.Click += but_Click;
-                        but.Opacity = 0.0;
-                        Grid.SetColumn(but, i);
-                        Grid.SetRow(but, j);
-                        gridActive.Children.Add(but);
+                        Button b = new Button();
+                        b.Click += but_Click;
+                        DataTemplate dat = new DataTemplate();
+                        dat.DataType = typeof(Button);
+                        FrameworkElementFactory factory = new FrameworkElementFactory(typeof(Button));
+                        factory.SetValue(Button.WidthProperty, 50.0);
+                        factory.SetValue(Button.HeightProperty, 25.0);
+                        factory.SetValue(Button.OpacityProperty, 0.0);
+                        factory.AddHandler(Button.ClickEvent, new RoutedEventHandler(but_Click));
+                        dat.VisualTree = factory;
+                        style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = new SolidColorBrush(Colors.Green) });
+                        style.Setters.Add(new Setter { Property = Control.OpacityProperty, Value = 0.0 });
+                        style.Setters.Add(new Setter { Property = ContentControl.ContentTemplateProperty, Value = dat });
                     }
+                    sss.Style = style;
+                    Grid.SetColumn(sss, j);
+                    Grid.SetRow(sss, i);
+                    hexGrid.Children.Add(sss);
                 }
-            Grid.SetZIndex(gridActive, 999);
-            this.Map.Children.Add(gridActive);
+            }
+
+            Grid.SetZIndex(hexGrid, 999);
+            this.Map.Children.Add(hexGrid);
         }
 
         public void MapHeatGrid()
@@ -298,23 +291,30 @@ namespace Nuclear
             int HeightMap = 12;
             int WidthMap = 27;
 
-            Grid gridHeat = new Grid();
-            gridHeat.Name = "HeatMap";
-            gridHeat.ShowGridLines = false;
+            HexGrid hexGrid = new HexGrid();
+            hexGrid.RowCount = HeightMap;
+            hexGrid.ColumnCount = WidthMap;
+            hexGrid.Orientation = Orientation.Vertical;
+            hexGrid.Name = "HeatMap";
+
             for (int i = 0; i < HeightMap; i++)
             {
-                RowDefinition row = new RowDefinition();
-                row.MinHeight = 50;
-                gridHeat.RowDefinitions.Add(row);
+                for (int j = 0; j < WidthMap; j++)
+                {
+                    HexItem sss = new HexItem();
+                    sss.Background = null;
+                    sss.Margin = new Thickness(0, 0, 0, 0);
+                    sss.BorderBrush = null;
+                    sss.BorderThickness = new Thickness(0);
+                    sss.Width = 50;
+                    sss.Height = 25;
+                    Grid.SetColumn(sss, j);
+                    Grid.SetRow(sss, i);
+                    hexGrid.Children.Add(sss);
+                }
             }
-            for (int i = 0; i < WidthMap; i++)
-            {
-                ColumnDefinition column = new ColumnDefinition();
-                column.MinWidth = 50;
-                gridHeat.ColumnDefinitions.Add(column);
-            }
-            Grid.SetZIndex(gridHeat, 5);
-            this.Map.Children.Add(gridHeat);
+            Grid.SetZIndex(hexGrid, 5);
+            this.Map.Children.Add(hexGrid);
         }
 
         private void but_Click(object sender, RoutedEventArgs e)
@@ -322,8 +322,10 @@ namespace Nuclear
             if (User.GetMovePoints() > 0)
             {
                 Button btn = sender as Button;
-                int row = (int)btn.GetValue(Grid.RowProperty);
-                int column = (int)btn.GetValue(Grid.ColumnProperty);
+
+                int row = (int)btn.GetValue(HexGrid.RowCountProperty);
+                int column = (int)btn.GetValue(HexGrid.ColumnCountProperty);
+
                 MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
                 Clean_TextBlock();
                 Clean_HeatMap();
@@ -335,24 +337,24 @@ namespace Nuclear
 
         private void Clean_TextBlock()
         {
-            foreach (Grid grid in Map.Children)
+            foreach (HexGrid grid in Map.Children)
                 if (grid.Name == "ImageMap")
                 {
                     UIElementCollection children1 = grid.Children;
                     var children = children1.OfType<UIElement>().ToList();
-                    foreach (TextBlock textblock in children)
+                    foreach (HexItem textblock in children)
                         grid.Children.Remove(textblock);
                 }
         }
 
         private void Clean_HeatMap()
         {
-            foreach (Grid gridHeat in Map.Children)
+            foreach (HexGrid gridHeat in Map.Children)
                 if (gridHeat.Name == "HeatMap")
                 {
                     UIElementCollection children1 = gridHeat.Children;
                     var children = children1.OfType<UIElement>().ToList();
-                    foreach (Rectangle rec in children)
+                    foreach (HexItem rec in children)
                         gridHeat.Children.Remove(rec);
                 }
         }
@@ -407,26 +409,26 @@ namespace Nuclear
                                 DopWavePath.Add(new Point(DoplocationUserX, DoplocationUserY));
                                 DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
 
-                                foreach (Grid gridImage in Map.Children)
+                                foreach (HexGrid gridImage in Map.Children)
                                     if (gridImage.Name == "ImageMap")
                                     {
-                                        TextBlock text = new TextBlock();
-                                        text.Text = nstep.ToString();
+                                        HexItem text = new HexItem();
+                                        text.Content = nstep.ToString();
                                         Grid.SetColumn(text, DoplocationUserY);
                                         Grid.SetRow(text, DoplocationUserX);
                                         gridImage.Children.Add(text);
                                     }
-                                foreach (Grid gridHeat in Map.Children)
+                                foreach (HexGrid gridHeat in Map.Children)
                                     if (gridHeat.Name == "HeatMap")
                                     {
-                                        Rectangle myRect = new Rectangle();
+                                        HexItem myRect = new HexItem();
                                         myRect.Opacity = 0.5;
                                         if (User.GetMovePoints() > nstep && User.GetMovePoints() - 3 > nstep)
-                                            myRect.Fill = Brushes.Green;
+                                            myRect.Background = Brushes.Green;
                                         else if (User.GetMovePoints() >= nstep)
-                                            myRect.Fill = Brushes.Yellow;
+                                            myRect.Background = Brushes.Yellow;
                                         else if (User.GetMovePoints() < nstep)
-                                            myRect.Fill = Brushes.Red;
+                                            myRect.Background = Brushes.Red;
                                         Grid.SetColumn(myRect, DoplocationUserY);
                                         Grid.SetRow(myRect, DoplocationUserX);
                                         gridHeat.Children.Add(myRect);
@@ -461,12 +463,12 @@ namespace Nuclear
                     oldWave = new List<Point>(wave);
                 }
 
-                foreach (Grid gridHeat in Map.Children)
+                foreach (HexGrid gridHeat in Map.Children)
                     if (gridHeat.Name == "HeatMap")
                     {
-                        Rectangle myRect = new Rectangle();
+                        HexItem myRect = new HexItem();
                         myRect.Opacity = 0.5;
-                        myRect.Fill = Brushes.Blue;
+                        myRect.Background = Brushes.Blue;
                         Grid.SetColumn(myRect, User.GetY());
                         Grid.SetRow(myRect, User.GetX());
                         gridHeat.Children.Add(myRect);
@@ -552,9 +554,9 @@ namespace Nuclear
                             foreach (Grid gridHeat in Map.Children)
                                 if (gridHeat.Name == "HeatMap")
                                 {
-                                    Rectangle myRect = new Rectangle();
+                                    HexItem myRect = new HexItem();
                                     myRect.Opacity = 0.5;
-                                    myRect.Fill = Brushes.Blue;
+                                    myRect.Background = Brushes.Blue;
                                     Grid.SetColumn(myRect, User.GetY());
                                     Grid.SetRow(myRect, User.GetX());
                                     gridHeat.Children.Add(myRect);
