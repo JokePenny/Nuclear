@@ -218,8 +218,8 @@ namespace Nuclear
                 for (int j = 0; j < WidthMap; j++)
                 {
                     HexItem sss = new HexItem();
-                    sss.Background = Brushes.Blue;
-                    sss.Margin = new Thickness(0, 0, 0, 0);
+                    sss.Background = null;
+                    sss.Margin = new Thickness(-3, -1, 0, 0);
                     sss.BorderBrush = null;
                     sss.BorderThickness = new Thickness(0);
                     sss.Width = 50;
@@ -237,7 +237,49 @@ namespace Nuclear
         {
             int HeightMap = 12;
             int WidthMap = 27;
+            /*
+            HexGrid hex = new HexGrid();
+            HexList hexList = new HexList();
+            hexList.RowCount = HeightMap;
+            hexList.ColumnCount = WidthMap;
+            hexList.Orientation = Orientation.Vertical;
+            hexList.Name = "PathMap";
+            hexList.ItemsSource = Enumerable.Range(0, hexList.RowCount)
+                .SelectMany(r => Enumerable.Range(0, hexList.ColumnCount)
+                .Select(c => new IntPoint(c, r)))
+                .ToList();
+            Style styleHexList = new Style();
+            Binding bind = new Binding();
+            //bind.ElementName = "PathMap";
+            bind.Mode = BindingMode.OneWay;
+            bind.Path = new PropertyPath("X");
+            styleHexList.Setters.Add(new Setter { Property = Grid.ColumnProperty, Value = bind});
+            Binding binds = new Binding();
+            //binds.ElementName = "PathMap";
+            binds.Mode = BindingMode.OneWay;
+            binds.Path = new PropertyPath("Y");
+            styleHexList.Setters.Add(new Setter { Property = Grid.RowProperty, Value = binds });
+            styleHexList.Setters.Add(new Setter { Property = Control.MarginProperty, Value = new Thickness(0, 0, 0, 0) });
+            styleHexList.Setters.Add(new Setter { Property = Control.BorderThicknessProperty, Value = new Thickness(0, 0, 0, 0) });
+            styleHexList.Setters.Add(new Setter { Property = Control.BorderBrushProperty, Value = null });
+            styleHexList.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = Brushes.Green });
+            hexList.ItemContainerStyle = styleHexList;
 
+
+            DataTemplate dat = new DataTemplate();
+            dat.DataType = typeof(Button);
+            FrameworkElementFactory factory = new FrameworkElementFactory(typeof(Button));
+            factory.SetValue(Button.WidthProperty, 50.0);
+            factory.SetValue(Button.HeightProperty, 25.0);
+            factory.SetValue(Button.ContentProperty, "ghb");
+            factory.AddHandler(Button.ClickEvent, new RoutedEventHandler(but_Click));
+            dat.VisualTree = factory;
+            hexList.ItemTemplate = dat;
+            hex.Children.Add(hexList);
+            Grid.SetZIndex(hex, 999);
+            this.Map.Children.Add(hex);
+
+            */
             HexGrid hexGrid = new HexGrid();
             hexGrid.RowCount = HeightMap;
             hexGrid.ColumnCount = WidthMap;
@@ -249,32 +291,30 @@ namespace Nuclear
                 for (int j = 0; j < WidthMap; j++)
                 {
                     Style style = new Style();
-                    style.Setters.Add(new Setter { Property = Control.MinHeightProperty, Value = (double)25 });
-                    style.Setters.Add(new Setter { Property = Control.MinWidthProperty, Value = (double)50 });
-                    style.Setters.Add(new Setter { Property = Control.MarginProperty, Value = new Thickness(0, 0, 0, 0) });
+                    style.Setters.Add(new Setter { Property = Control.HeightProperty, Value = (double)25 });
+                    style.Setters.Add(new Setter { Property = Control.WidthProperty, Value = (double)50 });
+                    style.Setters.Add(new Setter { Property = Control.MarginProperty, Value = new Thickness(-2.5, -1, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderThicknessProperty, Value = new Thickness(0, 0, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderBrushProperty, Value = null });
-                    HexItem sss = new HexItem();
                     if (PathArray[j, i] == -1)
                     {
-                        style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = new SolidColorBrush(Colors.Black) });
+                        style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = null });
                     }
                     else
                     {
-                        Button b = new Button();
-                        b.Click += but_Click;
                         DataTemplate dat = new DataTemplate();
-                        dat.DataType = typeof(Button);
-                        FrameworkElementFactory factory = new FrameworkElementFactory(typeof(Button));
-                        factory.SetValue(Button.WidthProperty, 50.0);
-                        factory.SetValue(Button.HeightProperty, 25.0);
-                        factory.SetValue(Button.OpacityProperty, 0.0);
-                        factory.AddHandler(Button.ClickEvent, new RoutedEventHandler(but_Click));
+                        dat.DataType = typeof(TextBlock);
+                        FrameworkElementFactory factory = new FrameworkElementFactory(typeof(TextBlock));
+                        factory.SetValue(TextBlock.WidthProperty, 50.0);
+                        factory.SetValue(TextBlock.HeightProperty, 25.0);
+                        factory.SetValue(TextBlock.OpacityProperty, 0.0);
+                        factory.SetValue(TextBlock.TextProperty, (i.ToString() + " " + j.ToString()) as string);
+                        factory.AddHandler(TextBlock.MouseDownEvent, new MouseButtonEventHandler(but_Click));
                         dat.VisualTree = factory;
-                        style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = new SolidColorBrush(Colors.Green) });
-                        style.Setters.Add(new Setter { Property = Control.OpacityProperty, Value = 0.0 });
+                        style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = null });
                         style.Setters.Add(new Setter { Property = ContentControl.ContentTemplateProperty, Value = dat });
                     }
+                    HexItem sss = new HexItem();
                     sss.Style = style;
                     Grid.SetColumn(sss, j);
                     Grid.SetRow(sss, i);
@@ -303,7 +343,7 @@ namespace Nuclear
                 {
                     HexItem sss = new HexItem();
                     sss.Background = null;
-                    sss.Margin = new Thickness(0, 0, 0, 0);
+                    sss.Margin = new Thickness(-2.5, -1, 0, 0);
                     sss.BorderBrush = null;
                     sss.BorderThickness = new Thickness(0);
                     sss.Width = 50;
@@ -321,10 +361,11 @@ namespace Nuclear
         {
             if (User.GetMovePoints() > 0)
             {
-                Button btn = sender as Button;
+                TextBlock btn = sender as TextBlock;
+                string[] buf = btn.Text.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
-                int row = (int)btn.GetValue(HexGrid.RowCountProperty);
-                int column = (int)btn.GetValue(HexGrid.ColumnCountProperty);
+                int row = Convert.ToInt32(buf[0]);
+                int column = Convert.ToInt32(buf[1]);
 
                 MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
                 Clean_TextBlock();
@@ -413,6 +454,12 @@ namespace Nuclear
                                     if (gridImage.Name == "ImageMap")
                                     {
                                         HexItem text = new HexItem();
+                                        text.Height = 25;
+                                        text.Width = 50;
+                                        text.Margin = new Thickness(-2.5, -1, 0, 0);
+                                        text.BorderBrush = null;
+                                        text.Background = null;
+                                        text.BorderThickness = new Thickness(0);
                                         text.Content = nstep.ToString();
                                         Grid.SetColumn(text, DoplocationUserY);
                                         Grid.SetRow(text, DoplocationUserX);
@@ -423,6 +470,11 @@ namespace Nuclear
                                     {
                                         HexItem myRect = new HexItem();
                                         myRect.Opacity = 0.5;
+                                        myRect.Height = 25;
+                                        myRect.Width = 50;
+                                        myRect.Margin = new Thickness(-2.5, -1, 0, 0);
+                                        myRect.BorderBrush = null;
+                                        myRect.BorderThickness = new Thickness(0);
                                         if (User.GetMovePoints() > nstep && User.GetMovePoints() - 3 > nstep)
                                             myRect.Background = Brushes.Green;
                                         else if (User.GetMovePoints() >= nstep)
@@ -468,6 +520,11 @@ namespace Nuclear
                     {
                         HexItem myRect = new HexItem();
                         myRect.Opacity = 0.5;
+                        myRect.Height = 25;
+                        myRect.Width = 50;
+                        myRect.Margin = new Thickness(-2.5, -1, 0, 0);
+                        myRect.BorderBrush = null;
+                        myRect.BorderThickness = new Thickness(0);
                         myRect.Background = Brushes.Blue;
                         Grid.SetColumn(myRect, User.GetY());
                         Grid.SetRow(myRect, User.GetX());
@@ -551,16 +608,6 @@ namespace Nuclear
                         {
                             c = wave.First<Point>();
                             User.SetXY(c.x, c.y);
-                            foreach (Grid gridHeat in Map.Children)
-                                if (gridHeat.Name == "HeatMap")
-                                {
-                                    HexItem myRect = new HexItem();
-                                    myRect.Opacity = 0.5;
-                                    myRect.Background = Brushes.Blue;
-                                    Grid.SetColumn(myRect, User.GetY());
-                                    Grid.SetRow(myRect, User.GetX());
-                                    gridHeat.Children.Add(myRect);
-                                }
                             wavePath = wave;
                         }
                         else break;
@@ -864,5 +911,42 @@ namespace Nuclear
                 ExitChat();
         }
         /* чат */
+    }
+
+    public struct IntPoint : IEquatable<IntPoint>
+    {
+        private readonly int _x;
+        private readonly int _y;
+
+        public IntPoint(int x, int y)
+        {
+            _x = x;
+            _y = y;
+        }
+
+        public int X
+        {
+            get { return _x; }
+        }
+
+        public int Y
+        {
+            get { return _y; }
+        }
+
+        public static bool operator ==(IntPoint a, IntPoint b)
+        {
+            return a.X == b.X && a.Y == b.Y;
+        }
+
+        public static bool operator !=(IntPoint a, IntPoint b)
+        {
+            return !(a == b);
+        }
+
+        public bool Equals(IntPoint other)
+        {
+            return this == other;
+        }
     }
 }
