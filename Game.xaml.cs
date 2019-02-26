@@ -88,7 +88,7 @@ namespace Nuclear
         private List<Point> wave = new List<Point>();
         private List<Point> wavePath = new List<Point>();
         private List<Point> DopWavePath = new List<Point>();
-        private PlayerUser User = new PlayerUser(8, 2, 20, 12);
+        private PlayerUser User = new PlayerUser(8, 2, 20, 12, 5);
         private int locationUserX;
         private int locationUserY;
         private int locationEndX;
@@ -237,49 +237,6 @@ namespace Nuclear
         {
             int HeightMap = 12;
             int WidthMap = 27;
-            /*
-            HexGrid hex = new HexGrid();
-            HexList hexList = new HexList();
-            hexList.RowCount = HeightMap;
-            hexList.ColumnCount = WidthMap;
-            hexList.Orientation = Orientation.Vertical;
-            hexList.Name = "PathMap";
-            hexList.ItemsSource = Enumerable.Range(0, hexList.RowCount)
-                .SelectMany(r => Enumerable.Range(0, hexList.ColumnCount)
-                .Select(c => new IntPoint(c, r)))
-                .ToList();
-            Style styleHexList = new Style();
-            Binding bind = new Binding();
-            //bind.ElementName = "PathMap";
-            bind.Mode = BindingMode.OneWay;
-            bind.Path = new PropertyPath("X");
-            styleHexList.Setters.Add(new Setter { Property = Grid.ColumnProperty, Value = bind});
-            Binding binds = new Binding();
-            //binds.ElementName = "PathMap";
-            binds.Mode = BindingMode.OneWay;
-            binds.Path = new PropertyPath("Y");
-            styleHexList.Setters.Add(new Setter { Property = Grid.RowProperty, Value = binds });
-            styleHexList.Setters.Add(new Setter { Property = Control.MarginProperty, Value = new Thickness(0, 0, 0, 0) });
-            styleHexList.Setters.Add(new Setter { Property = Control.BorderThicknessProperty, Value = new Thickness(0, 0, 0, 0) });
-            styleHexList.Setters.Add(new Setter { Property = Control.BorderBrushProperty, Value = null });
-            styleHexList.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = Brushes.Green });
-            hexList.ItemContainerStyle = styleHexList;
-
-
-            DataTemplate dat = new DataTemplate();
-            dat.DataType = typeof(Button);
-            FrameworkElementFactory factory = new FrameworkElementFactory(typeof(Button));
-            factory.SetValue(Button.WidthProperty, 50.0);
-            factory.SetValue(Button.HeightProperty, 25.0);
-            factory.SetValue(Button.ContentProperty, "ghb");
-            factory.AddHandler(Button.ClickEvent, new RoutedEventHandler(but_Click));
-            dat.VisualTree = factory;
-            hexList.ItemTemplate = dat;
-            hex.Children.Add(hexList);
-            Grid.SetZIndex(hex, 999);
-            this.Map.Children.Add(hex);
-
-            */
             HexGrid hexGrid = new HexGrid();
             hexGrid.RowCount = HeightMap;
             hexGrid.ColumnCount = WidthMap;
@@ -307,7 +264,7 @@ namespace Nuclear
                         FrameworkElementFactory factory = new FrameworkElementFactory(typeof(TextBlock));
                         factory.SetValue(TextBlock.WidthProperty, 50.0);
                         factory.SetValue(TextBlock.HeightProperty, 25.0);
-                        factory.SetValue(TextBlock.OpacityProperty, 1.0);
+                        factory.SetValue(TextBlock.OpacityProperty, 0.0);
                         factory.SetValue(TextBlock.TextProperty, (i.ToString() + " " + j.ToString()) as string);
                         factory.AddHandler(TextBlock.MouseDownEvent, new MouseButtonEventHandler(but_Click));
                         dat.VisualTree = factory;
@@ -502,6 +459,8 @@ namespace Nuclear
                         }
                     }
                     DopOldWave = new List<Point>(DopWavePath);
+                    if (nstep == User.GetAreaVisibility()) // поле зрения
+                        break;
                 }
                 //DopWavePath.Clear();
                 //DopOldWave.Clear();
@@ -630,7 +589,7 @@ namespace Nuclear
                     PathArray[i.y, i.x] = 1;
                 });
                 */
-                waveOut();
+                //waveOut();
                 if (User.GetMovePoints() > 0 && (User.GetX() != locationEndX || User.GetY() != locationEndY))
                 {
                     User.SetMovePoints(Convert.ToByte(User.GetMovePoints() - 1));

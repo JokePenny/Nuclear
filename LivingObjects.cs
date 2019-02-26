@@ -12,12 +12,14 @@ namespace Nuclear
         public int y;
         public byte health;
         public byte movePoints;
-        public LivingObjects(int X, int Y, byte Health, byte MovePoints)
+        public byte areaVisibility;
+        public LivingObjects(int X, int Y, byte Health, byte MovePoints, byte AreaVisibility)
         {
             x = X;
             y = Y;
             health = Health;
             movePoints = MovePoints;
+            areaVisibility = AreaVisibility;
         }
         public LivingObjects(int X, int Y)
         {
@@ -45,6 +47,10 @@ namespace Nuclear
         {
             return movePoints;
         }
+        public byte GetAreaVisibility()
+        {
+            return areaVisibility;
+        }
 
         //сеттеры
         public void SetXY(int X, int Y)
@@ -59,6 +65,10 @@ namespace Nuclear
         public void SetMovePoints(byte A)
         {
             movePoints = A;
+        }
+        public void SetAreaVisibility(byte A)
+        {
+            areaVisibility = A;
         }
     }
 }
