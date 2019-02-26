@@ -10,12 +10,13 @@ namespace Nuclear
     {
         private static int ID = 999;// индефикатор объекта 
 
-        public PlayerUser(int X, int Y, byte Health, byte MovePoints) : base(X, Y, Health, MovePoints)
+        public PlayerUser(int X, int Y, byte Health, byte MovePoints, byte AreaVisibility) : base(X, Y, Health, MovePoints, AreaVisibility)
         {
             x = X;
             y = Y;
             health = Health;
             movePoints = MovePoints;
+            areaVisibility = AreaVisibility;
         }
         public PlayerUser()
         {
