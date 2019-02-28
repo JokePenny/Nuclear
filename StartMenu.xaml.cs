@@ -1,4 +1,4 @@
-﻿
+using Nuclear.src;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +29,12 @@ namespace Nuclear
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Game game = new Game();
-            this.NavigationService.Navigate(game);
+            this.NavigationService.Navigate(new Game());
         }
         
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MapEditor mapEditor = new MapEditor();
-            this.NavigationService.Navigate(mapEditor);
+            this.NavigationService.Navigate(new Registration());
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

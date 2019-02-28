@@ -1,0 +1,38 @@
+﻿<Page x:Class="Nuclear.src.Registration"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Nuclear.src"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Registration">
+
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="200" Height="100" Grid.Row="2" Grid.Column="0" Name="Chat"  VerticalScrollBarVisibility="Hidden">
+            <TextBlock Name="ChatTextBlock" TextWrapping="Wrap" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9"/>
+        </ScrollViewer>
+        <StackPanel Margin="0 235 0 0" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">
+            <TextBlock Width="136" Margin="0 10 5 0" TextAlignment="Right" Opacity="0.6" Foreground="Green" FontSize="14" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="Логин"/>
+            <TextBlock Width="136" Margin="0 12 5 0" TextAlignment="Right" Opacity="0.6" Foreground="Green" FontSize="14" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="Пароль"/>
+        </StackPanel>
+        <StackPanel Margin="0 200 0 0" Grid.Column="1" Grid.Row="0">
+            <TextBlock Width="136" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="РЕГИСТРАЦИЯ"/>
+            <TextBox Name="Login" Width="150" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Background="Black" Foreground="Lime" FontSize="9" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="Гарпун" MouseLeftButtonDown="Button_Click"  />
+            <TextBox Name="Password" Width="150" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Background="Black" Foreground="Lime" FontSize="9" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" MouseLeftButtonDown="Button_Click_1"/>
+        </StackPanel>
+        <StackPanel Margin="0 0 0 0" Grid.Column="1" Grid.Row="1">
+            <TextBlock Name="RegistrUser" Width="136" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="ОК" MouseLeftButtonDown="Button_Click" MouseMove="MoveMouse_but" MouseLeave="MoveLeave_but"/>
+            <TextBlock Width="136" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="НАЗАД" MouseLeftButtonDown="Button_Click_1" MouseMove="MoveMouse_but" MouseLeave="MoveLeave_but"/>
+        </StackPanel>
+    </Grid>
+</Page>

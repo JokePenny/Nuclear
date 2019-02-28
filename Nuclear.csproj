@@ -76,6 +76,9 @@
     </Compile>
     <Compile Include="LivingObjects.cs" />
     <Compile Include="PlayerUser.cs" />
+    <Compile Include="src\Registration.xaml.cs">
+      <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StartMenu.xaml.cs">
       <DependentUpon>StartMenu.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SkillTree.xaml">
+    <Page Include="src\Registration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
