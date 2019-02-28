@@ -13,6 +13,9 @@ namespace Nuclear
         public byte health;
         public byte movePoints;
         public byte areaVisibility;
+        public int imageX;
+        public int imageY;
+
         public LivingObjects(int X, int Y, byte Health, byte MovePoints, byte AreaVisibility)
         {
             x = X;
@@ -52,11 +55,26 @@ namespace Nuclear
             return areaVisibility;
         }
 
+        public int GetImageX()
+        {
+            return imageX;
+        }
+
+        public int GetImageY()
+        {
+            return imageY;
+        }
+
         //сеттеры
         public void SetXY(int X, int Y)
         {
             x = X;
             y = Y;
+            imageX = (X * 13) - 55;
+            if (X % 2 != 0)
+                imageY = 34 + (Y * 36);
+            else
+                imageY = 34 + (Y * 18);
         }
         public void SetHealth(byte A)
         {

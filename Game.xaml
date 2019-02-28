@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:Nuclear"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1368"
-      Title="Game">
+      Title="Game"
+      Background="Black">
 
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
@@ -22,7 +23,11 @@
 
         <!-- игровое поле -->
         <ScrollViewer Name="Camera"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden" Visibility="Visible">
-            <Canvas Name="Map" Background="Lavender" Width="2000" Height="2000">
+            <Canvas Name="Map" Width="2000" Height="2000">
+                <Canvas Name="GROD" Width="2000" Height="2000" Panel.ZIndex="10">
+                </Canvas>
+                <Canvas Name="MapGrid" Width="2000" Height="2000">
+                </Canvas>
             </Canvas>
         </ScrollViewer>
         <!-- игровое поле -->
