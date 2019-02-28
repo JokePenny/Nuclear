@@ -90,6 +90,9 @@
     <Compile Include="src\Interface\Pipboy.cs" />
     <Compile Include="src\Interface\Skills.cs" />
     <Compile Include="src\Interface\Special.cs" />
+    <Compile Include="src\Registration.xaml.cs">
+      <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StartMenu.xaml.cs">
       <DependentUpon>StartMenu.xaml</DependentUpon>
     </Compile>
