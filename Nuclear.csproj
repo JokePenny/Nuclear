@@ -51,6 +51,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=1.4.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\WpfAnimatedGif.1.4.18\lib\net\WpfAnimatedGif.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -107,6 +110,7 @@
     <Resource Include="data\fonts\fallout_decayed.ttf" />
     <Resource Include="data\fonts\fallout_display.ttf" />
     <Resource Include="data\fonts\fallout.ttf" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -195,6 +199,20 @@
     <Resource Include="data\image\mainui\interfaceClick\but_map_interface.png" />
     <Resource Include="data\image\mainui\interfaceClick\but_pip_interface.png" />
     <Resource Include="data\image\mainui\interfaceClick\but_red_interface.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\characters\NMVALTAA_e.gif" />
+    <Resource Include="data\image\characters\NMVALTAA_ne.gif" />
+    <Resource Include="data\image\characters\NMVALTAA_nw.gif" />
+    <Resource Include="data\image\characters\NMVALTAA_se.gif" />
+    <Resource Include="data\image\characters\NMVALTAA_sw.gif" />
+    <Resource Include="data\image\characters\NMVALTAA_w.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_e.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_ne.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_nw.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_se.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_sw.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_w.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

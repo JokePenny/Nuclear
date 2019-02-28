@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HexGridControl;
+using WpfAnimatedGif;
 
 namespace Nuclear
 {
@@ -85,7 +87,7 @@ namespace Nuclear
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             };
 
-        private List<Point> wave = new List<Point>();
+        public List<Point> wave = new List<Point>();
         private List<Point> wavePath = new List<Point>();
         private List<Point> DopWavePath = new List<Point>();
         private PlayerUser User = new PlayerUser(8, 2, 20, 12, 5);
@@ -106,6 +108,8 @@ namespace Nuclear
         const string HOST = "235.5.5.1"; // хост для групповой рассылки
         IPAddress groupAddress; // адрес для групповой рассылки
 
+        Image img = new Image();
+        Image img1 = new Image();
         public object gridHeat { get; private set; }
 
         //private PlayerUser User = new PlayerUser();
@@ -113,13 +117,39 @@ namespace Nuclear
         {
 
             InitializeComponent();
-            //groupAddress = IPAddress.Parse(HOST);
+            //groupAddress = IPAddress.Parse(HOST); 
             //loginButton_Click();
             MapImageGrid();
             MapActiveGrid();
             MapHeatGrid();
+            MapImgPlayerGrid();
             findPath(8, 2, User.GetX(), User.GetY());
+            User.SetImage(GROD, img);
+            //initUser(8, 2);
+        }
 
+        private void initUser(int x, int y)
+        {
+            var image = new BitmapImage();
+            var image1 = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTAA_se.gif");
+            image.EndInit();
+            ImageBehavior.SetAnimatedSource(img, image);
+            image1.BeginInit();
+            image1.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTAA_se.gif");
+            image1.EndInit();
+            ImageBehavior.SetAnimatedSource(img1, image1);
+            //Canvas.SetLeft(img1, 107); // (82) + 50 на след клетку по горизонтали  или +75 если линия свдинулась
+            // Canvas.SetTop(img1, 115); // (97) + 28 на след клетку
+            //Canvas.SetLeft(img, 82); // (82) + 50 на след клетку по горизонтали  или +75 если линия свдинулась
+            // Canvas.SetTop(img, 97); // (97) + 25 на след клетку
+            Canvas.SetLeft(img, 16); // (82) + 50 на след клетку по горизонтали  или +75 если линия свдинулась
+            Canvas.SetTop(img, 24); // (97) + 25 на след клетку
+            Canvas.SetLeft(img1, 34); // (82) + 36 на след клетку по горизонтали  или +18 если линия свдинулась
+            Canvas.SetTop(img1, 37); // (97) + 13 на след клетку
+            GROD.Children.Add(img);
+            GROD.Children.Add(img1);
         }
 
         private void Opacity_ClickDown(object sender, MouseButtonEventArgs e)
@@ -202,10 +232,46 @@ namespace Nuclear
             }
         }
 
+        public void MapImgPlayerGrid()
+        {
+            int HeightMap = 12;
+            int WidthMap = 27;
+            double sizeCellWidth = 36;
+            double sizeCellHeight = 18;
+
+            HexGrid hexGrid = new HexGrid();
+            hexGrid.RowCount = HeightMap;
+            hexGrid.ColumnCount = WidthMap;
+            hexGrid.Orientation = Orientation.Vertical;
+            hexGrid.Name = "ImgPlayerGrid";
+
+            for (int i = 0; i < HeightMap; i++)
+            {
+                for (int j = 0; j < WidthMap; j++)
+                {
+                    HexItem sss = new HexItem();
+                    sss.Background = null;
+                    sss.Margin = new Thickness(-3, -1, 0, 0);
+                    sss.BorderBrush = null;
+                    sss.BorderThickness = new Thickness(0);
+                    sss.Width = sizeCellWidth;
+                    sss.Height = sizeCellHeight;
+                    Grid.SetColumn(sss, j);
+                    Grid.SetRow(sss, i);
+                    hexGrid.Children.Add(sss);
+                }
+            }
+            Grid.SetZIndex(hexGrid, 100);
+            this.MapGrid.Children.Add(hexGrid);
+        }
+
+
         public void MapImageGrid()
         {
             int HeightMap = 12;
             int WidthMap = 27;
+            double sizeCellWidth = 36;
+            double sizeCellHeight = 18;
 
             HexGrid hexGrid = new HexGrid();
             hexGrid.RowCount = HeightMap;
@@ -222,21 +288,24 @@ namespace Nuclear
                     sss.Margin = new Thickness(-3, -1, 0, 0);
                     sss.BorderBrush = null;
                     sss.BorderThickness = new Thickness(0);
-                    sss.Width = 50;
-                    sss.Height = 25;
+                    sss.Width = sizeCellWidth;
+                    sss.Height = sizeCellHeight;
                     Grid.SetColumn(sss, j);
                     Grid.SetRow(sss, i);
                     hexGrid.Children.Add(sss);
                 }
             }
             Grid.SetZIndex(hexGrid, 1);
-            this.Map.Children.Add(hexGrid);
+            this.MapGrid.Children.Add(hexGrid);
         }
 
         public void MapActiveGrid()
         {
             int HeightMap = 12;
             int WidthMap = 27;
+            double sizeCellWidth = 36;
+            double sizeCellHeight = 18;
+
             HexGrid hexGrid = new HexGrid();
             hexGrid.RowCount = HeightMap;
             hexGrid.ColumnCount = WidthMap;
@@ -248,8 +317,8 @@ namespace Nuclear
                 for (int j = 0; j < WidthMap; j++)
                 {
                     Style style = new Style();
-                    style.Setters.Add(new Setter { Property = Control.HeightProperty, Value = (double)25 });
-                    style.Setters.Add(new Setter { Property = Control.WidthProperty, Value = (double)50 });
+                    style.Setters.Add(new Setter { Property = Control.HeightProperty, Value = sizeCellHeight });
+                    style.Setters.Add(new Setter { Property = Control.WidthProperty, Value = sizeCellWidth });
                     style.Setters.Add(new Setter { Property = Control.MarginProperty, Value = new Thickness(-2.5, -1, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderThicknessProperty, Value = new Thickness(0, 0, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderBrushProperty, Value = null });
@@ -262,8 +331,8 @@ namespace Nuclear
                         DataTemplate dat = new DataTemplate();
                         dat.DataType = typeof(TextBlock);
                         FrameworkElementFactory factory = new FrameworkElementFactory(typeof(TextBlock));
-                        factory.SetValue(TextBlock.WidthProperty, 50.0);
-                        factory.SetValue(TextBlock.HeightProperty, 25.0);
+                        factory.SetValue(TextBlock.WidthProperty, sizeCellWidth);
+                        factory.SetValue(TextBlock.HeightProperty, sizeCellHeight);
                         factory.SetValue(TextBlock.OpacityProperty, 0.0);
                         factory.SetValue(TextBlock.TextProperty, (i.ToString() + " " + j.ToString()) as string);
                         factory.AddHandler(TextBlock.MouseDownEvent, new MouseButtonEventHandler(but_Click));
@@ -279,14 +348,16 @@ namespace Nuclear
                 }
             }
 
-            Grid.SetZIndex(hexGrid, 999);
-            this.Map.Children.Add(hexGrid);
+            Grid.SetZIndex(hexGrid, 50);
+            this.MapGrid.Children.Add(hexGrid);
         }
 
         public void MapHeatGrid()
         {
             int HeightMap = 12;
             int WidthMap = 27;
+            double sizeCellWidth = 36;
+            double sizeCellHeight = 18;
 
             HexGrid hexGrid = new HexGrid();
             hexGrid.RowCount = HeightMap;
@@ -303,15 +374,15 @@ namespace Nuclear
                     sss.Margin = new Thickness(-2.5, -1, 0, 0);
                     sss.BorderBrush = null;
                     sss.BorderThickness = new Thickness(0);
-                    sss.Width = 50;
-                    sss.Height = 25;
+                    sss.Width = sizeCellWidth;
+                    sss.Height = sizeCellHeight;
                     Grid.SetColumn(sss, j);
                     Grid.SetRow(sss, i);
                     hexGrid.Children.Add(sss);
                 }
             }
             Grid.SetZIndex(hexGrid, 5);
-            this.Map.Children.Add(hexGrid);
+            this.MapGrid.Children.Add(hexGrid);
         }
 
         private void but_Click(object sender, RoutedEventArgs e)
@@ -335,7 +406,7 @@ namespace Nuclear
 
         private void Clean_TextBlock()
         {
-            foreach (HexGrid grid in Map.Children)
+            foreach (HexGrid grid in MapGrid.Children)
                 if (grid.Name == "ImageMap")
                 {
                     UIElementCollection children1 = grid.Children;
@@ -347,7 +418,7 @@ namespace Nuclear
 
         private void Clean_HeatMap()
         {
-            foreach (HexGrid gridHeat in Map.Children)
+            foreach (HexGrid gridHeat in MapGrid.Children)
                 if (gridHeat.Name == "HeatMap")
                 {
                     UIElementCollection children1 = gridHeat.Children;
@@ -359,6 +430,10 @@ namespace Nuclear
 
         public async void findPath(int x, int y, int nx, int ny)
         {
+            double sizeCellWidth = 36;
+            double sizeCellHeight = 18;
+
+            //var controller = User.Moove(GROD, img);
             locationEndX = nx;
             locationEndY = ny;
             int locationEndXDUB = nx;
@@ -418,12 +493,12 @@ namespace Nuclear
                                 DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
 
                               
-                                foreach (HexGrid gridImage in Map.Children)
+                                foreach (HexGrid gridImage in MapGrid.Children)
                                     if (gridImage.Name == "ImageMap")
                                     {
                                         HexItem text = new HexItem();
-                                        text.Height = 25;
-                                        text.Width = 50;
+                                        text.Height = sizeCellHeight;
+                                        text.Width = sizeCellWidth;
                                         text.Margin = new Thickness(-2.5, -1, 0, 0);
                                         text.BorderBrush = null;
                                         text.Background = null;
@@ -433,13 +508,13 @@ namespace Nuclear
                                         Grid.SetRow(text, DoplocationUserX);
                                         gridImage.Children.Add(text);
                                     }
-                                foreach (HexGrid gridHeat in Map.Children)
+                                foreach (HexGrid gridHeat in MapGrid.Children)
                                     if (gridHeat.Name == "HeatMap")
                                     {
                                         HexItem myRect = new HexItem();
                                         myRect.Opacity = 0.5;
-                                        myRect.Height = 25;
-                                        myRect.Width = 50;
+                                        myRect.Height = sizeCellHeight;
+                                        myRect.Width = sizeCellWidth;
                                         myRect.Margin = new Thickness(-2.5, -1, 0, 0);
                                         myRect.BorderBrush = null;
                                         myRect.BorderThickness = new Thickness(0);
@@ -498,13 +573,13 @@ namespace Nuclear
                     oldWave = new List<Point>(wave);
                 }
 
-                foreach (HexGrid gridHeat in Map.Children)
+                foreach (HexGrid gridHeat in MapGrid.Children)
                     if (gridHeat.Name == "HeatMap")
                     {
                         HexItem myRect = new HexItem();
                         myRect.Opacity = 0.5;
-                        myRect.Height = 25;
-                        myRect.Width = 50;
+                        myRect.Height = sizeCellHeight;
+                        myRect.Width = sizeCellWidth;
                         myRect.Margin = new Thickness(-2.5, -1, 0, 0);
                         myRect.BorderBrush = null;
                         myRect.BorderThickness = new Thickness(0);
@@ -592,8 +667,8 @@ namespace Nuclear
                 //waveOut();
                 if (User.GetMovePoints() > 0 && (User.GetX() != locationEndX || User.GetY() != locationEndY))
                 {
-                    User.SetMovePoints(Convert.ToByte(User.GetMovePoints() - 1));
-                    await Task.Delay(1000);
+                    RunPeriodicSave();
+                    //await Task.Delay(100);
                     Clean_TextBlock();
                     Clean_HeatMap();
                     List<Point> step = new List<Point>();
@@ -607,13 +682,22 @@ namespace Nuclear
                         {
                             c = wave.First<Point>();
                             User.SetXY(c.x, c.y);
+                            Canvas.SetLeft(img, User.GetImageY());
+                            Canvas.SetTop(img, User.GetImageX());
+
                             wavePath = wave;
                         }
-                        else break;
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
                 else break;
-                if (wavePath.Count == 0) break;
+                if (wavePath.Count == 0) {
+                    //controller.GotoFrame(0);
+                    break;
+                }
                 else
                 {
                     nx = locationEndX;
@@ -633,7 +717,17 @@ namespace Nuclear
             }
         }
 
-        struct Point
+        public void RunPeriodicSave()
+        {
+            var controller = User.Moove(GROD, img);
+            int count = controller.FrameCount;
+            for(int i = 0; i < wave.Count; i++) {
+                controller.Play();
+                controller.GotoFrame(0);
+            }
+        }
+
+        public struct Point
         {
             public Point(int x, int y)
                 : this()
@@ -913,42 +1007,5 @@ namespace Nuclear
                 ExitChat();
         }
         /* чат */
-    }
-
-    public struct IntPoint : IEquatable<IntPoint>
-    {
-        private readonly int _x;
-        private readonly int _y;
-
-        public IntPoint(int x, int y)
-        {
-            _x = x;
-            _y = y;
-        }
-
-        public int X
-        {
-            get { return _x; }
-        }
-
-        public int Y
-        {
-            get { return _y; }
-        }
-
-        public static bool operator ==(IntPoint a, IntPoint b)
-        {
-            return a.X == b.X && a.Y == b.Y;
-        }
-
-        public static bool operator !=(IntPoint a, IntPoint b)
-        {
-            return !(a == b);
-        }
-
-        public bool Equals(IntPoint other)
-        {
-            return this == other;
-        }
     }
 }
