@@ -706,5 +706,25 @@ namespace Nuclear.src
             socket.Shutdown(SocketShutdown.Both);
             socket.Close();
         }
+
+        private void MoveMouseRoom_but(object sender, MouseEventArgs e)
+        {
+            (sender as Border).Background = Brushes.DarkGreen;
+        }
+
+        private void MoveLeaveRoom_but(object sender, MouseEventArgs e)
+        {
+            (sender as Border).Background = Brushes.Black;
+        }
+
+        private void CreateRoom_Click(object sender, MouseButtonEventArgs e)
+        {
+            if(CreateRoom.Visibility == Visibility.Collapsed)
+                CreateRoom.Visibility = Visibility.Visible;
+            else
+            {
+                CreateRoom.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }
