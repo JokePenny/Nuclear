@@ -76,6 +76,9 @@
     </Compile>
     <Compile Include="LivingObjects.cs" />
     <Compile Include="PlayerUser.cs" />
+    <Compile Include="src\NetworkRoom.xaml.cs">
+      <DependentUpon>NetworkRoom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="src\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SkillTree.xaml">
+    <Page Include="src\NetworkRoom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="src\Registration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -239,6 +246,9 @@
     <Resource Include="data\image\characters\NMVALTAB_se.gif" />
     <Resource Include="data\image\characters\NMVALTAB_sw.gif" />
     <Resource Include="data\image\characters\NMVALTAB_w.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\startClick\backlight_both.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
