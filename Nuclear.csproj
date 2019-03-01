@@ -90,6 +90,9 @@
     <Compile Include="src\Interface\Pipboy.cs" />
     <Compile Include="src\Interface\Skills.cs" />
     <Compile Include="src\Interface\Special.cs" />
+    <Compile Include="src\NetworkRoom.xaml.cs">
+      <DependentUpon>NetworkRoom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="src\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
@@ -245,7 +248,6 @@
     <Resource Include="data\image\mainui\interfaceClick\but_red_interface.png" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Resource Include="data\image\characters\NMVALTAA_e.gif" />
     <Resource Include="data\image\characters\NMVALTAA_ne.gif" />
     <Resource Include="data\image\characters\NMVALTAA_nw.gif" />
