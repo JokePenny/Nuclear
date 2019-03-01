@@ -72,6 +72,9 @@
     <Compile Include="src\Interface\Pipboy.cs" />
     <Compile Include="src\Interface\Skills.cs" />
     <Compile Include="src\Interface\Special.cs" />
+    <Compile Include="src\NetworkRoom.xaml.cs">
+      <DependentUpon>NetworkRoom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="src\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
@@ -94,6 +97,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="src\NetworkRoom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="src\Registration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -215,6 +222,7 @@
     <Resource Include="data\image\mainui\interfaceClick\but_red_interface.png" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_e.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_ne.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_nw.gif" />
@@ -229,5 +237,23 @@
     <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_w.gif" />
   </ItemGroup>
   <ItemGroup />
+=======
+    <Resource Include="data\image\characters\NMVALTAA_e.gif" />
+    <Resource Include="data\image\characters\NMVALTAA_ne.gif" />
+    <Resource Include="data\image\characters\NMVALTAA_nw.gif" />
+    <Resource Include="data\image\characters\NMVALTAA_se.gif" />
+    <Resource Include="data\image\characters\NMVALTAA_sw.gif" />
+    <Resource Include="data\image\characters\NMVALTAA_w.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_e.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_ne.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_nw.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_se.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_sw.gif" />
+    <Resource Include="data\image\characters\NMVALTAB_w.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\startClick\backlight_both.png" />
+  </ItemGroup>
+>>>>>>> Added page with the choice of room for the game on the network
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

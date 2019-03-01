@@ -18,7 +18,7 @@
             <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <ScrollViewer VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="200" Height="100" Grid.Row="2" Grid.Column="0" Name="Chat"  VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="300" Height="100" Grid.Row="2" Grid.Column="0" Name="Chat"  VerticalScrollBarVisibility="Hidden">
             <TextBlock Name="ChatTextBlock" TextWrapping="Wrap" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9"/>
         </ScrollViewer>
         <StackPanel Margin="0 235 0 0" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">

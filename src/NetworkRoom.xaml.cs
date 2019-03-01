@@ -1,5 +1,4 @@
-﻿using Nuclear.src;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,41 +13,34 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Nuclear
+namespace Nuclear.src
 {
     /// <summary>
-    /// Логика взаимодействия для StartMenu.xaml
+    /// Логика взаимодействия для NetworkRoom.xaml
     /// </summary>
-    public partial class StartMenu : Page
+    public partial class NetworkRoom : Page
     {
-        public StartMenu()
+        public NetworkRoom()
         {
             InitializeComponent();
-            ShowsNavigationUI = false;
         }
 
-        private void Game_Click(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Game());
+            this.NavigationService.Navigate(new StartMenu());
         }
 
-        private void Settings_Click(object sender, RoutedEventArgs e)
+        private void MoveMouseMenuOnline_but(object sender, MouseEventArgs e)
         {
+            (sender as TextBlock).Opacity = 0.8;
+            ImageBrush das = new ImageBrush();
+            das.ImageSource = new BitmapImage(new Uri(@"data/image/mainui/startClick/backlight_both.png", UriKind.Relative));
+            (sender as TextBlock).Background = das;
         }
 
-        private void Registration_Click(object sender, RoutedEventArgs e)
+        private void MoveMouseMenuSort_but(object sender, MouseEventArgs e)
         {
-            this.NavigationService.Navigate(new Registration());
-        }
-
-        private void OnlineGame_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(new NetworkRoom());
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
+            (sender as TextBlock).Opacity = 0.8;
         }
 
         private void MoveMouse_but(object sender, MouseEventArgs e)
