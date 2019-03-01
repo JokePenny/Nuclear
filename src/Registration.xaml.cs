@@ -64,9 +64,18 @@ namespace Nuclear.src
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             }
             while (socket.Available > 0);
-            Console.WriteLine("ответ сервера: " + builder.ToString());
-            socket.Shutdown(SocketShutdown.Both);
-            socket.Close();
+            ChatTextBlock.Text +="\r\n" + builder.ToString();
+            if(builder.ToString() == "Регистрация пройдена успешно")
+            {
+                RegistrUser.Opacity = 0.3;
+                RegistrUser.IsEnabled = false;
+                Login.Opacity = 0.3;
+                Login.IsEnabled = false;
+                Password.Opacity = 0.3;
+                Password.IsEnabled = false;
+                socket.Shutdown(SocketShutdown.Both);
+                socket.Close();
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
