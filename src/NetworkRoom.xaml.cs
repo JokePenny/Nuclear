@@ -8,7 +8,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
+<<<<<<< HEAD
 using System.Windows.Shapes;
+=======
+>>>>>>> Added Registration, Check entrance withc server
 
 namespace Nuclear.src
 {
@@ -774,6 +777,10 @@ namespace Nuclear.src
         {
             try
             {
+                if (Convert.ToInt32(RangeDown.Text) > Convert.ToInt32(RangeUp.Text))
+                    throw new Exception("\r\n Нижний порог входа выше чем верхний!");
+                if (Convert.ToInt32(RangeUp.Text) < Convert.ToInt32(RangeDown.Text))
+                    throw new Exception("\r\n Верхний порог входа ниже чем нижний!");
                 foreach (StackPanel stack in StackPlayer.Children)
                     if (stack.Name == NameRoom.Text)
                         throw new Exception("\r\n Комната с таким именем уже существует");
@@ -781,117 +788,178 @@ namespace Nuclear.src
                 {
                     CreateWindow.IsEnabled = false;
                     StatsPlayer.Margin = new Thickness(0, 0, 165, 0);
+                    ValuePlayers.Text = "0";
+                    RangeUp.Text = "0";
+                    RangeDown.Text = "0";
                     CreateRoom.Visibility = Visibility.Visible;
                 }
                 else if (MapSelection.SelectedItem == null || ValuePlayers.Text == "" || NameRoom.Text == "")
                     throw new Exception("\r\n Не все поля заполнены");
                 else
                 {
-                    StatsPlayer.Margin = new Thickness(0, 105, 5, 0);
-                    CreateWindow.IsEnabled = true;
-                    Border room = new Border();
-                    room.Height = 20;
-                    room.Background = Brushes.Black;
-                    room.BorderBrush = Brushes.Green;
-                    room.BorderThickness = new Thickness(2);
-                    room.Margin = new Thickness(0, 5, 0, 0);
-                    room.MouseMove += MoveMouseRoom_but;
-                    room.MouseLeave += MoveLeaveRoom_but;
-                    room.MouseLeftButtonDown += MoveClickRoom_but;
+                    ChatTextBlock.Text += "\r\n" + MapSelection.Text;
+                    string message = "2 " + NameRoom.Text + " " + " " + ValuePlayers.Text + " " + RangeUp.Text + " " + RangeDown.Text + " " + MapSelection.Text;
+                    byte[] data = Encoding.Unicode.GetBytes(message);
+                    socket.Send(data);
+                    data = new byte[256];
+                    StringBuilder builder = new StringBuilder();
+                    int bytes = 0;
+                    do
+                    {
+                        bytes = socket.Receive(data, data.Length, 0);
+                        builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                    }
+                    while (socket.Available > 0);
+                    //ChatTextBlock.Text += "\r\n" + builder.ToString();
+                    if (builder.ToString() == "Комната успешно создана")
+                    {
+                        ChatTextBlock.Text += "\r\n" + builder.ToString();
 
-                    WrapPanel wrap = new WrapPanel();
+                        StatsPlayer.Margin = new Thickness(0, 105, 5, 0);
+                        CreateWindow.IsEnabled = true;
+                        Border room = new Border();
+                        room.Height = 20;
+                        room.Background = Brushes.Black;
+                        room.BorderBrush = Brushes.Green;
+                        room.BorderThickness = new Thickness(2);
+                        room.Margin = new Thickness(0, 5, 0, 0);
+                        room.MouseMove += MoveMouseRoom_but;
+                        room.MouseLeave += MoveLeaveRoom_but;
+                        room.MouseLeftButtonDown += MoveClickRoom_but;
 
-                    TextBlock namemap = new TextBlock();
-                    namemap.Width = 200;
-                    namemap.Margin = new Thickness(0, 0, 196, 0);
-                    namemap.TextAlignment = TextAlignment.Center;
-                    namemap.Foreground = Brushes.Lime;
-                    namemap.FontSize = 12;
-                    namemap.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
-                    namemap.Text = NameRoom.Text;
+                        WrapPanel wrap = new WrapPanel();
 
-                    TextBlock valPlayers = new TextBlock();
-                    valPlayers.Width = 136;
-                    valPlayers.TextAlignment = TextAlignment.Center;
-                    valPlayers.Foreground = Brushes.Lime;
-                    valPlayers.Margin = new Thickness(0, 0, 4, 0);
-                    valPlayers.FontSize = 12;
-                    valPlayers.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
-                    valPlayers.Text = "0" + "/" + ValuePlayers.Text;
+                        TextBlock namemap = new TextBlock();
+                        namemap.Width = 200;
+                        namemap.Margin = new Thickness(0, 0, 196, 0);
+                        namemap.TextAlignment = TextAlignment.Center;
+                        namemap.Foreground = Brushes.Lime;
+                        namemap.FontSize = 12;
+                        namemap.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
+                        namemap.Text = NameRoom.Text;
 
-                    TextBlock active = new TextBlock();
-                    active.Width = 130;
-                    active.TextAlignment = TextAlignment.Center;
-                    active.Foreground = Brushes.Lime;
-                    active.FontSize = 12;
-                    active.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
-                    active.Text = "АКТИВЕН";
+                        TextBlock valPlayers = new TextBlock();
+                        valPlayers.Width = 136;
+                        valPlayers.TextAlignment = TextAlignment.Center;
+                        valPlayers.Foreground = Brushes.Lime;
+                        valPlayers.Margin = new Thickness(0, 0, 4, 0);
+                        valPlayers.FontSize = 12;
+                        valPlayers.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
+                        valPlayers.Text = "0" + "/" + ValuePlayers.Text;
 
-                    wrap.Children.Add(namemap);
-                    wrap.Children.Add(valPlayers);
-                    wrap.Children.Add(active);
-                    room.Child = wrap;
-                    StackRoom.Children.Add(room);
+                        TextBlock active = new TextBlock();
+                        active.Width = 130;
+                        active.TextAlignment = TextAlignment.Center;
+                        active.Foreground = Brushes.Lime;
+                        active.FontSize = 12;
+                        active.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
+                        active.Text = "ОЖИДАНИЕ";
 
-                    StackPanel listPlayer = new StackPanel();
-                    listPlayer.Name = NameRoom.Text;
-                    listPlayer.Visibility = Visibility.Collapsed;
-                    StackPlayer.Children.Add(listPlayer);
-                    NameRoom.Text = "";
+                        wrap.Children.Add(namemap);
+                        wrap.Children.Add(valPlayers);
+                        wrap.Children.Add(active);
+                        room.Child = wrap;
+                        StackRoom.Children.Add(room);
 
-                    CreateRoom.Visibility = Visibility.Collapsed;
+                        StackPanel listPlayer = new StackPanel();
+                        listPlayer.Name = NameRoom.Text;
+                        listPlayer.Visibility = Visibility.Collapsed;
+                        StackPlayer.Children.Add(listPlayer);
+                        NameRoom.Text = "";
+
+                        CreateRoom.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
             catch (Exception error)
             {
-                ChatTextBlock.Text += error.Message;
+                ChatTextBlock.Text += "\r\n" + error.Message;
             }
         }
 
         private void EntranceRoom_Click(object sender, MouseButtonEventArgs e)
         {
-            Border room = new Border();
-            room.Height = 20;
-            room.Background = Brushes.Black;
-            room.BorderBrush = Brushes.Green;
-            room.BorderThickness = new Thickness(2);
-            room.Margin = new Thickness(0, 5, 0, 0);
-            room.MouseMove += MoveMouseRoom_but;
-            room.MouseLeave += MoveLeaveRoom_but;
-            room.MouseLeftButtonDown += MoveClickRoom_but;
+            string message = "2 " + User.GetNickname();
+            message += " " + User.GetLevel();
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            socket.Send(data);
+            data = new byte[256];
+            StringBuilder builder = new StringBuilder();
+            int bytes = 0;
+            do
+            {
+                bytes = socket.Receive(data, data.Length, 0);
+                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+            }
+            while (socket.Available > 0);
+            //ChatTextBlock.Text += "\r\n" + builder.ToString();
+            if (builder.ToString() == "Вы зашли в комнату" || builder.ToString() == "Вы зашли в комнату перед этим ее создав")
+            {
+                StreamResourceInfo sris = Application.GetResourceStream(
+                    new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+                Cursor customCursors = new Cursor(sris.Stream);
+                Mouse.OverrideCursor = customCursors;
+                ChatTextBlock.Text += "\r\n" + builder.ToString();
 
-            WrapPanel wrap = new WrapPanel();
+                Border room = new Border();
+                room.Height = 20;
+                room.Background = Brushes.Black;
+                room.BorderBrush = Brushes.Green;
+                room.BorderThickness = new Thickness(2);
+                room.Margin = new Thickness(0, 5, 0, 0);
+                room.MouseMove += MoveMouseRoom_but;
+                room.MouseLeave += MoveLeaveRoom_but;
+                room.MouseLeftButtonDown += MoveClickRoom_but;
 
-            TextBlock namemap = new TextBlock();
-            namemap.Width = 140;
-            namemap.Margin = new Thickness(0, 0, 0, 0);
-            namemap.TextAlignment = TextAlignment.Center;
-            namemap.Foreground = Brushes.Lime;
-            namemap.FontSize = 12;
-            namemap.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
-            namemap.Text = "Lorne";
+                WrapPanel wrap = new WrapPanel();
 
-            TextBlock valPlayers = new TextBlock();
-            valPlayers.Width = 140;
-            valPlayers.TextAlignment = TextAlignment.Center;
-            valPlayers.Foreground = Brushes.Lime;
-            valPlayers.Margin = new Thickness(0, 0, 5, 0);
-            valPlayers.FontSize = 12;
-            valPlayers.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
-            valPlayers.Text = "4";
+                TextBlock namemap = new TextBlock();
+                namemap.Width = 140;
+                namemap.Margin = new Thickness(0, 0, 0, 0);
+                namemap.TextAlignment = TextAlignment.Center;
+                namemap.Foreground = Brushes.Lime;
+                namemap.FontSize = 12;
+                namemap.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
+                namemap.Text = "Lorne";
 
-            wrap.Children.Add(namemap);
-            wrap.Children.Add(valPlayers);
-            room.Child = wrap;
-            foreach (StackPanel stack in StackPlayer.Children)
-                if (stack.Visibility == Visibility.Visible)
-                    stack.Children.Add(room);
+                TextBlock valPlayers = new TextBlock();
+                valPlayers.Width = 140;
+                valPlayers.TextAlignment = TextAlignment.Center;
+                valPlayers.Foreground = Brushes.Lime;
+                valPlayers.Margin = new Thickness(0, 0, 5, 0);
+                valPlayers.FontSize = 12;
+                valPlayers.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
+                valPlayers.Text = "4";
 
-            ConnectRoom.IsEnabled = false;
-            ConnectRoom.MouseLeave -= MoveLeave_but;
-            ConnectRoom.MouseMove -= MoveMouseMenuOnline_but;
-            ConnectRoom.Background = null;
-            ConnectRoom.Opacity = 0.3;
+                wrap.Children.Add(namemap);
+                wrap.Children.Add(valPlayers);
+                room.Child = wrap;
+                foreach (StackPanel stack in StackPlayer.Children)
+                    if (stack.Visibility == Visibility.Visible)
+                        stack.Children.Add(room);
+
+                ConnectRoom.IsEnabled = false;
+                ConnectRoom.MouseLeave -= MoveLeave_but;
+                ConnectRoom.MouseMove -= MoveMouseMenuOnline_but;
+                ConnectRoom.Background = null;
+                ConnectRoom.Opacity = 0.3;
+                //socket.Shutdown(SocketShutdown.Both);
+                //socket.Close();
+            }
+            else
+            {
+                ChatTextBlock.Text += "\r\n Комната заполнена или не соответсвует вашему уровню";
+                //socket.Shutdown(SocketShutdown.Both);
+                //socket.Close();
+                StreamResourceInfo str = Application.GetResourceStream(
+                   new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+                Cursor customCursorr = new Cursor(str.Stream);
+                Mouse.OverrideCursor = customCursorr;
+            }
         }
 
         private void CloseCreteRoom_Click(object sender, MouseButtonEventArgs e)
@@ -899,6 +967,11 @@ namespace Nuclear.src
             CreateWindow.IsEnabled = true;
             StatsPlayer.Margin = new Thickness(0, 105, 5, 0);
             CreateRoom.Visibility = Visibility.Collapsed;
+        }
+
+        private void Number_CheckWrite(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = "0123456789".IndexOf(e.Text) < 0;
         }
     }
 }

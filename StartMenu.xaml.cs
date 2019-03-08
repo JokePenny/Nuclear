@@ -117,6 +117,7 @@ namespace Nuclear
                            new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
             Cursor customCursor = new Cursor(sri.Stream);
             Mouse.OverrideCursor = customCursor;
+
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
