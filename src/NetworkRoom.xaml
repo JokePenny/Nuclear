@@ -52,13 +52,16 @@
                         <ColumnDefinition Width="145"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Border Width="145" Grid.Row="0" BorderThickness="5" BorderBrush="Green">
-                        <TextBlock Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="Lorne"/>
+                        <TextBlock Name="NicknamePlayer" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.8" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display"/>
                     </Border>
-                    <TextBlock Grid.Row="1" Margin="0 10 0 0" TextAlignment="Center" Opacity="1" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="Подключен"/>
+                    <WrapPanel  Grid.Row="1">
+                        <TextBlock Grid.Row="1" Margin="20 10 10 0" TextAlignment="Center" Opacity="0.8" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="ур."/>
+                        <TextBlock Name="LevelPlayer" Grid.Row="1" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.8" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="12"/>
+                    </WrapPanel>
                 </Grid>
             </StackPanel>
         </Border>
-        <Border Name="CreateRoom" Grid.Column="0" Grid.Row="1" BorderThickness="5" BorderBrush="Green" Margin="10 105 5 0" HorizontalAlignment="Right" Visibility="Collapsed">
+        <Border Name="CreateRoom" Grid.Column="0" Grid.Row="1" BorderThickness="5" BorderBrush="Green" Margin="10 105 5 0" HorizontalAlignment="Right" Visibility="Visible">
             <StackPanel>
                 <Grid Background="Black">
                     <Grid.RowDefinitions>
@@ -96,20 +99,38 @@
                                 </Border>
                                 <Border BorderThickness="2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top">
                                     <WrapPanel>
-                                        <TextBlock  Width="157" Margin="0 5 0 5" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="КОЛ-ВО ИГРОКОВ"/>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                                        </StackPanel>
-                                        <TextBox Name="ValuePlayers" Width="136" TextAlignment="Center" Background="Black" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="12"></TextBox>
-                                    </WrapPanel>
-                                </Border>
-                                <Border BorderThickness="2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top">
-                                    <WrapPanel>
                                         <TextBlock  Width="157" Margin="0 5 0 5" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="НАЗВАНИЕ"/>
                                         <StackPanel Orientation="Horizontal">
                                             <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                         </StackPanel>
                                         <TextBox Name="NameRoom" Width="136" TextAlignment="Center" Background="Black" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text=""></TextBox>
+                                    </WrapPanel>
+                                </Border>
+                                <Border BorderThickness="2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top">
+                                    <WrapPanel>
+                                        <TextBlock  Width="157" Margin="0 5 0 5" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="КОЛ-ВО ИГРОКОВ"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                        </StackPanel>
+                                        <TextBox Name="ValuePlayers" Width="136" TextAlignment="Center" Background="Black" Foreground="Lime" FontSize="16" PreviewTextInput="Number_CheckWrite" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"></TextBox>
+                                    </WrapPanel>
+                                </Border>
+                                <Border BorderThickness="2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top">
+                                    <WrapPanel>
+                                        <TextBlock  Width="157" Margin="0 5 0 5" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="ВЕРХН. УРОВЕНЬ ВХОДА"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                        </StackPanel>
+                                        <TextBox Name="RangeUp" Width="136" TextAlignment="Center" Background="Black" PreviewTextInput="Number_CheckWrite" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"></TextBox>
+                                    </WrapPanel>
+                                </Border>
+                                <Border BorderThickness="2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top">
+                                    <WrapPanel>
+                                        <TextBlock  Width="157" Margin="0 5 0 5" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="НИЖН. УРОВЕНЬ ВХОДА"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                        </StackPanel>
+                                        <TextBox Name="RangeDown" Width="136" TextAlignment="Center" PreviewTextInput="Number_CheckWrite" Background="Black" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"></TextBox>
                                     </WrapPanel>
                                 </Border>
                             </StackPanel>
@@ -212,7 +233,6 @@
                             <TextBlock Name="ConnectRoom" Width="136" Margin="0 10 0 0" IsEnabled="False" TextAlignment="Center" Opacity="0.3" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="ПОДКЛ." MouseLeftButtonDown="EntranceRoom_Click"/>
                         </WrapPanel>
                     </Border>
-                   
                 </Grid>
             </StackPanel>
         </Border>

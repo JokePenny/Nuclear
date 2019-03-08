@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nuclear
 {
-    class LivingObjects
+    public abstract class LivingObjects
     {
         public int x;
         public int y;

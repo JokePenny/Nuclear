@@ -11,9 +11,12 @@ using WpfAnimatedGif;
 
 namespace Nuclear
 {
-    class PlayerUser : LivingObjects
+    public class PlayerUser : LivingObjects
     {
         private static int ID = 999;// индефикатор объекта
+        private string nickname = null;
+        private int level;
+
         //private int imageX;
         //private int imageY;
 
@@ -31,6 +34,10 @@ namespace Nuclear
             health = Health;
             movePoints = MovePoints;
             areaVisibility = AreaVisibility;
+        }
+        public PlayerUser(string Nickname)
+        {
+            nickname = Nickname;
         }
         public PlayerUser()
         {
@@ -75,11 +82,31 @@ namespace Nuclear
         public void DeleteImage()
         {
         }
+        //сеттеры
+        public void SetLevel(int a)
+        {
+            level = a;
+        }
+
+        public void SetNickname(string a)
+        {
+            nickname = a;
+        }
 
         //геттеры
         public int GetID()
         {
             return ID;
+        }
+
+        public int GetLevel()
+        {
+            return level;
+        }
+
+        public string GetNickname()
+        {
+            return nickname;
         }
     }
 }
