@@ -1,29 +1,33 @@
 using Nuclear.src;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Resources;
 
 namespace Nuclear
 {
-    /// <summary>
-    /// Логика взаимодействия для StartMenu.xaml
-    /// </summary>
     public partial class StartMenu : Page
     {
+        PlayerUser user = null;
         public StartMenu()
         {
             InitializeComponent();
+            user = new PlayerUser();
+            ShowsNavigationUI = false;
+        }
+
+        public StartMenu(PlayerUser connectUser)
+        {
+            InitializeComponent();
+            user = connectUser;
+            if(user.GetNickname() != null)
+                Login.Text = user.GetNickname();
             ShowsNavigationUI = false;
         }
 
@@ -38,12 +42,83 @@ namespace Nuclear
 
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Registration());
+            this.NavigationService.Navigate(new Registration(user));
         }
 
         private void OnlineGame_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new NetworkRoom());
+            if(Login.Text != "" && Password.Text != "")
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                // адрес и порт сервера, к которому будем подключаться
+                int port = 8005; // порт сервера
+                string address = "127.0.0.1"; // адрес сервера
+                Socket socket = null;
+                try
+                {
+                    IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(address), port);
+                    socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    socket.Connect(ipPoint);
+
+                    string message = "1 " + Login.Text;
+                    message += " " + Password.Text;
+                    byte[] data = Encoding.Unicode.GetBytes(message);
+                    socket.Send(data);
+                    data = new byte[256];
+                    StringBuilder builder = new StringBuilder();
+                    int bytes = 0;
+                    do
+                    {
+                        bytes = socket.Receive(data, data.Length, 0);
+                        builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                    }
+                    while (socket.Available > 0);
+                    //ChatTextBlock.Text += "\r\n" + builder.ToString();
+                    if (builder.ToString() == "Вход выполнен")
+                    {
+                        StreamResourceInfo sris = Application.GetResourceStream(
+                            new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+                        Cursor customCursors = new Cursor(sris.Stream);
+                        Mouse.OverrideCursor = customCursors;
+                        PlayerUser User = new PlayerUser(Login.Text);
+                        socket.Shutdown(SocketShutdown.Both);
+                        socket.Close();
+                        this.NavigationService.Navigate(new NetworkRoom(Login.Text, User));
+                        //socket.Shutdown(SocketShutdown.Both);
+                        //socket.Close();
+                    }
+                    else
+                    {
+                        ChatTextBlock.Text += "\r\n" + builder.ToString();
+                        socket.Shutdown(SocketShutdown.Both);
+                        socket.Close();
+                        StreamResourceInfo str = Application.GetResourceStream(
+                           new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+                        Cursor customCursorr = new Cursor(str.Stream);
+                        Mouse.OverrideCursor = customCursorr;
+                        socket.Shutdown(SocketShutdown.Both);
+                        socket.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    StreamResourceInfo sria = Application.GetResourceStream(
+                           new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+                    Cursor customCursore = new Cursor(sria.Stream);
+                    Mouse.OverrideCursor = customCursore;
+                    ChatTextBlock.Text += "\r\n Сервер неактивен!";
+                }
+            }
+            else
+                ChatTextBlock.Text += "\r\n Введите Логин и Пароль!";
+            /*
+            StreamResourceInfo sri = Application.GetResourceStream(
+                           new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+            Cursor customCursor = new Cursor(sri.Stream);
+            Mouse.OverrideCursor = customCursor;
+
+            this.NavigationService.Navigate(new NetworkRoom(Login.Text));
+            */
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
