@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -125,7 +126,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Resource Include="data\fonts\fallout_decayed.ttf" />
@@ -222,7 +223,6 @@
     <Resource Include="data\image\mainui\interfaceClick\but_red_interface.png" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_e.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_ne.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_nw.gif" />
@@ -236,24 +236,14 @@
     <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_sw.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_w.gif" />
   </ItemGroup>
-  <ItemGroup />
-=======
-    <Resource Include="data\image\characters\NMVALTAA_e.gif" />
-    <Resource Include="data\image\characters\NMVALTAA_ne.gif" />
-    <Resource Include="data\image\characters\NMVALTAA_nw.gif" />
-    <Resource Include="data\image\characters\NMVALTAA_se.gif" />
-    <Resource Include="data\image\characters\NMVALTAA_sw.gif" />
-    <Resource Include="data\image\characters\NMVALTAA_w.gif" />
-    <Resource Include="data\image\characters\NMVALTAB_e.gif" />
-    <Resource Include="data\image\characters\NMVALTAB_ne.gif" />
-    <Resource Include="data\image\characters\NMVALTAB_nw.gif" />
-    <Resource Include="data\image\characters\NMVALTAB_se.gif" />
-    <Resource Include="data\image\characters\NMVALTAB_sw.gif" />
-    <Resource Include="data\image\characters\NMVALTAB_w.gif" />
-  </ItemGroup>
   <ItemGroup>
     <Resource Include="data\image\mainui\startClick\backlight_both.png" />
   </ItemGroup>
->>>>>>> Added page with the choice of room for the game on the network
+  <ItemGroup>
+    <None Include="Resources\cur.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\cursor\ACTARROW.cur" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
