@@ -73,19 +73,20 @@ namespace Nuclear
                         builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
                     }
                     while (socket.Available > 0);
+                    string[] answer = builder.ToString().Split(';');
                     //ChatTextBlock.Text += "\r\n" + builder.ToString();
-                    if (builder.ToString() == "Вход выполнен")
+                    if (answer[0] == "Вход выполнен")
                     {
                         StreamResourceInfo sris = Application.GetResourceStream(
                             new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
                         Cursor customCursors = new Cursor(sris.Stream);
                         Mouse.OverrideCursor = customCursors;
-                        PlayerUser User = new PlayerUser(Login.Text);
+                        user.SetNickname(Login.Text);
+                        user.SetLevel(Convert.ToInt32(answer[1]));
+                        socket.Shutdown(SocketShutdown.Both);
                         socket.Shutdown(SocketShutdown.Both);
                         socket.Close();
-                        this.NavigationService.Navigate(new NetworkRoom(Login.Text, User));
-                        //socket.Shutdown(SocketShutdown.Both);
-                        //socket.Close();
+                        this.NavigationService.Navigate(new NetworkRoom(user));
                     }
                     else
                     {
@@ -111,14 +112,10 @@ namespace Nuclear
             }
             else
                 ChatTextBlock.Text += "\r\n Введите Логин и Пароль!";
-            /*
             StreamResourceInfo sri = Application.GetResourceStream(
                            new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
             Cursor customCursor = new Cursor(sri.Stream);
             Mouse.OverrideCursor = customCursor;
-
-            this.NavigationService.Navigate(new NetworkRoom(Login.Text));
-            */
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
