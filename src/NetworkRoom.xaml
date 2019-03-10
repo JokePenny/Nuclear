@@ -118,7 +118,7 @@
                                         <TextBox Name="NameRoom" Width="136" TextAlignment="Center" Background="Black" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text=""></TextBox>
                                     </WrapPanel>
                                 </Border>
-                                <Border BorderThickness="2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top">
+                                <Border BorderThickness="0 2 0 2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top">
                                     <WrapPanel>
                                         <TextBlock  Width="157" Margin="0 5 0 5" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="КОЛ-ВО ИГРОКОВ"/>
                                         <StackPanel Orientation="Horizontal">
