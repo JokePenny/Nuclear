@@ -37,7 +37,7 @@
                     <Border Width="145" Grid.Row="0" BorderThickness="5" BorderBrush="Green">
                         <TextBlock Margin="0 5 0 5" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="ОНЛАЙН"/>
                     </Border>
-                    <TextBlock Grid.Row="1" Margin="0 3 0 3" TextAlignment="Center" Opacity="1" Foreground="Lime" FontSize="17" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"/>
+                    <TextBlock Name="CountOnlineUsers" Grid.Row="1" Margin="0 3 0 3" TextAlignment="Center" Opacity="1" Foreground="Lime" FontSize="17" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"/>
                 </Grid>
             </StackPanel>
         </Border>
@@ -150,7 +150,7 @@
         </Border>
         <!--Создание комнаты-->
         <!--Комната-->
-        <Border Name="Room" Grid.Column="2" Grid.Row="1" BorderThickness="5" BorderBrush="Green" Margin="0 0 13 0" HorizontalAlignment="Right" Visibility="Visible" IsEnabled="False">
+        <Border Name="Room" Grid.Column="2" Grid.Row="1" BorderThickness="5" BorderBrush="Green" Margin="0 0 13 0" HorizontalAlignment="Right" Visibility="Collapsed" IsEnabled="False">
             <StackPanel>
                 <Grid Background="Black">
                     <Grid.RowDefinitions>

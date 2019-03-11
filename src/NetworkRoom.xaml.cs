@@ -25,6 +25,7 @@ namespace Nuclear.src
             InitializeComponent();
             User = connectUser;
             NicknamePlayer.Text = connectUser.GetNickname();
+            LevelPlayer.Text = connectUser.GetLevel().ToString();
             UpdateAllRoom();
         }
 
@@ -101,6 +102,35 @@ namespace Nuclear.src
                     br.Background = Brushes.Black;
             foreach (StackPanel stack in StackPlayer.Children)
                 stack.Visibility = Visibility.Collapsed;
+
+            WrapPanel wpanel = (WrapPanel)(sender as Border).Child;
+            foreach (var stack in wpanel.Children)
+                if((stack as TextBlock).Text != User.GetStateRoom())
+                {
+                    ExitRoom.IsEnabled = false;
+                    ExitRoom.MouseMove -= MoveMouseMenuOnline_but;
+                    ExitRoom.MouseLeave -= MoveLeave_but;
+                    ExitRoom.Background = null;
+                    ExitRoom.Opacity = 0.3;
+                    Readiness.IsEnabled = false;
+                    Readiness.MouseMove -= MoveMouseMenuOnline_but;
+                    Readiness.MouseLeave -= MoveLeave_but;
+                    Readiness.Background = null;
+                    Readiness.Opacity = 0.3;
+                    break;
+                }
+                else
+                {
+                    ExitRoom.IsEnabled = true;
+                    ExitRoom.MouseMove += MoveMouseMenuOnline_but;
+                    ExitRoom.MouseLeave += MoveLeave_but;
+                    ExitRoom.Opacity = 0.6;
+                    Readiness.IsEnabled = true;
+                    Readiness.MouseMove += MoveMouseMenuOnline_but;
+                    Readiness.MouseLeave += MoveLeave_but;
+                    Readiness.Opacity = 0.6;
+                    break;
+                }
 
             (sender as Border).Background = Brushes.Green;
             if(User.GetStateRoom() == null)
@@ -477,6 +507,24 @@ namespace Nuclear.src
                     usersBlock.Children.Remove(deleted);
                     break;
                 }
+
+            foreach (Border rooms in StackRoom.Children)
+                if (rooms.Background == Brushes.Green)
+                {
+                    WrapPanel wraps = (WrapPanel)rooms.Child;
+                    int i = 0;
+                    foreach (TextBlock maps in wraps.Children)
+                    {
+                        if (i == 2)
+                        {
+                            string[] temp = maps.Text.Split('/');
+                            maps.Text = (Convert.ToInt32(temp[0]) - 1).ToString() + "/" + temp[1];
+                            break;
+                        }
+                        i++;
+                    }
+                    break;
+                }
             User.SetStateRoom(null);
             ExitRoom.IsEnabled = false;
             ExitRoom.MouseMove -= MoveMouseMenuOnline_but;
@@ -541,9 +589,6 @@ namespace Nuclear.src
                 {
                     elements = rows[i].Split(' ');
                     CreateWindow.IsEnabled = true;
-
-
-
                     Border room = new Border();
                     room.Height = 20;
                     room.Background = Brushes.Black;
@@ -684,6 +729,24 @@ namespace Nuclear.src
                 socket.Shutdown(SocketShutdown.Both);
                 socket.Close();
             }
+
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket.Connect(ipPoint);
+            message = "8";
+            data = Encoding.Unicode.GetBytes(message);
+            socket.Send(data);
+            data = new byte[256];
+            builder = new StringBuilder();
+            bytes = 0;
+            do
+            {
+                bytes = socket.Receive(data, data.Length, 0);
+                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+            }
+            while (socket.Available > 0);
+            CountOnlineUsers.Text = builder.ToString();
+            socket.Shutdown(SocketShutdown.Both);
+            socket.Close();
         }
     }
 }
