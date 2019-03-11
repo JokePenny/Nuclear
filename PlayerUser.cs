@@ -10,6 +10,8 @@ namespace Nuclear
         private static int ID = 999;// индефикатор объекта
         private string nickname = null;
         private int level;
+        private string stateMap;
+        private string stateRoom;
 
         //private int imageX;
         //private int imageY;
@@ -81,10 +83,17 @@ namespace Nuclear
         {
             level = a;
         }
-
         public void SetNickname(string a)
         {
             nickname = a;
+        }
+        public void SetStateMap(string a)
+        {
+            stateMap = a;
+        }
+        public void SetStateRoom(string a)
+        {
+            stateRoom = a;
         }
 
         //геттеры
@@ -92,15 +101,21 @@ namespace Nuclear
         {
             return ID;
         }
-
         public int GetLevel()
         {
             return level;
         }
-
         public string GetNickname()
         {
             return nickname;
+        }
+        public string GetStateMap()
+        {
+            return stateMap;
+        }
+        public string GetStateRoom()
+        {
+            return stateRoom;
         }
     }
 }
