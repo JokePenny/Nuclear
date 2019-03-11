@@ -131,7 +131,7 @@ namespace Nuclear
         {
             level = a;
         }
-		
+
         public void SetNickname(string a)
         {
             nickname = a;
@@ -150,12 +150,10 @@ namespace Nuclear
         {
             return ID;
         }
-
         public int GetLevel()
         {
             return level;
         }
-
         public string GetNickname()
         {
             return nickname;
