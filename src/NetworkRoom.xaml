@@ -177,8 +177,8 @@
                     </ScrollViewer>
                     <Border BorderThickness="0 2 0 2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top" Padding="5 0 5 0">
                         <WrapPanel>
-                            <TextBlock Name="ExitRoom" Height="35" Width="140" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.3" IsEnabled="False" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="ВЫЙТИ" MouseLeftButtonDown="ExitRoom_Click" MouseMove="MoveMouseMenuOnline_but" MouseLeave="MoveLeave_but"/>
-                            <TextBlock Name="Readiness" Height="35" Width="140" Margin="10 10 0 0" TextAlignment="Center" Opacity="0.3" IsEnabled="False" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="ГОТОВ" MouseLeftButtonDown="ReadinessRoom_Click" MouseMove="MoveMouseMenuOnline_but" MouseLeave="MoveLeave_but"/>
+                            <TextBlock Name="ExitRoom" Height="35" Width="140" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.3" IsEnabled="False" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="ВЫЙТИ" MouseLeftButtonDown="ExitRoom_Click"/>
+                            <TextBlock Name="Readiness" Height="35" Width="140" Margin="10 10 0 0" TextAlignment="Center" Opacity="0.3" IsEnabled="False" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="ГОТОВ" MouseLeftButtonDown="ReadinessRoom_Click"/>
                         </WrapPanel>
                     </Border>
                 </Grid>
@@ -210,7 +210,7 @@
                             <!--панель с характеристиками комнат-->
                             <Border BorderThickness="2 0 2 0" BorderBrush="Green"  Grid.Row="0" VerticalAlignment="Bottom" Padding="0 0 0 0">
                                 <WrapPanel Height="30">
-                                    <TextBlock Width="136" Margin="0 7 80 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="КОМНАТЫ" MouseMove="MoveMouseMenuSort_but" MouseLeave="MoveLeave_but"/>
+                                    <TextBlock Width="220" Margin="0 7 0 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="КОМНАТЫ" MouseMove="MoveMouseMenuSort_but" MouseLeave="MoveLeave_but"/>
                                     <StackPanel Orientation="Horizontal" Height="30" >
                                         <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                     </StackPanel>
@@ -218,11 +218,15 @@
                                     <StackPanel Orientation="Horizontal" Height="30" >
                                         <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                     </StackPanel>
-                                    <TextBlock Width="136" Margin="0 7 0 5" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="ИГРОКИ" MouseMove="MoveMouseMenuSort_but" MouseLeave="MoveLeave_but"/>
+                                    <TextBlock Width="80" Margin="0 7 0 5" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="ИГРОКИ" MouseMove="MoveMouseMenuSort_but" MouseLeave="MoveLeave_but"/>
                                     <StackPanel Orientation="Horizontal" Height="30">
                                         <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                     </StackPanel>
-                                    <TextBlock Width="136" Margin="0 7 0 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="СТАТУС" MouseMove="MoveMouseMenuSort_but" MouseLeave="MoveLeave_but"/>
+                                    <TextBlock Width="70" Margin="0 7 0 5" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="РАНГ" MouseMove="MoveMouseMenuSort_but" MouseLeave="MoveLeave_but"/>
+                                    <StackPanel Orientation="Horizontal" Height="30">
+                                        <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                    </StackPanel>
+                                    <TextBlock Width="110" Margin="0 7 0 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="СТАТУС" MouseMove="MoveMouseMenuSort_but" MouseLeave="MoveLeave_but"/>
                                 </WrapPanel>
                             </Border>
                             <!--панель с характеристиками комнат-->

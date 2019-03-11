@@ -30,6 +30,28 @@ namespace Nuclear.src
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            Exits("1");
+            Border deleted = null;
+            foreach (StackPanel usersBlock in StackPlayer.Children)
+                if (usersBlock.Name == User.GetStateRoom())
+                {
+                    foreach (Border userBorder in usersBlock.Children)
+                    {
+                        WrapPanel panelUser = (WrapPanel)userBorder.Child;
+                        foreach (var nick in panelUser.Children)
+                        {
+                            if (nick is TextBlock)
+                                if ((nick as TextBlock).Text == User.GetNickname())
+                                {
+                                    deleted = userBorder;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                    usersBlock.Children.Remove(deleted);
+                    break;
+                }
             this.NavigationService.Navigate(new StartMenu());
         }
 
@@ -81,10 +103,13 @@ namespace Nuclear.src
                 stack.Visibility = Visibility.Collapsed;
 
             (sender as Border).Background = Brushes.Green;
-            ConnectRoom.IsEnabled = true;
-            ConnectRoom.MouseLeave += MoveLeave_but;
-            ConnectRoom.MouseMove += MoveMouseMenuOnline_but;
-            ConnectRoom.Opacity = 0.6;
+            if(User.GetStateRoom() == null)
+            {
+                ConnectRoom.IsEnabled = true;
+                ConnectRoom.MouseLeave += MoveLeave_but;
+                ConnectRoom.MouseMove += MoveMouseMenuOnline_but;
+                ConnectRoom.Opacity = 0.6;
+            }
             Room.Visibility = Visibility.Visible;
             Room.IsEnabled = true;
             foreach (Border br in StackRoom.Children)
@@ -165,8 +190,7 @@ namespace Nuclear.src
                         WrapPanel wrap = new WrapPanel();
 
                         TextBlock namemap = new TextBlock();
-                        namemap.Width = 136;
-                        namemap.Margin = new Thickness(0, 0, 90, 0);
+                        namemap.Width = 220;
                         namemap.TextAlignment = TextAlignment.Center;
                         namemap.Foreground = Brushes.Lime;
                         namemap.FontSize = 12;
@@ -174,8 +198,7 @@ namespace Nuclear.src
                         namemap.Text = NameRoom.Text;
 
                         TextBlock map = new TextBlock();
-                        map.Width = 160;
-                        map.Margin = new Thickness(0, 0, 10, 0);
+                        map.Width = 170;
                         map.TextAlignment = TextAlignment.Center;
                         map.Foreground = Brushes.Lime;
                         map.FontSize = 12;
@@ -183,16 +206,24 @@ namespace Nuclear.src
                         map.Text = MapSelection.Text;
 
                         TextBlock valPlayers = new TextBlock();
-                        valPlayers.Width = 136;
+                        valPlayers.Width = 90;
                         valPlayers.TextAlignment = TextAlignment.Center;
                         valPlayers.Foreground = Brushes.Lime;
-                        valPlayers.Margin = new Thickness(0, 0, 4, 0);
                         valPlayers.FontSize = 12;
+                        valPlayers.Name = NameRoom.Text + "Count";
                         valPlayers.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
                         valPlayers.Text = "0" + "/" + ValuePlayers.Text;
 
+                        TextBlock range = new TextBlock();
+                        range.Width = 75;
+                        range.TextAlignment = TextAlignment.Center;
+                        range.Foreground = Brushes.Lime;
+                        range.FontSize = 12;
+                        range.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
+                        range.Text = RangeDown.Text + " - " + RangeUp.Text;
+
                         TextBlock active = new TextBlock();
-                        active.Width = 130;
+                        active.Width = 115;
                         active.TextAlignment = TextAlignment.Center;
                         active.Foreground = Brushes.Lime;
                         active.FontSize = 12;
@@ -202,6 +233,7 @@ namespace Nuclear.src
                         wrap.Children.Add(namemap);
                         wrap.Children.Add(map);
                         wrap.Children.Add(valPlayers);
+                        wrap.Children.Add(range);
                         wrap.Children.Add(active);
                         room.Child = wrap;
                         StackRoom.Children.Add(room);
@@ -228,23 +260,20 @@ namespace Nuclear.src
 
         private void EntranceRoom_Click(object sender, MouseButtonEventArgs e)
         {
-            string namemap = "";
-            string nameroom = "";
             foreach (Border room in StackRoom.Children)
                 if (room.Background == Brushes.Green)
                 {
                     WrapPanel wrap = (WrapPanel)room.Child;
-                    int i = 0;
                     foreach (TextBlock map in wrap.Children)
                     {
-                        nameroom = map.Text;
+                        User.SetStateRoom(map.Text);
                         break;
                     }
                     break;
                 }
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.Connect(ipPoint);
-            string message = "3 " + nameroom + " " + User.GetNickname() + " " + User.GetLevel();
+            string message = "3 " + User.GetStateRoom() + " " + User.GetNickname() + " " + User.GetLevel();
             byte[] data = Encoding.Unicode.GetBytes(message);
             socket.Send(data);
             data = new byte[256];
@@ -256,18 +285,41 @@ namespace Nuclear.src
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             }
             while (socket.Available > 0);
-            if (builder.ToString() == "Вы зашли в комнату" || builder.ToString() == "Вы зашли в комнату перед этим ее создав")
+            if (builder.ToString() != "Недоступен по уровню" || builder.ToString() != "Комната заполнена" || builder.ToString() != "Комната заполнена")
             {
-                StreamResourceInfo sris = Application.GetResourceStream(
-                    new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+
+                string[] receiveData = builder.ToString().Split(';');
+
+                foreach (Border rooms in StackRoom.Children)
+                    if (rooms.Background == Brushes.Green)
+                    {
+                        WrapPanel wraps = (WrapPanel)rooms.Child;
+                        int i = 0;
+                        foreach (TextBlock maps in wraps.Children)
+                        {
+                            if (i == 2)
+                            {
+                                string[] temp = maps.Text.Split('/');
+                                maps.Text = receiveData[1] + "/" + temp[1];
+                                break;
+                            }
+                            i++;
+                        }
+                        break;
+                    }
+                StreamResourceInfo sris = Application.GetResourceStream(new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
                 Cursor customCursors = new Cursor(sris.Stream);
                 Mouse.OverrideCursor = customCursors;
-                ChatTextBlock.Text += "\r\n" + builder.ToString();
+                ChatTextBlock.Text += "\r\n" + receiveData[0];
 
-                Readiness.IsEnabled = true;
-                Readiness.Opacity = 0.6;
                 ExitRoom.IsEnabled = true;
+                ExitRoom.MouseMove += MoveMouseMenuOnline_but;
+                ExitRoom.MouseLeave += MoveLeave_but;
                 ExitRoom.Opacity = 0.6;
+                Readiness.IsEnabled = true;
+                Readiness.MouseMove += MoveMouseMenuOnline_but;
+                Readiness.MouseLeave += MoveLeave_but;
+                Readiness.Opacity = 0.6;
 
                 socket.Shutdown(SocketShutdown.Both);
                 socket.Close();
@@ -296,7 +348,7 @@ namespace Nuclear.src
                 levelUser.Margin = new Thickness(10, 0, 5, 0);
                 levelUser.FontSize = 12;
                 levelUser.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
-                levelUser.Text = "4";
+                levelUser.Text = Convert.ToString(User.GetLevel());
 
                 wrap.Children.Add(nickname);
                 wrap.Children.Add(levelUser);
@@ -306,8 +358,8 @@ namespace Nuclear.src
                         stack.Children.Add(room);
 
                 ConnectRoom.IsEnabled = false;
-                ConnectRoom.MouseLeave -= MoveLeave_but;
                 ConnectRoom.MouseMove -= MoveMouseMenuOnline_but;
+                ConnectRoom.MouseLeave -= MoveLeave_but;
                 ConnectRoom.Background = null;
                 ConnectRoom.Opacity = 0.3;
             }
@@ -326,7 +378,7 @@ namespace Nuclear.src
         private void CloseCreteRoom_Click(object sender, MouseButtonEventArgs e)
         {
             CreateWindow.IsEnabled = true;
-            StatsPlayer.Margin = new Thickness(0, 105, 5, 0);
+            StatsPlayer.Margin = new Thickness(0, 86, 5, 0);
             CreateRoom.Visibility = Visibility.Collapsed;
         }
 
@@ -338,6 +390,7 @@ namespace Nuclear.src
         private void ReadinessRoom_Click(object sender, MouseButtonEventArgs e)
         {
             int check = 0;
+            int checkTwo = 0;
             foreach (StackPanel stack in StackPlayer.Children)
                 if (stack.Visibility == Visibility.Visible)
                 {
@@ -346,38 +399,114 @@ namespace Nuclear.src
                         WrapPanel panel = (WrapPanel)user.Child;
                         Ellipse reads = null;
                         foreach (var nickname in panel.Children)
-                            if(nickname is Ellipse)
+                        {
+                            if (nickname is Ellipse)
                             {
                                 reads = (nickname as Ellipse);
                                 check = 1;
                             }
-                        if (check != 1)
+                            else if ((nickname as TextBlock).Text == User.GetNickname())
+                                checkTwo = 1;
+                        }
+                        if(checkTwo == 1)
                         {
-                            reads = new Ellipse();
-                            reads.Width = 13;
-                            reads.Height = 13;
-                            reads.Margin = new Thickness(0, 0, 5, 0);
-                            reads.Fill = Brushes.Lime;
-                            panel.Background = Brushes.Black;
-                            panel.Children.Add(reads);
-                            user.Child = panel;
-                            Readiness.Text = "НЕ ГОТОВ";
+                            if (check != 1)
+                            {
+                                reads = new Ellipse();
+                                reads.Width = 13;
+                                reads.Height = 13;
+                                reads.Margin = new Thickness(0, 0, 5, 0);
+                                reads.Fill = Brushes.Lime;
+                                panel.Background = Brushes.Black;
+                                panel.Children.Add(reads);
+                                user.Child = panel;
+                                Readiness.Text = "НЕ ГОТОВ";
+                            }
+                            else
+                            {
+                                panel.Children.Remove(reads);
+                                user.Child = panel;
+                                Readiness.Text = "ГОТОВ";
+                            }
+                            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                            socket.Connect(ipPoint);
+                            string message = "4 " + stack.Name + " " + User.GetNickname() + " " + Readiness.Text;
+                            byte[] data = Encoding.Unicode.GetBytes(message);
+                            socket.Send(data);
+                            data = new byte[256];
+                            StringBuilder builder = new StringBuilder();
+                            int bytes = 0;
+                            do
+                            {
+                                bytes = socket.Receive(data, data.Length, 0);
+                                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                            }
+                            while (socket.Available > 0);
+                            socket.Shutdown(SocketShutdown.Both);
+                            socket.Close();
                             break;
                         }
                         else
-                        {
-                            panel.Children.Remove(reads);
-                            user.Child = panel;
-                            Readiness.Text = "ГОТОВ";
-                            break;
-                        }
+                            check = 0;
                     }
+                    break;
                 }
         }
 
         private void ExitRoom_Click(object sender, MouseButtonEventArgs e)
         {
+            Exits("0");
+            Border deleted = null;
+            foreach (StackPanel usersBlock in StackPlayer.Children)
+                if(usersBlock.Name == User.GetStateRoom())
+                {
+                    foreach (Border userBorder in usersBlock.Children)
+                    {
+                        WrapPanel panelUser = (WrapPanel)userBorder.Child;
+                        foreach (var nick in panelUser.Children)
+                        {
+                            if(nick is TextBlock)
+                                if ((nick as TextBlock).Text == User.GetNickname())
+                                {
+                                    deleted = userBorder;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                    usersBlock.Children.Remove(deleted);
+                    break;
+                }
+            User.SetStateRoom(null);
+            ExitRoom.IsEnabled = false;
+            ExitRoom.MouseMove -= MoveMouseMenuOnline_but;
+            ExitRoom.MouseLeave -= MoveLeave_but;
+            ExitRoom.Background = null;
+            ExitRoom.Opacity = 0.3;
+            Readiness.IsEnabled = false;
+            Readiness.MouseMove -= MoveMouseMenuOnline_but;
+            Readiness.MouseLeave -= MoveLeave_but;
+            Readiness.Background = null;
+            Readiness.Opacity = 0.3;
+        }
 
+        private void Exits(string exit)
+        {
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket.Connect(ipPoint);
+            string message = "7 " + User.GetStateRoom() + " " + User.GetNickname() + " " + exit;
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            socket.Send(data);
+            data = new byte[256];
+            StringBuilder builder = new StringBuilder();
+            int bytes = 0;
+            do
+            {
+                bytes = socket.Receive(data, data.Length, 0);
+                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+            }
+            while (socket.Available > 0);
+            ChatTextBlock.Text += "\r\n" + builder.ToString();
         }
 
         private void UpdateAllRoom_Click(object sender, MouseButtonEventArgs e)
@@ -412,6 +541,9 @@ namespace Nuclear.src
                 {
                     elements = rows[i].Split(' ');
                     CreateWindow.IsEnabled = true;
+
+
+
                     Border room = new Border();
                     room.Height = 20;
                     room.Background = Brushes.Black;
@@ -425,8 +557,7 @@ namespace Nuclear.src
                     WrapPanel wrap = new WrapPanel();
 
                     TextBlock namemap = new TextBlock();
-                    namemap.Width = 136;
-                    namemap.Margin = new Thickness(0, 0, 90, 0);
+                    namemap.Width = 220;
                     namemap.TextAlignment = TextAlignment.Center;
                     namemap.Foreground = Brushes.Lime;
                     namemap.FontSize = 12;
@@ -434,8 +565,7 @@ namespace Nuclear.src
                     namemap.Text = elements[0];
 
                     TextBlock map = new TextBlock();
-                    map.Width = 160;
-                    map.Margin = new Thickness(0, 0, 10, 0);
+                    map.Width = 170;
                     map.TextAlignment = TextAlignment.Center;
                     map.Foreground = Brushes.Lime;
                     map.FontSize = 12;
@@ -443,16 +573,24 @@ namespace Nuclear.src
                     map.Text = elements[1];
 
                     TextBlock valPlayers = new TextBlock();
-                    valPlayers.Width = 136;
+                    valPlayers.Width = 90;
                     valPlayers.TextAlignment = TextAlignment.Center;
                     valPlayers.Foreground = Brushes.Lime;
-                    valPlayers.Margin = new Thickness(0, 0, 4, 0);
                     valPlayers.FontSize = 12;
+                    valPlayers.Name = NameRoom.Text + "Count";
                     valPlayers.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
                     valPlayers.Text = elements[3] + "/" + elements[2];
 
+                    TextBlock range = new TextBlock();
+                    range.Width = 75;
+                    range.TextAlignment = TextAlignment.Center;
+                    range.Foreground = Brushes.Lime;
+                    range.FontSize = 12;
+                    range.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
+                    range.Text = elements[5] + " - " + elements[4];
+
                     TextBlock active = new TextBlock();
-                    active.Width = 130;
+                    active.Width = 115;
                     active.TextAlignment = TextAlignment.Center;
                     active.Foreground = Brushes.Lime;
                     active.FontSize = 12;
@@ -465,6 +603,7 @@ namespace Nuclear.src
                     wrap.Children.Add(namemap);
                     wrap.Children.Add(map);
                     wrap.Children.Add(valPlayers);
+                    wrap.Children.Add(range);
                     wrap.Children.Add(active);
                     room.Child = wrap;
                     StackRoom.Children.Add(room);
