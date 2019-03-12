@@ -782,7 +782,9 @@ namespace Nuclear.src
                 {
                     Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     socket.Connect(ipPoint);
-                    string message = "2 " + NameRoom.Text + " " + ValuePlayers.Text + " " + RangeUp.Text + " " + RangeDown.Text + " " + MapSelection.Text;
+                    User.SetStateRoom(NameRoom.Text);
+                    User.SetStateMap(MapSelection.Text);
+                    string message = "2 " + NameRoom.Text + " " + ValuePlayers.Text + " " + RangeUp.Text + " " + RangeDown.Text + " " + MapSelection.Text + " " + User.GetNickname() + " " + User.GetLevel().ToString();
                     byte[] data = Encoding.Unicode.GetBytes(message);
                     socket.Send(data);
                     data = new byte[256];
@@ -796,6 +798,12 @@ namespace Nuclear.src
                     while (socket.Available > 0);
                     if (builder.ToString() == "Комната успешно создана")
                     {
+                        CreateWindow.IsEnabled = false;
+                        CreateWindow.MouseMove -= MoveMouseMenuOnline_but;
+                        CreateWindow.MouseLeave -= MoveLeave_but;
+                        CreateWindow.Background = null;
+                        CreateWindow.Opacity = 0.3;
+
                         ChatTextBlock.Text += "\r\n" + builder.ToString();
                         socket.Shutdown(SocketShutdown.Both);
                         socket.Close();
@@ -869,6 +877,7 @@ namespace Nuclear.src
                         NameRoom.Text = "";
 
                         CreateRoom.Visibility = Visibility.Collapsed;
+                        UpdateAllRoom();
                     }
                     else
                     {
@@ -1080,46 +1089,12 @@ namespace Nuclear.src
         private void ExitRoom_Click(object sender, MouseButtonEventArgs e)
         {
             Exits("0");
-            Border deleted = null;
-            foreach (StackPanel usersBlock in StackPlayer.Children)
-                if(usersBlock.Name == User.GetStateRoom())
-                {
-                    foreach (Border userBorder in usersBlock.Children)
-                    {
-                        WrapPanel panelUser = (WrapPanel)userBorder.Child;
-                        foreach (var nick in panelUser.Children)
-                        {
-                            if(nick is TextBlock)
-                                if ((nick as TextBlock).Text == User.GetNickname())
-                                {
-                                    deleted = userBorder;
-                                    break;
-                                }
-                        }
-                        break;
-                    }
-                    usersBlock.Children.Remove(deleted);
-                    break;
-                }
-
-            foreach (Border rooms in StackRoom.Children)
-                if (rooms.Background == Brushes.Green)
-                {
-                    WrapPanel wraps = (WrapPanel)rooms.Child;
-                    int i = 0;
-                    foreach (TextBlock maps in wraps.Children)
-                    {
-                        if (i == 2)
-                        {
-                            string[] temp = maps.Text.Split('/');
-                            maps.Text = (Convert.ToInt32(temp[0]) - 1).ToString() + "/" + temp[1];
-                            break;
-                        }
-                        i++;
-                    }
-                    break;
-                }
             User.SetStateRoom(null);
+            User.SetStateMap(null);
+            CreateWindow.IsEnabled = true;
+            CreateWindow.MouseMove += MoveMouseMenuOnline_but;
+            CreateWindow.MouseLeave += MoveLeave_but;
+            CreateWindow.Opacity = 0.6;
             ExitRoom.IsEnabled = false;
             ExitRoom.MouseMove -= MoveMouseMenuOnline_but;
             ExitRoom.MouseLeave -= MoveLeave_but;
@@ -1130,6 +1105,8 @@ namespace Nuclear.src
             Readiness.MouseLeave -= MoveLeave_but;
             Readiness.Background = null;
             Readiness.Opacity = 0.3;
+            Room.Visibility = Visibility.Collapsed;
+            UpdateAllRoom();
         }
 
         private void Exits(string exit)
@@ -1159,6 +1136,7 @@ namespace Nuclear.src
         private void UpdateAllRoom()
         {
             StackRoom.Children.Clear();
+            StackPlayer.Children.Clear();
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.Connect(ipPoint);
             string message = "5";
@@ -1301,7 +1279,7 @@ namespace Nuclear.src
                             levelUser.Text = elements[1];
                             wrap.Children.Add(nickname);
                             wrap.Children.Add(levelUser);
-                            if(elements[2] == "1")
+                            if(elements[3] == "1")
                             {
                                 Ellipse reads = new Ellipse();
                                 reads.Width = 13;
