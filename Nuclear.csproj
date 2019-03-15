@@ -245,5 +245,14 @@
   <ItemGroup>
     <Resource Include="data\image\mainui\cursor\ACTARROW.cur" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\startClick\backlight_both.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cur.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\cursor\ACTARROW.cur" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
