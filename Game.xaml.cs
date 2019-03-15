@@ -16,9 +16,6 @@ using WpfAnimatedGif;
 
 namespace Nuclear
 {
-    /// <summary>
-    /// Логика взаимодействия для Game.xaml
-    /// </summary>
     public partial class Game : Page
     {
         /* игровое поле */
@@ -108,7 +105,6 @@ namespace Nuclear
         Image img1 = new Image();
         public object gridHeat { get; private set; }
 
-        //private PlayerUser User = new PlayerUser();
         public Game()
         {
 
@@ -119,8 +115,8 @@ namespace Nuclear
             MapActiveGrid();
             MapHeatGrid();
             MapImgPlayerGrid();
-            findPath(8, 2, User.GetX(), User.GetY());
             User.SetImage(GROD, img);
+            findPath(8, 2, User.GetX(), User.GetY());
             //initUser(8, 2);
         }
 
@@ -136,14 +132,10 @@ namespace Nuclear
             image1.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTAA_se.gif");
             image1.EndInit();
             ImageBehavior.SetAnimatedSource(img1, image1);
-            //Canvas.SetLeft(img1, 107); // (82) + 50 на след клетку по горизонтали  или +75 если линия свдинулась
-            // Canvas.SetTop(img1, 115); // (97) + 28 на след клетку
-            //Canvas.SetLeft(img, 82); // (82) + 50 на след клетку по горизонтали  или +75 если линия свдинулась
-            // Canvas.SetTop(img, 97); // (97) + 25 на след клетку
-            Canvas.SetLeft(img, 16); // (82) + 50 на след клетку по горизонтали  или +75 если линия свдинулась
-            Canvas.SetTop(img, 24); // (97) + 25 на след клетку
-            Canvas.SetLeft(img1, 34); // (82) + 36 на след клетку по горизонтали  или +18 если линия свдинулась
-            Canvas.SetTop(img1, 37); // (97) + 13 на след клетку
+            Canvas.SetLeft(img, 16);
+            Canvas.SetTop(img, 24);
+            Canvas.SetLeft(img1, 34); 
+            Canvas.SetTop(img1, 37);
             GROD.Children.Add(img);
             GROD.Children.Add(img1);
         }
@@ -429,7 +421,6 @@ namespace Nuclear
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
 
-            //var controller = User.Moove(GROD, img);
             locationEndX = nx;
             locationEndY = ny;
             int locationEndXDUB = nx;
@@ -663,8 +654,7 @@ namespace Nuclear
                 //waveOut();
                 if (User.GetMovePoints() > 0 && (User.GetX() != locationEndX || User.GetY() != locationEndY))
                 {
-                    RunPeriodicSave();
-                    //await Task.Delay(100);
+                    await Task.Delay(500);
                     Clean_TextBlock();
                     Clean_HeatMap();
                     List<Point> step = new List<Point>();
@@ -677,21 +667,22 @@ namespace Nuclear
                         if (wave.Count != 0)
                         {
                             c = wave.First<Point>();
+ 
                             User.SetXY(c.x, c.y);
-                            Canvas.SetLeft(img, User.GetImageY());
-                            Canvas.SetTop(img, User.GetImageX());
+                            User.ChangeImage(GROD, img);
 
                             wavePath = wave;
                         }
                         else
-                        {
                             break;
-                        }
                     }
                 }
-                else break;
+                else
+                {
+                    break;
+                }
+
                 if (wavePath.Count == 0) {
-                    //controller.GotoFrame(0);
                     break;
                 }
                 else
@@ -710,16 +701,6 @@ namespace Nuclear
             {
                 User.SetMovePoints(0);
                 MessageBox.Show(string.Format("Очки действия кончились"));
-            }
-        }
-
-        public void RunPeriodicSave()
-        {
-            var controller = User.Moove(GROD, img);
-            int count = controller.FrameCount;
-            for(int i = 0; i < wave.Count; i++) {
-                controller.Play();
-                controller.GotoFrame(0);
             }
         }
 

@@ -83,6 +83,13 @@
     <Compile Include="src\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
+    <Compile Include="src\Interface\Fixboy.cs" />
+    <Compile Include="src\Interface\Inventory.cs" />
+    <Compile Include="src\Interface\Map.cs" />
+    <Compile Include="src\Interface\Menu.cs" />
+    <Compile Include="src\Interface\Pipboy.cs" />
+    <Compile Include="src\Interface\Skills.cs" />
+    <Compile Include="src\Interface\Special.cs" />
     <Compile Include="StartMenu.xaml.cs">
       <DependentUpon>StartMenu.xaml</DependentUpon>
     </Compile>
@@ -235,6 +242,7 @@
     <Resource Include="data\image\mainui\interfaceClick\but_red_interface.png" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Resource Include="data\image\characters\NMVALTAA_e.gif" />
     <Resource Include="data\image\characters\NMVALTAA_ne.gif" />
     <Resource Include="data\image\characters\NMVALTAA_nw.gif" />
@@ -257,5 +265,19 @@
   <ItemGroup>
     <Resource Include="data\image\mainui\cursor\ACTARROW.cur" />
   </ItemGroup>
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_e.gif" />
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_ne.gif" />
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_nw.gif" />
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_se.gif" />
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_sw.gif" />
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_w.gif" />
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_e.gif" />
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_ne.gif" />
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_nw.gif" />
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_se.gif" />
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_sw.gif" />
+    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_w.gif" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
