@@ -14,20 +14,16 @@ namespace Nuclear
     class PlayerUser : LivingObjects
     {
         private static int ID = 999;// индефикатор объекта
-        //private int imageX;
-        //private int imageY;
 
         public PlayerUser(int X, int Y, byte Health, byte MovePoints, byte AreaVisibility) : base(X, Y, Health, MovePoints, AreaVisibility)
         {
             x = X;
             y = Y;
-            //imageX = 34 + (X * 36);
             imageX = (X * 13) - 55;
             if (X % 2 != 0)
                 imageY = 34 + (Y * 36);
             else
                 imageY = 34 + (Y * 18);
-            //imageY = 11;
             health = Health;
             movePoints = MovePoints;
             areaVisibility = AreaVisibility;
@@ -40,36 +36,86 @@ namespace Nuclear
         {
             var image = new BitmapImage();
             image.BeginInit();
-            image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTAA_e.gif");
+            image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_e.gif");
             image.EndInit();
             ImageBehavior.SetAnimatedSource(img, image);
-            //ImageBehavior.SetRepeatBehavior(img, new RepeatBehavior(TimeSpan.FromSeconds(1)));
-            Canvas.SetLeft(img, imageY); // (34) + 36 на след клетку по горизонтали  или +18 (эротика) если линия свдинулась
-            Canvas.SetTop(img, imageX); // (37) + 13 на след клетку
+            Canvas.SetLeft(img, imageY);
+            Canvas.SetTop(img, imageX);
             GROD.Children.Add(img);
         }
 
-        public ImageAnimationController Moove(Canvas GROD, Image img)
+        public void ChangeImage(Canvas GROD, Image img)
         {
+            Image imgs = img;
+            GROD.Children.Remove(img);
             var image = new BitmapImage();
             image.BeginInit();
-            image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTAB_e.gif");
+            if(changeImage == 1)
+            {
+                switch (IndexImage)
+                {
+                    case 0:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_w.gif");
+                        Canvas.SetLeft(imgs, imageY - 10);
+                        break;
+                    case 1:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_se.gif");
+                        Canvas.SetLeft(imgs, imageY - 10);
+                        break;
+                    case 2:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_e.gif");
+                        Canvas.SetLeft(imgs, imageY);
+                        break;
+                    case 3:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_sw.gif");
+                        Canvas.SetLeft(imgs, imageY - 10);
+                        break;
+                    case 4:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_ne.gif");
+                        Canvas.SetLeft(imgs, imageY - 10);
+                        break;
+                    case 5:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_nw.gif");
+                        Canvas.SetLeft(imgs, imageY - 10);
+                        break;
+
+                }
+            }
+            else if(changeImage == 2)
+            {
+                switch (IndexImage)
+                {
+                    case 0:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_w.gif");
+                        Canvas.SetLeft(imgs, imageY - 10);
+                        break;
+                    case 1:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_sw.gif");
+                        Canvas.SetLeft(imgs, imageY - 10);
+                        break;
+                    case 2:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_e.gif");
+                        Canvas.SetLeft(imgs, imageY);
+                        break;
+                    case 3:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_nw.gif");
+                        Canvas.SetLeft(imgs, imageY - 10);
+                        break;
+                    case 4:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_se.gif");
+                        Canvas.SetLeft(imgs, imageY - 10);
+                        break;
+                    case 5:
+                        image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_ne.gif");
+                        Canvas.SetLeft(imgs, imageY - 10);
+                        break;
+                }
+            }
             image.EndInit();
-            //int i = wave.Count;
-            //foreach (Game.Point h in wave)
-           // {
-                //imageX = (h.x * 13) - 55;
-               // if (h.x % 2 != 0)
-                //    imageY = 34 + (h.y * 36);
-               // else
-              //      imageY = 34 + (h.y * 18);
-            ImageBehavior.SetAnimatedSource(img, image);
-            var controller = ImageBehavior.GetAnimationController(img);
-            //controller.Play();
-            return controller;
-           // ImageBehavior.SetRepeatBehavior(img, new RepeatBehavior(count));
-           //   Canvas.SetLeft(img, imageY); // (82) + 36 на след клетку по горизонтали  или +18 (эротика) если линия свдинулась
-           //  Canvas.SetTop(img, imageX); // (97) + 13 на след клетку
+            ImageBehavior.SetAnimatedSource(imgs, image);
+            ImageBehavior.GetAnimationController(imgs).Pause();
+            Canvas.SetTop(imgs, imageX); 
+            GROD.Children.Add(imgs);
         }
 
         public void DeleteImage()
