@@ -61,11 +61,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Game.xaml.cs">
+    <Compile Include="src\Game\Game.xaml.cs">
       <DependentUpon>Game.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LivingObjects.cs" />
-    <Compile Include="PlayerUser.cs" />
+    <Compile Include="src\Game\LivingObjects.cs" />
+    <Compile Include="src\Game\PlayerUser.cs" />
     <Compile Include="src\Interface\Fixboy.cs" />
     <Compile Include="src\Interface\Inventory.cs" />
     <Compile Include="src\Interface\Map.cs" />
@@ -73,16 +73,16 @@
     <Compile Include="src\Interface\Pipboy.cs" />
     <Compile Include="src\Interface\Skills.cs" />
     <Compile Include="src\Interface\Special.cs" />
-    <Compile Include="src\NetworkRoom.xaml.cs">
+    <Compile Include="src\Net\NetworkRoom.xaml.cs">
       <DependentUpon>NetworkRoom.xaml</DependentUpon>
     </Compile>
-    <Compile Include="src\Registration.xaml.cs">
+    <Compile Include="src\Net\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StartMenu.xaml.cs">
+    <Compile Include="src\Menu\StartMenu.xaml.cs">
       <DependentUpon>StartMenu.xaml</DependentUpon>
     </Compile>
-    <Page Include="Game.xaml">
+    <Page Include="src\Game\Game.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -98,15 +98,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="src\NetworkRoom.xaml">
+    <Page Include="src\Net\NetworkRoom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="src\Registration.xaml">
+    <Page Include="src\Net\Registration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StartMenu.xaml">
+    <Page Include="src\Menu\StartMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,12 +229,6 @@
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_se.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_sw.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_w.gif" />
-    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_e.gif" />
-    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_ne.gif" />
-    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_nw.gif" />
-    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_se.gif" />
-    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_sw.gif" />
-    <Resource Include="data\image\characters\NMVALTA\NMVALTAB\NMVALTAB_w.gif" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="data\image\mainui\startClick\backlight_both.png" />
@@ -253,6 +247,363 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="data\image\mainui\cursor\ACTARROW.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="data\image\characters\HANPWRA\HANPWRAA\" />
+    <Folder Include="data\image\characters\HANPWRA\HANPWRAK\" />
+    <Folder Include="data\image\characters\HANPWRA\HANPWRAL\" />
+    <Folder Include="data\image\characters\HANPWRA\HANPWRAN\" />
+    <Folder Include="data\image\characters\HANPWRA\HANPWRAO\" />
+    <Folder Include="data\image\characters\HANPWRA\HANPWRAP\" />
+    <Folder Include="data\image\characters\HANPWRA\HANPWRBA\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\items\armor\CBTARMOR.gif" />
+    <Resource Include="data\image\items\armor\CBTARMR2.gif" />
+    <Resource Include="data\image\items\armor\COMBA2A.gif" />
+    <Resource Include="data\image\items\armor\LTHARMOR.gif" />
+    <Resource Include="data\image\items\armor\LTHARMR2.gif" />
+    <Resource Include="data\image\items\armor\MAXINV.gif" />
+    <Resource Include="data\image\items\armor\PWRARMOR.gif" />
+    <Resource Include="data\image\items\armor\ROBEINV.gif" />
+    <Resource Include="data\image\items\armor\SPLEATHR.gif" />
+    <Resource Include="data\image\items\armor\TESLA.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\items\different\1STAID.gif" />
+    <Resource Include="data\image\items\different\acountbk.gif" />
+    <Resource Include="data\image\items\different\ANNABONE.gif" />
+    <Resource Include="data\image\items\different\ANNALOCK.gif" />
+    <Resource Include="data\image\items\different\BAG.gif" />
+    <Resource Include="data\image\items\different\BAGC.gif" />
+    <Resource Include="data\image\items\different\BAGD.gif" />
+    <Resource Include="data\image\items\different\BALLGAG.gif" />
+    <Resource Include="data\image\items\different\BBADGE.gif" />
+    <Resource Include="data\image\items\different\BBS.gif" />
+    <Resource Include="data\image\items\different\BCASE2A.gif" />
+    <Resource Include="data\image\items\different\beckbook.gif" />
+    <Resource Include="data\image\items\different\BEER.gif" />
+    <Resource Include="data\image\items\different\botlcaps.gif" />
+    <Resource Include="data\image\items\different\BOTTLE.gif" />
+    <Resource Include="data\image\items\different\BRAIN1.gif" />
+    <Resource Include="data\image\items\different\BRAIN2.gif" />
+    <Resource Include="data\image\items\different\BRAIN3.gif" />
+    <Resource Include="data\image\items\different\BRAIN4.gif" />
+    <Resource Include="data\image\items\different\brocflwr.gif" />
+    <Resource Include="data\image\items\different\BUG.gif" />
+    <Resource Include="data\image\items\different\CAP2.gif" />
+    <Resource Include="data\image\items\different\CARBATRY.gif" />
+    <Resource Include="data\image\items\different\cards1.gif" />
+    <Resource Include="data\image\items\different\cards2.gif" />
+    <Resource Include="data\image\items\different\CARDS3.gif" />
+    <Resource Include="data\image\items\different\CARTURBO.gif" />
+    <Resource Include="data\image\items\different\CAT.gif" />
+    <Resource Include="data\image\items\different\CATPAW2.gif" />
+    <Resource Include="data\image\items\different\CATPROD2.gif" />
+    <Resource Include="data\image\items\different\cheezy.gif" />
+    <Resource Include="data\image\items\different\CHEF.gif" />
+    <Resource Include="data\image\items\different\chipblu.gif" />
+    <Resource Include="data\image\items\different\chipgre.gif" />
+    <Resource Include="data\image\items\different\CHIPRED.gif" />
+    <Resource Include="data\image\items\different\CHIPYEL.gif" />
+    <Resource Include="data\image\items\different\clipbrd.gif" />
+    <Resource Include="data\image\items\different\CLIPBRD2.gif" />
+    <Resource Include="data\image\items\different\CONDOMBL.gif" />
+    <Resource Include="data\image\items\different\CONDOMGR.gif" />
+    <Resource Include="data\image\items\different\CONDOMRD.gif" />
+    <Resource Include="data\image\items\different\cookie1.gif" />
+    <Resource Include="data\image\items\different\COSMETIC.gif" />
+    <Resource Include="data\image\items\different\CROWBAR.gif" />
+    <Resource Include="data\image\items\different\CUTTER.gif" />
+    <Resource Include="data\image\items\different\DAYPASS.gif" />
+    <Resource Include="data\image\items\different\DEANS.gif" />
+    <Resource Include="data\image\items\different\DICE1.gif" />
+    <Resource Include="data\image\items\different\DICE2.gif" />
+    <Resource Include="data\image\items\different\DINNER.gif" />
+    <Resource Include="data\image\items\different\DISK1.gif" />
+    <Resource Include="data\image\items\different\DISK2.gif" />
+    <Resource Include="data\image\items\different\DISK3.gif" />
+    <Resource Include="data\image\items\different\DISK4.gif" />
+    <Resource Include="data\image\items\different\DISK5.gif" />
+    <Resource Include="data\image\items\different\DISK6.gif" />
+    <Resource Include="data\image\items\different\DISK7.gif" />
+    <Resource Include="data\image\items\different\DOCBAG2.gif" />
+    <Resource Include="data\image\items\different\DOCBAG7.gif" />
+    <Resource Include="data\image\items\different\DOCPAPER.gif" />
+    <Resource Include="data\image\items\different\donotuse.gif" />
+    <Resource Include="data\image\items\different\DRG_RAD2.gif" />
+    <Resource Include="data\image\items\different\DRUG_BOT.gif" />
+    <Resource Include="data\image\items\different\drymeat.gif" />
+    <Resource Include="data\image\items\different\DXBOOST2.gif" />
+    <Resource Include="data\image\items\different\ear1.gif" />
+    <Resource Include="data\image\items\different\EAR2.gif" />
+    <Resource Include="data\image\items\different\EASTREGG.gif" />
+    <Resource Include="data\image\items\different\ELECPIC.gif" />
+    <Resource Include="data\image\items\different\ELOCKPK2.gif" />
+    <Resource Include="data\image\items\different\exchip.gif" />
+    <Resource Include="data\image\items\different\EXLOCKPK.gif" />
+    <Resource Include="data\image\items\different\eye1.gif" />
+    <Resource Include="data\image\items\different\eye2.gif" />
+    <Resource Include="data\image\items\different\f2hintbk.gif" />
+    <Resource Include="data\image\items\different\faid2.gif" />
+    <Resource Include="data\image\items\different\FAKECITZ.gif" />
+    <Resource Include="data\image\items\different\FIREWOOD.gif" />
+    <Resource Include="data\image\items\different\FLARE.gif" />
+    <Resource Include="data\image\items\different\FLAREON.gif" />
+    <Resource Include="data\image\items\different\FLASK.gif" />
+    <Resource Include="data\image\items\different\flint.gif" />
+    <Resource Include="data\image\items\different\FLOWER.gif" />
+    <Resource Include="data\image\items\different\FRST_BK.gif" />
+    <Resource Include="data\image\items\different\FRUIT.gif" />
+    <Resource Include="data\image\items\different\G&amp;A.gif" />
+    <Resource Include="data\image\items\different\GAMABEER.gif" />
+    <Resource Include="data\image\items\different\geck.gif" />
+    <Resource Include="data\image\items\different\GEIGER4.gif" />
+    <Resource Include="data\image\items\different\GEIGON.gif" />
+    <Resource Include="data\image\items\different\glasses.gif" />
+    <Resource Include="data\image\items\different\goldtoth.gif" />
+    <Resource Include="data\image\items\different\GOLDWATC.gif" />
+    <Resource Include="data\image\items\different\GUTROT.gif" />
+    <Resource Include="data\image\items\different\healpwdr.gif" />
+    <Resource Include="data\image\items\different\HEARTPIL.gif" />
+    <Resource Include="data\image\items\different\HYPO01.gif" />
+    <Resource Include="data\image\items\different\ICECHES.gif" />
+    <Resource Include="data\image\items\different\idbadge.gif" />
+    <Resource Include="data\image\items\different\IGUAN2.gif" />
+    <Resource Include="data\image\items\different\IGUANA.gif" />
+    <Resource Include="data\image\items\different\IV.gif" />
+    <Resource Include="data\image\items\different\JAR.gif" />
+    <Resource Include="data\image\items\different\JET.gif" />
+    <Resource Include="data\image\items\different\jet2.gif" />
+    <Resource Include="data\image\items\different\JETANTI.gif" />
+    <Resource Include="data\image\items\different\JEWEL.gif" />
+    <Resource Include="data\image\items\different\KEY.gif" />
+    <Resource Include="data\image\items\different\KEY2.gif" />
+    <Resource Include="data\image\items\different\KEY3.gif" />
+    <Resource Include="data\image\items\different\KEY4.gif" />
+    <Resource Include="data\image\items\different\KEY5.gif" />
+    <Resource Include="data\image\items\different\keyprim.gif" />
+    <Resource Include="data\image\items\different\KEYS.gif" />
+    <Resource Include="data\image\items\different\KOKOWEEF.gif" />
+    <Resource Include="data\image\items\different\LASTDRUG.gif" />
+    <Resource Include="data\image\items\different\LOCKET.gif" />
+    <Resource Include="data\image\items\different\LOCKPIC2.gif" />
+    <Resource Include="data\image\items\different\LPASS.gif" />
+    <Resource Include="data\image\items\different\MAG8BALL.gif" />
+    <Resource Include="data\image\items\different\minepart.gif" />
+    <Resource Include="data\image\items\different\minescrp.gif" />
+    <Resource Include="data\image\items\different\MOTION.gif" />
+    <Resource Include="data\image\items\different\MOTIONON.gif" />
+    <Resource Include="data\image\items\different\MOTIVATR.gif" />
+    <Resource Include="data\image\items\different\MOTOR.gif" />
+    <Resource Include="data\image\items\different\MUTASYRM.gif" />
+    <Resource Include="data\image\items\different\NATR.gif" />
+    <Resource Include="data\image\items\different\navcom.gif" />
+    <Resource Include="data\image\items\different\NUKEY.gif" />
+    <Resource Include="data\image\items\different\oilcan.gif" />
+    <Resource Include="data\image\items\different\paper1.gif" />
+    <Resource Include="data\image\items\different\paper2.gif" />
+    <Resource Include="data\image\items\different\PARMOR2.gif" />
+    <Resource Include="data\image\items\different\PASSKEY1.gif" />
+    <Resource Include="data\image\items\different\PASSKEY2.gif" />
+    <Resource Include="data\image\items\different\PASSKEY3.gif" />
+    <Resource Include="data\image\items\different\pelt1.gif" />
+    <Resource Include="data\image\items\different\pelt2.gif" />
+    <Resource Include="data\image\items\different\PIPLING.gif" />
+    <Resource Include="data\image\items\different\pipmed.gif" />
+    <Resource Include="data\image\items\different\PLANK1.gif" />
+    <Resource Include="data\image\items\different\plntspik.gif" />
+    <Resource Include="data\image\items\different\POCKLINT.gif" />
+    <Resource Include="data\image\items\different\poisncan.gif" />
+    <Resource Include="data\image\items\different\POISON.gif" />
+    <Resource Include="data\image\items\different\POT.gif" />
+    <Resource Include="data\image\items\different\prespass.gif" />
+    <Resource Include="data\image\items\different\PRES_KEY.gif" />
+    <Resource Include="data\image\items\different\PSYNULL.gif" />
+    <Resource Include="data\image\items\different\PUMP2.gif" />
+    <Resource Include="data\image\items\different\pwpaper.gif" />
+    <Resource Include="data\image\items\different\RADIO3.gif" />
+    <Resource Include="data\image\items\different\RADSLIMB.gif" />
+    <Resource Include="data\image\items\different\raidmap.gif" />
+    <Resource Include="data\image\items\different\rambox1.gif" />
+    <Resource Include="data\image\items\different\rambox2.gif" />
+    <Resource Include="data\image\items\different\RANGER1.gif" />
+    <Resource Include="data\image\items\different\RANGER2.gif" />
+    <Resource Include="data\image\items\different\RBADGE.gif" />
+    <Resource Include="data\image\items\different\REQFORM1.gif" />
+    <Resource Include="data\image\items\different\robotprt.gif" />
+    <Resource Include="data\image\items\different\ROCK.gif" />
+    <Resource Include="data\image\items\different\ROCK2.gif" />
+    <Resource Include="data\image\items\different\rock3.gif" />
+    <Resource Include="data\image\items\different\rock4.gif" />
+    <Resource Include="data\image\items\different\ROENBEER.gif" />
+    <Resource Include="data\image\items\different\ROPE.gif" />
+    <Resource Include="data\image\items\different\rubrbod1.gif" />
+    <Resource Include="data\image\items\different\RUBRBOD2.gif" />
+    <Resource Include="data\image\items\different\RUBRBOOT.gif" />
+    <Resource Include="data\image\items\different\sbadge.gif" />
+    <Resource Include="data\image\items\different\SCHLAGER.gif" />
+    <Resource Include="data\image\items\different\SCIENCE.gif" />
+    <Resource Include="data\image\items\different\SCORP.gif" />
+    <Resource Include="data\image\items\different\SCOUT.gif" />
+    <Resource Include="data\image\items\different\shiv.gif" />
+    <Resource Include="data\image\items\different\shovel1.gif" />
+    <Resource Include="data\image\items\different\SLAGMESS.gif" />
+    <Resource Include="data\image\items\different\smitfood.gif" />
+    <Resource Include="data\image\items\different\STIMPAK.gif" />
+    <Resource Include="data\image\items\different\STIMX.gif" />
+    <Resource Include="data\image\items\different\STLTHBOY.gif" />
+    <Resource Include="data\image\items\different\STLTHON.gif" />
+    <Resource Include="data\image\items\different\sunglass.gif" />
+    <Resource Include="data\image\items\different\SUPRTOOL.gif" />
+    <Resource Include="data\image\items\different\SYRING2.gif" />
+    <Resource Include="data\image\items\different\TAG.gif" />
+    <Resource Include="data\image\items\different\TALISMAN.gif" />
+    <Resource Include="data\image\items\different\TANDI1.gif" />
+    <Resource Include="data\image\items\different\tankrfob.gif" />
+    <Resource Include="data\image\items\different\TAPE3.gif" />
+    <Resource Include="data\image\items\different\TAPE_PLY.gif" />
+    <Resource Include="data\image\items\different\THAND.gif" />
+    <Resource Include="data\image\items\different\toe.gif" />
+    <Resource Include="data\image\items\different\tpaper1.gif" />
+    <Resource Include="data\image\items\different\TPAPER2.gif" />
+    <Resource Include="data\image\items\different\TPAPER3.gif" />
+    <Resource Include="data\image\items\different\TPAPER4.gif" />
+    <Resource Include="data\image\items\different\trans01.gif" />
+    <Resource Include="data\image\items\different\TROPHY.gif" />
+    <Resource Include="data\image\items\different\v15comp.gif" />
+    <Resource Include="data\image\items\different\vertipln.gif" />
+    <Resource Include="data\image\items\different\VICRADIO.gif" />
+    <Resource Include="data\image\items\different\VICWATRF.gif" />
+    <Resource Include="data\image\items\different\voicemod.gif" />
+    <Resource Include="data\image\items\different\WATCH3.gif" />
+    <Resource Include="data\image\items\different\WATER.gif" />
+    <Resource Include="data\image\items\different\wrench.gif" />
+    <Resource Include="data\image\items\different\xander.gif" />
+    <Resource Include="data\image\items\different\ZIP1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\items\weapon\AMINIGUN.gif" />
+    <Resource Include="data\image\items\weapon\ASSRIFL2.gif" />
+    <Resource Include="data\image\items\weapon\ASSSHOT.gif" />
+    <Resource Include="data\image\items\weapon\boxglov2.gif" />
+    <Resource Include="data\image\items\weapon\boxglove.gif" />
+    <Resource Include="data\image\items\weapon\bozar.gif" />
+    <Resource Include="data\image\items\weapon\BRSKNKLS.gif" />
+    <Resource Include="data\image\items\weapon\BRSNUCK.gif" />
+    <Resource Include="data\image\items\weapon\CLUB.gif" />
+    <Resource Include="data\image\items\weapon\CPROD3.gif" />
+    <Resource Include="data\image\items\weapon\DEAGLE2.gif" />
+    <Resource Include="data\image\items\weapon\DECKER.gif" />
+    <Resource Include="data\image\items\weapon\DYNAMIT.gif" />
+    <Resource Include="data\image\items\weapon\DYNON.gif" />
+    <Resource Include="data\image\items\weapon\FEDHYPO.gif" />
+    <Resource Include="data\image\items\weapon\FLAMETHR.gif" />
+    <Resource Include="data\image\items\weapon\fnfal.gif" />
+    <Resource Include="data\image\items\weapon\FNFALLOW.gif" />
+    <Resource Include="data\image\items\weapon\GAUNT.gif" />
+    <Resource Include="data\image\items\weapon\GAUSSPTL.gif" />
+    <Resource Include="data\image\items\weapon\GIZGUN1.gif" />
+    <Resource Include="data\image\items\weapon\GLOCK.gif" />
+    <Resource Include="data\image\items\weapon\greasegn.gif" />
+    <Resource Include="data\image\items\weapon\GRENADEO.gif" />
+    <Resource Include="data\image\items\weapon\GRENADEP.gif" />
+    <Resource Include="data\image\items\weapon\GRENADEQ.gif" />
+    <Resource Include="data\image\items\weapon\GRIFLE.gif" />
+    <Resource Include="data\image\items\weapon\hkcaws.gif" />
+    <Resource Include="data\image\items\weapon\hkg11.gif" />
+    <Resource Include="data\image\items\weapon\HKG11E.gif" />
+    <Resource Include="data\image\items\weapon\hkp90c.gif" />
+    <Resource Include="data\image\items\weapon\HOLYGREN.gif" />
+    <Resource Include="data\image\items\weapon\howshell.gif" />
+    <Resource Include="data\image\items\weapon\HRIFLE.gif" />
+    <Resource Include="data\image\items\weapon\hrifle2.gif" />
+    <Resource Include="data\image\items\weapon\IFLAMETH.gif" />
+    <Resource Include="data\image\items\weapon\indweap.gif" />
+    <Resource Include="data\image\items\weapon\jackhamr.gif" />
+    <Resource Include="data\image\items\weapon\JKNIFE.gif" />
+    <Resource Include="data\image\items\weapon\JONBBGUN.gif" />
+    <Resource Include="data\image\items\weapon\KNIFE.gif" />
+    <Resource Include="data\image\items\weapon\KNIFE2.gif" />
+    <Resource Include="data\image\items\weapon\KNIFE3.gif" />
+    <Resource Include="data\image\items\weapon\LASERGUN.gif" />
+    <Resource Include="data\image\items\weapon\lightsup.gif" />
+    <Resource Include="data\image\items\weapon\LRIFLE.gif" />
+    <Resource Include="data\image\items\weapon\LRIFLE2.gif" />
+    <Resource Include="data\image\items\weapon\M60.gif" />
+    <Resource Include="data\image\items\weapon\M72GAUSS.gif" />
+    <Resource Include="data\image\items\weapon\MAGNUM.gif" />
+    <Resource Include="data\image\items\weapon\magnum2.gif" />
+    <Resource Include="data\image\items\weapon\MINIGUN.gif" />
+    <Resource Include="data\image\items\weapon\MINILAZR.gif" />
+    <Resource Include="data\image\items\weapon\MLASPIST.gif" />
+    <Resource Include="data\image\items\weapon\MOLA.gif" />
+    <Resource Include="data\image\items\weapon\MPWRFIST.gif" />
+    <Resource Include="data\image\items\weapon\MTLARMOR.gif" />
+    <Resource Include="data\image\items\weapon\MTLARMR2.gif" />
+    <Resource Include="data\image\items\weapon\NEEDLER.gif" />
+    <Resource Include="data\image\items\weapon\OKNIFE.gif" />
+    <Resource Include="data\image\items\weapon\PISTOL.gif" />
+    <Resource Include="data\image\items\weapon\PLAS2.gif" />
+    <Resource Include="data\image\items\weapon\PLASMA.gif" />
+    <Resource Include="data\image\items\weapon\plaspst2.gif" />
+    <Resource Include="data\image\items\weapon\PLASTIC.gif" />
+    <Resource Include="data\image\items\weapon\PLASTION.gif" />
+    <Resource Include="data\image\items\weapon\PULSEPST.gif" />
+    <Resource Include="data\image\items\weapon\PULSERIF.gif" />
+    <Resource Include="data\image\items\weapon\RLAUNCH.gif" />
+    <Resource Include="data\image\items\weapon\RRBASE.gif" />
+    <Resource Include="data\image\items\weapon\RRSPEC.gif" />
+    <Resource Include="data\image\items\weapon\SHOTGUN6.gif" />
+    <Resource Include="data\image\items\weapon\SLEDGE.gif" />
+    <Resource Include="data\image\items\weapon\SLUGGER.gif" />
+    <Resource Include="data\image\items\weapon\SMGPSTLE.gif" />
+    <Resource Include="data\image\items\weapon\SNIPER.gif" />
+    <Resource Include="data\image\items\weapon\SOLARSCR.gif" />
+    <Resource Include="data\image\items\weapon\SOSHOTGN.gif" />
+    <Resource Include="data\image\items\weapon\SPEAR.gif" />
+    <Resource Include="data\image\items\weapon\spear2.gif" />
+    <Resource Include="data\image\items\weapon\spear3.gif" />
+    <Resource Include="data\image\items\weapon\springun.gif" />
+    <Resource Include="data\image\items\weapon\SSLEDGE2.gif" />
+    <Resource Include="data\image\items\weapon\switchbd.gif" />
+    <Resource Include="data\image\items\weapon\TOGGLE.gif" />
+    <Resource Include="data\image\items\weapon\TOMMYGUN.gif" />
+    <Resource Include="data\image\items\weapon\UFOGUN.gif" />
+    <Resource Include="data\image\items\weapon\UZI.gif" />
+    <Resource Include="data\image\items\weapon\VBLADE.gif" />
+    <Resource Include="data\image\items\weapon\VMINIGUN.gif" />
+    <Resource Include="data\image\items\weapon\wknife.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\items\ammo\10MMAP.gif" />
+    <Resource Include="data\image\items\ammo\10MMJHP.gif" />
+    <Resource Include="data\image\items\ammo\14MMAP.gif" />
+    <Resource Include="data\image\items\ammo\223FMJ.gif" />
+    <Resource Include="data\image\items\ammo\2MMEC.gif" />
+    <Resource Include="data\image\items\ammo\44FMJ.gif" />
+    <Resource Include="data\image\items\ammo\44JHP.gif" />
+    <Resource Include="data\image\items\ammo\44mspeed.gif" />
+    <Resource Include="data\image\items\ammo\45CAL.gif" />
+    <Resource Include="data\image\items\ammo\4_7MM.gif" />
+    <Resource Include="data\image\items\ammo\5MMAP.gif" />
+    <Resource Include="data\image\items\ammo\5MMJHP.gif" />
+    <Resource Include="data\image\items\ammo\762mm.gif" />
+    <Resource Include="data\image\items\ammo\9MM.gif" />
+    <Resource Include="data\image\items\ammo\ACCARD.gif" />
+    <Resource Include="data\image\items\ammo\BULLET.gif" />
+    <Resource Include="data\image\items\ammo\CCELLS.gif" />
+    <Resource Include="data\image\items\ammo\DCELLS.gif" />
+    <Resource Include="data\image\items\ammo\FLMFUEL2.gif" />
+    <Resource Include="data\image\items\ammo\HNAPCART.gif" />
+    <Resource Include="data\image\items\ammo\HNCART.gif" />
+    <Resource Include="data\image\items\ammo\HYMGPART.gif" />
+    <Resource Include="data\image\items\ammo\oxygncan.gif" />
+    <Resource Include="data\image\items\ammo\PACK2C.gif" />
+    <Resource Include="data\image\items\ammo\RSHELL.gif" />
+    <Resource Include="data\image\items\ammo\SHELL2.gif" />
+    <Resource Include="data\image\items\ammo\SSSHELLS.gif" />
+    <Resource Include="data\image\items\ammo\TANK.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
