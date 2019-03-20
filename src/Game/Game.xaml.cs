@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using HexGridControl;
+using Nuclear.src.Interface;
 using WpfAnimatedGif;
 
 namespace Nuclear
@@ -84,6 +85,7 @@ namespace Nuclear
         private List<Point> wavePath = new List<Point>();
         private List<Point> DopWavePath = new List<Point>();
         private PlayerUser User = new PlayerUser(8, 2, 20, 12, 5);
+        private Inventory inventory = new Inventory();
         private int locationUserX;
         private int locationUserY;
         private int locationEndX;
@@ -107,37 +109,21 @@ namespace Nuclear
 
         public Game()
         {
-
             InitializeComponent();
             //groupAddress = IPAddress.Parse(HOST); 
             //loginButton_Click();
+            InitInventory();
             MapImageGrid();
             MapActiveGrid();
             MapHeatGrid();
             MapImgPlayerGrid();
             User.SetImage(GROD, img);
             findPath(8, 2, User.GetX(), User.GetY());
-            //initUser(8, 2);
         }
 
-        private void initUser(int x, int y)
+        private void InitInventory()
         {
-            var image = new BitmapImage();
-            var image1 = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTAA_se.gif");
-            image.EndInit();
-            ImageBehavior.SetAnimatedSource(img, image);
-            image1.BeginInit();
-            image1.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTAA_se.gif");
-            image1.EndInit();
-            ImageBehavior.SetAnimatedSource(img1, image1);
-            Canvas.SetLeft(img, 16);
-            Canvas.SetTop(img, 24);
-            Canvas.SetLeft(img1, 34); 
-            Canvas.SetTop(img1, 37);
-            GROD.Children.Add(img);
-            GROD.Children.Add(img1);
+
         }
 
         private void Opacity_ClickDown(object sender, MouseButtonEventArgs e)
@@ -976,6 +962,41 @@ namespace Nuclear
             Mouse.Capture(null);
 
         }
+
+        private void FirstWeaponUp_Click(object sender, DragEventArgs e)
+        {
+            if (Clipboard.GetImage() != null)
+            { 
+                (sender as Image).Source = inventory.SetItemFirstWeapon().Source;
+            }
+        }
+
+        private void FirstWeaponDown_Click(object sender, DragEventArgs e)
+        {
+            if((sender as Image) != null)
+            {
+                Clipboard.SetImage(new BitmapImage(((sender as Image).Source as BitmapImage).UriSource));
+            }
+        }
+
+        private void SecondWeaponUp_Click(object sender, DragEventArgs e)
+        {
+            if ((sender as Image).Source != null)
+            {
+                //(sender as Image).Source = inventory.SetItemFirstWeapon().Source;
+                (sender as Image).Source = new BitmapImage((e.Data.GetData(DataFormats.Bitmap) as BitmapImage).UriSource);
+            }
+        }
+
+        private void SecondWeaponDown_Click(object sender, DragEventArgs e)
+        {
+            if ((sender as Image).Source != null)
+            {
+                Clipboard.SetImage(new BitmapImage(((sender as Image).Source as BitmapImage).UriSource));
+                DragDrop.DoDragDrop((sender as Image), (sender as Image).Source, DragDropEffects.Copy);
+            }
+        }
+
         // обработчик события закрытия формы
         /*
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WpfAnimatedGif;
 
@@ -24,6 +26,8 @@ namespace Nuclear.src.Interface
 
         public int GetItem(object sender, MouseButtonEventArgs e)
         {
+            Image picture = sender as Image;
+            ImageSource image = Clipboard.GetImage();
             return items.IndexOf(sender as Image);
         }
 
@@ -32,9 +36,34 @@ namespace Nuclear.src.Interface
             items.RemoveAt(a);
         }
 
-        public int SetItem(object sender, MouseButtonEventArgs e)
+        public Image SetItemInventory()
         {
-            return items.IndexOf(sender as Image);
+            Image picture = null;
+            ImageSource image = Clipboard.GetImage();
+            picture.Source = image;
+            items.Add(picture);
+            return picture;
+        }
+
+        public Image SetItemFirstWeapon()
+        {
+            ImageSource image = Clipboard.GetImage();
+            SecondWeapon.Source = image;
+            return SecondWeapon;
+        }
+
+        public Image SetItemSecondWeapon()
+        {
+            ImageSource image = Clipboard.GetImage();
+            FirstWeapon.Source = image;
+            return FirstWeapon;
+        }
+
+        public Image SetItemArmor()
+        {
+            ImageSource image = Clipboard.GetImage();
+            Armor.Source = image;
+            return Armor;
         }
 
         public void RotationCharacterOfInventory(object sender, MouseButtonEventArgs e)
