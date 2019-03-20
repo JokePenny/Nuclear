@@ -67,10 +67,20 @@
     <Compile Include="data\mapeditor\BulletPhysics.cs" />
     <Compile Include="data\mapeditor\Field.cs" />
     <Compile Include="Game.xaml.cs">
+    <Compile Include="src\Game\Game.xaml.cs">
       <DependentUpon>Game.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameCamera.xaml.cs">
-      <DependentUpon>GameCamera.xaml</DependentUpon>
+    <Compile Include="src\Game\LivingObjects.cs" />
+    <Compile Include="src\Game\PlayerUser.cs" />
+    <Compile Include="src\Interface\Fixboy.cs" />
+    <Compile Include="src\Interface\Inventory.cs" />
+    <Compile Include="src\Interface\Map.cs" />
+    <Compile Include="src\Interface\Menu.cs" />
+    <Compile Include="src\Interface\Pipboy.cs" />
+    <Compile Include="src\Interface\Skills.cs" />
+    <Compile Include="src\Interface\Special.cs" />
+    <Compile Include="src\Net\NetworkRoom.xaml.cs">
+      <DependentUpon>NetworkRoom.xaml</DependentUpon>
     </Compile>
     <Compile Include="data\mapeditor\MapEditor.xaml.cs">
       <DependentUpon>MapEditor.xaml</DependentUpon>
@@ -254,6 +264,7 @@
     <Resource Include="data\image\mainui\interfaceClick\but_red_interface.png" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Resource Include="data\image\mainui\startClick\backlight_both.png" />
   </ItemGroup>
   <ItemGroup>
