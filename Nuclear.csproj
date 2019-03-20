@@ -61,15 +61,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Backpack.xaml.cs">
-      <DependentUpon>Backpack.xaml</DependentUpon>
-    </Compile>
     <Compile Include="data\mapeditor\BulletPhysics.cs" />
     <Compile Include="data\mapeditor\Field.cs" />
-    <Compile Include="Game.xaml.cs">
-    <Compile Include="src\Game\Game.xaml.cs">
-      <DependentUpon>Game.xaml</DependentUpon>
-    </Compile>
     <Compile Include="src\Game\LivingObjects.cs" />
     <Compile Include="src\Game\PlayerUser.cs" />
     <Compile Include="src\Interface\Fixboy.cs" />
@@ -79,37 +72,17 @@
     <Compile Include="src\Interface\Pipboy.cs" />
     <Compile Include="src\Interface\Skills.cs" />
     <Compile Include="src\Interface\Special.cs" />
-    <Compile Include="src\Net\NetworkRoom.xaml.cs">
-      <DependentUpon>NetworkRoom.xaml</DependentUpon>
-    </Compile>
     <Compile Include="data\mapeditor\MapEditor.xaml.cs">
       <DependentUpon>MapEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LivingObjects.cs" />
-    <Compile Include="PlayerUser.cs" />
-    <Compile Include="src\NetworkRoom.xaml.cs">
-      <DependentUpon>NetworkRoom.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="src\Registration.xaml.cs">
-      <DependentUpon>Registration.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="src\Game\Game.xaml.cs">
-      <DependentUpon>Game.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="src\Game\LivingObjects.cs" />
-    <Compile Include="src\Game\PlayerUser.cs" />
-    <Compile Include="src\Interface\Fixboy.cs" />
-    <Compile Include="src\Interface\Inventory.cs" />
-    <Compile Include="src\Interface\Map.cs" />
-    <Compile Include="src\Interface\Menu.cs" />
-    <Compile Include="src\Interface\Pipboy.cs" />
-    <Compile Include="src\Interface\Skills.cs" />
-    <Compile Include="src\Interface\Special.cs" />
     <Compile Include="src\Net\NetworkRoom.xaml.cs">
       <DependentUpon>NetworkRoom.xaml</DependentUpon>
     </Compile>
     <Compile Include="src\Net\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="src\Game\Game.xaml.cs">
+      <DependentUpon>Game.xaml</DependentUpon>
     </Compile>
     <Compile Include="src\Menu\StartMenu.xaml.cs">
       <DependentUpon>StartMenu.xaml</DependentUpon>
@@ -134,8 +107,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SkillTree.xaml">
-    <Page Include="src\NetworkRoom.xaml">
     <Page Include="src\Net\NetworkRoom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -264,37 +235,18 @@
     <Resource Include="data\image\mainui\interfaceClick\but_red_interface.png" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Resource Include="data\image\mainui\startClick\backlight_both.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\cur.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="data\image\mainui\cursor\ACTARROW.cur" />
-  </ItemGroup>
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_e.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_ne.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_nw.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_se.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_sw.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_w.gif" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Resource Include="data\image\mainui\startClick\backlight_both.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\cur.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="data\image\mainui\cursor\ACTARROW.cur" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="data\image\mainui\startClick\backlight_both.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\cur.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="data\image\mainui\cursor\ACTARROW.cur" />
