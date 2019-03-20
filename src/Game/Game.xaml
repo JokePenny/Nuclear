@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Nuclear"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1368"
       Title="Game"
@@ -198,15 +199,8 @@
                             </Grid>
                         </StackPanel>
                     </Grid>
-                    <!--
-                        <Button Background="gray" Content="Конец хода"/>
-                        <Button Background="white" Content="Назад" Click="OpenGameField_Click"/>
-                        <Button Background="white" Content="Навыки" Click="OpenSkillTree_Click"/>
-                        <Button Background="white" Content="ИНвентарь" Click="OpenBackpack_Click"/>
-                        -->
                 </StackPanel>
                 <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
-                    <!--<Button Width="70" Background="silver" Click="Exit_Game"/>-->
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="130"></RowDefinition>
@@ -416,7 +410,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden" Margin="45 38 30 35">
-                        <Grid Name="PanelItems">
+                        <Grid Name="PanelInventory">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"></RowDefinition>
                             </Grid.RowDefinitions>
@@ -444,8 +438,8 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Name="Appearance" Grid.Row="0" Margin="35 30 30 65"/>
-                                    <TextBlock Name="BoxArmor" Grid.Row="1" Margin="10 10 23 17"/>
+                                    <Image Name="Appearance" Grid.Row="0" Margin="35 30 30 65"/>
+                                    <Image Name="BoxArmor" gif:ImageBehavior.AnimatedSource="pack://siteoforigin:,,,/data/image/inventory/armor/CBTARMOR.gif" Grid.Row="1" Margin="10 10 23 17"/>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Height="100" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
@@ -458,8 +452,8 @@
                                         <ColumnDefinition Width="95"/>
                                         <ColumnDefinition Width="155"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Name="FirstWeapon" Grid.Column="0" Margin="15 25 5 20"/>
-                                    <TextBlock Name="SecondWeapon" Grid.Column="1" Margin="0 25 5 20"/>
+                                    <Image Name="FirstWeapon" gif:ImageBehavior.AnimatedSource="pack://siteoforigin:,,,/data/image/inventory/armor/CBTARMOR.gif" Grid.Column="0" Margin="15 25 5 20" AllowDrop="True" Drop="FirstWeaponUp_Click" DragEnter="FirstWeaponDown_Click"/>
+                                    <Image Name="SecondWeapon" gif:ImageBehavior.AnimatedSource="pack://siteoforigin:,,,/data/image/inventory/armor/CBTARMOR.gif" Grid.Column="1" Margin="0 25 5 20"  AllowDrop="True" Drop="FirstWeaponUp_Click" DragEnter="FirstWeaponDown_Click"/>
                                     <TextBlock Height="21" Width="21" Grid.Column="2" Opacity="0" Margin="60 58 5 25" MouseLeftButtonDown="Opacity_ClickDown" MouseLeftButtonUp="Collapsed_WindowUI_Click" Tag="Inventory">
                                         <TextBlock.Background>
                                             <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/inventoryClick/but_red.png"/>
