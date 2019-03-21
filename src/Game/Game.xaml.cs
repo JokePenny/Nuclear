@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using HexGridControl;
+using Nuclear.data.mapeditor;
 using Nuclear.src.Interface;
 using WpfAnimatedGif;
 
@@ -19,69 +20,8 @@ namespace Nuclear
 {
     public partial class Game : Page
     {
-        /* игровое поле */
-        //12hx27w size
-        private static int[,] PathArray = new int[,] {
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            };
-
-        private static int[,] ImageIDArray = new int[,] {
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, -1, -1, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            };
-
-        public List<Point> wave = new List<Point>();
+        private Field field = new Field();
+        private List<Point> wave = new List<Point>();
         private List<Point> wavePath = new List<Point>();
         private List<Point> DopWavePath = new List<Point>();
         private PlayerUser User = new PlayerUser(8, 2, 20, 12, 5);
@@ -91,9 +31,7 @@ namespace Nuclear
         private int locationEndX;
         private int locationEndY;
 
-
         string userName = "Lorne"; // имя пользователя в чате
-
 
         bool alive = false; // будет ли работать поток для приема
         UdpClient client;
@@ -296,7 +234,7 @@ namespace Nuclear
                     style.Setters.Add(new Setter { Property = Control.MarginProperty, Value = new Thickness(-2.5, -1, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderThicknessProperty, Value = new Thickness(0, 0, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderBrushProperty, Value = null });
-                    if (PathArray[j, i] == -1)
+                    if (field.GetPathArray(j, i) == -1) //PathArray[j, i] == -1
                     {
                         style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = null });
                     }
@@ -419,7 +357,7 @@ namespace Nuclear
             int[,] DopPathArray;
             int[,] DopClonePathArray;
 
-            if (PathArray[y, x] == -1 || PathArray[ny, nx] == -1)
+            if (field.GetPathArray(y, x) == -1 || field.GetPathArray(ny, nx) == -1)
             {
                 // вывод ошибки выбора - недоступная зона (стена)
                 //return;
@@ -427,7 +365,7 @@ namespace Nuclear
             while (true)
             {
                 //волновой алгоритм поиска пути (заполнение значений достижимости) начиная от конца пути
-                DopPathArray = (int[,])PathArray.Clone();
+                DopPathArray = (int[,])field.GetClonePathArray();
                 DopClonePathArray = (int[,])DopPathArray.Clone();
                 List<Point> DopOldWave = new List<Point>();
                 DopOldWave.Add(new Point(x, y));
@@ -513,11 +451,11 @@ namespace Nuclear
                 //DopWavePath.Clear();
                 //DopOldWave.Clear();
 
-                clonePathArray = (int[,])PathArray.Clone();
+                clonePathArray = (int[,])field.GetClonePathArray();
                 List<Point> oldWave = new List<Point>();
                 oldWave.Add(new Point(nx, ny));
                 nstep = 0;
-                PathArray[ny, nx] = nstep;
+                field.SetPathArray(ny, nx, nstep);
                 while (oldWave.Count > 0)
                 {
                     nstep++;
@@ -536,10 +474,10 @@ namespace Nuclear
                                 nx = i.x + dx2[d];
                                 ny = i.y + dy2[d];
                             }
-                            if (PathArray[ny, nx] == 0)
+                            if (field.GetPathArray(ny, nx) == 0)
                             {
                                 wave.Add(new Point(nx, ny));
-                                PathArray[ny, nx] = nstep;
+                                field.SetPathArray(ny, nx, nstep);
                             }
                         }
                     }
@@ -568,7 +506,7 @@ namespace Nuclear
                 wave.Add(new Point(locationEndXDUB, locationEndYDUB));
                 int stepX = 0;
                 int stepY = 0;
-                while (PathArray[y, x] != 99)
+                while (field.GetPathArray(y, x) != 99)
                 {
                     flag = true;
                     for (int d = 0; d < 6; d++)
@@ -629,7 +567,7 @@ namespace Nuclear
                     }
                 }
                 wave.Reverse();
-                PathArray = clonePathArray;
+                field.SetClonePathArray(clonePathArray);
                 DopPathArray = DopClonePathArray;
                 /*
                 wave.ForEach(delegate (Point i)

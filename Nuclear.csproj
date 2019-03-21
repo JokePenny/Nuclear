@@ -61,8 +61,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="data\mapeditor\BulletPhysics.cs" />
-    <Compile Include="data\mapeditor\Field.cs" />
+    <Compile Include="src\Editor\BulletPhysics.cs" />
+    <Compile Include="src\Game\Field.cs" />
     <Compile Include="src\Game\LivingObjects.cs" />
     <Compile Include="src\Game\PlayerUser.cs" />
     <Compile Include="src\Interface\Fixboy.cs" />
@@ -72,7 +72,7 @@
     <Compile Include="src\Interface\Pipboy.cs" />
     <Compile Include="src\Interface\Skills.cs" />
     <Compile Include="src\Interface\Special.cs" />
-    <Compile Include="data\mapeditor\MapEditor.xaml.cs">
+    <Compile Include="src\Editor\MapEditor.xaml.cs">
       <DependentUpon>MapEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="src\Net\NetworkRoom.xaml.cs">
@@ -87,6 +87,7 @@
     <Compile Include="src\Menu\StartMenu.xaml.cs">
       <DependentUpon>StartMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="src\Net\UserNet.cs" />
     <Page Include="src\Game\Game.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -103,7 +104,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="data\mapeditor\MapEditor.xaml">
+    <Page Include="src\Editor\MapEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,9 +152,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="data\mapcreateds\" />
-    <Folder Include="data\mapeditor\sprits\props\city\" />
-    <Folder Include="data\mapeditor\sprits\wall\wallr\" />
     <Resource Include="data\image\mainui\menu.png" />
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +265,9 @@
     <Folder Include="data\image\misc\" />
     <Folder Include="data\image\tiles\" />
     <Folder Include="data\image\walls\" />
+    <Folder Include="data\mapcreateds\" />
+    <Folder Include="data\mapeditor\sprits\props\city\" />
+    <Folder Include="data\mapeditor\sprits\wall\wallr\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="data\image\items\chest\ABKSHLF1.gif" />

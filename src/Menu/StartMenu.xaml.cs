@@ -118,6 +118,11 @@ namespace Nuclear
             Mouse.OverrideCursor = customCursor;
         }
 
+        private void Editor_Click(object sender, MouseButtonEventArgs e)
+        {
+            this.NavigationService.Navigate(new MapEditor());
+        }
+
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
