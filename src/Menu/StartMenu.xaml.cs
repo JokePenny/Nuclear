@@ -14,7 +14,11 @@ namespace Nuclear
 {
     public partial class StartMenu : Page
     {
+        const int port = 8888;
+        const string address = "127.0.0.1";
+        TcpClient client = null;
         PlayerUser user = null;
+
         public StartMenu()
         {
             InitializeComponent();
@@ -50,29 +54,27 @@ namespace Nuclear
             if(Login.Text != "" && Password.Text != "")
             {
                 Mouse.OverrideCursor = Cursors.Wait;
-                // адрес и порт сервера, к которому будем подключаться
-                int port = 8005; // порт сервера
-                string address = "127.0.0.1"; // адрес сервера
-                Socket socket = null;
                 try
                 {
-                    IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(address), port);
-                    socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    socket.Connect(ipPoint);
+                    client = new TcpClient(address, port);
+                    NetworkStream stream = client.GetStream();
 
                     string message = "1 " + Login.Text;
                     message += " " + Password.Text;
                     byte[] data = Encoding.Unicode.GetBytes(message);
-                    socket.Send(data);
-                    data = new byte[256];
+                    // отправка сообщения
+                    stream.Write(data, 0, data.Length);
+                    // получаем ответ
+                    data = new byte[256]; // буфер для получаемых данных
                     StringBuilder builder = new StringBuilder();
                     int bytes = 0;
                     do
                     {
-                        bytes = socket.Receive(data, data.Length, 0);
+                        bytes = stream.Read(data, 0, data.Length);
                         builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
                     }
-                    while (socket.Available > 0);
+                    while (stream.DataAvailable);
+
                     string[] answer = builder.ToString().Split(';');
                     //ChatTextBlock.Text += "\r\n" + builder.ToString();
                     if (answer[0] == "Вход выполнен")
@@ -83,22 +85,19 @@ namespace Nuclear
                         Mouse.OverrideCursor = customCursors;
                         user.SetNickname(Login.Text);
                         user.SetLevel(Convert.ToInt32(answer[1]));
-                        socket.Shutdown(SocketShutdown.Both);
-                        socket.Shutdown(SocketShutdown.Both);
-                        socket.Close();
+                        client.Close();
+                        stream.Close();
                         this.NavigationService.Navigate(new NetworkRoom(user));
                     }
                     else
                     {
                         ChatTextBlock.Text += "\r\n" + builder.ToString();
-                        socket.Shutdown(SocketShutdown.Both);
-                        socket.Close();
+                        client.Close();
+                        stream.Close();
                         StreamResourceInfo str = Application.GetResourceStream(
                            new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
                         Cursor customCursorr = new Cursor(str.Stream);
                         Mouse.OverrideCursor = customCursorr;
-                        socket.Shutdown(SocketShutdown.Both);
-                        socket.Close();
                     }
                 }
                 catch (Exception ex)

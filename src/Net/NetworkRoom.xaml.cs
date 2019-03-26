@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows;
@@ -8,17 +7,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
-using System.Windows.Shapes;
 
 namespace Nuclear.src
 {
     public partial class NetworkRoom : Page
     {
-        PlayerUser User = null;
-        // адрес и порт сервера, к которому будем подключаться
-        static private int port = 8005; // порт сервера
-        static private string address = "127.0.0.1"; // адрес сервера
-        IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(address), port);
+        private PlayerUser User = null;
+        private const int port = 8888;
+        private const string address = "127.0.0.1";
+        private TcpClient client = null;
+        private NetworkStream stream;
+        private string message = null;
 
         public NetworkRoom(PlayerUser connectUser)
         {
@@ -83,34 +82,6 @@ namespace Nuclear.src
             foreach (StackPanel stack in StackPlayer.Children)
                 stack.Visibility = Visibility.Collapsed;
 
-            WrapPanel wpanel = (WrapPanel)(sender as Border).Child;
-            foreach (var stack in wpanel.Children)
-                if((stack as TextBlock).Text != User.GetStateRoom())
-                {
-                    ExitRoom.IsEnabled = false;
-                    ExitRoom.MouseMove -= MoveMouseMenuOnline_but;
-                    ExitRoom.MouseLeave -= MoveLeave_but;
-                    ExitRoom.Background = null;
-                    ExitRoom.Opacity = 0.3;
-                    Readiness.IsEnabled = false;
-                    Readiness.MouseMove -= MoveMouseMenuOnline_but;
-                    Readiness.MouseLeave -= MoveLeave_but;
-                    Readiness.Background = null;
-                    Readiness.Opacity = 0.3;
-                    break;
-                }
-                else
-                {
-                    ExitRoom.IsEnabled = true;
-                    ExitRoom.MouseMove += MoveMouseMenuOnline_but;
-                    ExitRoom.MouseLeave += MoveLeave_but;
-                    ExitRoom.Opacity = 0.6;
-                    Readiness.IsEnabled = true;
-                    Readiness.MouseMove += MoveMouseMenuOnline_but;
-                    Readiness.MouseLeave += MoveLeave_but;
-                    Readiness.Opacity = 0.6;
-                    break;
-                }
             (sender as Border).Background = Brushes.Green;
             if(User.GetStateRoom() == null)
             {
@@ -165,22 +136,25 @@ namespace Nuclear.src
                     throw new Exception("\r\n Не все поля заполнены");
                 else
                 {
-                    Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    socket.Connect(ipPoint);
+                    client = new TcpClient(address, port);
+                    stream = client.GetStream();
                     User.SetStateRoom(NameRoom.Text);
                     User.SetStateMap(MapSelection.Text);
-                    string message = "2 " + NameRoom.Text + " " + ValuePlayers.Text + " " + RangeUp.Text + " " + RangeDown.Text + " " + MapSelection.Text + " " + User.GetNickname() + " " + User.GetLevel().ToString();
+                    message = "2 " + NameRoom.Text + " " + ValuePlayers.Text + " " + RangeUp.Text + " " + RangeDown.Text + " " + MapSelection.Text + " " + User.GetNickname() + " " + User.GetLevel().ToString();
                     byte[] data = Encoding.Unicode.GetBytes(message);
-                    socket.Send(data);
-                    data = new byte[256];
+                    // отправка сообщения
+                    stream.Write(data, 0, data.Length);
+                    // получаем ответ
+                    data = new byte[64]; // буфер для получаемых данных
                     StringBuilder builder = new StringBuilder();
                     int bytes = 0;
                     do
                     {
-                        bytes = socket.Receive(data, data.Length, 0);
+                        bytes = stream.Read(data, 0, data.Length);
                         builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
                     }
-                    while (socket.Available > 0);
+                    while (stream.DataAvailable);
+
                     if (builder.ToString() == "Комната успешно создана")
                     {
                         CreateWindow.IsEnabled = false;
@@ -190,8 +164,8 @@ namespace Nuclear.src
                         CreateWindow.Opacity = 0.3;
 
                         ChatTextBlock.Text += "\r\n" + builder.ToString();
-                        socket.Shutdown(SocketShutdown.Both);
-                        socket.Close();
+                        client.Close();
+
                         StatsPlayer.Margin = new Thickness(0, 86, 5, 0);
                         CreateWindow.IsEnabled = true;
                         Border room = new Border();
@@ -274,6 +248,10 @@ namespace Nuclear.src
             {
                 ChatTextBlock.Text += "\r\n" + error.Message;
             }
+            finally
+            {
+                client.Close();
+            }
         }
 
         private void EntranceRoom_Click(object sender, MouseButtonEventArgs e)
@@ -289,107 +267,39 @@ namespace Nuclear.src
                     }
                     break;
                 }
-            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket.Connect(ipPoint);
-            string message = "3 " + User.GetStateRoom() + " " + User.GetNickname() + " " + User.GetLevel();
+            client = new TcpClient(address, port);
+            stream = client.GetStream();
+            message = "3 " + User.GetStateRoom() + " " + User.GetNickname() + " " + User.GetLevel();
             byte[] data = Encoding.Unicode.GetBytes(message);
-            socket.Send(data);
-            data = new byte[256];
+            // отправка сообщения
+            stream.Write(data, 0, data.Length);
+            // получаем ответ
+            data = new byte[64]; // буфер для получаемых данных
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
             do
             {
-                bytes = socket.Receive(data, data.Length, 0);
+                bytes = stream.Read(data, 0, data.Length);
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             }
-            while (socket.Available > 0);
-            if (builder.ToString() != "Недоступен по уровню" || builder.ToString() != "Комната заполнена" || builder.ToString() != "Комната заполнена")
+            while (stream.DataAvailable);
+
+            if (builder.ToString() != "Недоступен по уровню" && builder.ToString() != "Комната заполнена" && builder.ToString() != "Комната заполнена")
             {
-
-                string[] receiveData = builder.ToString().Split(';');
-
-                foreach (Border rooms in StackRoom.Children)
-                    if (rooms.Background == Brushes.Green)
-                    {
-                        WrapPanel wraps = (WrapPanel)rooms.Child;
-                        int i = 0;
-                        foreach (TextBlock maps in wraps.Children)
-                        {
-                            if (i == 2)
-                            {
-                                string[] temp = maps.Text.Split('/');
-                                maps.Text = receiveData[1] + "/" + temp[1];
-                                break;
-                            }
-                            i++;
-                        }
-                        break;
-                    }
-                StreamResourceInfo sris = Application.GetResourceStream(new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
-                Cursor customCursors = new Cursor(sris.Stream);
-                Mouse.OverrideCursor = customCursors;
-                ChatTextBlock.Text += "\r\n" + receiveData[0];
-
-                ExitRoom.IsEnabled = true;
-                ExitRoom.MouseMove += MoveMouseMenuOnline_but;
-                ExitRoom.MouseLeave += MoveLeave_but;
-                ExitRoom.Opacity = 0.6;
-                Readiness.IsEnabled = true;
-                Readiness.MouseMove += MoveMouseMenuOnline_but;
-                Readiness.MouseLeave += MoveLeave_but;
-                Readiness.Opacity = 0.6;
-
-                socket.Shutdown(SocketShutdown.Both);
-                socket.Close();
-                Border room = new Border();
-                room.Height = 20;
-                room.Background = Brushes.Black;
-                room.BorderBrush = Brushes.Green;
-                room.BorderThickness = new Thickness(2);
-                room.Margin = new Thickness(0, 5, 0, 0);
-
-                WrapPanel wrap = new WrapPanel();
-
-                TextBlock nickname = new TextBlock();
-                nickname.Width = 150;
-                nickname.Margin = new Thickness(0, 0, 0, 0);
-                nickname.TextAlignment = TextAlignment.Center;
-                nickname.Foreground = Brushes.Lime;
-                nickname.FontSize = 12;
-                nickname.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
-                nickname.Text = User.GetNickname();
-
-                TextBlock levelUser = new TextBlock();
-                levelUser.Width = 100;
-                levelUser.TextAlignment = TextAlignment.Center;
-                levelUser.Foreground = Brushes.Lime;
-                levelUser.Margin = new Thickness(10, 0, 5, 0);
-                levelUser.FontSize = 12;
-                levelUser.FontFamily = new FontFamily(new Uri("pack://application:,,,/Nuclear"), "/data/fonts/#Fallout Display");
-                levelUser.Text = Convert.ToString(User.GetLevel());
-
-                wrap.Children.Add(nickname);
-                wrap.Children.Add(levelUser);
-                room.Child = wrap;
-                foreach (StackPanel stack in StackPlayer.Children)
-                    if (stack.Visibility == Visibility.Visible)
-                        stack.Children.Add(room);
-
-                ConnectRoom.IsEnabled = false;
-                ConnectRoom.MouseMove -= MoveMouseMenuOnline_but;
-                ConnectRoom.MouseLeave -= MoveLeave_but;
-                ConnectRoom.Background = null;
-                ConnectRoom.Opacity = 0.3;
+                this.NavigationService.Navigate(new Game(User));
+                client.Close();
+                stream.Close();
             }
             else
             {
-                ChatTextBlock.Text += "\r\n Комната заполнена или не соответсвует вашему уровню";
-                socket.Shutdown(SocketShutdown.Both);
-                socket.Close();
+                ChatTextBlock.Text += "\r\n " + builder.ToString();
                 StreamResourceInfo str = Application.GetResourceStream(
                    new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
                 Cursor customCursorr = new Cursor(str.Stream);
                 Mouse.OverrideCursor = customCursorr;
+                client.Close();
+                stream.Close();
+                UpdateAllRoom();
             }
         }
 
@@ -404,113 +314,61 @@ namespace Nuclear.src
         {
             e.Handled = "0123456789".IndexOf(e.Text) < 0;
         }
+        
 
-        private void ReadinessRoom_Click(object sender, MouseButtonEventArgs e)
+        /*
+        private void ReadinessRoom_Click(object sender, MouseButtonEventArgs e) // засунуть в подключение
         {
-            int check = 0;
-            int checkTwo = 0;
-            foreach (StackPanel stack in StackPlayer.Children)
-                if (stack.Visibility == Visibility.Visible)
-                {
-                    foreach (Border user in stack.Children)
-                    {
-                        WrapPanel panel = (WrapPanel)user.Child;
-                        Ellipse reads = null;
-                        foreach (var nickname in panel.Children)
-                        {
-                            if (nickname is Ellipse)
-                            {
-                                reads = (nickname as Ellipse);
-                                check = 1;
-                            }
-                            else if ((nickname as TextBlock).Text == User.GetNickname())
-                                checkTwo = 1;
-                        }
-                        if(checkTwo == 1)
-                        {
-                            if (check != 1)
-                            {
-                                reads = new Ellipse();
-                                reads.Width = 13;
-                                reads.Height = 13;
-                                reads.Margin = new Thickness(0, 0, 5, 0);
-                                reads.Fill = Brushes.Lime;
-                                panel.Background = Brushes.Black;
-                                panel.Children.Add(reads);
-                                user.Child = panel;
-                                Readiness.Text = "НЕ ГОТОВ";
-                            }
-                            else
-                            {
-                                panel.Children.Remove(reads);
-                                user.Child = panel;
-                                Readiness.Text = "ГОТОВ";
-                            }
-                            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                            socket.Connect(ipPoint);
-                            string message = "4 " + stack.Name + " " + User.GetNickname() + " " + Readiness.Text;
-                            byte[] data = Encoding.Unicode.GetBytes(message);
-                            socket.Send(data);
-                            data = new byte[256];
-                            StringBuilder builder = new StringBuilder();
-                            int bytes = 0;
-                            do
-                            {
-                                bytes = socket.Receive(data, data.Length, 0);
-                                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
-                            }
-                            while (socket.Available > 0);
-                            socket.Shutdown(SocketShutdown.Both);
-                            socket.Close();
-                            break;
-                        }
-                        else
-                            check = 0;
-                    }
-                    break;
-                }
+            client = new TcpClient(address, port);
+            NetworkStream stream = client.GetStream();
+            message = "4 " + User.GetStateRoom() + " " + User.GetNickname() + " " + Readiness.Text;
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            // отправка сообщения
+            stream.Write(data, 0, data.Length);
+            // получаем ответ
+            data = new byte[64]; // буфер для получаемых данных
+            StringBuilder builder = new StringBuilder();
+            int bytes = 0;
+            do
+            {
+                bytes = stream.Read(data, 0, data.Length);
+                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+            }
+            while (stream.DataAvailable);
+            client.Close();
+            stream.Close();  
         }
+        */
 
-        private void ExitRoom_Click(object sender, MouseButtonEventArgs e)
+        private void ExitRoom_Click(object sender, MouseButtonEventArgs e) // засунуть в гейм (выход из игры)
         {
             Exits("0");
             User.SetStateRoom(null);
             User.SetStateMap(null);
-            CreateWindow.IsEnabled = true;
-            CreateWindow.MouseMove += MoveMouseMenuOnline_but;
-            CreateWindow.MouseLeave += MoveLeave_but;
-            CreateWindow.Opacity = 0.6;
-            ExitRoom.IsEnabled = false;
-            ExitRoom.MouseMove -= MoveMouseMenuOnline_but;
-            ExitRoom.MouseLeave -= MoveLeave_but;
-            ExitRoom.Background = null;
-            ExitRoom.Opacity = 0.3;
-            Readiness.IsEnabled = false;
-            Readiness.MouseMove -= MoveMouseMenuOnline_but;
-            Readiness.MouseLeave -= MoveLeave_but;
-            Readiness.Background = null;
-            Readiness.Opacity = 0.3;
-            Room.Visibility = Visibility.Collapsed;
             UpdateAllRoom();
         }
 
         private void Exits(string exit)
         {
-            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket.Connect(ipPoint);
-            string message = "7 " + User.GetStateRoom() + " " + User.GetNickname() + " " + exit;
+            client = new TcpClient(address, port);
+            NetworkStream stream = client.GetStream();
+            message = "7 " + User.GetStateRoom() + " " + User.GetNickname() + " " + exit;
             byte[] data = Encoding.Unicode.GetBytes(message);
-            socket.Send(data);
-            data = new byte[256];
+            // отправка сообщения
+            stream.Write(data, 0, data.Length);
+            // получаем ответ
+            data = new byte[64]; // буфер для получаемых данных
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
             do
             {
-                bytes = socket.Receive(data, data.Length, 0);
+                bytes = stream.Read(data, 0, data.Length);
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             }
-            while (socket.Available > 0);
+            while (stream.DataAvailable);
             ChatTextBlock.Text += "\r\n" + builder.ToString();
+            client.Close();
+            stream.Close();
         }
 
         private void UpdateAllRoom_Click(object sender, MouseButtonEventArgs e)
@@ -522,24 +380,26 @@ namespace Nuclear.src
         {
             StackRoom.Children.Clear();
             StackPlayer.Children.Clear();
-            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket.Connect(ipPoint);
-            string message = "5";
+            client = new TcpClient(address, port);
+            NetworkStream stream = client.GetStream();
+            message = "5";
             byte[] data = Encoding.Unicode.GetBytes(message);
-            socket.Send(data);
-            data = new byte[256];
+            // отправка сообщения
+            stream.Write(data, 0, data.Length);
+            // получаем ответ
+            data = new byte[64]; // буфер для получаемых данных
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
             do
             {
-                bytes = socket.Receive(data, data.Length, 0);
+                bytes = stream.Read(data, 0, data.Length);
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             }
-            while (socket.Available > 0);
+            while (stream.DataAvailable);
             if (builder.ToString() != "Комнат нет")
             {
-                socket.Shutdown(SocketShutdown.Both);
-                socket.Close();
+                client.Close();
+                stream.Close();
                 string[] rows = builder.ToString().Split(';');
                 string[] elements;
                 for (int i = 0; i < rows.Length - 1; i++)
@@ -614,24 +474,26 @@ namespace Nuclear.src
                     listPlayer.Name = elements[0];
                     listPlayer.Visibility = Visibility.Collapsed;
 
-                    socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    socket.Connect(ipPoint);
+                    client = new TcpClient(address, port);
+                    stream = client.GetStream();
                     message = "6 " + elements[0];
                     data = Encoding.Unicode.GetBytes(message);
-                    socket.Send(data);
-                    data = new byte[256];
+                    // отправка сообщения
+                    stream.Write(data, 0, data.Length);
+                    // получаем ответ
+                    data = new byte[64]; // буфер для получаемых данных
                     builder = new StringBuilder();
                     bytes = 0;
                     do
                     {
-                        bytes = socket.Receive(data, data.Length, 0);
+                        bytes = stream.Read(data, 0, data.Length);
                         builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
                     }
-                    while (socket.Available > 0);
+                    while (stream.DataAvailable);
                     if (builder.ToString() != "")
                     {
-                        socket.Shutdown(SocketShutdown.Both);
-                        socket.Close();
+                        client.Close();
+                        stream.Close();
                         string[] rowsUser = builder.ToString().Split(';');
                         for (int j = 0; j < rowsUser.Length - 1; j++)
                         {
@@ -664,46 +526,41 @@ namespace Nuclear.src
                             levelUser.Text = elements[1];
                             wrap.Children.Add(nickname);
                             wrap.Children.Add(levelUser);
-                            if(elements[3] == "1")
-                            {
-                                Ellipse reads = new Ellipse();
-                                reads.Width = 13;
-                                reads.Height = 13;
-                                reads.Margin = new Thickness(0, 0, 5, 0);
-                                reads.Fill = Brushes.Lime;
-                                wrap.Children.Add(reads);
-                            }
                             room.Child = wrap;
                             listPlayer.Children.Add(room);
                         }
                     }
+                    client.Close();
+                    stream.Close();
                     StackPlayer.Children.Add(listPlayer);
                 }
             }
             else
             {
                 ChatTextBlock.Text += "\r\n" + builder.ToString();
-                socket.Shutdown(SocketShutdown.Both);
-                socket.Close();
+                client.Close();
+                stream.Close();
             }
 
-            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket.Connect(ipPoint);
+            client = new TcpClient(address, port);
+            stream = client.GetStream();
             message = "8";
             data = Encoding.Unicode.GetBytes(message);
-            socket.Send(data);
-            data = new byte[256];
+            // отправка сообщения
+            stream.Write(data, 0, data.Length);
+            // получаем ответ
+            data = new byte[64]; // буфер для получаемых данных
             builder = new StringBuilder();
             bytes = 0;
             do
             {
-                bytes = socket.Receive(data, data.Length, 0);
+                bytes = stream.Read(data, 0, data.Length);
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             }
-            while (socket.Available > 0);
+            while (stream.DataAvailable);
             CountOnlineUsers.Text = builder.ToString();
-            socket.Shutdown(SocketShutdown.Both);
-            socket.Close();
+            client.Close();
+            stream.Close();
         }
     }
 }

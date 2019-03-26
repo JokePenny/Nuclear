@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,22 +25,17 @@ namespace Nuclear
         private List<Point> wave = new List<Point>();
         private List<Point> wavePath = new List<Point>();
         private List<Point> DopWavePath = new List<Point>();
-        private PlayerUser User = new PlayerUser(8, 2, 20, 12, 5);
+        private PlayerUser User = null;
         private Inventory inventory = new Inventory();
         private int locationUserX;
         private int locationUserY;
         private int locationEndX;
         private int locationEndY;
 
-        string userName = "Lorne"; // имя пользователя в чате
-
-        bool alive = false; // будет ли работать поток для приема
-        UdpClient client;
-        const int LOCALPORT = 8001; // порт для приема сообщений
-        const int REMOTEPORT = 8001; // порт для отправки сообщений
-        const int TTL = 20;
-        const string HOST = "235.5.5.1"; // хост для групповой рассылки
-        IPAddress groupAddress; // адрес для групповой рассылки
+        private const int port = 8888;
+        private const string address = "127.0.0.1";
+        private static TcpClient client = null;
+        private static NetworkStream stream = null;
 
         Image img = new Image();
         Image img1 = new Image();
@@ -48,15 +44,98 @@ namespace Nuclear
         public Game()
         {
             InitializeComponent();
-            //groupAddress = IPAddress.Parse(HOST); 
-            //loginButton_Click();
-            InitInventory();
+            //InitInventory();
+            User = new PlayerUser(8, 2, 20, 12, 5);
             MapImageGrid();
             MapActiveGrid();
             MapHeatGrid();
             MapImgPlayerGrid();
-            User.SetImage(GROD, img);
+            
+            User.SetImageScreen(GROD, img);
             findPath(8, 2, User.GetX(), User.GetY());
+        }
+
+        public Game(PlayerUser connect)
+        {
+            InitializeComponent();
+            User = new PlayerUser(8, 2, 20, 12, 5);
+            //User = connect;
+            /*
+            client = new TcpClient();
+            try
+            {
+                client.Connect(address, port); //подключение клиента
+                stream = client.GetStream(); // получаем поток
+
+                message = "10 " + User.GetStateRoom() + " " + User.GetNickname();
+                data = Encoding.Unicode.GetBytes(message);
+                stream.Write(data, 0, data.Length);
+
+                // запускаем новый поток для получения данных
+                Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
+                receiveThread.Start(); //старт потока
+                Thread sendThread = new Thread(new ThreadStart(SendMessage));
+                sendThread.Start(); //старт потока
+            }
+            catch (Exception ex)
+            {
+                ChatTextBlock.Text += ex.Message + "\r\n";
+            }
+            */
+
+
+            //InitInventory();
+            MapImageGrid();
+            MapActiveGrid();
+            MapHeatGrid();
+            MapImgPlayerGrid();
+
+            User.SetImageScreen(GROD, img);
+            findPath(8, 2, User.GetX(), User.GetY());
+        }
+
+        static void SendMessage(string command)
+        {
+            byte[] data = Encoding.Unicode.GetBytes(command);
+            stream.Write(data, 0, data.Length);
+        }
+
+        // получение сообщений
+        static void ReceiveMessage()
+        {
+            while (true)
+            {
+                try
+                {
+                    byte[] data = new byte[64]; // буфер для получаемых данных
+                    StringBuilder builder = new StringBuilder();
+                    int bytes = 0;
+                    do
+                    {
+                        bytes = stream.Read(data, 0, data.Length);
+                        builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                    }
+                    while (stream.DataAvailable);
+
+                    string message = builder.ToString();
+                    Console.WriteLine(message);//вывод сообщения
+                }
+                catch
+                {
+                    Console.WriteLine("Подключение прервано!"); //соединение было прервано
+                    Console.ReadLine();
+                    Disconnect();
+                }
+            }
+        }
+
+        static void Disconnect()
+        {
+            if (stream != null)
+                stream.Close();//отключение потока
+            if (client != null)
+                client.Close();//отключение клиента
+            Environment.Exit(0); //завершение процесса
         }
 
         private void InitInventory()
@@ -146,7 +225,7 @@ namespace Nuclear
 
         public void MapImgPlayerGrid()
         {
-            int HeightMap = 12;
+            int HeightMap = 17;
             int WidthMap = 27;
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
@@ -180,7 +259,7 @@ namespace Nuclear
 
         public void MapImageGrid()
         {
-            int HeightMap = 12;
+            int HeightMap = 17;
             int WidthMap = 27;
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
@@ -213,7 +292,7 @@ namespace Nuclear
 
         public void MapActiveGrid()
         {
-            int HeightMap = 12;
+            int HeightMap = 17;
             int WidthMap = 27;
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
@@ -266,7 +345,7 @@ namespace Nuclear
 
         public void MapHeatGrid()
         {
-            int HeightMap = 12;
+            int HeightMap = 17;
             int WidthMap = 27;
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
@@ -660,110 +739,32 @@ namespace Nuclear
         // обработчик нажатия кнопки loginButton
         private void loginButton_Click()
         {
-            try
-            {
-                client = new UdpClient(LOCALPORT);
-                // присоединяемся к групповой рассылке
-                client.JoinMulticastGroup(groupAddress, TTL);
-
-                // запускаем задачу на прием сообщений
-                Task receiveTask = new Task(ReceiveMessages);
-                receiveTask.Start();
-
-                // отправляем первое сообщение о входе нового пользователя
-                string message = userName + " вошел в чат";
-                byte[] data = Encoding.Unicode.GetBytes(message);
-                client.Send(data, data.Length, HOST, REMOTEPORT);
-
-                //SendButton.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            
         }
         // метод приема сообщений
         private void ReceiveMessages()
         {
-            alive = true;
-            try
-            {
-                while (alive)
-                {
-                    IPEndPoint remoteIp = null;
-                    byte[] data = client.Receive(ref remoteIp);
-                    string message = Encoding.Unicode.GetString(data);
-
-                    // добавляем полученное сообщение в текстовое поле
-                    Dispatcher.Invoke(delegate
-                    {
-                        string time = DateTime.Now.ToShortTimeString();
-                        ChatTextBlock.Text = time + " " + message + "\r\n" + ChatTextBlock.Text;
-                    });
-                }
-            }
-            catch (ObjectDisposedException)
-            {
-                if (!alive)
-                    return;
-                throw;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+           
         }
         // обработчик нажатия кнопки sendButton
         private void SendButton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string message = String.Format("{0}: {1}", userName, MessageTextBox.Text);
-                byte[] data = Encoding.Unicode.GetBytes(message);
-                client.Send(data, data.Length, HOST, REMOTEPORT);
-                MessageTextBox.Clear();
-                MessageTextBox.Focus();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+           
         }
         // обработчик нажатия кнопки logoutButton
         private void logoutButton_Click(object sender, EventArgs e)
         {
-            ExitChat();
+           
         }
         // выход из чата
         private void ExitChat()
         {
-            string message = userName + " покидает чат";
-            byte[] data = Encoding.Unicode.GetBytes(message);
-            client.Send(data, data.Length, HOST, REMOTEPORT);
-            client.DropMulticastGroup(groupAddress);
-
-            alive = false;
-            client.Close();
+            
         }
 
         private void SendButton_Key(object sender, KeyEventArgs e)
         {
-            string s = e.Key.ToString();
-            if (e.Key == Key.Enter)
-            {
-                try
-                {
-                    string message = String.Format("{0}: {1}", userName, MessageTextBox.Text);
-                    byte[] data = Encoding.Unicode.GetBytes(message);
-                    client.Send(data, data.Length, HOST, REMOTEPORT);
-                    MessageTextBox.Clear();
-                    MessageTextBox.Focus();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
+            
         }
 
         private void Collapsed_WindowUI_Click(object sender, MouseButtonEventArgs e)
@@ -934,14 +935,5 @@ namespace Nuclear
                 DragDrop.DoDragDrop((sender as Image), (sender as Image).Source, DragDropEffects.Copy);
             }
         }
-
-        // обработчик события закрытия формы
-        /*
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (alive)
-                ExitChat();
-        }
-        /* чат */
     }
 }

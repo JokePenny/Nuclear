@@ -13,9 +13,6 @@ namespace Nuclear
         private string stateMap;
         private string stateRoom;
 
-        //private int imageX;
-        //private int imageY;
-
         public PlayerUser(int X, int Y, byte Health, byte MovePoints, byte AreaVisibility) : base(X, Y, Health, MovePoints, AreaVisibility)
         {
             x = X;
@@ -37,7 +34,7 @@ namespace Nuclear
         {
         }
 
-        public void SetImage(Canvas GROD, Image img)
+        public void SetImageScreen(Canvas GROD, Image img)
         {
             var image = new BitmapImage();
             image.BeginInit();
@@ -123,9 +120,6 @@ namespace Nuclear
             GROD.Children.Add(imgs);
         }
 
-        public void DeleteImage()
-        {
-        }
         //сеттеры
         public void SetLevel(int a)
         {

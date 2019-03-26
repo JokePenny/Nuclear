@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace Nuclear
         private double imageYOld;
         protected double changeImage = 2;
         protected double IndexImage = 0;
+
+        protected Image image;
 
         private int[] dx = { 0, 1, 0, 1, -1, -1 };
         private int[] dy = { -1, 0, 1, -1, 0, -1 };
@@ -48,18 +51,22 @@ namespace Nuclear
         {
             return x;
         }
+
         public int GetY()
         {
             return y;
         }
+
         public byte GetHealth()
         {
             return health;
         }
+
         public byte GetMovePoints()
         {
             return movePoints;
         }
+
         public byte GetAreaVisibility()
         {
             return areaVisibility;
@@ -78,6 +85,11 @@ namespace Nuclear
         public double GetChangeImage()
         {
             return changeImage;
+        }
+
+        public Image GetImage()
+        {
+            return image;
         }
 
         //сеттеры
@@ -133,6 +145,10 @@ namespace Nuclear
         public void SetAreaVisibility(byte A)
         {
             areaVisibility = A;
+        }
+        public void SetImage(Image A)
+        {
+            image = A;
         }
     }
 }

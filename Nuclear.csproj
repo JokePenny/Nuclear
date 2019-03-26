@@ -87,7 +87,6 @@
     <Compile Include="src\Menu\StartMenu.xaml.cs">
       <DependentUpon>StartMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="src\Net\UserNet.cs" />
     <Page Include="src\Game\Game.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
