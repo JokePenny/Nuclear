@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Controls;
+using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using WpfAnimatedGif;
 
@@ -26,30 +28,39 @@ namespace Nuclear
             movePoints = MovePoints;
             areaVisibility = AreaVisibility;
         }
+
+        public PlayerUser(int X, int Y, string Nickname) : base(X, Y)
+        {
+            nickname = Nickname;
+            x = X;
+            y = Y;
+            imageX = (X * 13) - 55;
+            if (X % 2 != 0)
+                imageY = 34 + (Y * 36);
+            else
+                imageY = 34 + (Y * 18);
+        }
+
         public PlayerUser(string Nickname)
         {
             nickname = Nickname;
         }
+
         public PlayerUser()
         {
         }
 
-        public void SetImageScreen(Canvas GROD, Image img)
+        public void SetImageScreen(Canvas GROD)
         {
-            var image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_e.gif");
-            image.EndInit();
-            ImageBehavior.SetAnimatedSource(img, image);
-            Canvas.SetLeft(img, imageY);
-            Canvas.SetTop(img, imageX);
-            GROD.Children.Add(img);
+            GetImage().Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_e.gif"));
+            Canvas.SetLeft(GetImage(), imageY);
+            Canvas.SetTop(GetImage(), imageX);
+            GROD.Children.Add(GetImage());
         }
 
-        public void ChangeImage(Canvas GROD, Image img)
+        public void ChangeImage(Canvas GROD)
         {
-            Image imgs = img;
-            GROD.Children.Remove(img);
+            GROD.Children.Remove(GetImage());
             var image = new BitmapImage();
             image.BeginInit();
             if(changeImage == 1)
@@ -58,27 +69,27 @@ namespace Nuclear
                 {
                     case 0:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_w.gif");
-                        Canvas.SetLeft(imgs, imageY - 10);
+                        Canvas.SetLeft(GetImage(), imageY - 10);
                         break;
                     case 1:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_se.gif");
-                        Canvas.SetLeft(imgs, imageY - 10);
+                        Canvas.SetLeft(GetImage(), imageY - 10);
                         break;
                     case 2:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_e.gif");
-                        Canvas.SetLeft(imgs, imageY);
+                        Canvas.SetLeft(GetImage(), imageY);
                         break;
                     case 3:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_sw.gif");
-                        Canvas.SetLeft(imgs, imageY - 10);
+                        Canvas.SetLeft(GetImage(), imageY - 10);
                         break;
                     case 4:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_ne.gif");
-                        Canvas.SetLeft(imgs, imageY - 10);
+                        Canvas.SetLeft(GetImage(), imageY - 10);
                         break;
                     case 5:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_nw.gif");
-                        Canvas.SetLeft(imgs, imageY - 10);
+                        Canvas.SetLeft(GetImage(), imageY - 10);
                         break;
 
                 }
@@ -89,35 +100,35 @@ namespace Nuclear
                 {
                     case 0:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_w.gif");
-                        Canvas.SetLeft(imgs, imageY - 10);
+                        Canvas.SetLeft(GetImage(), imageY - 10);
                         break;
                     case 1:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_sw.gif");
-                        Canvas.SetLeft(imgs, imageY - 10);
+                        Canvas.SetLeft(GetImage(), imageY - 10);
                         break;
                     case 2:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_e.gif");
-                        Canvas.SetLeft(imgs, imageY);
+                        Canvas.SetLeft(GetImage(), imageY);
                         break;
                     case 3:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_nw.gif");
-                        Canvas.SetLeft(imgs, imageY - 10);
+                        Canvas.SetLeft(GetImage(), imageY - 10);
                         break;
                     case 4:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_se.gif");
-                        Canvas.SetLeft(imgs, imageY - 10);
+                        Canvas.SetLeft(GetImage(), imageY - 10);
                         break;
                     case 5:
                         image.UriSource = new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_ne.gif");
-                        Canvas.SetLeft(imgs, imageY - 10);
+                        Canvas.SetLeft(GetImage(), imageY - 10);
                         break;
                 }
             }
             image.EndInit();
-            ImageBehavior.SetAnimatedSource(imgs, image);
-            ImageBehavior.GetAnimationController(imgs).Pause();
-            Canvas.SetTop(imgs, imageX); 
-            GROD.Children.Add(imgs);
+            ImageBehavior.SetAnimatedSource(GetImage(), image);
+            ImageBehavior.GetAnimationController(GetImage()).Pause();
+            Canvas.SetTop(GetImage(), imageX); 
+            GROD.Children.Add(GetImage());
         }
 
         //сеттеры

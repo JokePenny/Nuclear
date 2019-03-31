@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using HexGridControl;
 using Nuclear.data.mapeditor;
 using Nuclear.src.Interface;
@@ -25,6 +26,7 @@ namespace Nuclear
         private List<Point> wave = new List<Point>();
         private List<Point> wavePath = new List<Point>();
         private List<Point> DopWavePath = new List<Point>();
+        private List<PlayerUser> Players = new List<PlayerUser>();
         private PlayerUser User = null;
         private Inventory inventory = new Inventory();
         private int locationUserX;
@@ -37,8 +39,11 @@ namespace Nuclear
         private static TcpClient client = null;
         private static NetworkStream stream = null;
 
-        Image img = new Image();
-        Image img1 = new Image();
+        private string message;
+        private int openSend = 0;
+
+        //Image img = new Image();
+
         public object gridHeat { get; private set; }
 
         public Game()
@@ -51,57 +56,93 @@ namespace Nuclear
             MapHeatGrid();
             MapImgPlayerGrid();
             
-            User.SetImageScreen(GROD, img);
+            User.SetImageScreen(GROD);
             findPath(8, 2, User.GetX(), User.GetY());
         }
 
         public Game(PlayerUser connect)
         {
             InitializeComponent();
-            User = new PlayerUser(8, 2, 20, 12, 5);
-            //User = connect;
-            /*
+            byte[] data;
+            int x;
+            int y;  
+            User = connect;
+            Random point = new Random();
+            //stream = client.GetStream();
+            while (true)
+            {
+                client = new TcpClient(address, port);
+                stream = client.GetStream();
+                x = point.Next(1, 14);
+                y = point.Next(1, 24);
+                message = "10 " + User.GetStateRoom() + " " + x.ToString() + " " + y.ToString() + " " + User.GetNickname();
+                data = Encoding.Unicode.GetBytes(message);
+                // отправка сообщения
+                stream.Write(data, 0, data.Length);
+                // получаем ответ
+                data = new byte[64]; // буфер для получаемых данных
+                StringBuilder builders = new StringBuilder();
+                int bytess = 0;
+                do
+                {
+                    bytess = stream.Read(data, 0, data.Length);
+                    builders.Append(Encoding.Unicode.GetString(data, 0, bytess));
+                }
+                while (stream.DataAvailable);
+                if (builders.ToString() != "0")
+                    break;
+            }
+            User.SetXY(x, y);
+            User.SetMovePoints(12);
+            User.SetAreaVisibility(5);
+            User.SetHealth(20);
+
             client = new TcpClient();
             try
             {
                 client.Connect(address, port); //подключение клиента
-                stream = client.GetStream(); // получаем поток
-
-                message = "10 " + User.GetStateRoom() + " " + User.GetNickname();
+                stream = client.GetStream();
+                message = "11 " + User.GetStateRoom() + " " + User.GetNickname() + " " + x.ToString() + " " + y.ToString();
                 data = Encoding.Unicode.GetBytes(message);
+                // отправка сообщения
                 stream.Write(data, 0, data.Length);
-
+                openSend = 1;
+                // получаем ответ
                 // запускаем новый поток для получения данных
                 Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
-                receiveThread.Start(); //старт потока
+                receiveThread.Start();
                 Thread sendThread = new Thread(new ThreadStart(SendMessage));
-                sendThread.Start(); //старт потока
+                sendThread.Start();
             }
             catch (Exception ex)
             {
                 ChatTextBlock.Text += ex.Message + "\r\n";
             }
-            */
-
-
             //InitInventory();
             MapImageGrid();
             MapActiveGrid();
             MapHeatGrid();
             MapImgPlayerGrid();
 
-            User.SetImageScreen(GROD, img);
-            findPath(8, 2, User.GetX(), User.GetY());
+            User.SetImageScreen(GROD);
+            findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
         }
 
-        static void SendMessage(string command)
+        private void SendMessage()
         {
-            byte[] data = Encoding.Unicode.GetBytes(command);
-            stream.Write(data, 0, data.Length);
+            while (true)
+            {
+                if(openSend == 1)
+                {
+                    byte[] data = Encoding.Unicode.GetBytes(message);
+                    stream.Write(data, 0, data.Length);
+                    openSend = 0;
+                }
+            }
         }
 
         // получение сообщений
-        static void ReceiveMessage()
+        private void ReceiveMessage()
         {
             while (true)
             {
@@ -117,25 +158,105 @@ namespace Nuclear
                     }
                     while (stream.DataAvailable);
 
-                    string message = builder.ToString();
-                    Console.WriteLine(message);//вывод сообщения
+                    message = builder.ToString();
+                    CommandDecryption(message.Split(' '));
                 }
                 catch
                 {
-                    Console.WriteLine("Подключение прервано!"); //соединение было прервано
-                    Console.ReadLine();
+                    Dispatcher.Invoke(delegate
+                    {
+                        ChatTextBlock.Text += "Подключение прервано!";//вывод сообщения
+                    });
                     Disconnect();
                 }
             }
         }
 
-        static void Disconnect()
+        private void Disconnect()
         {
             if (stream != null)
                 stream.Close();//отключение потока
             if (client != null)
                 client.Close();//отключение клиента
             Environment.Exit(0); //завершение процесса
+        }
+
+        private void CommandDecryption(string[] command)
+        {
+            switch (command[0])
+            {
+                case "0": // ход игроков
+                    Dispatcher.Invoke(delegate
+                    {
+                        foreach(PlayerUser connectedUser in Players)
+                        {
+                            if(connectedUser.GetNickname() == command[1])
+                            {
+                                connectedUser.SetXY(Convert.ToInt32(command[2]), Convert.ToInt32(command[3]));
+                                connectedUser.ChangeImage(GROD);
+                                break;
+                            }
+                        }
+                    });
+                    break;
+                case "1": // атакуют
+                    break;
+                case "2": // дисконектятся
+                    break;
+                case "11": // подключение
+                    Dispatcher.Invoke(delegate
+                    {
+                        PlayerUser connectedUser = new PlayerUser();
+                        connectedUser.SetXY(Convert.ToInt32(command[3]), Convert.ToInt32(command[4]));
+                        connectedUser.SetMovePoints(12);
+                        connectedUser.SetAreaVisibility(5);
+                        connectedUser.SetHealth(20);
+                        connectedUser.SetNickname(command[2]);
+                        connectedUser.SetImageScreen(GROD);
+                        Players.Add(connectedUser);
+                        message = "12 " + User.GetX() + " " + User.GetY() + " " + User.GetNickname();
+                        openSend = 1;
+                    });
+                    break;
+                case "12": // подключение
+                    Dispatcher.Invoke(delegate
+                    {
+                        PlayerUser connectedUser = new PlayerUser();
+                        connectedUser.SetXY(Convert.ToInt32(command[1]), Convert.ToInt32(command[2]));
+                        connectedUser.SetMovePoints(12);
+                        connectedUser.SetAreaVisibility(5);
+                        connectedUser.SetHealth(20);
+                        connectedUser.SetNickname(command[3]);
+                        connectedUser.SetImageScreen(GROD);
+                        Players.Add(connectedUser);
+                    });
+                    break;
+                default:
+                    Dispatcher.Invoke(delegate
+                    {
+                        ChatTextBlock.Text += "\r\n" + message;//вывод сообщения
+                    });
+                    break;
+            }
+        }
+
+        private DispatcherTimer timer = null;
+        private int x = 60;
+
+        private void timerStart()
+        {
+            timer = new DispatcherTimer();  // если надо, то в скобках указываем приоритет, например DispatcherPriority.Render
+            timer.Tick += new EventHandler(timerTick);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            timer.Start();
+        }
+
+        private void timerTick(object sender, EventArgs e)
+        {
+            x--;
+            if (x < 0)
+                x = 60;
+            time.Text = x.ToString();
         }
 
         private void InitInventory()
@@ -672,7 +793,12 @@ namespace Nuclear
                             c = wave.First<Point>();
  
                             User.SetXY(c.x, c.y);
-                            User.ChangeImage(GROD, img);
+                            User.ChangeImage(GROD);
+                            if(Players.Count != 0)
+                            {
+                                message = "0 " + User.GetNickname() + " " + User.GetX() + " " + User.GetY();
+                                openSend = 1;
+                            }
 
                             wavePath = wave;
                         }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Windows.Controls;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +14,7 @@ namespace Nuclear
         protected byte health;
         protected byte movePoints;
         protected byte areaVisibility;
+
         protected double imageX;
         protected double imageY;
 
@@ -22,7 +23,7 @@ namespace Nuclear
         protected double changeImage = 2;
         protected double IndexImage = 0;
 
-        protected Image image;
+        protected Image image = new Image();
 
         private int[] dx = { 0, 1, 0, 1, -1, -1 };
         private int[] dy = { -1, 0, 1, -1, 0, -1 };
