@@ -14,6 +14,8 @@ namespace Nuclear
             WindowState = WindowState.Maximized;
             StreamResourceInfo sri = Application.GetResourceStream(
             new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+            //ACTARROW
+            //ACTTOHIT
             Cursor customCursor = new Cursor(sri.Stream);
             this.Cursor = customCursor;
 

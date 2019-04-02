@@ -7,10 +7,9 @@
       xmlns:gif="http://wpfanimatedgif.codeplex.com"
       mc:Ignorable="d" 
       d:DesignHeight="768" d:DesignWidth="1368"
-      Title="Game"
-      Background="Black">
+      Title="Game">
 
-    <Grid Name="MainGrid">
+    <Grid Name="MainGrid" Background="Black" MouseRightButtonDown="ChoosAction_RightClick">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition MinHeight="30" MaxHeight="30"></RowDefinition>
@@ -22,8 +21,29 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
+        <!-- дебаг -->
+        <StackPanel Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <WrapPanel>
+                <TextBlock Height="19" Width="70" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="x:"/>
+                <TextBlock Name="PositionX" Height="19" Width="50" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="0"/>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Height="19" Width="70" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="y:"/>
+                <TextBlock Name="PositionY" Height="19" Width="50" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="0"/>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Height="19" Width="70" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="dist:"/>
+                <TextBlock Name="Dist" Height="19" Width="50" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="0"/>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Height="19" Width="70" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="distV:"/>
+                <TextBlock Name="DistView" Height="19" Width="50" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="0"/>
+            </WrapPanel>
+        </StackPanel>
+        <!-- дебаг -->
+
         <!-- игровое поле -->
-        <ScrollViewer Name="Camera"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden" Visibility="Visible">
+        <ScrollViewer Name="Camera"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden"  Visibility="Visible">
             <Canvas Name="Map" Width="2000" Height="2000">
                 <Canvas Name="GROD" Width="2000" Height="2000" Panel.ZIndex="10">
                 </Canvas>
@@ -35,7 +55,7 @@
 
         <!-- таймер -->
         <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-            <TextBlock Name="time" Height="50" Width="100" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="30">
+            <TextBlock Name="time" Height="50" Width="100" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="30" MouseRightButtonDown="ChoosAction_RightClick">
              60
             </TextBlock>
         </StackPanel>

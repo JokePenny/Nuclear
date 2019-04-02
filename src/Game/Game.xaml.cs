@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Resources;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using HexGridControl;
@@ -22,6 +23,9 @@ namespace Nuclear
 {
     public partial class Game : Page
     {
+        private bool changeCursor = false;
+
+
         private Field field = new Field();
         private List<Point> wave = new List<Point>();
         private List<Point> wavePath = new List<Point>();
@@ -506,7 +510,7 @@ namespace Nuclear
 
                 int row = Convert.ToInt32(buf[0]);
                 int column = Convert.ToInt32(buf[1]);
-
+                DistView.Text = ViewCalculation(User.GetX(), User.GetY(), Convert.ToInt32(buf[0]), Convert.ToInt32(buf[1])).ToString();
                 MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
                 Clean_TextBlock();
                 Clean_HeatMap();
@@ -544,6 +548,8 @@ namespace Nuclear
         {
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
+
+            bool debagdoor = true;
 
             locationEndX = nx;
             locationEndY = ny;
@@ -603,158 +609,164 @@ namespace Nuclear
                                 DopWavePath.Add(new Point(DoplocationUserX, DoplocationUserY));
                                 DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
 
-                              
-                                foreach (HexGrid gridImage in MapGrid.Children)
-                                    if (gridImage.Name == "ImageMap")
-                                    {
-                                        HexItem text = new HexItem();
-                                        text.Height = sizeCellHeight;
-                                        text.Width = sizeCellWidth;
-                                        text.Margin = new Thickness(-2.5, -1, 0, 0);
-                                        text.BorderBrush = null;
-                                        text.Background = null;
-                                        text.BorderThickness = new Thickness(0);
-                                        text.Content = nstep.ToString();
-                                        Grid.SetColumn(text, DoplocationUserY);
-                                        Grid.SetRow(text, DoplocationUserX);
-                                        gridImage.Children.Add(text);
-                                    }
-                                foreach (HexGrid gridHeat in MapGrid.Children)
-                                    if (gridHeat.Name == "HeatMap")
-                                    {
-                                        HexItem myRect = new HexItem();
-                                        myRect.Opacity = 0.5;
-                                        myRect.Height = sizeCellHeight;
-                                        myRect.Width = sizeCellWidth;
-                                        myRect.Margin = new Thickness(-2.5, -1, 0, 0);
-                                        myRect.BorderBrush = null;
-                                        myRect.BorderThickness = new Thickness(0);
-                                        if (User.GetMovePoints() > nstep && User.GetMovePoints() - 3 > nstep)
-                                            myRect.Background = Brushes.Green;
-                                        else if (User.GetMovePoints() >= nstep)
-                                            myRect.Background = Brushes.Yellow;
-                                        else if (User.GetMovePoints() < nstep)
-                                            myRect.Background = Brushes.Red;
-                                        Grid.SetColumn(myRect, DoplocationUserY);
-                                        Grid.SetRow(myRect, DoplocationUserX);
-                                        gridHeat.Children.Add(myRect);
-                                    }
-                                 
+                                /* использовалось для квадратной сетки
+                                  foreach (HexGrid gridImage in MapGrid.Children)
+                                      if (gridImage.Name == "ImageMap")
+                                      {
+                                          HexItem text = new HexItem();
+                                          text.Height = sizeCellHeight;
+                                          text.Width = sizeCellWidth;
+                                          text.Margin = new Thickness(-2.5, -1, 0, 0);
+                                          text.BorderBrush = null;
+                                          text.Background = null;
+                                          text.BorderThickness = new Thickness(0);
+                                          text.Content = nstep.ToString();
+                                          Grid.SetColumn(text, DoplocationUserY);
+                                          Grid.SetRow(text, DoplocationUserX);
+                                          gridImage.Children.Add(text);
+                                      }
+                                      */
+                                  foreach (HexGrid gridHeat in MapGrid.Children)
+                                      if (gridHeat.Name == "HeatMap")
+                                      {
+                                          HexItem myRect = new HexItem();
+                                          myRect.Opacity = 0.5;
+                                          myRect.Height = sizeCellHeight;
+                                          myRect.Width = sizeCellWidth;
+                                          myRect.Margin = new Thickness(-2.5, -1, 0, 0);
+                                          myRect.BorderBrush = null;
+                                          myRect.BorderThickness = new Thickness(0);
+                                          if (User.GetMovePoints() > nstep && User.GetMovePoints() - 3 > nstep)
+                                              myRect.Background = Brushes.Green;
+                                          else if (User.GetMovePoints() >= nstep)
+                                              myRect.Background = Brushes.Yellow;
+                                          else if (User.GetMovePoints() < nstep)
+                                              myRect.Background = Brushes.Red;
+                                          Grid.SetColumn(myRect, DoplocationUserY);
+                                          Grid.SetRow(myRect, DoplocationUserX);
+                                          gridHeat.Children.Add(myRect);
+                                      }
+                              }
+                          }
+                      }
+                      DopOldWave = new List<Point>(DopWavePath);
+                      if (nstep == User.GetAreaVisibility()) // поле зрения
+                          break;
+                  }
+                  //DopWavePath.Clear();
+                  //DopOldWave.Clear();
 
-                            }
-                        }
-                    }
-                    DopOldWave = new List<Point>(DopWavePath);
-                    if (nstep == User.GetAreaVisibility()) // поле зрения
-                        break;
-                }
-                //DopWavePath.Clear();
-                //DopOldWave.Clear();
+                  clonePathArray = (int[,])field.GetClonePathArray();
+                  List<Point> oldWave = new List<Point>();
+                  oldWave.Add(new Point(nx, ny));
+                  nstep = 0;
+                  field.SetPathArray(ny, nx, nstep);
+                  while (oldWave.Count > 0)
+                  {
+                      nstep++;
+                      wave.Clear();
+                      foreach (Point i in oldWave)
+                      {
+                          for (int d = 0; d < 6; d++)
+                          {
+                              if (i.x % 2 == 0)
+                              {
+                                  nx = i.x + dx[d];
+                                  ny = i.y + dy[d];
+                              }
+                              else
+                              {
+                                  nx = i.x + dx2[d];
+                                  ny = i.y + dy2[d];
+                              }
+                              if (field.GetPathArray(ny, nx) == 0)
+                              {
+                                  wave.Add(new Point(nx, ny));
+                                  field.SetPathArray(ny, nx, nstep);
+                              }
+                          }
+                      }
+                      oldWave = new List<Point>(wave);
+                  }
 
-                clonePathArray = (int[,])field.GetClonePathArray();
-                List<Point> oldWave = new List<Point>();
-                oldWave.Add(new Point(nx, ny));
-                nstep = 0;
-                field.SetPathArray(ny, nx, nstep);
-                while (oldWave.Count > 0)
-                {
-                    nstep++;
-                    wave.Clear();
-                    foreach (Point i in oldWave)
-                    {
-                        for (int d = 0; d < 6; d++)
-                        {
-                            if (i.x % 2 == 0)
-                            {
-                                nx = i.x + dx[d];
-                                ny = i.y + dy[d];
-                            }
-                            else
-                            {
-                                nx = i.x + dx2[d];
-                                ny = i.y + dy2[d];
-                            }
-                            if (field.GetPathArray(ny, nx) == 0)
-                            {
-                                wave.Add(new Point(nx, ny));
-                                field.SetPathArray(ny, nx, nstep);
-                            }
-                        }
-                    }
-                    oldWave = new List<Point>(wave);
-                }
+                  foreach (HexGrid gridHeat in MapGrid.Children)
+                      if (gridHeat.Name == "HeatMap")
+                      {
+                          HexItem myRect = new HexItem();
+                          myRect.Opacity = 0.5;
+                          myRect.Height = sizeCellHeight;
+                          myRect.Width = sizeCellWidth;
+                          myRect.Margin = new Thickness(-2.5, -1, 0, 0);
+                          myRect.BorderBrush = null;
+                          myRect.BorderThickness = new Thickness(0);
+                          myRect.Background = Brushes.Blue;
+                          Grid.SetColumn(myRect, User.GetY());
+                          Grid.SetRow(myRect, User.GetX());
+                          gridHeat.Children.Add(myRect);
+                      }
 
-                foreach (HexGrid gridHeat in MapGrid.Children)
-                    if (gridHeat.Name == "HeatMap")
-                    {
-                        HexItem myRect = new HexItem();
-                        myRect.Opacity = 0.5;
-                        myRect.Height = sizeCellHeight;
-                        myRect.Width = sizeCellWidth;
-                        myRect.Margin = new Thickness(-2.5, -1, 0, 0);
-                        myRect.BorderBrush = null;
-                        myRect.BorderThickness = new Thickness(0);
-                        myRect.Background = Brushes.Blue;
-                        Grid.SetColumn(myRect, User.GetY());
-                        Grid.SetRow(myRect, User.GetX());
-                        gridHeat.Children.Add(myRect);
-                    }
-
-                //волновой алгоритм поиска пути начиная от начала
-                bool flag = true;
-                wave.Clear();
-                wave.Add(new Point(locationEndXDUB, locationEndYDUB));
-                int stepX = 0;
-                int stepY = 0;
-                while (field.GetPathArray(y, x) != 99)
-                {
-                    flag = true;
-                    for (int d = 0; d < 6; d++)
-                    {
-                        if (locationEndXDUB % 2 == 0)
-                        {
-                            stepX = locationEndXDUB + dx[d];
-                            stepY = locationEndYDUB + dy[d];
-                        }
-                        else
-                        {
-                            stepX = locationEndXDUB + dx2[d];
-                            stepY = locationEndYDUB + dy2[d];
-                        }
-                        if (stepX == x && stepY == y)
-                            break;
-                        if (DopPathArray[locationEndYDUB, locationEndXDUB] - 1 == DopPathArray[stepY, stepX])
-                        {
-                            locationEndXDUB = stepX;
-                            locationEndYDUB = stepY;
-                            wave.Add(new Point(locationEndXDUB, locationEndYDUB));
-                            flag = false;
-                            /*
-                            foreach (Grid gridImage in Map.Children)
-                                if (gridImage.Name == "ImageMap")
-                                {
-                                    TextBlock text = new TextBlock();
-                                    text.Text = nstep.ToString();
-                                    Grid.SetColumn(text, y);
-                                    Grid.SetRow(text, x);
-                                    gridImage.Children.Add(text);
-                                }
-                            foreach (Grid gridHeat in Map.Children)
+                  //волновой алгоритм поиска пути начиная от начала
+                  bool flag = true;
+                  wave.Clear();
+                  wave.Add(new Point(locationEndXDUB, locationEndYDUB));
+                  int stepX = 0;
+                  int stepY = 0;
+                  while (field.GetPathArray(y, x) != 99)
+                  {
+                      flag = true;
+                      for (int d = 0; d < 6; d++)
+                      {
+                          if (locationEndXDUB % 2 == 0)
+                          {
+                              stepX = locationEndXDUB + dx[d];
+                              stepY = locationEndYDUB + dy[d];
+                          }
+                          else
+                          {
+                              stepX = locationEndXDUB + dx2[d];
+                              stepY = locationEndYDUB + dy2[d];
+                          }
+                          if (stepX == x && stepY == y)
+                              break;
+                          if (DopPathArray[locationEndYDUB, locationEndXDUB] - 1 == DopPathArray[stepY, stepX])
+                          {
+                              locationEndXDUB = stepX;
+                              locationEndYDUB = stepY;
+                              wave.Add(new Point(locationEndXDUB, locationEndYDUB));
+                              flag = false;
+                            /* использовалось для квадратной сетки
+                             foreach (HexGrid gridImage in MapGrid.Children)
+                                 if (gridImage.Name == "ImageMap")
+                                 {
+                                     HexItem text = new HexItem();
+                                     text.Height = sizeCellHeight;
+                                     text.Width = sizeCellWidth;
+                                     text.Margin = new Thickness(-2.5, -1, 0, 0);
+                                     text.BorderBrush = null;
+                                     text.Background = Brushes.Yellow;
+                                     text.BorderThickness = new Thickness(0);
+                                     text.Content = nstep.ToString();
+                                     Grid.SetColumn(text, locationEndYDUB);
+                                     Grid.SetRow(text, locationEndXDUB);
+                                     gridImage.Children.Add(text);
+                                 }
+                              */ // показывает путь
+                            foreach (HexGrid gridHeat in MapGrid.Children)
                                 if (gridHeat.Name == "HeatMap")
                                 {
-                                    Rectangle myRect = new Rectangle();
+                                    HexItem myRect = new HexItem();
                                     myRect.Opacity = 0.5;
                                     if (User.GetMovePoints() > nstep && User.GetMovePoints() - 3 > nstep)
-                                        myRect.Fill = Brushes.Green;
+                                        myRect.Background = Brushes.Green;
                                     else if (User.GetMovePoints() >= nstep)
-                                        myRect.Fill = Brushes.Yellow;
+                                        myRect.Background = Brushes.Yellow;
                                     else if (User.GetMovePoints() < nstep)
-                                        myRect.Fill = Brushes.Red;
-                                    Grid.SetColumn(myRect, y);
-                                    Grid.SetRow(myRect, x);
+                                        myRect.Background = Brushes.Red;
+                                    Grid.SetColumn(myRect, locationEndYDUB);
+                                    Grid.SetRow(myRect, locationEndXDUB);
                                     gridHeat.Children.Add(myRect);
                                 }
-                                */ // показывает путь
+                               // */ // показывает путь
                             break;
                         }
                     }
@@ -776,6 +788,15 @@ namespace Nuclear
                 });
                 */
                 //waveOut();
+                if (debagdoor)
+                {
+                    Dispatcher.Invoke(delegate
+                    {
+                        Dist.Text = wave.Count.ToString();
+                    });
+                    debagdoor = false;
+                }
+
                 if (User.GetMovePoints() > 0 && (User.GetX() != locationEndX || User.GetY() != locationEndY))
                 {
                     await Task.Delay(500);
@@ -793,6 +814,13 @@ namespace Nuclear
                             c = wave.First<Point>();
  
                             User.SetXY(c.x, c.y);
+
+                            Dispatcher.Invoke(delegate
+                            {
+                                PositionX.Text = User.GetX().ToString();
+                                PositionY.Text = User.GetY().ToString();
+                            });
+
                             User.ChangeImage(GROD);
                             if(Players.Count != 0)
                             {
@@ -831,6 +859,8 @@ namespace Nuclear
                 User.SetMovePoints(0);
                 MessageBox.Show(string.Format("Очки действия кончились"));
             }
+
+            debagdoor = true;
         }
 
         public struct Point
@@ -1059,6 +1089,67 @@ namespace Nuclear
             {
                 Clipboard.SetImage(new BitmapImage(((sender as Image).Source as BitmapImage).UriSource));
                 DragDrop.DoDragDrop((sender as Image), (sender as Image).Source, DragDropEffects.Copy);
+            }
+        }
+
+        private void ChoosAction_RightClick(object sender, MouseButtonEventArgs e)
+        {
+            if (changeCursor)
+            {
+                StreamResourceInfo sris = Application.GetResourceStream(
+                        new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+                Cursor customCursors = new Cursor(sris.Stream);
+                Mouse.OverrideCursor = customCursors;
+                changeCursor = false;
+            }
+            else
+            {
+                StreamResourceInfo sris = Application.GetResourceStream(
+                        new Uri("data/image/mainui/cursor/ACTTOHIT.cur", UriKind.Relative));
+                Cursor customCursors = new Cursor(sris.Stream);
+                Mouse.OverrideCursor = customCursors;
+                changeCursor = true;
+            }
+        }
+
+        private void ActionWithPlayer_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (!changeCursor)
+            {
+                TextBlock btn = sender as TextBlock;
+                string[] buf = btn.Text.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (ViewCalculation(User.GetX(), User.GetY(), Convert.ToInt32(buf[0]), Convert.ToInt32(buf[1])) == Convert.ToInt32(Dist.Text))
+                {
+                    foreach (Image PlayerImage in GROD.Children)
+                    {
+                        if ((sender as Image).Name == PlayerImage.Name)
+                        {
+                            foreach (PlayerUser PlayerFinded in Players)
+                            {
+                                if (PlayerFinded.GetNickname() == (sender as Image).Name)
+                                {
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private int ViewCalculation(int x, int y, int endX, int endY)
+        {
+            int step = 0;
+            while (true)
+            {
+                if (x != endX)
+                    x = (x > endX) ? --x : ++x;
+                if (y != endY)
+                    y = (y > endY) ? --y : ++y;
+                step++;
+                if (x == endX && y == endY)
+                    return step;
             }
         }
     }

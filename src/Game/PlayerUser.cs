@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Controls;
-using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using WpfAnimatedGif;
 
@@ -14,6 +12,43 @@ namespace Nuclear
         private int level;
         private string stateMap;
         private string stateRoom;
+
+        //оружие в руках
+        public int d_initial { get; set; } = 1;
+        public int d_limit { get; set; } = 1;
+        public int type_of_weapon { get; set; } = 1;
+
+        //броня надетая
+        public int d_resistance { get; set; } = 1;
+
+        //характеристика
+        private int strength = 5;
+        private int perception = 5;
+        private int endurance = 5;
+        private int charisma = 5;
+        private int intelligence = 5;
+        private int agility = 5;
+        private int luck = 5;
+
+        //умения
+        public int big_guns { get; set; } = 10;
+        public int small_guns { get; set; } = 35;
+        public int energy_weapons { get; set; } = 10;
+        public int throwing { get; set; } = 40;
+        public int traps { get; set; } = 20;
+        public int melee_weapons { get; set; } = 55;
+        public int unarmed { get; set; } = 65;
+        public int doctor { get; set; } = 15;
+        public int first_aid { get; set; } = 30;
+        public int lockpick { get; set; } = 20;
+        public int repair { get; set; } = 20;
+        public int science { get; set; } = 25;
+        public int sneak { get; set; } = 20;
+        public int steal { get; set; } = 25;
+        public int barter { get; set; } = 20;
+        public int gambling { get; set; } = 20;
+        public int outdoorsman { get; set; } = 5;
+        public int speech { get; set; } = 25;
 
         public PlayerUser(int X, int Y, byte Health, byte MovePoints, byte AreaVisibility) : base(X, Y, Health, MovePoints, AreaVisibility)
         {
@@ -170,6 +205,16 @@ namespace Nuclear
         public string GetStateRoom()
         {
             return stateRoom;
+        }
+
+        public int GetDamage(int d_resistance_p, int d_resistance_modifier, int d_modifier)
+        {
+            return (d_initial * d_modifier - d_limit) * (100 - (d_resistance_p - d_resistance_modifier)) / 100;
+        }
+        public int GetProbabilityHitting(int distance, int arm_class, int perk, int bonus)
+        {
+            double A = 5, B = 3.5, C = -2 + perk;
+            return Convert.ToInt32(Math.Round(type_of_weapon + (perception + C) * A - distance * B - arm_class + bonus));
         }
     }
 }
