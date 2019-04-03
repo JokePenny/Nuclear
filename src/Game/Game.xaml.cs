@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 using System.Windows.Shapes;
@@ -24,7 +25,6 @@ namespace Nuclear
     public partial class Game : Page
     {
         private bool changeCursor = false;
-
 
         private Field field = new Field();
         private List<Point> wave = new List<Point>();
@@ -46,8 +46,6 @@ namespace Nuclear
         private string message;
         private int openSend = 0;
 
-        //Image img = new Image();
-
         public object gridHeat { get; private set; }
 
         public Game()
@@ -60,8 +58,8 @@ namespace Nuclear
             MapHeatGrid();
             MapImgPlayerGrid();
             
-            User.SetImageScreen(GROD);
-            findPath(8, 2, User.GetX(), User.GetY());
+            User.SetImageScreen(GROD, this);
+            findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
         }
 
         public Game(PlayerUser connect)
@@ -100,6 +98,7 @@ namespace Nuclear
             User.SetMovePoints(12);
             User.SetAreaVisibility(5);
             User.SetHealth(20);
+            User.SetNickname("lorne");
 
             client = new TcpClient();
             try
@@ -128,7 +127,7 @@ namespace Nuclear
             MapHeatGrid();
             MapImgPlayerGrid();
 
-            User.SetImageScreen(GROD);
+            User.SetImageScreen(GROD, this);
             findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
         }
 
@@ -194,7 +193,7 @@ namespace Nuclear
                     {
                         foreach(PlayerUser connectedUser in Players)
                         {
-                            if(connectedUser.GetNickname() == command[1])
+                            if (connectedUser.GetNickname() == command[1])
                             {
                                 connectedUser.SetXY(Convert.ToInt32(command[2]), Convert.ToInt32(command[3]));
                                 connectedUser.ChangeImage(GROD);
@@ -216,7 +215,7 @@ namespace Nuclear
                         connectedUser.SetAreaVisibility(5);
                         connectedUser.SetHealth(20);
                         connectedUser.SetNickname(command[2]);
-                        connectedUser.SetImageScreen(GROD);
+                        connectedUser.SetImageScreen(GROD, this);
                         Players.Add(connectedUser);
                         message = "12 " + User.GetX() + " " + User.GetY() + " " + User.GetNickname();
                         openSend = 1;
@@ -231,7 +230,7 @@ namespace Nuclear
                         connectedUser.SetAreaVisibility(5);
                         connectedUser.SetHealth(20);
                         connectedUser.SetNickname(command[3]);
-                        connectedUser.SetImageScreen(GROD);
+                        connectedUser.SetImageScreen(GROD, this);
                         Players.Add(connectedUser);
                     });
                     break;
@@ -566,7 +565,7 @@ namespace Nuclear
             if (field.GetPathArray(y, x) == -1 || field.GetPathArray(ny, nx) == -1)
             {
                 // вывод ошибки выбора - недоступная зона (стена)
-                //return;
+                return;
             }
             while (true)
             {
@@ -787,7 +786,7 @@ namespace Nuclear
                     PathArray[i.y, i.x] = 1;
                 });
                 */
-                //waveOut();
+                waveOut();
                 if (debagdoor)
                 {
                     Dispatcher.Invoke(delegate
@@ -1105,37 +1104,76 @@ namespace Nuclear
             else
             {
                 StreamResourceInfo sris = Application.GetResourceStream(
-                        new Uri("data/image/mainui/cursor/ACTTOHIT.cur", UriKind.Relative));
+                        new Uri("data/image/mainui/cursor/ACTTAHIT.cur", UriKind.Relative));
                 Cursor customCursors = new Cursor(sris.Stream);
                 Mouse.OverrideCursor = customCursors;
                 changeCursor = true;
             }
         }
 
-        private void ActionWithPlayer_Click(object sender, MouseButtonEventArgs e)
+        public void ActionWithPlayer_Click(object sender, MouseButtonEventArgs e)
         {
-            if (!changeCursor)
+            if (changeCursor)
             {
-                TextBlock btn = sender as TextBlock;
-                string[] buf = btn.Text.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-
-                if (ViewCalculation(User.GetX(), User.GetY(), Convert.ToInt32(buf[0]), Convert.ToInt32(buf[1])) == Convert.ToInt32(Dist.Text))
+                foreach (Image PlayerImage in GROD.Children)
                 {
-                    foreach (Image PlayerImage in GROD.Children)
+                    if ((sender as Image).Name == PlayerImage.Name && User.GetNickname() != (sender as Image).Name)
                     {
-                        if ((sender as Image).Name == PlayerImage.Name)
+                        foreach (PlayerUser PlayerFinded in Players)
                         {
-                            foreach (PlayerUser PlayerFinded in Players)
+                            if (PlayerFinded.GetNickname() == (sender as Image).Name)
                             {
-                                if (PlayerFinded.GetNickname() == (sender as Image).Name)
+                                if (ViewCalculation(User.GetX(), User.GetY(), PlayerFinded.GetX(), PlayerFinded.GetY()) == Convert.ToInt32(Dist.Text))
                                 {
-
+                                    Random probability = new Random();
+                                    int chance_of_hit = User.GetProbabilityHitting(Convert.ToInt32(Dist.Text), 0, 0, 0);
+                                    if (probability.Next(5, 95) <= chance_of_hit)
+                                    {
+                                        PlayerFinded.SetHealth(PlayerFinded.GetHealth() - User.GetDamage(1, 1, 1));
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+        }
+
+        public void ActionWithPlayer_Move(object sender, MouseEventArgs e)
+        {
+            if (changeCursor)
+            {
+                foreach (Image PlayerImage in GROD.Children)
+                    if ((sender as Image).Name == PlayerImage.Name)
+                    {
+                        DropShadowEffect effect = new DropShadowEffect();
+                        effect.ShadowDepth = 0;
+                        effect.BlurRadius = 15;
+                        effect.Color = Colors.Red;
+                        PlayerImage.Effect = effect;
+                        break;
+                    }
+            }
+            else
+            {
+                foreach (Image PlayerImage in GROD.Children)
+                    if ((sender as Image).Name == PlayerImage.Name)
+                    {
+                        PlayerImage.Effect = null;
+                        break;
+                    }
+            }
+        }
+
+        public void ActionWithPlayer_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (changeCursor)
+                foreach (Image PlayerImage in GROD.Children)
+                    if ((sender as Image).Name == PlayerImage.Name)
+                    {
+                        PlayerImage.Effect = null;
+                        break;
+                    }
         }
 
         private int ViewCalculation(int x, int y, int endX, int endY)

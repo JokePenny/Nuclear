@@ -76,7 +76,6 @@ namespace Nuclear
                     while (stream.DataAvailable);
 
                     string[] answer = builder.ToString().Split(';');
-                    //ChatTextBlock.Text += "\r\n" + builder.ToString();
                     if (answer[0] == "Вход выполнен")
                     {
                         StreamResourceInfo sris = Application.GetResourceStream(

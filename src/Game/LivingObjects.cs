@@ -11,7 +11,7 @@ namespace Nuclear
     {
         protected int x;
         protected int y;
-        protected byte health;
+        protected int health;
         protected byte movePoints;
         protected byte areaVisibility;
 
@@ -30,7 +30,7 @@ namespace Nuclear
         private int[] dx2 = { 0, 1, 0, -1, 1, -1 };
         private int[] dy2 = { -1, 0, 1, 0, 1, 1 };
 
-        public LivingObjects(int X, int Y, byte Health, byte MovePoints, byte AreaVisibility)
+        public LivingObjects(int X, int Y, int Health, byte MovePoints, byte AreaVisibility)
         {
             x = X;
             y = Y;
@@ -58,7 +58,7 @@ namespace Nuclear
             return y;
         }
 
-        public byte GetHealth()
+        public int GetHealth()
         {
             return health;
         }
@@ -135,7 +135,7 @@ namespace Nuclear
             imageYOld = Y;
         }
 
-        public void SetHealth(byte A)
+        public void SetHealth(int A)
         {
             health = A;
         }

@@ -475,7 +475,7 @@
     <None Include="data\image\inventory\armor\TESLA.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="data\image\mainui\cursor\ACTTOHIT.cur" />
+    <Resource Include="data\image\mainui\cursor\ACTTAHIT.cur" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

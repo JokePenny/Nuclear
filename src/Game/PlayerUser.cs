@@ -85,9 +85,13 @@ namespace Nuclear
         {
         }
 
-        public void SetImageScreen(Canvas GROD)
+        public void SetImageScreen(Canvas GROD, Game game)
         {
             GetImage().Source = new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/image/characters/NMVALTA/NMVALTAA/NMVALTAA_e.gif"));
+            GetImage().MouseLeftButtonDown += game.ActionWithPlayer_Click;
+            GetImage().MouseMove += game.ActionWithPlayer_Move;
+            GetImage().MouseLeave += game.ActionWithPlayer_MouseLeave;
+            GetImage().Name = nickname;
             Canvas.SetLeft(GetImage(), imageY);
             Canvas.SetTop(GetImage(), imageX);
             GROD.Children.Add(GetImage());
