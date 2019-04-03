@@ -91,6 +91,7 @@ namespace Nuclear
             GetImage().MouseLeftButtonDown += game.ActionWithPlayer_Click;
             GetImage().MouseMove += game.ActionWithPlayer_Move;
             GetImage().MouseLeave += game.ActionWithPlayer_MouseLeave;
+            GetImage().MouseEnter += game.ActionWithPlayer_Focusable;
             GetImage().Name = nickname;
             Canvas.SetLeft(GetImage(), imageY);
             Canvas.SetTop(GetImage(), imageX);
@@ -218,6 +219,7 @@ namespace Nuclear
         public int GetProbabilityHitting(int distance, int arm_class, int perk, int bonus)
         {
             double A = 5, B = 3.5, C = -2 + perk;
+            type_of_weapon = 143;
             return Convert.ToInt32(Math.Round(type_of_weapon + (perception + C) * A - distance * B - arm_class + bonus));
         }
     }

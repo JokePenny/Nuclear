@@ -477,5 +477,14 @@
   <ItemGroup>
     <Resource Include="data\image\mainui\cursor\ACTTAHIT.cur" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\voltboy\body.png" />
+    <Resource Include="data\image\mainui\voltboy\head.png" />
+    <Resource Include="data\image\mainui\voltboy\l_foot.png" />
+    <Resource Include="data\image\mainui\voltboy\l_hand.png" />
+    <Resource Include="data\image\mainui\voltboy\r_foot.png" />
+    <Resource Include="data\image\mainui\voltboy\r_hand.png" />
+    <Resource Include="data\image\mainui\voltboy\voltboy.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1146,11 +1146,15 @@ namespace Nuclear
                 foreach (Image PlayerImage in GROD.Children)
                     if ((sender as Image).Name == PlayerImage.Name)
                     {
+                        PanelAttack.Visibility = Visibility.Visible;
                         DropShadowEffect effect = new DropShadowEffect();
                         effect.ShadowDepth = 0;
                         effect.BlurRadius = 15;
                         effect.Color = Colors.Red;
                         PlayerImage.Effect = effect;
+                        PlayerImage.KeyDown += ActionWithPlayer_KeyDown;
+                        PlayerImage.KeyUp += ActionWithPlayer_KeyUp;
+                        PlayerImage.Focus();
                         break;
                     }
             }
@@ -1159,7 +1163,10 @@ namespace Nuclear
                 foreach (Image PlayerImage in GROD.Children)
                     if ((sender as Image).Name == PlayerImage.Name)
                     {
+                        PanelAttack.Visibility = Visibility.Hidden;
                         PlayerImage.Effect = null;
+                        PlayerImage.KeyDown -= ActionWithPlayer_KeyDown;
+                        PlayerImage.KeyUp -= ActionWithPlayer_KeyUp;
                         break;
                     }
             }
@@ -1171,7 +1178,10 @@ namespace Nuclear
                 foreach (Image PlayerImage in GROD.Children)
                     if ((sender as Image).Name == PlayerImage.Name)
                     {
+                        PanelAttack.Visibility = Visibility.Hidden;
                         PlayerImage.Effect = null;
+                        PlayerImage.KeyDown -= ActionWithPlayer_KeyDown;
+                        PlayerImage.KeyUp -= ActionWithPlayer_KeyUp;
                         break;
                     }
         }
@@ -1189,6 +1199,122 @@ namespace Nuclear
                 if (x == endX && y == endY)
                     return step;
             }
+        }
+
+        public void ActionWithPlayer_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.NumPad8:
+                    if (changeCursor)
+                    {
+                        if (User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1) > 95)
+                            HeadChance.Text = "95";
+                        else HeadChance.Text = User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1).ToString();
+                        head.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case Key.NumPad4:
+                    if (changeCursor)
+                    {
+                        if (User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1) > 95)
+                            LHandOrBodyChance.Text = "95";
+                        else LHandOrBodyChance.Text = User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1).ToString();
+                        l_hand.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case Key.NumPad5:
+                    if (changeCursor)
+                    {
+                        if (User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1) > 95)
+                            RHandChance.Text = "95";
+                        else LHandOrBodyChance.Text = User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1).ToString();
+                        body.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case Key.NumPad6:
+                    if (changeCursor)
+                    {
+                        if (User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1) > 95)
+                            RHandChance.Text = "95";
+                        else RHandChance.Text = User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1).ToString();
+                        r_hand.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case Key.NumPad1:
+                    if (changeCursor)
+                    {
+                        if (User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1) > 95)
+                            LFootChance.Text = "95";
+                        else RFootChance.Text = User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1).ToString();
+                        l_foot.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case Key.NumPad3:
+                    if (changeCursor)
+                    {
+                        if(User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1) > 95)
+                            RFootChance.Text = "95";
+                        else RFootChance.Text = User.GetProbabilityHitting(ViewCalculation(User.GetX(), User.GetY(), User.GetX(), User.GetY()), 1, 1, 1).ToString();
+                        r_foot.Visibility = Visibility.Visible;
+                    }
+                    break;
+            }
+        }
+
+        public void ActionWithPlayer_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.NumPad8:
+                    if (changeCursor)
+                    {
+                        HeadChance.Text = "0";
+                        head.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case Key.NumPad4:
+                    if (changeCursor)
+                    {
+                        LHandOrBodyChance.Text = "0";
+                        l_hand.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case Key.NumPad5:
+                    if (changeCursor)
+                    {
+                        LHandOrBodyChance.Text = "0";
+                        body.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case Key.NumPad6:
+                    if (changeCursor)
+                    {
+                        RHandChance.Text = "0";
+                        r_hand.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case Key.NumPad1:
+                    if (changeCursor)
+                    {
+                        LFootChance.Text = "0";
+                        l_foot.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case Key.NumPad3:
+                    if (changeCursor)
+                    {
+                        RFootChance.Text = "0";
+                        r_foot.Visibility = Visibility.Hidden;
+                    }
+                    break;
+            }
+        }
+
+        public void ActionWithPlayer_Focusable(object sender, MouseEventArgs e)
+        {
+            (sender as Image).Focusable = true;
+            (sender as Image).Focus();
         }
     }
 }

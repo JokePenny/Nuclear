@@ -41,6 +41,47 @@
             </WrapPanel>
         </StackPanel>
         <!-- дебаг -->
+        
+        <!-- панель стрельбы -->
+        <Border Name="PanelAttack" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="3"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Hidden">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="300" MaxHeight="300"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="190" MaxWidth="190"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <WrapPanel Margin="0 40 100 190">
+                    <TextBlock Name="HeadChance" Height="15" Width="30" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="12" Text="0"/>
+                    <TextBlock Height="15" Width="15" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="%"/>
+                </WrapPanel>
+                <WrapPanel Margin="0 100 100 0">
+                    <TextBlock Name="LHandOrBodyChance" Height="15" Width="30" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="12" Text="0"/>
+                    <TextBlock Height="15" Width="15" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="%"/>
+                </WrapPanel>
+                <WrapPanel Margin="139 100 0 0">
+                    <TextBlock Name="RHandChance" Height="15" Width="30" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="12" Text="0"/>
+                    <TextBlock Height="15" Width="15" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="%"/>
+                </WrapPanel>
+                <WrapPanel Margin="139 230 0 0">
+                    <TextBlock Name="RFootChance" Height="15" Width="30" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="12" Text="0"/>
+                    <TextBlock Height="15" Width="15" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="%"/>
+                </WrapPanel>
+                <WrapPanel Margin="0 230 0 0">
+                    <TextBlock Name="LFootChance" Height="15" Width="30" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="12" Text="0"/>
+                    <TextBlock Height="15" Width="15" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="%"/>
+                </WrapPanel>
+
+                <Image Grid.Row="0" Height="300" Width="170" Source="/Nuclear;component/data/image/mainui/voltboy/voltboy.png"/>
+                <Image Name="l_hand" Grid.Row="0" Height="300" Width="170" Source="/Nuclear;component/data/image/mainui/voltboy/l_hand.png" Visibility="Hidden"/>
+                <Image Name="r_hand" Grid.Row="0" Height="300" Width="170" Source="/Nuclear;component/data/image/mainui/voltboy/r_hand.png" Visibility="Hidden"/>
+                <Image Name="body" Grid.Row="0" Height="300" Width="170" Source="/Nuclear;component/data/image/mainui/voltboy/body.png" Visibility="Hidden"/>
+                <Image Name="head" Grid.Row="0" Height="300" Width="170" Source="/Nuclear;component/data/image/mainui/voltboy/head.png" Visibility="Hidden"/>
+                <Image Name="l_foot" Grid.Row="0" Height="300" Width="170" Source="/Nuclear;component/data/image/mainui/voltboy/l_foot.png" Visibility="Hidden"/>
+                <Image Name="r_foot" Grid.Row="0" Height="300" Width="170" Source="/Nuclear;component/data/image/mainui/voltboy/r_foot.png" Visibility="Hidden"/>
+            </Grid>
+        </Border>
+        <!-- панель стрельбы -->
 
         <!-- игровое поле -->
         <ScrollViewer Name="Camera"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden"  Visibility="Visible">
