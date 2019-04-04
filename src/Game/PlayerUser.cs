@@ -14,7 +14,7 @@ namespace Nuclear
         private string stateRoom;
 
         //оружие в руках
-        public int d_initial { get; set; } = 1;
+        public int d_initial { get; set; } = 3;
         public int d_limit { get; set; } = 1;
         public int type_of_weapon { get; set; } = 1;
 

@@ -21,9 +21,14 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="1" Margin="0 10 0 0" VerticalAlignment="Bottom" TextAlignment="Center" Foreground="Lime" FontSize="72" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="FALLOUT#"/>
         <TextBlock Grid.Row="2" Grid.Column="1" Width="136" Margin="0 10 0 0" VerticalAlignment="Top" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="НАЗАД" MouseLeftButtonDown="Button_Click_1" MouseMove="MoveMouse_but" MouseLeave="MoveLeave_but"/>
+        
+        <!-- консоль -->
         <ScrollViewer VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="300" Height="100" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Name="Chat"  VerticalScrollBarVisibility="Hidden">
             <TextBlock Name="ChatTextBlock" TextWrapping="Wrap" Foreground="Lime" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="9"/>
         </ScrollViewer>
+        <!-- консоль -->
+        
+        <!-- кол-во онлайн игроков -->
         <Border Grid.Column="0" Grid.Row="1"  BorderThickness="5" BorderBrush="Green" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 0 5 0">
             <StackPanel>
                 <Grid Background="Black">
@@ -41,6 +46,8 @@
                 </Grid>
             </StackPanel>
         </Border>
+        <!-- кол-во онлайн игроков -->
+
         <!--характеристика игрока-->
         <Border Name="StatsPlayer" Grid.Column="0" Grid.Row="1" BorderThickness="5" BorderBrush="Green" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 86 5 0">
             <StackPanel>
@@ -57,12 +64,13 @@
                     </Border>
                     <WrapPanel  Grid.Row="1">
                         <TextBlock Width="70" Grid.Row="1" Margin="10 3 0 3" TextAlignment="Center" Opacity="0.8" Foreground="Lime" FontSize="17" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="ур."/>
-                        <TextBlock Name="LevelPlayer" Grid.Row="1" Margin="0 3 0 3" TextAlignment="Center" Opacity="0.8" Foreground="Lime" FontSize="17" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="12"/>
+                        <TextBlock Name="LevelPlayer" Grid.Row="1" Margin="0 3 0 3" TextAlignment="Center" Opacity="0.8" Foreground="Lime" FontSize="17" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"/>
                     </WrapPanel>
                 </Grid>
             </StackPanel>
         </Border>
         <!--характеристика игрока-->
+        
         <!--Создание комнаты-->
         <Border Name="CreateRoom" Grid.Column="0" Grid.Row="1" BorderThickness="5" BorderBrush="Green" Margin="10 86 5 0" HorizontalAlignment="Right" Visibility="Collapsed">
             <StackPanel>
@@ -150,7 +158,7 @@
         </Border>
         <!--Создание комнаты-->
         <!--Комната-->
-        <Border Name="Room" Grid.Column="2" Grid.Row="1" BorderThickness="5" BorderBrush="Green" Margin="0 0 13 0" HorizontalAlignment="Right" Visibility="Visible" IsEnabled="False">
+        <Border Name="Room" Grid.Column="2" Grid.Row="1" BorderThickness="5" BorderBrush="Green" Margin="0 0 13 0" HorizontalAlignment="Right" Visibility="Collapsed" IsEnabled="False">
             <StackPanel>
                 <Grid Background="Black">
                     <Grid.RowDefinitions>
@@ -203,7 +211,7 @@
                             </Grid.ColumnDefinitions>
                             <!--панель с характеристиками комнат-->
                             <Border BorderThickness="2 0 2 0" BorderBrush="Green"  Grid.Row="0" VerticalAlignment="Bottom" Padding="0 0 0 0">
-                                <WrapPanel Height="30">
+                                <WrapPanel Name="TopPanelRoom" Height="30">
                                     <TextBlock Width="220" Margin="0 7 0 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="КОМНАТЫ" MouseMove="MoveMouseMenuSort_but" MouseLeave="MoveLeave_but"/>
                                     <StackPanel Orientation="Horizontal" Height="30" >
                                         <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />

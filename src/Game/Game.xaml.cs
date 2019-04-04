@@ -57,7 +57,7 @@ namespace Nuclear
             MapActiveGrid();
             MapHeatGrid();
             MapImgPlayerGrid();
-            
+            User.SetNickname("lorne");
             User.SetImageScreen(GROD, this);
             findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
         }
@@ -98,7 +98,6 @@ namespace Nuclear
             User.SetMovePoints(12);
             User.SetAreaVisibility(5);
             User.SetHealth(20);
-            User.SetNickname("lorne");
 
             client = new TcpClient();
             try
@@ -1123,17 +1122,21 @@ namespace Nuclear
                         {
                             if (PlayerFinded.GetNickname() == (sender as Image).Name)
                             {
-                                if (ViewCalculation(User.GetX(), User.GetY(), PlayerFinded.GetX(), PlayerFinded.GetY()) == Convert.ToInt32(Dist.Text))
+                                if (ViewCalculationToPlayer(User.GetX(), User.GetY(), PlayerFinded.GetX(), PlayerFinded.GetY()))
                                 {
                                     Random probability = new Random();
                                     int chance_of_hit = User.GetProbabilityHitting(Convert.ToInt32(Dist.Text), 0, 0, 0);
-                                    if (probability.Next(5, 95) <= chance_of_hit)
+                                    chance_of_hit = chance_of_hit > 95 ? 95 : chance_of_hit;
+                                    chance_of_hit = chance_of_hit < 5 ? 5 : chance_of_hit;
+                                    if (probability.Next(0, 100) <= chance_of_hit)
                                     {
                                         PlayerFinded.SetHealth(PlayerFinded.GetHealth() - User.GetDamage(1, 1, 1));
                                     }
                                 }
+                                break;
                             }
                         }
+                        break;
                     }
                 }
             }
@@ -1186,19 +1189,166 @@ namespace Nuclear
                     }
         }
 
-        private int ViewCalculation(int x, int y, int endX, int endY)
+        private int ViewCalculation(int sx, int sy, int nx, int ny)
         {
             int step = 0;
+            int x = sx;
+            int y = sy;
             while (true)
             {
-                if (x != endX)
-                    x = (x > endX) ? --x : ++x;
-                if (y != endY)
-                    y = (y > endY) ? --y : ++y;
+                if (sx != nx)
+                    sx = (sx > nx) ? --sx : ++sx;
+                if (sy != ny)
+                    sy = (sy > ny) ? --sy : ++sy;
                 step++;
-                if (x == endX && y == endY)
+                if (sx == nx && sy == ny)
                     return step;
             }
+        }
+
+        private bool ViewCalculationToPlayer(int sx, int sy, int nx, int ny)
+        {
+            int step = 0;
+            int x = sx;
+            int y = sy;
+            while (true)
+            {
+                if (sx != nx)
+                    sx = (sx > nx) ? --sx : ++sx;
+                if (sy != ny)
+                    sy = (sy > ny) ? --sy : ++sy;
+                step++;
+                if (sx == nx && sy == ny)
+                    break;
+            }
+
+            int locationEndXDUB = nx;
+            int locationEndYDUB = ny;
+            int DoplocationUserX = x;
+            int DoplocationUserY = y;
+            int[,] clonePathArray;
+            int[,] DopPathArray;
+
+            //волновой алгоритм поиска пути (заполнение значений достижимости) начиная от конца пути
+            DopPathArray = (int[,])field.GetClonePathArray();
+            List<Point> DopOldWave = new List<Point>();
+            DopOldWave.Add(new Point(x, y));
+            int nstep = 0;
+            DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
+
+            int[] dx = { 0, 1, 0, 1, -1, -1 };
+            int[] dy = { -1, 0, 1, -1, 0, -1 };
+            int[] dx2 = { 0, 1, 0, -1, 1, -1 };
+            int[] dy2 = { -1, 0, 1, 0, 1, 1 };
+
+                
+            while (DopOldWave.Count > 0)
+            {
+                nstep++;
+                DopWavePath.Clear();
+                foreach (Point i in DopOldWave)
+                {
+                    for (int d = 0; d < 6; d++)
+                    {
+                        if (i.x % 2 == 0)
+                        {
+                            DoplocationUserX = i.x + dx[d];
+                            DoplocationUserY = i.y + dy[d];
+                        }
+                        else
+                        {
+                            DoplocationUserX = i.x + dx2[d];
+                            DoplocationUserY = i.y + dy2[d];
+                        }
+
+                        if (DopPathArray[DoplocationUserY, DoplocationUserX] == 0)
+                        {
+                            DopWavePath.Add(new Point(DoplocationUserX, DoplocationUserY));
+                            DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
+                        }
+                    }
+                }
+                DopOldWave = new List<Point>(DopWavePath);
+                //if (nstep == User.GetAreaVisibility()) // поле зрения
+                    //  break;
+            }
+        
+
+            clonePathArray = (int[,])field.GetClonePathArray();
+            List<Point> oldWave = new List<Point>();
+            oldWave.Add(new Point(nx, ny));
+            nstep = 0;
+            clonePathArray[ny, nx] = nstep;
+            while (oldWave.Count > 0)
+            {
+                nstep++;
+                wave.Clear();
+                foreach (Point i in oldWave)
+                {
+                    for (int d = 0; d < 6; d++)
+                    {
+                        if (i.x % 2 == 0)
+                        {
+                            nx = i.x + dx[d];
+                            ny = i.y + dy[d];
+                        }
+                        else
+                        {
+                            nx = i.x + dx2[d];
+                            ny = i.y + dy2[d];
+                        }
+                        if (clonePathArray[ny, nx] == 0)
+                        {
+                            wave.Add(new Point(nx, ny));
+                            clonePathArray[ny, nx] = nstep;
+                        }
+                    }
+                }
+                oldWave = new List<Point>(wave);
+            }
+            bool flag = true;
+            wave.Clear();
+            wave.Add(new Point(locationEndXDUB, locationEndYDUB));
+            int stepX = 0;
+            int stepY = 0;
+            while (field.GetPathArray(y, x) != 99)
+            {
+                flag = true;
+                for (int d = 0; d < 6; d++)
+                {
+                    if (locationEndXDUB % 2 == 0)
+                    {
+                        stepX = locationEndXDUB + dx[d];
+                        stepY = locationEndYDUB + dy[d];
+                    }
+                    else
+                    {
+                        stepX = locationEndXDUB + dx2[d];
+                        stepY = locationEndYDUB + dy2[d];
+                    }
+                    if (stepX == x && stepY == y)
+                        break;
+                    if (DopPathArray[locationEndYDUB, locationEndXDUB] - 1 == DopPathArray[stepY, stepX])
+                    {
+                        locationEndXDUB = stepX;
+                        locationEndYDUB = stepY;
+                        wave.Add(new Point(locationEndXDUB, locationEndYDUB));
+                        flag = false;
+                        break;
+                    }
+                }
+                if (stepX == x && stepY == y)
+                    break;
+                if (flag)
+                {
+                    // вывод ошибки, пути нет
+                    break;
+                }
+            }
+            Dist.Text = wave.Count.ToString();
+            if (wave.Count == step)
+                return true;
+            return false;
         }
 
         public void ActionWithPlayer_KeyDown(object sender, KeyEventArgs e)
