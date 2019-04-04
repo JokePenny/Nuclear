@@ -22,33 +22,33 @@ namespace Nuclear
         public int d_resistance { get; set; } = 1;
 
         //характеристика
-        private int strength = 5;
-        private int perception = 5;
-        private int endurance = 5;
-        private int charisma = 5;
-        private int intelligence = 5;
-        private int agility = 5;
-        private int luck = 5;
+        private byte strength = 5;
+        private byte perception = 5;
+        private byte endurance = 5;
+        private byte charisma = 5;
+        private byte intelligence = 5;
+        private byte agility = 5;
+        private byte luck = 5;
 
         //умения
-        public int big_guns { get; set; } = 10;
-        public int small_guns { get; set; } = 35;
-        public int energy_weapons { get; set; } = 10;
-        public int throwing { get; set; } = 40;
-        public int traps { get; set; } = 20;
-        public int melee_weapons { get; set; } = 55;
-        public int unarmed { get; set; } = 65;
-        public int doctor { get; set; } = 15;
-        public int first_aid { get; set; } = 30;
-        public int lockpick { get; set; } = 20;
-        public int repair { get; set; } = 20;
-        public int science { get; set; } = 25;
-        public int sneak { get; set; } = 20;
-        public int steal { get; set; } = 25;
-        public int barter { get; set; } = 20;
-        public int gambling { get; set; } = 20;
-        public int outdoorsman { get; set; } = 5;
-        public int speech { get; set; } = 25;
+        public ushort big_guns { get; set; } = 10;
+        public ushort small_guns { get; set; } = 35;
+        public ushort energy_weapons { get; set; } = 10;
+        public ushort throwing { get; set; } = 40;
+        public ushort traps { get; set; } = 20;
+        public ushort melee_weapons { get; set; } = 55;
+        public ushort unarmed { get; set; } = 65;
+        public ushort doctor { get; set; } = 15;
+        public ushort first_aid { get; set; } = 30;
+        public ushort lockpick { get; set; } = 20;
+        public ushort repair { get; set; } = 20;
+        public ushort science { get; set; } = 25;
+        public ushort sneak { get; set; } = 20;
+        public ushort steal { get; set; } = 25;
+        public ushort barter { get; set; } = 20;
+        public ushort gambling { get; set; } = 20;
+        public ushort outdoorsman { get; set; } = 5;
+        public ushort speech { get; set; } = 25;
 
         public PlayerUser(int X, int Y, byte Health, byte MovePoints, byte AreaVisibility) : base(X, Y, Health, MovePoints, AreaVisibility)
         {

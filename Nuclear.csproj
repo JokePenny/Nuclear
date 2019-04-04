@@ -63,6 +63,12 @@
     </ApplicationDefinition>
     <Compile Include="src\Editor\BulletPhysics.cs" />
     <Compile Include="src\Game\Field.cs" />
+    <Compile Include="src\Game\Items\Ammo.cs" />
+    <Compile Include="src\Game\Items\Armor.cs" />
+    <Compile Include="src\Game\Items\Chemistry.cs" />
+    <Compile Include="src\Game\Items\ItemsInventory.cs" />
+    <Compile Include="src\Game\Items\Misc.cs" />
+    <Compile Include="src\Game\Items\Weapon.cs" />
     <Compile Include="src\Game\LivingObjects.cs" />
     <Compile Include="src\Game\PlayerUser.cs" />
     <Compile Include="src\Interface\Fixboy.cs" />
@@ -235,9 +241,6 @@
     <Resource Include="data\image\mainui\startClick\backlight_both.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\cur.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_e.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_ne.gif" />
     <Resource Include="data\image\characters\NMVALTA\NMVALTAA\NMVALTAA_nw.gif" />
@@ -267,6 +270,7 @@
     <Folder Include="data\mapcreateds\" />
     <Folder Include="data\mapeditor\sprits\props\city\" />
     <Folder Include="data\mapeditor\sprits\wall\wallr\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="data\image\items\chest\ABKSHLF1.gif" />

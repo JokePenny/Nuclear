@@ -1131,6 +1131,14 @@ namespace Nuclear
                                     if (probability.Next(0, 100) <= chance_of_hit)
                                     {
                                         PlayerFinded.SetHealth(PlayerFinded.GetHealth() - User.GetDamage(1, 1, 1));
+                                        if(PlayerFinded.GetHealth() <= 0)
+                                        {
+                                            // смерть игрока
+                                        }
+                                        else
+                                        {
+                                            //ранение
+                                        }
                                     }
                                 }
                                 break;
