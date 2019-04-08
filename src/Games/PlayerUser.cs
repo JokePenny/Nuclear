@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nuclear.src;
+using System;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using WpfAnimatedGif;
@@ -7,8 +8,8 @@ namespace Nuclear
 {
     public class PlayerUser : LivingObjects
     {
-        private static int ID = 999;// индефикатор объекта
-        private string nickname = null;
+        private int ID = 999;// индефикатор объекта
+        //private string nickname = null;
         private int level;
         private string stateMap;
         private string stateRoom;
@@ -20,6 +21,7 @@ namespace Nuclear
 
         //броня надетая
         public int d_resistance { get; set; } = 1;
+        public byte TypeOfArmor { get; set; } = 9;
 
         //характеристика
         private byte strength = 5;
@@ -50,7 +52,7 @@ namespace Nuclear
         public ushort outdoorsman { get; set; } = 5;
         public ushort speech { get; set; } = 25;
 
-        public PlayerUser(int X, int Y, byte Health, byte MovePoints, byte AreaVisibility) : base(X, Y, Health, MovePoints, AreaVisibility)
+        public PlayerUser(int X, int Y, byte Health, byte MovePoints, byte AreaVisibility, Canvas GROD, Game game) : base(X, Y, Health, MovePoints, AreaVisibility)
         {
             x = X;
             y = Y;
@@ -64,7 +66,7 @@ namespace Nuclear
             areaVisibility = AreaVisibility;
         }
 
-        public PlayerUser(int X, int Y, string Nickname) : base(X, Y)
+        public PlayerUser(int X, int Y, string Nickname, Canvas GROD, Game game) : base(X, Y)
         {
             nickname = Nickname;
             x = X;
@@ -85,101 +87,17 @@ namespace Nuclear
         {
         }
 
-        public void SetImageScreen(Canvas GROD, Game game)
-        {
-            GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_e.gif", UriKind.Relative));
-            GetImage().MouseLeftButtonDown += game.ActionWithPlayer_Click;
-            GetImage().MouseMove += game.ActionWithPlayer_Move;
-            GetImage().MouseLeave += game.ActionWithPlayer_MouseLeave;
-            GetImage().MouseEnter += game.ActionWithPlayer_Focusable;
-            GetImage().Name = nickname;
-            Canvas.SetLeft(GetImage(), imageY);
-            Canvas.SetTop(GetImage(), imageX);
-            GROD.Children.Add(GetImage());
-        }
-
-        public void ChangeImage(Canvas GROD)
-        {
-            GROD.Children.Remove(GetImage());
-            if(changeImage == 1)
-            {
-                switch (IndexImage)
-                {
-                    case 0:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_w.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY - 10);
-                        break;
-                    case 1:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_se.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY - 10);
-                        break;
-                    case 2:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_e.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY);
-                        break;
-                    case 3:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_sw.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY - 10);
-                        break;
-                    case 4:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_ne.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY - 10);
-                        break;
-                    case 5:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_nw.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY - 10);
-                        break;
-
-                }
-            }
-            else if(changeImage == 2)
-            {
-                switch (IndexImage)
-                {
-                    case 0:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_w.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY - 10);
-                        break;
-                    case 1:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_sw.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY - 10);
-                        break;
-                    case 2:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_e.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY);
-                        break;
-                    case 3:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_nw.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY - 10);
-                        break;
-                    case 4:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_se.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY - 10);
-                        break;
-                    case 5:
-                        GetImage().Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_ne.gif", UriKind.Relative));
-                        Canvas.SetLeft(GetImage(), imageY - 10);
-                        break;
-                }
-            }
-            Canvas.SetTop(GetImage(), imageX); 
-            GROD.Children.Add(GetImage());
-        }
-
         //сеттеры
         public void SetLevel(int a)
         {
             level = a;
         }
 
-        public void SetNickname(string a)
-        {
-            nickname = a;
-        }
         public void SetStateMap(string a)
         {
             stateMap = a;
         }
+
         public void SetStateRoom(string a)
         {
             stateRoom = a;
@@ -190,18 +108,17 @@ namespace Nuclear
         {
             return ID;
         }
+
         public int GetLevel()
         {
             return level;
         }
-        public string GetNickname()
-        {
-            return nickname;
-        }
+
         public string GetStateMap()
         {
             return stateMap;
         }
+
         public string GetStateRoom()
         {
             return stateRoom;

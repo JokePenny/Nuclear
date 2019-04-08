@@ -37,6 +37,8 @@ namespace Nuclear
         private int locationEndX;
         private int locationEndY;
 
+        private int run = 0;
+
         private const int port = 8888;
         private const string address = "127.0.0.1";
         private static TcpClient client = null;
@@ -50,8 +52,9 @@ namespace Nuclear
         public Game()
         {
             InitializeComponent();
+            run = 1;
             //InitInventory();
-            User = new PlayerUser(8, 2, 20, 12, 5);
+            User = new PlayerUser(8, 2, 20, 12, 5, GROD, this);
             MapImageGrid();
             MapActiveGrid();
             MapHeatGrid();
@@ -127,6 +130,7 @@ namespace Nuclear
 
             User.SetImageScreen(GROD, this);
             findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
+            timerStart();
         }
 
         private void SendMessage()
@@ -194,13 +198,43 @@ namespace Nuclear
                             if (connectedUser.GetNickname() == command[1])
                             {
                                 connectedUser.SetXY(Convert.ToInt32(command[2]), Convert.ToInt32(command[3]));
-                                connectedUser.ChangeImage(GROD);
+                                connectedUser.animationCharacter.ChangeImage(GROD, connectedUser.imageY, connectedUser.imageX, connectedUser.changeImage, connectedUser.IndexImage);
                                 break;
                             }
                         }
                     });
                     break;
                 case "1": // атакуют
+                    Dispatcher.Invoke(delegate
+                    {
+                        foreach (PlayerUser connectedUser in Players)
+                        {
+                            if (connectedUser.GetNickname() == command[2])
+                            {
+                                connectedUser.animationCharacter.SetAnimation(command[4], GROD, connectedUser.imageY, connectedUser.imageX);
+                                break;
+                            }
+                        }
+                        if(User.GetNickname() == command[1])
+                        {
+                            User.SetHealth(User.GetHealth() - Convert.ToInt32(command[3]));
+                            if (User.GetHealth() <= 0)
+                            {
+                                User.animationCharacter.SetAnimation(User.TypeOfArmor, 1, 3);
+                                User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
+                                message = "14 " + "d" + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
+                                // смерть игрока
+                            }
+                            else
+                            {
+                                User.animationCharacter.SetAnimation(User.TypeOfArmor, 0, 14);
+                                User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
+                                message = "14 " + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
+                                //ранение
+                            }
+                            openSend = 1;
+                        }
+                    });
                     break;
                 case "2": // дисконектятся
                     break;
@@ -215,6 +249,8 @@ namespace Nuclear
                         connectedUser.SetNickname(command[2]);
                         connectedUser.SetImageScreen(GROD, this);
                         Players.Add(connectedUser);
+                        //if(User.GetNickname() == command[5])
+                          //  run = 1;
                         message = "12 " + User.GetX() + " " + User.GetY() + " " + User.GetNickname();
                         openSend = 1;
                     });
@@ -231,6 +267,35 @@ namespace Nuclear
                         connectedUser.SetImageScreen(GROD, this);
                         Players.Add(connectedUser);
                     });
+                    break;
+                case "14": // проигрывание анимации
+                    Dispatcher.Invoke(delegate
+                    {
+                        foreach (PlayerUser connectedUser in Players)
+                        {
+                            if (connectedUser.GetNickname() == command[1])
+                            {
+                                connectedUser.animationCharacter.SetAnimation(command[2], GROD, connectedUser.imageY, connectedUser.imageX);
+                                break;
+                            }
+                            else if(command[1] == "d")
+                            {
+                                connectedUser.animationCharacter.SetAnimation(command[3], GROD, connectedUser.imageY, connectedUser.imageX);
+                                break;
+                            }
+                        }
+                    });
+                    break;
+                case "t+": // запуск времени
+                    if (command[1] == User.GetNickname())
+                    {
+                        Dispatcher.Invoke(delegate
+                        {
+                            time.Text = 60.ToString();
+                            run = 1;
+                            x = 60;
+                        });
+                    }
                     break;
                 default:
                     Dispatcher.Invoke(delegate
@@ -254,10 +319,20 @@ namespace Nuclear
 
         private void timerTick(object sender, EventArgs e)
         {
-            x--;
-            if (x < 0)
-                x = 60;
-            time.Text = x.ToString();
+            if(run == 1)
+            {
+                x--;
+                if (x <= 0)
+                {
+                    Dispatcher.Invoke(delegate
+                    {
+                        message = User.GetNickname() + " " + "t-";
+                        run = 0;
+                        openSend = 1;
+                    });
+                }
+                time.Text = x.ToString();
+            }
         }
 
         private void InitInventory()
@@ -498,9 +573,9 @@ namespace Nuclear
             this.MapGrid.Children.Add(hexGrid);
         }
 
-        private void but_Click(object sender, RoutedEventArgs e)
+        private void but_Click(object sender, MouseButtonEventArgs e)
         {
-            if (User.GetMovePoints() > 0)
+            if (User.GetMovePoints() > 0 && run == 1)
             {
                 TextBlock btn = sender as TextBlock;
                 string[] buf = btn.Text.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
@@ -508,7 +583,7 @@ namespace Nuclear
                 int row = Convert.ToInt32(buf[0]);
                 int column = Convert.ToInt32(buf[1]);
                 DistView.Text = ViewCalculation(User.GetX(), User.GetY(), Convert.ToInt32(buf[0]), Convert.ToInt32(buf[1])).ToString();
-                MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
+                //MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
                 Clean_TextBlock();
                 Clean_HeatMap();
                 locationEndX = row;
@@ -769,17 +844,15 @@ namespace Nuclear
                         if (wave.Count != 0)
                         {
                             c = wave.First<Point>();
- 
                             User.SetXY(c.x, c.y);
-
                             Dispatcher.Invoke(delegate
                             {
                                 PositionX.Text = User.GetX().ToString();
                                 PositionY.Text = User.GetY().ToString();
                             });
+                            User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
 
-                            User.ChangeImage(GROD);
-                            if(Players.Count != 0)
+                            if (Players.Count != 0)
                             {
                                 message = "0 " + User.GetNickname() + " " + User.GetX() + " " + User.GetY();
                                 openSend = 1;
@@ -1071,7 +1144,7 @@ namespace Nuclear
 
         public void ActionWithPlayer_Click(object sender, MouseButtonEventArgs e)
         {
-            if (changeCursor)
+            if (changeCursor && run == 1)
             {
                 foreach (Image PlayerImage in GROD.Children)
                 {
@@ -1089,15 +1162,8 @@ namespace Nuclear
                                     chance_of_hit = chance_of_hit < 5 ? 5 : chance_of_hit;
                                     if (probability.Next(0, 100) <= chance_of_hit)
                                     {
-                                        PlayerFinded.SetHealth(PlayerFinded.GetHealth() - User.GetDamage(1, 1, 1));
-                                        if(PlayerFinded.GetHealth() <= 0)
-                                        {
-                                            // смерть игрока
-                                        }
-                                        else
-                                        {
-                                            //ранение
-                                        }
+                                        message = "1 " + PlayerFinded.GetNickname() + " " + User.GetNickname() + " " + User.GetDamage(1, 1, 1) + " " + User.animationCharacter.FullPathImage;
+                                        openSend = 1;
                                     }
                                 }
                                 break;
@@ -1175,19 +1241,11 @@ namespace Nuclear
 
         private bool ViewCalculationToPlayer(int sx, int sy, int nx, int ny)
         {
+            
             int step = 0;
+            
             int x = sx;
             int y = sy;
-            while (true)
-            {
-                if (sx != nx)
-                    sx = (sx > nx) ? --sx : ++sx;
-                if (sy != ny)
-                    sy = (sy > ny) ? --sy : ++sy;
-                step++;
-                if (sx == nx && sy == ny)
-                    break;
-            }
 
             int locationEndXDUB = nx;
             int locationEndYDUB = ny;
@@ -1208,7 +1266,6 @@ namespace Nuclear
             int[] dx2 = { 0, 1, 0, -1, 1, -1 };
             int[] dy2 = { -1, 0, 1, 0, 1, 1 };
 
-                
             while (DopOldWave.Count > 0)
             {
                 nstep++;
@@ -1233,13 +1290,18 @@ namespace Nuclear
                             DopWavePath.Add(new Point(DoplocationUserX, DoplocationUserY));
                             DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
                         }
+
+                        if (DoplocationUserY == ny && DoplocationUserX == nx)
+                        {
+                            step = nstep;
+                            break;
+                        }
                     }
+                    if (step == nstep) break;
                 }
+                if (step == nstep) break;
                 DopOldWave = new List<Point>(DopWavePath);
-                //if (nstep == User.GetAreaVisibility()) // поле зрения
-                    //  break;
             }
-        
 
             clonePathArray = (int[,])field.GetClonePathArray();
             List<Point> oldWave = new List<Point>();

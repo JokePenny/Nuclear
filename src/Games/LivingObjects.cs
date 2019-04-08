@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nuclear.src;
 
 namespace Nuclear
 {
@@ -14,16 +15,16 @@ namespace Nuclear
         protected int health;
         protected byte movePoints;
         protected byte areaVisibility;
+        protected string nickname = null;
+        public AnimationCharacter animationCharacter { get; set; }
 
-        protected double imageX;
-        protected double imageY;
+        public double imageX { get; set; }
+        public double imageY { get; set; }
 
         private double imageXOld;
         private double imageYOld;
-        protected double changeImage = 2;
-        protected double IndexImage = 0;
-
-        protected Image image = new Image();
+        public bool changeImage { get; set; } = false;
+        public double IndexImage { get; set; } = 0;
 
         private int[] dx = { 0, 1, 0, 1, -1, -1 };
         private int[] dy = { -1, 0, 1, -1, 0, -1 };
@@ -83,14 +84,9 @@ namespace Nuclear
             return imageY;
         }
 
-        public double GetChangeImage()
+        public string GetNickname()
         {
-            return changeImage;
-        }
-
-        public Image GetImage()
-        {
-            return image;
+            return nickname;
         }
 
         //сеттеры
@@ -114,7 +110,8 @@ namespace Nuclear
                     checkImageY = (imageYOld + dy[d]) * 96/2.74 + 10;
                     if (checkImageX == imageX && checkImageY == imageY)
                     {
-                        changeImage = 1;
+                        animationCharacter.ZIndexImage = X;
+                        changeImage = true;
                         IndexImage = d;
                         break;
                     }
@@ -125,7 +122,8 @@ namespace Nuclear
                     checkImageY = (imageYOld + dy2[d]) *96/2.74 - 10;
                     if (checkImageX == imageX && checkImageY == imageY)
                     {
-                        changeImage = 2;
+                        animationCharacter.ZIndexImage = X;
+                        changeImage = false;
                         IndexImage = d;
                         break;
                     }
@@ -139,17 +137,25 @@ namespace Nuclear
         {
             health = A;
         }
+
         public void SetMovePoints(byte A)
         {
             movePoints = A;
         }
+
         public void SetAreaVisibility(byte A)
         {
             areaVisibility = A;
         }
-        public void SetImage(Image A)
+
+        public void SetImageScreen(Canvas GROD, Game game)
         {
-            image = A;
+            animationCharacter = new AnimationCharacter(GROD, game, nickname, imageX, imageY);
+        }
+
+        public void SetNickname(string a)
+        {
+            nickname = a;
         }
     }
 }
