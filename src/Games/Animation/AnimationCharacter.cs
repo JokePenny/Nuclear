@@ -43,6 +43,7 @@ namespace Nuclear.src
         {
             image = new Image();
             image.Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_e.gif", UriKind.Relative));
+            FullPathImage = "pack://application:,,,/data/image/characters/HMJMPS/HMJMPSAA_e.gif";
             image.MouseLeftButtonDown += game.ActionWithPlayer_Click;
             image.MouseMove += game.ActionWithPlayer_Move;
             image.MouseLeave += game.ActionWithPlayer_MouseLeave;
@@ -290,6 +291,82 @@ namespace Nuclear.src
             }
         }
 
+        public string AttackAnimation(Canvas GROD, double imageY, double imageX, bool changeDirection, double indexDirection)
+        {
+            GROD.Children.Remove(image);
+            while (true)
+            {
+                if (!ChangeAnimation)
+                {
+                    if (changeDirection)
+                    {
+                        switch (indexDirection)
+                        {
+                            case 0:
+                                Direction = "_w";
+                                break;
+                            case 1:
+                                Direction = "_se";
+                                break;
+                            case 2:
+                                Direction = "_e";
+                                break;
+                            case 3:
+                                Direction = "_sw";
+                                break;
+                            case 4:
+                                Direction = "_ne";
+                                break;
+                            case 5:
+                                Direction = "_nw";
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (indexDirection)
+                        {
+                            case 0:
+                                Direction = "_w";
+                                break;
+                            case 1:
+                                Direction = "_sw";
+                                break;
+                            case 2:
+                                Direction = "_e";
+                                break;
+                            case 3:
+                                Direction = "_nw";
+                                break;
+                            case 4:
+                                Direction = "_se";
+                                break;
+                            case 5:
+                                Direction = "_ne";
+                                break;
+                        }
+                    }
+
+                    var imageAnimation = new BitmapImage();
+
+                    imageAnimation.BeginInit();
+                    imageAnimation.UriSource = new Uri("pack://application:,,," + PathImage + Direction + ".gif", UriKind.RelativeOrAbsolute);
+                    FullPathImage = "pack://application:,,," + PathImage + Direction + ".gif";
+                    imageAnimation.EndInit();
+                    ImageBehavior.SetAnimatedSource(image, imageAnimation);
+                    var controller = ImageBehavior.GetAnimationController(image);
+                    controller.Play();
+                    Canvas.SetLeft(image, imageY - 10);
+                    Canvas.SetTop(image, imageX);
+                    Canvas.SetZIndex(image, ZIndexImage);
+                    GROD.Children.Add(image);
+                    break;
+                }
+                else PathImage = PathForImage();
+            }
+            return FullPathImage;
+        }
+
         public void SetAnimation(byte numFolderCharacter, byte firstLetterAnimation, byte secondLetterAnimation)
         {
             NumFolderCharacter = numFolderCharacter;
@@ -304,6 +381,7 @@ namespace Nuclear.src
             var imageAnimation = new BitmapImage();
             imageAnimation.BeginInit();
             imageAnimation.UriSource = new Uri(animation, UriKind.RelativeOrAbsolute);
+            FullPathImage = animation;
             imageAnimation.EndInit();
             ImageBehavior.SetAnimatedSource(image, imageAnimation);
             var controller = ImageBehavior.GetAnimationController(image);

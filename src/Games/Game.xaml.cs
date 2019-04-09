@@ -207,7 +207,7 @@ namespace Nuclear
                 case "1": // атакуют
                     Dispatcher.Invoke(delegate
                     {
-                        foreach (PlayerUser connectedUser in Players)
+                        foreach (PlayerUser connectedUser in Players)// анимация атакуюшего
                         {
                             if (connectedUser.GetNickname() == command[2])
                             {
@@ -222,7 +222,7 @@ namespace Nuclear
                             {
                                 User.animationCharacter.SetAnimation(User.TypeOfArmor, 1, 3);
                                 User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
-                                message = "14 " + "d" + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
+                                message = "14 " + "d" + " " + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
                                 // смерть игрока
                             }
                             else
@@ -230,6 +230,7 @@ namespace Nuclear
                                 User.animationCharacter.SetAnimation(User.TypeOfArmor, 0, 14);
                                 User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
                                 message = "14 " + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
+                                User.animationCharacter.SetAnimation(User.TypeOfArmor, 0, 0);
                                 //ранение
                             }
                             openSend = 1;
@@ -278,7 +279,7 @@ namespace Nuclear
                                 connectedUser.animationCharacter.SetAnimation(command[2], GROD, connectedUser.imageY, connectedUser.imageX);
                                 break;
                             }
-                            else if(command[1] == "d")
+                            else if(command[1] == "d" && connectedUser.GetNickname() == command[2])
                             {
                                 connectedUser.animationCharacter.SetAnimation(command[3], GROD, connectedUser.imageY, connectedUser.imageX);
                                 break;
@@ -1162,7 +1163,8 @@ namespace Nuclear
                                     chance_of_hit = chance_of_hit < 5 ? 5 : chance_of_hit;
                                     if (probability.Next(0, 100) <= chance_of_hit)
                                     {
-                                        message = "1 " + PlayerFinded.GetNickname() + " " + User.GetNickname() + " " + User.GetDamage(1, 1, 1) + " " + User.animationCharacter.FullPathImage;
+                                        User.animationCharacter.SetAnimation(9, 0, 16);
+                                        message = "1 " + PlayerFinded.GetNickname() + " " + User.GetNickname() + " " + User.GetDamage(1, 1, 1) + " " + User.animationCharacter.AttackAnimation(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
                                         openSend = 1;
                                     }
                                 }
