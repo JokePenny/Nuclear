@@ -28,6 +28,18 @@ namespace Nuclear.src
             UpdateAllRoom();
         }
 
+        public NetworkRoom(PlayerUser connectUser, int exit)
+        {
+            InitializeComponent();
+            User = connectUser;
+            NicknamePlayer.Text = connectUser.GetNickname();
+            LevelPlayer.Text = connectUser.GetLevel().ToString();
+            Exits(exit.ToString());
+            User.SetStateRoom(null);
+            User.SetStateMap(null);
+            UpdateAllRoom();
+        }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Exits("1");
@@ -237,6 +249,8 @@ namespace Nuclear.src
 
                         CreateRoom.Visibility = Visibility.Collapsed;
                         UpdateAllRoom();
+                        User.SetStateRoom(namemap.Text);
+                        this.NavigationService.Navigate(new Game(User));
                     }
                     else
                     {

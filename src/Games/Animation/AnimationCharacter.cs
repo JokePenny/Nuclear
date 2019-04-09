@@ -392,5 +392,10 @@ namespace Nuclear.src
             GROD.Children.Add(image);
             ChangeAnimation = true;
         }
+
+        public void Disconect(Canvas GROD)
+        {
+            GROD.Children.Remove(image);
+        }
     }
 }

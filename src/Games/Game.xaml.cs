@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using HexGridControl;
 using Nuclear.data.mapeditor;
+using Nuclear.src;
 using Nuclear.src.Interface;
 using WpfAnimatedGif;
 
@@ -37,9 +38,12 @@ namespace Nuclear
         private int locationEndX;
         private int locationEndY;
 
+        Thread receiveThread;
+        Thread sendThread;
+
         private int run = 0;
 
-        private const int port = 8888;
+        private int port;
         private const string address = "127.0.0.1";
         private static TcpClient client = null;
         private static NetworkStream stream = null;
@@ -67,6 +71,7 @@ namespace Nuclear
         public Game(PlayerUser connect)
         {
             InitializeComponent();
+            port = 8888;
             byte[] data;
             int x;
             int y;  
@@ -113,9 +118,9 @@ namespace Nuclear
                 openSend = 1;
                 // получаем ответ
                 // запускаем новый поток для получения данных
-                Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
+                receiveThread = new Thread(new ThreadStart(ReceiveMessage));
                 receiveThread.Start();
-                Thread sendThread = new Thread(new ThreadStart(SendMessage));
+                sendThread = new Thread(new ThreadStart(SendMessage));
                 sendThread.Start();
             }
             catch (Exception ex)
@@ -183,7 +188,6 @@ namespace Nuclear
                 stream.Close();//отключение потока
             if (client != null)
                 client.Close();//отключение клиента
-            Environment.Exit(0); //завершение процесса
         }
 
         private void CommandDecryption(string[] command)
@@ -297,6 +301,22 @@ namespace Nuclear
                             x = 60;
                         });
                     }
+                    break;
+                case "200": // отключение игрока
+                    Dispatcher.Invoke(delegate
+                    {
+                        PlayerUser disconetUser = null;
+                        foreach (PlayerUser connectedUser in Players)
+                        {
+                            if (connectedUser.GetNickname() == command[1])
+                            {
+                                disconetUser = connectedUser;
+                                connectedUser.animationCharacter.Disconect(GROD);
+                                break;
+                            }
+                        }
+                        Players.Remove(disconetUser);
+                    });
                     break;
                 default:
                     Dispatcher.Invoke(delegate
@@ -1024,10 +1044,26 @@ namespace Nuclear
                     Skill.Visibility = Visibility.Collapsed;
                     break;
                 case "Exit":
-                    (sender as TextBlock).Opacity = 0;
-                    Mouse.Capture(null);
-                    StartMenu menu = new StartMenu();
-                    this.NavigationService.Navigate(menu);
+                    if(port == 8888)
+                    {
+                        Disconnect();
+                        sendThread.Abort();
+                        sendThread.Join(500);
+                        receiveThread.Abort();
+                        receiveThread.Join(500);
+                        timer.Stop();
+                        (sender as TextBlock).Opacity = 0;
+                        Mouse.Capture(null);
+                        NetworkRoom launcher = new NetworkRoom(User, 0);
+                        this.NavigationService.Navigate(launcher);
+                    }
+                    else
+                    {
+                        (sender as TextBlock).Opacity = 0;
+                        Mouse.Capture(null);
+                        StartMenu menu = new StartMenu();
+                        this.NavigationService.Navigate(menu);
+                    }
                     break;
                 case "Settings":
                     (sender as TextBlock).Opacity = 0;
@@ -1165,6 +1201,7 @@ namespace Nuclear
                                     {
                                         User.animationCharacter.SetAnimation(9, 0, 16);
                                         message = "1 " + PlayerFinded.GetNickname() + " " + User.GetNickname() + " " + User.GetDamage(1, 1, 1) + " " + User.animationCharacter.AttackAnimation(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
+                                        User.animationCharacter.SetAnimation(User.TypeOfArmor, 0, 0);
                                         openSend = 1;
                                     }
                                 }

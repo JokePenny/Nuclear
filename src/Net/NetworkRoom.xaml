@@ -72,7 +72,7 @@
         <!--характеристика игрока-->
         
         <!--Создание комнаты-->
-        <Border Name="CreateRoom" Grid.Column="0" Grid.Row="1" BorderThickness="5" BorderBrush="Green" Margin="10 86 5 0" HorizontalAlignment="Right" Visibility="Collapsed">
+        <Border Name="CreateRoom" Grid.Column="0" Grid.Row="1" BorderThickness="5" BorderBrush="Green" Margin="10 86 5 0" HorizontalAlignment="Right" Visibility="Visible">
             <StackPanel>
                 <Grid Background="Black">
                     <Grid.RowDefinitions>
