@@ -44,7 +44,7 @@ namespace Nuclear
         private int run = 0;
 
         private int port;
-        private const string address = "127.0.0.1";
+        private const string address = "84.201.150.2";
         private static TcpClient client = null;
         private static NetworkStream stream = null;
 
@@ -71,7 +71,7 @@ namespace Nuclear
         public Game(PlayerUser connect)
         {
             InitializeComponent();
-            port = 8888;
+            port = 2888;
             byte[] data;
             int x;
             int y;  
@@ -671,10 +671,10 @@ namespace Nuclear
                 int nstep = 0;
                 DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
 
-                int[] dx = { 0, 1, 0, 1, -1, -1 };
-                int[] dy = { -1, 0, 1, -1, 0, -1 };
-                int[] dx2 = { 0, 1, 0, -1, 1, -1 };
-                int[] dy2 = { -1, 0, 1, 0, 1, 1 };
+                int[] dx = { 0, 1, 0, 1, -1, -1};
+                int[] dy = { -1, 0, 1, -1, 0, -1};
+                int[] dx2 = { 0, 1, 0, -1, 1, -1};
+                int[] dy2 = { -1, 0, 1, 0, 1, 1};
 
                 // окраска пути
                 while (DopOldWave.Count > 0)
@@ -1044,7 +1044,7 @@ namespace Nuclear
                     Skill.Visibility = Visibility.Collapsed;
                     break;
                 case "Exit":
-                    if(port == 8888)
+                    if(port == 2888)
                     {
                         Disconnect();
                         sendThread.Abort();

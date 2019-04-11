@@ -17,8 +17,8 @@ namespace Nuclear.src
     {
         PlayerUser user = null;
         // адрес и порт сервера, к которому будем подключаться
-        static int port = 8005; // порт сервера
-        static string address = "127.0.0.1"; // адрес сервера
+        static int port = 2888; // порт сервера
+        static string address = "84.201.150.2"; // адрес сервера
         Socket socket = null;
 
         public Registration(PlayerUser connectUser)

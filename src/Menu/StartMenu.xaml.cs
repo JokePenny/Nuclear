@@ -1,6 +1,5 @@
 using Nuclear.src;
 using System;
-using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows;
@@ -14,8 +13,8 @@ namespace Nuclear
 {
     public partial class StartMenu : Page
     {
-        const int port = 8888;
-        const string address = "127.0.0.1";
+        const int port = 2888;
+        const string address = "84.201.150.2";
         TcpClient client = null;
         PlayerUser user = null;
 

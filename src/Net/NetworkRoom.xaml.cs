@@ -13,8 +13,8 @@ namespace Nuclear.src
     public partial class NetworkRoom : Page
     {
         private PlayerUser User = null;
-        private const int port = 8888;
-        private const string address = "127.0.0.1";
+        private const int port = 2888;
+        private const string address = "84.201.150.2";
         private TcpClient client = null;
         private NetworkStream stream;
         private string message = null;
