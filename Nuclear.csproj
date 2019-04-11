@@ -34,8 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HexGridControl">
-      <HintPath>..\..\HexGrid\HexGrid\HexGridControl\obj\Debug\HexGridControl.dll</HintPath>
+    <Reference Include="HexGridControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Control\HexGridControl\HexGridControl.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
