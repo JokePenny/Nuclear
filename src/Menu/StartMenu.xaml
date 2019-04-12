@@ -19,9 +19,9 @@
         </Grid.ColumnDefinitions>
         <StackPanel Margin="0 210 0 0" Grid.Column="0" Grid.Row="0">
             <Label Width="136" Opacity="0.4" Background="Black" Foreground="Lime" FontSize="9" FontFamily="/Nuclear;component/data/fonts/#Fallout Display">Логин</Label>
-            <TextBox Name="Login" Width="136" Margin="0 0 0 0" TextAlignment="Center" Opacity="0.6" Background="Black" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="Admin"/>
+            <TextBox Name="Login" MaxLength="18" Width="136" Margin="0 0 0 0" TextAlignment="Center" Opacity="0.6" Background="Black" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="Admin"/>
             <Label Width="136" Opacity="0.4" Background="Black" Foreground="Lime" FontSize="9" FontFamily="/Nuclear;component/data/fonts/#Fallout Display">Пароль</Label>
-            <TextBox Name="Password" Width="136" Margin="0 0 0 0" TextAlignment="Center" Opacity="0.6" Background="Black" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="1234"/>
+            <TextBox Name="Password" MaxLength="18" Width="136" Margin="0 0 0 0" TextAlignment="Center" Opacity="0.6" Background="Black" Foreground="Lime" FontSize="12" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="1234"/>
         </StackPanel>
         <StackPanel Margin="0 0 0 0" Grid.Column="0" Grid.Row="1">
             <TextBlock Width="136" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="ИГРАТЬ" MouseLeftButtonDown="Game_Click" MouseMove="MoveMouse_but" MouseLeave="MoveLeave_but"/>

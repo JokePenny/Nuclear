@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- дебаг -->
-        <StackPanel Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <StackPanel Name="DebugPanel" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top">
             <WrapPanel>
                 <TextBlock Height="19" Width="70" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="x:"/>
                 <TextBlock Name="PositionX" Height="19" Width="50" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="0"/>
@@ -41,7 +41,15 @@
             </WrapPanel>
         </StackPanel>
         <!-- дебаг -->
-        
+
+        <!-- панель стрельбы -->
+        <Border Name="TabPlayer" Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" Width="498" MinWidth="498" MaxWidth="498" Height="400" MinHeight="400" MaxHeight="400" HorizontalAlignment="Center" Visibility="Visible">
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden">
+                
+            </ScrollViewer>
+        </Border>
+        <!-- панель стрельбы -->
+
         <!-- панель стрельбы -->
         <Border Name="PanelAttack" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="3"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Visible" Margin="0 0 30 0">
             <Grid>
@@ -153,53 +161,53 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="7">
-                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="4 0 0 0" >
+                                <WrapPanel Name="HealthPanel" Grid.Row="0" HorizontalAlignment="Center" Margin="7">
+                                    <Ellipse Name="Ar1" Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="4 0 0 0" >
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/interfaceClick/but_lamp_interface.png"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                    <Ellipse Name="Ar2" Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/interfaceClick/but_lamp_interface.png"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                    <Ellipse Name="Ar3" Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/interfaceClick/but_lamp_interface.png"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                    <Ellipse Name="Ar4" Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/interfaceClick/but_lamp_interface.png"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="2 0 0 0">
+                                    <Ellipse Name="Ar5" Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="2 0 0 0">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/interfaceClick/but_lamp_interface.png"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                    <Ellipse Name="Ar6" Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/interfaceClick/but_lamp_interface.png"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                    <Ellipse Name="Ar7" Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/interfaceClick/but_lamp_interface.png"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                    <Ellipse Name="Ar8" Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/interfaceClick/but_lamp_interface.png"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
+                                    <Ellipse Name="Ar9" Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/interfaceClick/but_lamp_interface.png"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <Ellipse Grid.Row="0" Width="8" Height="8" Opacity="0" Margin="1 0 0 0">
+                                    <Ellipse Name="Ar10" Grid.Row="0" Width="8" Height="8" Opacity="1" Margin="1 0 0 0">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/interfaceClick/but_lamp_interface.png"/>
                                         </Ellipse.Fill>
@@ -214,7 +222,7 @@
                                     <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/interfaceClick/but_red_interface.png"/>
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock Height="14" Width="35" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" FontSize="14" Margin="5 22 0 0" Text="120">
+                            <TextBlock Name="HealthPlayer" Height="14" Width="35" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Regular" FontSize="14" Margin="5 22 0 0" Text="120">
                                 <TextBlock.Foreground>
                                     <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0.5">
                                         <GradientStop Color="Gray" Offset="0"></GradientStop>
@@ -1405,7 +1413,7 @@
         <!-- пипбой -->
 
         <!-- меню -->
-        <Border Name="MenuGame" Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" MinWidth="164" MaxWidth="164" MinHeight="144" MaxHeight="144" HorizontalAlignment="Center" Visibility="Visible">
+        <Border Name="MenuGame" Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="3" MinWidth="164" MaxWidth="164" MinHeight="144" MaxHeight="144" HorizontalAlignment="Center" Visibility="Collapsed">
             <Border.Background>
                 <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/menu.png"/>
             </Border.Background>

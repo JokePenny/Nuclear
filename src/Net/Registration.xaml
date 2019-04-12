@@ -27,8 +27,8 @@
         </StackPanel>
         <StackPanel Margin="0 200 0 0" Grid.Column="1" Grid.Row="0">
             <TextBlock Width="136" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="РЕГИСТРАЦИЯ"/>
-            <TextBox Name="Login" Width="150" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Background="Black" Foreground="Lime" FontSize="9" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="" MouseLeftButtonDown="Button_Click"  />
-            <TextBox Name="Password" Width="150" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Background="Black" Foreground="Lime" FontSize="9" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" MouseLeftButtonDown="Button_Click_1"/>
+            <TextBox Name="Login" MaxLength="18" Width="150" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Background="Black" Foreground="Lime" FontSize="9" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="" MouseLeftButtonDown="Button_Click"  />
+            <TextBox Name="Password" MaxLength="18" Width="150" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Background="Black" Foreground="Lime" FontSize="9" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" MouseLeftButtonDown="Button_Click_1"/>
         </StackPanel>
         <StackPanel Margin="0 0 0 0" Grid.Column="1" Grid.Row="1">
             <TextBlock Name="RegistrUser" Width="136" Margin="0 10 0 0" TextAlignment="Center" Opacity="0.6" Foreground="Lime" FontSize="21" FontFamily="/Nuclear;component/data/fonts/#Fallout Decayed" Text="ОК" MouseLeftButtonDown="Button_Click" MouseMove="MoveMouse_but" MouseLeave="MoveLeave_but"/>

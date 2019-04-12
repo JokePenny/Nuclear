@@ -42,6 +42,7 @@ namespace Nuclear
         Thread sendThread;
 
         private int run = 0;
+        private bool userMoving = false;
 
         private int port;
         private const string address = "84.201.150.2";
@@ -65,6 +66,7 @@ namespace Nuclear
             MapImgPlayerGrid();
             User.SetNickname("lorne");
             User.SetImageScreen(GROD, this);
+            HealthPlayer.Text = User.GetHealth().ToString();
             findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
         }
 
@@ -103,8 +105,9 @@ namespace Nuclear
             }
             User.SetXY(x, y);
             User.SetMovePoints(12);
-            User.SetAreaVisibility(5);
+            User.SetAreaVisibility(16);
             User.SetHealth(20);
+            HealthPlayer.Text = User.GetHealth().ToString();
 
             client = new TcpClient();
             try
@@ -175,7 +178,7 @@ namespace Nuclear
                 {
                     Dispatcher.Invoke(delegate
                     {
-                        ChatTextBlock.Text += "Подключение прервано!";//вывод сообщения
+                        ChatTextBlock.Text += "Подключение прервано!\r\n";//вывод сообщения
                     });
                     Disconnect();
                 }
@@ -226,6 +229,7 @@ namespace Nuclear
                             {
                                 User.animationCharacter.SetAnimation(User.TypeOfArmor, 1, 3);
                                 User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
+                                ChatTextBlock.Text += "Вас убил " + command[2] + "!\r\n";
                                 message = "14 " + "d" + " " + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
                                 // смерть игрока
                             }
@@ -233,8 +237,9 @@ namespace Nuclear
                             {
                                 User.animationCharacter.SetAnimation(User.TypeOfArmor, 0, 14);
                                 User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
-                                message = "14 " + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
                                 User.animationCharacter.SetAnimation(User.TypeOfArmor, 0, 0);
+                                ChatTextBlock.Text += "Вас ранил " + command[2] + "! Потеряно " + command[3] + " здоровья\r\n";
+                                message = "14 " + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
                                 //ранение
                             }
                             openSend = 1;
@@ -248,14 +253,11 @@ namespace Nuclear
                     {
                         PlayerUser connectedUser = new PlayerUser();
                         connectedUser.SetXY(Convert.ToInt32(command[3]), Convert.ToInt32(command[4]));
-                        connectedUser.SetMovePoints(12);
-                        connectedUser.SetAreaVisibility(5);
                         connectedUser.SetHealth(20);
                         connectedUser.SetNickname(command[2]);
                         connectedUser.SetImageScreen(GROD, this);
                         Players.Add(connectedUser);
-                        //if(User.GetNickname() == command[5])
-                          //  run = 1;
+                        ChatTextBlock.Text += "Присоединился " + command[2] + "\r\n";
                         message = "12 " + User.GetX() + " " + User.GetY() + " " + User.GetNickname();
                         openSend = 1;
                     });
@@ -265,11 +267,10 @@ namespace Nuclear
                     {
                         PlayerUser connectedUser = new PlayerUser();
                         connectedUser.SetXY(Convert.ToInt32(command[1]), Convert.ToInt32(command[2]));
-                        connectedUser.SetMovePoints(12);
-                        connectedUser.SetAreaVisibility(5);
                         connectedUser.SetHealth(20);
                         connectedUser.SetNickname(command[3]);
                         connectedUser.SetImageScreen(GROD, this);
+                        ChatTextBlock.Text += "Присоединился " + command[3] + "\r\n";
                         Players.Add(connectedUser);
                     });
                     break;
@@ -299,6 +300,18 @@ namespace Nuclear
                             time.Text = 60.ToString();
                             run = 1;
                             x = 60;
+                            User.SetMovePoints(10);
+                            findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
+                            int i = 0;
+                            foreach (Ellipse health in HealthPanel.Children)
+                            {
+                                if (health.Name == "Ar" + i && i < User.GetMovePoints())
+                                {
+                                    i++;
+                                    health.Opacity = 0;
+                                }
+                            }
+                            ChatTextBlock.Text += "Ваш ход!\r\n";
                         });
                     }
                     break;
@@ -315,13 +328,14 @@ namespace Nuclear
                                 break;
                             }
                         }
+                        ChatTextBlock.Text += disconetUser.GetNickname() + " отключился\r\n";
                         Players.Remove(disconetUser);
                     });
                     break;
                 default:
                     Dispatcher.Invoke(delegate
                     {
-                        ChatTextBlock.Text += "\r\n" + message;//вывод сообщения
+                        ChatTextBlock.Text += message + "\r\n";//вывод сообщения
                     });
                     break;
             }
@@ -350,6 +364,7 @@ namespace Nuclear
                         message = User.GetNickname() + " " + "t-";
                         run = 0;
                         openSend = 1;
+                        ChatTextBlock.Text += "Время на ход закончилось!\r\n";
                     });
                 }
                 time.Text = x.ToString();
@@ -544,7 +559,8 @@ namespace Nuclear
                         factory.SetValue(TextBlock.HeightProperty, sizeCellHeight);
                         factory.SetValue(TextBlock.OpacityProperty, 0.0);
                         factory.SetValue(TextBlock.TextProperty, (i.ToString() + " " + j.ToString()) as string);
-                        factory.AddHandler(TextBlock.MouseDownEvent, new MouseButtonEventHandler(but_Click));
+                        factory.AddHandler(TextBlock.MouseLeftButtonDownEvent, new MouseButtonEventHandler(but_Click));
+                        factory.AddHandler(TextBlock.MouseRightButtonDownEvent, new MouseButtonEventHandler(ChoosAction_RightClick));
                         dat.VisualTree = factory;
                         style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = null });
                         style.Setters.Add(new Setter { Property = ContentControl.ContentTemplateProperty, Value = dat });
@@ -596,15 +612,15 @@ namespace Nuclear
 
         private void but_Click(object sender, MouseButtonEventArgs e)
         {
-            if (User.GetMovePoints() > 0 && run == 1)
+            if (User.GetMovePoints() > 0 && run == 1 && !changeCursor && !userMoving)
             {
+                userMoving = true;
                 TextBlock btn = sender as TextBlock;
                 string[] buf = btn.Text.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
                 int row = Convert.ToInt32(buf[0]);
                 int column = Convert.ToInt32(buf[1]);
                 DistView.Text = ViewCalculation(User.GetX(), User.GetY(), Convert.ToInt32(buf[0]), Convert.ToInt32(buf[1])).ToString();
-                //MessageBox.Show(string.Format("Клетка {0}, {1}", column, row));
                 Clean_TextBlock();
                 Clean_HeatMap();
                 locationEndX = row;
@@ -641,7 +657,6 @@ namespace Nuclear
         {
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
-
             bool debagdoor = true;
 
             locationEndX = nx;
@@ -726,9 +741,9 @@ namespace Nuclear
                             }
                         }
                     }
-                        DopOldWave = new List<Point>(DopWavePath);
-                        if (nstep == User.GetAreaVisibility()) // поле зрения
-                            break;
+                    DopOldWave = new List<Point>(DopWavePath);
+                    if (nstep == User.GetAreaVisibility()) // поле зрения
+                        break;
                 }
                 DopWavePath.Clear();
                 DopOldWave.Clear();
@@ -843,10 +858,7 @@ namespace Nuclear
 
                 if (debagdoor)
                 {
-                    Dispatcher.Invoke(delegate
-                    {
-                        Dist.Text = wave.Count.ToString();
-                    });
+                    Dist.Text = wave.Count.ToString();
                     debagdoor = false;
                 }
 
@@ -866,11 +878,19 @@ namespace Nuclear
                         {
                             c = wave.First<Point>();
                             User.SetXY(c.x, c.y);
-                            Dispatcher.Invoke(delegate
+                            PositionX.Text = User.GetX().ToString();
+                            PositionY.Text = User.GetY().ToString();
+
+                            foreach(Ellipse health in HealthPanel.Children)
                             {
-                                PositionX.Text = User.GetX().ToString();
-                                PositionY.Text = User.GetY().ToString();
-                            });
+                                if(health.Name == "Ar" + User.GetMovePoints())
+                                {
+                                    health.Opacity = 0;
+                                    break;
+                                }
+                            }
+                            User.SetMovePoints(Convert.ToByte(User.GetMovePoints() - 1));
+
                             User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
 
                             if (Players.Count != 0)
@@ -912,6 +932,7 @@ namespace Nuclear
             }
 
             debagdoor = true;
+            userMoving = false;
         }
 
         public struct Point
@@ -943,32 +964,6 @@ namespace Nuclear
         /* игровое поле */
 
         /* чат */
-        // обработчик нажатия кнопки loginButton
-        private void loginButton_Click()
-        {
-            
-        }
-        // метод приема сообщений
-        private void ReceiveMessages()
-        {
-           
-        }
-        // обработчик нажатия кнопки sendButton
-        private void SendButton_Click(object sender, EventArgs e)
-        {
-           
-        }
-        // обработчик нажатия кнопки logoutButton
-        private void logoutButton_Click(object sender, EventArgs e)
-        {
-           
-        }
-        // выход из чата
-        private void ExitChat()
-        {
-            
-        }
-
         private void SendButton_Key(object sender, KeyEventArgs e)
         {
             
@@ -1159,7 +1154,7 @@ namespace Nuclear
             }
         }
 
-        private void ChoosAction_RightClick(object sender, MouseButtonEventArgs e)
+        public void ChoosAction_RightClick(object sender, MouseButtonEventArgs e)
         {
             if (changeCursor)
             {
@@ -1280,9 +1275,7 @@ namespace Nuclear
 
         private bool ViewCalculationToPlayer(int sx, int sy, int nx, int ny)
         {
-            
             int step = 0;
-            
             int x = sx;
             int y = sy;
 
@@ -1525,6 +1518,69 @@ namespace Nuclear
                         RFootChance.Text = "0";
                         r_foot.Visibility = Visibility.Hidden;
                     }
+                    break;
+            }
+        }
+
+        public void Hotkey_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Tab: // list player
+                    if (changeCursor)
+                    {
+                        HeadChance.Text = "0";
+                        head.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case Key.Escape: // menu or close windows
+                    if (changeCursor)
+                    {
+                        LHandOrBodyChance.Text = "0";
+                        l_hand.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case Key.T: // char
+                    if (changeCursor)
+                    {
+                        LHandOrBodyChance.Text = "0";
+                        body.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case Key.L: // charactir
+                    if (Characteristic.IsVisible)
+                        Characteristic.Visibility = Visibility.Collapsed;
+                    else Characteristic.Visibility = Visibility.Visible;
+                    break;
+                case Key.S: // skill
+                    if (Skill.IsVisible)
+                        Skill.Visibility = Visibility.Collapsed;
+                    else Skill.Visibility = Visibility.Visible;
+                    break;
+                case Key.I: // inventory
+                    if (Inventory.IsVisible)
+                        Inventory.Visibility = Visibility.Collapsed;
+                    else Inventory.Visibility = Visibility.Visible;
+                    break;
+                case Key.C: // craft
+                    if (Craft.IsVisible)
+                        Craft.Visibility = Visibility.Collapsed;
+                    else Craft.Visibility = Visibility.Visible;
+                    break;
+                case Key.M: // map
+                    if (MapWindow.IsVisible)
+                        MapWindow.Visibility = Visibility.Collapsed;
+                    else MapWindow.Visibility = Visibility.Visible;
+                    break;
+                case Key.P: // pip-boy
+                    if (DebugPanel.IsVisible)
+                        DebugPanel.Visibility = Visibility.Collapsed;
+                    else DebugPanel.Visibility = Visibility.Visible;
+                    break;
+                case Key.D: // debug pnale
+                    if (DebugPanel.IsVisible)
+                        DebugPanel.Visibility = Visibility.Collapsed;
+                    else DebugPanel.Visibility = Visibility.Visible;
                     break;
             }
         }

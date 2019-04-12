@@ -128,13 +128,15 @@ namespace Nuclear.src
         {
             try
             {
+                if (Convert.ToInt32(ValuePlayers.Text) <= 1)
+                    throw new Exception("Вместительность не должна быть меньше 2!\r\n");
                 if (Convert.ToInt32(RangeDown.Text) > Convert.ToInt32(RangeUp.Text))
-                    throw new Exception("\r\n Нижний порог входа выше чем верхний!");
+                    throw new Exception("Нижний порог входа выше чем верхний!\r\n");
                 if (Convert.ToInt32(RangeUp.Text) < Convert.ToInt32(RangeDown.Text))
-                    throw new Exception("\r\n Верхний порог входа ниже чем нижний!");
+                    throw new Exception("Верхний порог входа ниже чем нижний!\r\n");
                 foreach (StackPanel stack in StackPlayer.Children)
                     if (stack.Name == NameRoom.Text)
-                        throw new Exception("\r\n Комната с таким именем уже существует");
+                        throw new Exception("Комната с таким именем уже существует\r\n");
                 if (CreateRoom.Visibility == Visibility.Collapsed)
                 {
                     CreateWindow.IsEnabled = false;
@@ -145,7 +147,7 @@ namespace Nuclear.src
                     CreateRoom.Visibility = Visibility.Visible;
                 }
                 else if (MapSelection.SelectedItem == null || ValuePlayers.Text == "" || NameRoom.Text == "" || RangeUp.Text == "" || RangeDown.Text == "")
-                    throw new Exception("\r\n Не все поля заполнены");
+                    throw new Exception("Не все поля заполнены\r\n");
                 else
                 {
                     client = new TcpClient(address, port);
@@ -154,10 +156,8 @@ namespace Nuclear.src
                     User.SetStateMap(MapSelection.Text);
                     message = "2 " + NameRoom.Text + " " + ValuePlayers.Text + " " + RangeUp.Text + " " + RangeDown.Text + " " + MapSelection.Text + " " + User.GetNickname() + " " + User.GetLevel().ToString();
                     byte[] data = Encoding.Unicode.GetBytes(message);
-                    // отправка сообщения
                     stream.Write(data, 0, data.Length);
-                    // получаем ответ
-                    data = new byte[64]; // буфер для получаемых данных
+                    data = new byte[64];
                     StringBuilder builder = new StringBuilder();
                     int bytes = 0;
                     do
@@ -175,7 +175,7 @@ namespace Nuclear.src
                         CreateWindow.Background = null;
                         CreateWindow.Opacity = 0.3;
 
-                        ChatTextBlock.Text += "\r\n" + builder.ToString();
+                        ChatTextBlock.Text += builder.ToString() + "\r\n";
                         client.Close();
 
                         StatsPlayer.Margin = new Thickness(0, 86, 5, 0);
@@ -260,7 +260,7 @@ namespace Nuclear.src
             }
             catch (Exception error)
             {
-                ChatTextBlock.Text += "\r\n" + error.Message;
+                ChatTextBlock.Text += error.Message + "\r\n";
             }
             finally
             {
@@ -285,10 +285,8 @@ namespace Nuclear.src
             stream = client.GetStream();
             message = "3 " + User.GetStateRoom() + " " + User.GetNickname() + " " + User.GetLevel();
             byte[] data = Encoding.Unicode.GetBytes(message);
-            // отправка сообщения
             stream.Write(data, 0, data.Length);
-            // получаем ответ
-            data = new byte[64]; // буфер для получаемых данных
+            data = new byte[64];
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
             do
@@ -306,7 +304,7 @@ namespace Nuclear.src
             }
             else
             {
-                ChatTextBlock.Text += "\r\n " + builder.ToString();
+                ChatTextBlock.Text += builder.ToString() + "\r\n ";
                 StreamResourceInfo str = Application.GetResourceStream(
                    new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
                 Cursor customCursorr = new Cursor(str.Stream);
@@ -368,10 +366,8 @@ namespace Nuclear.src
             NetworkStream stream = client.GetStream();
             message = "7 " + User.GetStateRoom() + " " + User.GetNickname() + " " + exit;
             byte[] data = Encoding.Unicode.GetBytes(message);
-            // отправка сообщения
             stream.Write(data, 0, data.Length);
-            // получаем ответ
-            data = new byte[64]; // буфер для получаемых данных
+            data = new byte[64];
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
             do
@@ -380,7 +376,7 @@ namespace Nuclear.src
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             }
             while (stream.DataAvailable);
-            ChatTextBlock.Text += "\r\n" + builder.ToString();
+            ChatTextBlock.Text += builder.ToString() + "\r\n";
             client.Close();
             stream.Close();
         }
@@ -398,10 +394,8 @@ namespace Nuclear.src
             NetworkStream stream = client.GetStream();
             message = "5";
             byte[] data = Encoding.Unicode.GetBytes(message);
-            // отправка сообщения
             stream.Write(data, 0, data.Length);
-            // получаем ответ
-            data = new byte[64]; // буфер для получаемых данных
+            data = new byte[64];
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
             do
@@ -492,10 +486,8 @@ namespace Nuclear.src
                     stream = client.GetStream();
                     message = "6 " + elements[0];
                     data = Encoding.Unicode.GetBytes(message);
-                    // отправка сообщения
                     stream.Write(data, 0, data.Length);
-                    // получаем ответ
-                    data = new byte[64]; // буфер для получаемых данных
+                    data = new byte[64];
                     builder = new StringBuilder();
                     bytes = 0;
                     do
@@ -551,7 +543,7 @@ namespace Nuclear.src
             }
             else
             {
-                ChatTextBlock.Text += "\r\n" + builder.ToString();
+                ChatTextBlock.Text += builder.ToString() + "\r\n";
                 client.Close();
                 stream.Close();
             }
@@ -560,10 +552,8 @@ namespace Nuclear.src
             stream = client.GetStream();
             message = "8";
             data = Encoding.Unicode.GetBytes(message);
-            // отправка сообщения
             stream.Write(data, 0, data.Length);
-            // получаем ответ
-            data = new byte[64]; // буфер для получаемых данных
+            data = new byte[64];
             builder = new StringBuilder();
             bytes = 0;
             do

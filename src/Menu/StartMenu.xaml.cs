@@ -45,7 +45,25 @@ namespace Nuclear
 
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Registration(user));
+            Mouse.OverrideCursor = Cursors.Wait;
+            try
+            {
+                client = new TcpClient(address, port);
+                NetworkStream stream = client.GetStream();
+                StreamResourceInfo sri = Application.GetResourceStream(
+                          new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+                Cursor customCursor = new Cursor(sri.Stream);
+                Mouse.OverrideCursor = customCursor;
+                this.NavigationService.Navigate(new Registration(user));
+            }
+            catch (Exception ex)
+            {
+                StreamResourceInfo sria = Application.GetResourceStream(
+                        new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+                Cursor customCursore = new Cursor(sria.Stream);
+                Mouse.OverrideCursor = customCursore;
+                ChatTextBlock.Text += "Сервер неактивен!\r\n";
+            }
         }
 
         private void OnlineGame_Click(object sender, RoutedEventArgs e)
@@ -57,9 +75,7 @@ namespace Nuclear
                 {
                     client = new TcpClient(address, port);
                     NetworkStream stream = client.GetStream();
-
-                    string message = "1 " + Login.Text;
-                    message += " " + Password.Text;
+                    string message = "1 " + Login.Text + " " + Password.Text;
                     byte[] data = Encoding.Unicode.GetBytes(message);
                     // отправка сообщения
                     stream.Write(data, 0, data.Length);
@@ -89,7 +105,7 @@ namespace Nuclear
                     }
                     else
                     {
-                        ChatTextBlock.Text += "\r\n" + builder.ToString();
+                        ChatTextBlock.Text += builder.ToString() + "\r\n";
                         client.Close();
                         stream.Close();
                         StreamResourceInfo str = Application.GetResourceStream(
@@ -104,11 +120,11 @@ namespace Nuclear
                            new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
                     Cursor customCursore = new Cursor(sria.Stream);
                     Mouse.OverrideCursor = customCursore;
-                    ChatTextBlock.Text += "\r\n Сервер неактивен!";
+                    ChatTextBlock.Text += "Сервер неактивен!\r\n";
                 }
             }
             else
-                ChatTextBlock.Text += "\r\n Введите Логин и Пароль!";
+                ChatTextBlock.Text += "Введите Логин и Пароль!\r\n";
             StreamResourceInfo sri = Application.GetResourceStream(
                            new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
             Cursor customCursor = new Cursor(sri.Stream);

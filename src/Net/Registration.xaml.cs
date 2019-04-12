@@ -10,16 +10,12 @@ using System.Windows.Media.Imaging;
 
 namespace Nuclear.src
 {
-    /// <summary>
-    /// Логика взаимодействия для Registration.xaml
-    /// </summary>
     public partial class Registration : Page
     {
         PlayerUser user = null;
-        // адрес и порт сервера, к которому будем подключаться
-        static int port = 2888; // порт сервера
-        static string address = "84.201.150.2"; // адрес сервера
-        Socket socket = null;
+        static int port = 2888;
+        static string address = "84.201.150.2";
+        TcpClient client = null;
 
         public Registration(PlayerUser connectUser)
         {
@@ -35,44 +31,24 @@ namespace Nuclear.src
                 Password.Opacity = 0.3;
                 Password.IsEnabled = false;
             }
-            else
-            {
-                try
-                {
-                    IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(address), port);
-                    socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    socket.Connect(ipPoint);
-                    ChatTextBlock.Text = ChatTextBlock.Text + "\r\n" + "Сервер активен!";
-                }
-                catch (Exception ex)
-                {
-                    ChatTextBlock.Text = ChatTextBlock.Text + "\r\n" + "Сервер неактивен!";
-                    RegistrUser.Opacity = 0.3;
-                    RegistrUser.IsEnabled = false;
-                    Login.Opacity = 0.3;
-                    Login.IsEnabled = false;
-                    Password.Opacity = 0.3;
-                    Password.IsEnabled = false;
-                }
-            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string message ="0 " + Login.Text;
-            message += " " + Password.Text;
+            client = new TcpClient(address, port);
+            NetworkStream stream = client.GetStream();
+            string message ="0 " + Login.Text + " " + Password.Text;
             byte[] data = Encoding.Unicode.GetBytes(message);
-            socket.Send(data);
             data = new byte[256];
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
             do
             {
-                bytes = socket.Receive(data, data.Length, 0);
+                bytes = stream.Read(data, 0, data.Length);
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             }
-            while (socket.Available > 0);
-            ChatTextBlock.Text +="\r\n" + builder.ToString();
+            while (stream.DataAvailable);
+            ChatTextBlock.Text += builder.ToString() + "\r\n";
             if(builder.ToString() == "Регистрация прошла успешно")
             {
                 user.SetNickname(Login.Text);
@@ -82,9 +58,9 @@ namespace Nuclear.src
                 Login.IsEnabled = false;
                 Password.Opacity = 0.3;
                 Password.IsEnabled = false;
-                socket.Shutdown(SocketShutdown.Both);
-                socket.Close();
             }
+            client.Close();
+            stream.Close();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

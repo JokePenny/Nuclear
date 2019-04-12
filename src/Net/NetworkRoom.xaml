@@ -114,7 +114,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                         </StackPanel>
-                                        <TextBox Name="NameRoom" Width="136" TextAlignment="Center" Background="Black" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text=""></TextBox>
+                                        <TextBox Name="NameRoom" MaxLength="18" Width="136" TextAlignment="Center" Background="Black" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text=""></TextBox>
                                     </WrapPanel>
                                 </Border>
                                 <Border BorderThickness="0 2 0 2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top">
@@ -123,7 +123,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                         </StackPanel>
-                                        <TextBox Name="ValuePlayers" Width="136" TextAlignment="Center" Background="Black" Foreground="Lime" FontSize="16" PreviewTextInput="Number_CheckWrite" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"></TextBox>
+                                        <TextBox Name="ValuePlayers" MaxLength="1" Width="136" TextAlignment="Center" Background="Black" Foreground="Lime" FontSize="16" PreviewTextInput="Number_CheckWrite" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"></TextBox>
                                     </WrapPanel>
                                 </Border>
                                 <Border BorderThickness="0 2 0 2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top">
@@ -132,7 +132,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                         </StackPanel>
-                                        <TextBox Name="RangeUp" Width="136" TextAlignment="Center" Background="Black" PreviewTextInput="Number_CheckWrite" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"></TextBox>
+                                        <TextBox Name="RangeUp" MaxLength="1" Width="136" TextAlignment="Center" Background="Black" PreviewTextInput="Number_CheckWrite" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"></TextBox>
                                     </WrapPanel>
                                 </Border>
                                 <Border BorderThickness="0 2 0 2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top">
@@ -141,7 +141,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                         </StackPanel>
-                                        <TextBox Name="RangeDown" Width="136" TextAlignment="Center" PreviewTextInput="Number_CheckWrite" Background="Black" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"></TextBox>
+                                        <TextBox Name="RangeDown" MaxLength="1" Width="136" TextAlignment="Center" PreviewTextInput="Number_CheckWrite" Background="Black" Foreground="Lime" FontSize="16" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"></TextBox>
                                     </WrapPanel>
                                 </Border>
                             </StackPanel>
