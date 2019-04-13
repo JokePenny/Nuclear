@@ -141,7 +141,7 @@ namespace Nuclear.src
                 {
                     CreateWindow.IsEnabled = false;
                     StatsPlayer.Margin = new Thickness(0, 0, 165, 0);
-                    ValuePlayers.Text = "0";
+                    ValuePlayers.Text = "2";
                     RangeUp.Text = "0";
                     RangeDown.Text = "0";
                     CreateRoom.Visibility = Visibility.Visible;

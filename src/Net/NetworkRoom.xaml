@@ -123,7 +123,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Separator BorderThickness="2" BorderBrush="Green" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                         </StackPanel>
-                                        <TextBox Name="ValuePlayers" MaxLength="1" Width="136" TextAlignment="Center" Background="Black" Foreground="Lime" FontSize="16" PreviewTextInput="Number_CheckWrite" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="0"></TextBox>
+                                        <TextBox Name="ValuePlayers" MaxLength="1" Width="136" TextAlignment="Center" Background="Black" Foreground="Lime" FontSize="16" PreviewTextInput="Number_CheckWrite" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" Text="2"></TextBox>
                                     </WrapPanel>
                                 </Border>
                                 <Border BorderThickness="0 2 0 2" BorderBrush="Green"  Grid.Row="2" VerticalAlignment="Top">

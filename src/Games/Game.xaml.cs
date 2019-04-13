@@ -25,7 +25,6 @@ namespace Nuclear
     public partial class Game : Page
     {
         private bool changeCursor = false;
-
         private Field field = new Field();
         private List<Point> wave = new List<Point>();
         private List<Point> wavePath = new List<Point>();
@@ -79,7 +78,6 @@ namespace Nuclear
             int y;  
             User = connect;
             Random point = new Random();
-            //stream = client.GetStream();
             while (true)
             {
                 client = new TcpClient(address, port);
@@ -112,15 +110,12 @@ namespace Nuclear
             client = new TcpClient();
             try
             {
-                client.Connect(address, port); //подключение клиента
+                client.Connect(address, port);
                 stream = client.GetStream();
                 message = "11 " + User.GetStateRoom() + " " + User.GetNickname() + " " + x.ToString() + " " + y.ToString();
                 data = Encoding.Unicode.GetBytes(message);
-                // отправка сообщения
                 stream.Write(data, 0, data.Length);
                 openSend = 1;
-                // получаем ответ
-                // запускаем новый поток для получения данных
                 receiveThread = new Thread(new ThreadStart(ReceiveMessage));
                 receiveThread.Start();
                 sendThread = new Thread(new ThreadStart(SendMessage));
@@ -135,7 +130,6 @@ namespace Nuclear
             MapActiveGrid();
             MapHeatGrid();
             MapImgPlayerGrid();
-
             User.SetImageScreen(GROD, this);
             findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
             timerStart();
@@ -246,7 +240,18 @@ namespace Nuclear
                         }
                     });
                     break;
-                case "2": // дисконектятся
+                case "2": // чат
+                    Dispatcher.Invoke(delegate
+                    {
+                        foreach (PlayerUser connectedUser in Players)
+                        {
+                            if (connectedUser.GetNickname() == command[1])
+                            {
+                                ChatTextBlock.Text += command[1] + ": " + command[2] + "\r\n";
+                                break;
+                            }
+                        }
+                    });
                     break;
                 case "11": // подключение
                     Dispatcher.Invoke(delegate
@@ -301,6 +306,8 @@ namespace Nuclear
                             run = 1;
                             x = 60;
                             User.SetMovePoints(10);
+                            Clean_HeatMap();
+                            Clean_TextBlock();
                             findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
                             int i = 0;
                             foreach (Ellipse health in HealthPanel.Children)
@@ -325,10 +332,10 @@ namespace Nuclear
                             {
                                 disconetUser = connectedUser;
                                 connectedUser.animationCharacter.Disconect(GROD);
+                                ChatTextBlock.Text += disconetUser.GetNickname() + " отключился\r\n";
                                 break;
                             }
                         }
-                        ChatTextBlock.Text += disconetUser.GetNickname() + " отключился\r\n";
                         Players.Remove(disconetUser);
                     });
                     break;
@@ -966,7 +973,13 @@ namespace Nuclear
         /* чат */
         private void SendButton_Key(object sender, KeyEventArgs e)
         {
-            
+            if(e.Key == Key.Enter)
+            {
+                message = User.GetNickname() + ": " + MessageTextBox.Text;
+                ChatTextBlock.Text += message + "\r\n";
+                MessageTextBox.Text = "";
+                openSend = 1;
+            }
         }
 
         private void Collapsed_WindowUI_Click(object sender, MouseButtonEventArgs e)
@@ -1522,16 +1535,14 @@ namespace Nuclear
             }
         }
 
-        public void Hotkey_KeyUp(object sender, KeyEventArgs e)
+        public void Hotkey_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
                 case Key.Tab: // list player
-                    if (changeCursor)
-                    {
-                        HeadChance.Text = "0";
-                        head.Visibility = Visibility.Hidden;
-                    }
+                    if (TabPlayer.IsVisible)
+                        TabPlayer.Visibility = Visibility.Collapsed;
+                    else TabPlayer.Visibility = Visibility.Visible;
                     break;
                 case Key.Escape: // menu or close windows
                     if (changeCursor)
@@ -1540,12 +1551,9 @@ namespace Nuclear
                         l_hand.Visibility = Visibility.Hidden;
                     }
                     break;
-                case Key.T: // char
-                    if (changeCursor)
-                    {
-                        LHandOrBodyChance.Text = "0";
-                        body.Visibility = Visibility.Hidden;
-                    }
+                case Key.T: // chat
+                    if(MessageTextBox.Visibility == Visibility.Visible)
+                        MessageTextBox.Focus();
                     break;
                 case Key.L: // charactir
                     if (Characteristic.IsVisible)
