@@ -7,7 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
-
+//"84.201.150.2"
 namespace Nuclear.src
 {
     public partial class NetworkRoom : Page
@@ -296,7 +296,7 @@ namespace Nuclear.src
             }
             while (stream.DataAvailable);
 
-            if (builder.ToString() != "Недоступен по уровню" && builder.ToString() != "Комната заполнена" && builder.ToString() != "Комната заполнена")
+            if (builder.ToString() != "Недоступен по уровню" && builder.ToString() != "Комната заполнена" && builder.ToString() != "Комната заполнена" && builder.ToString() != "Матч уже начался")
             {
                 this.NavigationService.Navigate(new Game(User));
                 client.Close();
@@ -308,6 +308,7 @@ namespace Nuclear.src
                 StreamResourceInfo str = Application.GetResourceStream(
                    new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
                 Cursor customCursorr = new Cursor(str.Stream);
+                User.SetStateRoom("");
                 Mouse.OverrideCursor = customCursorr;
                 client.Close();
                 stream.Close();

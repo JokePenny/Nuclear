@@ -86,10 +86,8 @@ namespace Nuclear
                 y = point.Next(1, 24);
                 message = "10 " + User.GetStateRoom() + " " + x.ToString() + " " + y.ToString() + " " + User.GetNickname();
                 data = Encoding.Unicode.GetBytes(message);
-                // отправка сообщения
                 stream.Write(data, 0, data.Length);
-                // получаем ответ
-                data = new byte[64]; // буфер для получаемых данных
+                data = new byte[64];
                 StringBuilder builders = new StringBuilder();
                 int bytess = 0;
                 do
@@ -155,7 +153,7 @@ namespace Nuclear
             {
                 try
                 {
-                    byte[] data = new byte[64]; // буфер для получаемых данных
+                    byte[] data = new byte[64];
                     StringBuilder builder = new StringBuilder();
                     int bytes = 0;
                     do
@@ -553,7 +551,7 @@ namespace Nuclear
                     style.Setters.Add(new Setter { Property = Control.MarginProperty, Value = new Thickness(-2.5, -1, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderThicknessProperty, Value = new Thickness(0, 0, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderBrushProperty, Value = null });
-                    if (field.GetPathArray(j, i) == -1) //PathArray[j, i] == -1
+                    if (field.GetPathArray(j, i) == -1)
                     {
                         style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = null });
                     }
@@ -1227,7 +1225,7 @@ namespace Nuclear
             if (changeCursor)
             {
                 foreach (Image PlayerImage in GROD.Children)
-                    if ((sender as Image).Name == PlayerImage.Name)
+                    if ((sender as Image).Name == PlayerImage.Name && (sender as Image).Name != User.GetNickname())
                     {
                         PanelAttack.Visibility = Visibility.Visible;
                         DropShadowEffect effect = new DropShadowEffect();
@@ -1244,7 +1242,7 @@ namespace Nuclear
             else
             {
                 foreach (Image PlayerImage in GROD.Children)
-                    if ((sender as Image).Name == PlayerImage.Name)
+                    if ((sender as Image).Name == PlayerImage.Name && (sender as Image).Name != User.GetNickname())
                     {
                         PanelAttack.Visibility = Visibility.Hidden;
                         PlayerImage.Effect = null;
@@ -1259,7 +1257,7 @@ namespace Nuclear
         {
             if (changeCursor)
                 foreach (Image PlayerImage in GROD.Children)
-                    if ((sender as Image).Name == PlayerImage.Name)
+                    if ((sender as Image).Name == PlayerImage.Name && (sender as Image).Name != User.GetNickname())
                     {
                         PanelAttack.Visibility = Visibility.Hidden;
                         PlayerImage.Effect = null;
