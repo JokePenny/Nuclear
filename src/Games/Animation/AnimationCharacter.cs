@@ -15,11 +15,13 @@ namespace Nuclear.src
         public string FullPathImage { get; set; }
         public string Direction { get; set; }
         public int ZIndexImage { get; set; } = 0;
+        public int NumEndAnimaion { get; set; } = 0;
         public byte NumFolderCharacter { get; set; } = 9;
         public byte FirstLetterAnimation { get; set; } = 0;
         public byte SecondLetterAnimation { get; set; } = 0;
         public byte IndexDirection { get; set; } = 0;
         public bool ChangeAnimation { get; set; } = true;
+        public bool SpeedMove { get; set; } = false; // false - ходьба, true - бег
 
         /* Инструкция к анимации
          * FirstLetterAnimation: анимация     SecondLetterAnimation:
@@ -154,7 +156,10 @@ namespace Nuclear.src
                     PathImage += "A";
                     break;
                 case 1:
-                    PathImage += "B";
+                    if (NumEndAnimaion == 1)
+                        PathImage += "A";
+                    else
+                        PathImage += "B";
                     break;
                 case 2:
                     PathImage += "C";
@@ -209,12 +214,27 @@ namespace Nuclear.src
                     PathImage += "S";
                     break;
                 case 19:
-                    PathImage += "T";
+                    if (NumEndAnimaion == 1)
+                        PathImage += "A";
+                    else
+                        PathImage += "T";
                     break;
             }
             ChangeAnimation = false;
             return PathImage;
         }
+
+        /*   Direction
+         * 
+         *       N
+         *   NW  |  NE
+         *     \ | /
+         * W ----+---- E
+         *     / | \
+         *   SW  |  SE
+         *       S
+         *
+         */
 
         public void ChangeImage(Canvas GROD, double imageY, double imageX, bool changeDirection, double indexDirection)
         {
@@ -369,6 +389,15 @@ namespace Nuclear.src
 
         public void SetAnimation(byte numFolderCharacter, byte firstLetterAnimation, byte secondLetterAnimation)
         {
+            NumFolderCharacter = numFolderCharacter;
+            FirstLetterAnimation = firstLetterAnimation;
+            SecondLetterAnimation = secondLetterAnimation;
+            ChangeAnimation = true;
+        }
+
+        public void SetAnimation(int numEndAnimation, byte numFolderCharacter, byte firstLetterAnimation, byte secondLetterAnimation)
+        {
+            NumEndAnimaion = numEndAnimation;
             NumFolderCharacter = numFolderCharacter;
             FirstLetterAnimation = firstLetterAnimation;
             SecondLetterAnimation = secondLetterAnimation;

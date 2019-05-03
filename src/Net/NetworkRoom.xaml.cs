@@ -270,14 +270,28 @@ namespace Nuclear.src
 
         private void EntranceRoom_Click(object sender, MouseButtonEventArgs e)
         {
+            string status;
             foreach (Border room in StackRoom.Children)
                 if (room.Background == Brushes.Green)
                 {
                     WrapPanel wrap = (WrapPanel)room.Child;
+                    int i = 0;
                     foreach (TextBlock map in wrap.Children)
                     {
                         User.SetStateRoom(map.Text);
                         break;
+                        /*
+                        switch (i)
+                        {
+                            case 0:
+                                User.SetStateRoom(map.Text);
+                                break;
+                            case 4:
+                                status = map.Text;
+                                break;
+                        }
+                        i++;
+                        */
                     }
                     break;
                 }

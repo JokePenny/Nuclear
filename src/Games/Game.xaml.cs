@@ -58,7 +58,7 @@ namespace Nuclear
             InitializeComponent();
             run = 1;
             //InitInventory();
-            User = new PlayerUser(8, 2, 20, 12, 5, GROD, this);
+            User = new PlayerUser(8, 2, 20, 200, 5, GROD, this);
             MapImageGrid();
             MapActiveGrid();
             MapHeatGrid();
@@ -869,7 +869,7 @@ namespace Nuclear
 
                 if (User.GetMovePoints() > 0 && (User.GetX() != locationEndX || User.GetY() != locationEndY))
                 {
-                    await Task.Delay(500);
+                    await Task.Delay(470);
                     Clean_TextBlock();
                     Clean_HeatMap();
                     List<Point> step = new List<Point>();
@@ -895,6 +895,13 @@ namespace Nuclear
                                 }
                             }
                             User.SetMovePoints(Convert.ToByte(User.GetMovePoints() - 1));
+
+                            //MessageBox.Show(string.Format(wave.Count.ToString()));
+
+                            if(User.animationCharacter.SpeedMove)
+                                User.animationCharacter.SetAnimation(wave.Count, User.TypeOfArmor, 0, 19);
+                            else
+                                User.animationCharacter.SetAnimation(wave.Count, User.TypeOfArmor, 0, 1);
 
                             User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
 
@@ -1587,6 +1594,11 @@ namespace Nuclear
                     if (DebugPanel.IsVisible)
                         DebugPanel.Visibility = Visibility.Collapsed;
                     else DebugPanel.Visibility = Visibility.Visible;
+                    break;
+                case Key.R: // смена бега/ходьбы
+                    if (User.animationCharacter.SpeedMove)
+                        User.animationCharacter.SpeedMove = false;
+                    else User.animationCharacter.SpeedMove = true;
                     break;
             }
         }

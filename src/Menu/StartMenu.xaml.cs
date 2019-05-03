@@ -77,10 +77,8 @@ namespace Nuclear
                     NetworkStream stream = client.GetStream();
                     string message = "1 " + Login.Text + " " + Password.Text;
                     byte[] data = Encoding.Unicode.GetBytes(message);
-                    // отправка сообщения
                     stream.Write(data, 0, data.Length);
-                    // получаем ответ
-                    data = new byte[256]; // буфер для получаемых данных
+                    data = new byte[256];
                     StringBuilder builder = new StringBuilder();
                     int bytes = 0;
                     do
