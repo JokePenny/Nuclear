@@ -64,7 +64,6 @@ namespace Nuclear
             MapHeatGrid();
             MapImgPlayerGrid();
             User.SetNickname("lorne");
-            User.SetImageScreen(GROD, this);
             HealthPlayer.Text = User.GetHealth().ToString();
             findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
         }
@@ -100,6 +99,7 @@ namespace Nuclear
                     break;
             }
             User.SetXY(x, y);
+            User.animationCharacter.SetImageXImageY(x, y);
             User.SetMovePoints(12);
             User.SetAreaVisibility(16);
             User.SetHealth(20);
@@ -197,7 +197,7 @@ namespace Nuclear
                             if (connectedUser.GetNickname() == command[1])
                             {
                                 connectedUser.SetXY(Convert.ToInt32(command[2]), Convert.ToInt32(command[3]));
-                                connectedUser.animationCharacter.ChangeImage(GROD, connectedUser.imageY, connectedUser.imageX, connectedUser.changeImage, connectedUser.IndexImage);
+                                connectedUser.animationCharacter.ChangeImage(GROD);
                                 break;
                             }
                         }
@@ -210,7 +210,7 @@ namespace Nuclear
                         {
                             if (connectedUser.GetNickname() == command[2])
                             {
-                                connectedUser.animationCharacter.SetAnimation(command[4], GROD, connectedUser.imageY, connectedUser.imageX);
+                                connectedUser.animationCharacter.SetAnimation(command[4], GROD);
                                 break;
                             }
                         }
@@ -220,7 +220,7 @@ namespace Nuclear
                             if (User.GetHealth() <= 0)
                             {
                                 User.animationCharacter.SetAnimation(User.TypeOfArmor, 1, 3);
-                                User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
+                                User.animationCharacter.ChangeImage(GROD);
                                 ChatTextBlock.Text += "Вас убил " + command[2] + "!\r\n";
                                 message = "14 " + "d" + " " + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
                                 // смерть игрока
@@ -228,7 +228,7 @@ namespace Nuclear
                             else
                             {
                                 User.animationCharacter.SetAnimation(User.TypeOfArmor, 0, 14);
-                                User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
+                                User.animationCharacter.ChangeImage(GROD);
                                 User.animationCharacter.SetAnimation(User.TypeOfArmor, 0, 0);
                                 ChatTextBlock.Text += "Вас ранил " + command[2] + "! Потеряно " + command[3] + " здоровья\r\n";
                                 message = "14 " + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
@@ -256,6 +256,7 @@ namespace Nuclear
                     {
                         PlayerUser connectedUser = new PlayerUser();
                         connectedUser.SetXY(Convert.ToInt32(command[3]), Convert.ToInt32(command[4]));
+                        connectedUser.animationCharacter.SetImageXImageY(Convert.ToInt32(command[3]), Convert.ToInt32(command[4]));
                         connectedUser.SetHealth(20);
                         connectedUser.SetNickname(command[2]);
                         connectedUser.SetImageScreen(GROD, this);
@@ -270,6 +271,7 @@ namespace Nuclear
                     {
                         PlayerUser connectedUser = new PlayerUser();
                         connectedUser.SetXY(Convert.ToInt32(command[1]), Convert.ToInt32(command[2]));
+                        connectedUser.animationCharacter.SetImageXImageY(Convert.ToInt32(command[3]), Convert.ToInt32(command[4]));
                         connectedUser.SetHealth(20);
                         connectedUser.SetNickname(command[3]);
                         connectedUser.SetImageScreen(GROD, this);
@@ -284,12 +286,12 @@ namespace Nuclear
                         {
                             if (connectedUser.GetNickname() == command[1])
                             {
-                                connectedUser.animationCharacter.SetAnimation(command[2], GROD, connectedUser.imageY, connectedUser.imageX);
+                                connectedUser.animationCharacter.SetAnimation(command[2], GROD);
                                 break;
                             }
                             else if(command[1] == "d" && connectedUser.GetNickname() == command[2])
                             {
-                                connectedUser.animationCharacter.SetAnimation(command[3], GROD, connectedUser.imageY, connectedUser.imageX);
+                                connectedUser.animationCharacter.SetAnimation(command[3], GROD);
                                 break;
                             }
                         }
@@ -869,7 +871,7 @@ namespace Nuclear
 
                 if (User.GetMovePoints() > 0 && (User.GetX() != locationEndX || User.GetY() != locationEndY))
                 {
-                    await Task.Delay(470);
+                    await Task.Delay(472);
                     Clean_TextBlock();
                     Clean_HeatMap();
                     List<Point> step = new List<Point>();
@@ -883,6 +885,7 @@ namespace Nuclear
                         {
                             c = wave.First<Point>();
                             User.SetXY(c.x, c.y);
+                            User.animationCharacter.SetImageXImageY(c.x, c.y);
                             PositionX.Text = User.GetX().ToString();
                             PositionY.Text = User.GetY().ToString();
 
@@ -903,7 +906,7 @@ namespace Nuclear
                             else
                                 User.animationCharacter.SetAnimation(wave.Count, User.TypeOfArmor, 0, 1);
 
-                            User.animationCharacter.ChangeImage(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
+                            User.animationCharacter.ChangeImage(GROD);
 
                             if (Players.Count != 0)
                             {
@@ -1213,7 +1216,7 @@ namespace Nuclear
                                     if (probability.Next(0, 100) <= chance_of_hit)
                                     {
                                         User.animationCharacter.SetAnimation(9, 0, 16);
-                                        message = "1 " + PlayerFinded.GetNickname() + " " + User.GetNickname() + " " + User.GetDamage(1, 1, 1) + " " + User.animationCharacter.AttackAnimation(GROD, User.imageY, User.imageX, User.changeImage, User.IndexImage);
+                                        message = "1 " + PlayerFinded.GetNickname() + " " + User.GetNickname() + " " + User.GetDamage(1, 1, 1) + " " + User.animationCharacter.AttackAnimation(GROD);
                                         User.animationCharacter.SetAnimation(User.TypeOfArmor, 0, 0);
                                         openSend = 1;
                                     }

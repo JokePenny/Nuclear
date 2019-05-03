@@ -17,6 +17,7 @@ namespace Nuclear
         protected byte areaVisibility;
         protected string nickname = null;
         public AnimationCharacter animationCharacter { get; set; }
+        /*
 
         public double imageX { get; set; }
         public double imageY { get; set; }
@@ -30,6 +31,7 @@ namespace Nuclear
         private int[] dy = { -1, 0, 1, -1, 0, -1 };
         private int[] dx2 = { 0, 1, 0, -1, 1, -1 };
         private int[] dy2 = { -1, 0, 1, 0, 1, 1 };
+        */
 
         public LivingObjects(int X, int Y, int Health, byte MovePoints, byte AreaVisibility)
         {
@@ -73,7 +75,7 @@ namespace Nuclear
         {
             return areaVisibility;
         }
-
+        /*
         public double GetImageX()
         {
             return imageX;
@@ -83,6 +85,7 @@ namespace Nuclear
         {
             return imageY;
         }
+        */
 
         public string GetNickname()
         {
@@ -94,43 +97,6 @@ namespace Nuclear
         {
             x = X;
             y = Y;
-            imageX = X * 13 - 55;
-            if (X % 2 != 0)
-                imageY = Y * 96/ 2.74 + 10;
-            else
-                imageY = Y  * 96/2.74 - 10;
-
-            double checkImageX;
-            double checkImageY;
-            for (int d = 0; d < 6; d++)
-            {
-                if (X % 2 != 0)
-                {
-                    checkImageX = (imageXOld + dx[d]) * 13 - 55;
-                    checkImageY = (imageYOld + dy[d]) * 96/2.74 + 10;
-                    if (checkImageX == imageX && checkImageY == imageY)
-                    {
-                        animationCharacter.ZIndexImage = X;
-                        changeImage = true;
-                        IndexImage = d;
-                        break;
-                    }
-                }
-                else
-                {
-                    checkImageX = (imageXOld + dx2[d]) * 13 - 55;
-                    checkImageY = (imageYOld + dy2[d]) *96/2.74 - 10;
-                    if (checkImageX == imageX && checkImageY == imageY)
-                    {
-                        animationCharacter.ZIndexImage = X;
-                        changeImage = false;
-                        IndexImage = d;
-                        break;
-                    }
-                }
-            }
-            imageXOld = X;
-            imageYOld = Y;
         }
 
         public void SetHealth(int A)
@@ -150,7 +116,7 @@ namespace Nuclear
 
         public void SetImageScreen(Canvas GROD, Game game)
         {
-            animationCharacter = new AnimationCharacter(GROD, game, nickname, imageX, imageY);
+            animationCharacter = new AnimationCharacter(GROD, game, nickname, x, y);
         }
 
         public void SetNickname(string a)

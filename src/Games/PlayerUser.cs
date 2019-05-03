@@ -56,14 +56,10 @@ namespace Nuclear
         {
             x = X;
             y = Y;
-            imageX = (X * 13) - 55;
-            if (X % 2 != 0)
-                imageY = 34 + (Y * 36);
-            else
-                imageY = 34 + (Y * 18);
             health = Health;
             movePoints = MovePoints;
             areaVisibility = AreaVisibility;
+            animationCharacter = new AnimationCharacter(GROD, game, nickname, x, y);
         }
 
         public PlayerUser(int X, int Y, string Nickname, Canvas GROD, Game game) : base(X, Y)
@@ -71,11 +67,7 @@ namespace Nuclear
             nickname = Nickname;
             x = X;
             y = Y;
-            imageX = (X * 13) - 55;
-            if (X % 2 != 0)
-                imageY = 34 + (Y * 36);
-            else
-                imageY = 34 + (Y * 18);
+            animationCharacter = new AnimationCharacter(GROD, game, nickname, x, y);
         }
 
         public PlayerUser(string Nickname)

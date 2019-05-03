@@ -23,6 +23,62 @@ namespace Nuclear.src
         public bool ChangeAnimation { get; set; } = true;
         public bool SpeedMove { get; set; } = false; // false - ходьба, true - бег
 
+        public double imageX { get; set; }
+        public double imageY { get; set; }
+
+        private double imageXOld;
+        private double imageYOld;
+        public bool changeDirection { get; set; } = false;
+        public double indexDirection { get; set; } = 0;
+
+        private int[] dx = { 0, 1, 0, 1, -1, -1 };
+        private int[] dy = { -1, 0, 1, -1, 0, -1 };
+        private int[] dx2 = { 0, 1, 0, -1, 1, -1 };
+        private int[] dy2 = { -1, 0, 1, 0, 1, 1 };
+
+        public void SetImageXImageY(int X, int Y)
+        {
+            imageX = X * 13 - 55;
+            if (X % 2 != 0)
+                imageY = Y * 96 / 2.74 + 10;
+            else
+                imageY = Y * 96 / 2.74 - 10;
+
+            double checkImageX;
+            double checkImageY;
+            for (int d = 0; d < 6; d++)
+            {
+                if (X % 2 != 0)
+                {
+                    checkImageX = (imageXOld + dx[d]) * 13 - 55;
+                    checkImageY = (imageYOld + dy[d]) * 96 / 2.74 + 10;
+                    if (checkImageX == imageX && checkImageY == imageY)
+                    {
+                        ZIndexImage = X;
+                        changeDirection = true;
+                        indexDirection = d;
+                        break;
+                    }
+                }
+                else
+                {
+                    checkImageX = (imageXOld + dx2[d]) * 13 - 55;
+                    checkImageY = (imageYOld + dy2[d]) * 96 / 2.74 - 10;
+                    if (checkImageX == imageX && checkImageY == imageY)
+                    {
+                        ZIndexImage = X;
+                        changeDirection = false;
+                        indexDirection = d;
+                        break;
+                    }
+                }
+            }
+            imageXOld = X;
+            imageYOld = Y;
+        }
+
+
+
         /* Инструкция к анимации
          * FirstLetterAnimation: анимация     SecondLetterAnimation:
          * A - движения
@@ -41,8 +97,9 @@ namespace Nuclear.src
          * R - лежачего
          */
 
-        public AnimationCharacter(Canvas GROD, Game game, string nickname, double imageX, double imageY)
+        public AnimationCharacter(Canvas GROD, Game game, string nickname, int X, int Y)
         {
+            SetImageXImageY(X, Y);
             image = new Image();
             image.Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_e.gif", UriKind.Relative));
             FullPathImage = "pack://application:,,,/data/image/characters/HMJMPS/HMJMPSAA_e.gif";
@@ -236,7 +293,7 @@ namespace Nuclear.src
          *
          */
 
-        public void ChangeImage(Canvas GROD, double imageY, double imageX, bool changeDirection, double indexDirection)
+        public void ChangeImage(Canvas GROD)
         {
             GROD.Children.Remove(image);
             while (true)
@@ -258,9 +315,13 @@ namespace Nuclear.src
                                 break;
                             case 3:
                                 Direction = "_sw";
+                                if (NumEndAnimaion != 1)
+                                    imageX = imageX - 15;
                                 break;
                             case 4:
                                 Direction = "_ne";
+                                if (NumEndAnimaion != 1)
+                                    imageX = imageX - 15;
                                 break;
                             case 5:
                                 Direction = "_nw";
@@ -276,6 +337,8 @@ namespace Nuclear.src
                                 break;
                             case 1:
                                 Direction = "_sw";
+                                if (NumEndAnimaion != 1)
+                                    imageX = imageX - 15;
                                 break;
                             case 2:
                                 Direction = "_e";
@@ -288,6 +351,8 @@ namespace Nuclear.src
                                 break;
                             case 5:
                                 Direction = "_ne";
+                                if (NumEndAnimaion != 1)
+                                    imageX = imageX - 15;
                                 break;
                         }
                     }
@@ -311,7 +376,7 @@ namespace Nuclear.src
             }
         }
 
-        public string AttackAnimation(Canvas GROD, double imageY, double imageX, bool changeDirection, double indexDirection)
+        public string AttackAnimation(Canvas GROD)
         {
             GROD.Children.Remove(image);
             while (true)
@@ -404,7 +469,7 @@ namespace Nuclear.src
             ChangeAnimation = true;
         }
 
-        public void SetAnimation(string animation, Canvas GROD, double imageY, double imageX)
+        public void SetAnimation(string animation, Canvas GROD)
         {
             GROD.Children.Remove(image);
             var imageAnimation = new BitmapImage();
