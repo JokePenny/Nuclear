@@ -58,14 +58,14 @@ namespace Nuclear
             InitializeComponent();
             run = 1;
             //InitInventory();
-            User = new PlayerUser(8, 2, 20, 200, 5, GROD, this);
+            User = new PlayerUser(23, 17, 20, 200, 5, GROD, this);
             MapImageGrid();
             MapActiveGrid();
             MapHeatGrid();
             MapImgPlayerGrid();
             User.SetNickname("lorne");
             HealthPlayer.Text = User.GetHealth().ToString();
-            findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
+            findPath(User.GetX(), User.GetY(), User.GetX() + 1, User.GetY() + 1);
         }
 
         public Game(PlayerUser connect)
@@ -465,8 +465,8 @@ namespace Nuclear
 
         public void MapImgPlayerGrid()
         {
-            int HeightMap = 17;
-            int WidthMap = 27;
+            int HeightMap = 74;
+            int WidthMap = 142;
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
 
@@ -499,8 +499,8 @@ namespace Nuclear
 
         public void MapImageGrid()
         {
-            int HeightMap = 17;
-            int WidthMap = 27;
+            int HeightMap = 74;
+            int WidthMap = 142;
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
 
@@ -532,8 +532,10 @@ namespace Nuclear
 
         public void MapActiveGrid()
         {
-            int HeightMap = 17;
-            int WidthMap = 27;
+            //int HeightMap = 17;
+            //int WidthMap = 27;
+            int HeightMap = 74;
+            int WidthMap = 142;
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
 
@@ -586,8 +588,10 @@ namespace Nuclear
 
         public void MapHeatGrid()
         {
-            int HeightMap = 17;
-            int WidthMap = 27;
+            //int HeightMap = 17;
+            //int WidthMap = 27;
+            int HeightMap = 74;
+            int WidthMap = 142;
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
 
@@ -1610,6 +1614,27 @@ namespace Nuclear
         {
             (sender as Image).Focusable = true;
             (sender as Image).Focus();
+        }
+
+
+        private void MoveMouse_Scroll(object sender, MouseEventArgs e)
+        {
+            object tag = ((Border)e.OriginalSource).Tag;
+            switch (tag.ToString())
+            {
+                case "Top":
+                    Camera.LineUp();
+                    break;
+                case "Down":
+                    Camera.LineDown();
+                    break;
+                case "Right":
+                    Camera.LineRight();
+                    break;
+                case "Left":
+                    Camera.LineLeft();
+                    break;
+            }
         }
     }
 }

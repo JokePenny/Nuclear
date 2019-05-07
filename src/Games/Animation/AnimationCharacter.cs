@@ -10,26 +10,26 @@ namespace Nuclear.src
 {
     public class AnimationCharacter
     {
-        public Image image { get; set; }
-        public string PathImage { get; set; }
+        private Image image { get; set; }
+        private string PathImage { get; set; }
         public string FullPathImage { get; set; }
-        public string Direction { get; set; }
-        public int ZIndexImage { get; set; } = 0;
-        public int NumEndAnimaion { get; set; } = 0;
-        public byte NumFolderCharacter { get; set; } = 9;
-        public byte FirstLetterAnimation { get; set; } = 0;
-        public byte SecondLetterAnimation { get; set; } = 0;
-        public byte IndexDirection { get; set; } = 0;
-        public bool ChangeAnimation { get; set; } = true;
+        private string Direction { get; set; }
+        private int ZIndexImage { get; set; } = 0;
+        private int NumEndAnimaion { get; set; } = 0;
+        private byte NumFolderCharacter { get; set; } = 9;
+        private byte FirstLetterAnimation { get; set; } = 0;
+        private byte SecondLetterAnimation { get; set; } = 0;
+        private byte IndexDirection { get; set; } = 0;
+        private bool ChangeAnimation { get; set; } = true;
         public bool SpeedMove { get; set; } = false; // false - ходьба, true - бег
 
-        public double imageX { get; set; }
-        public double imageY { get; set; }
+        private double imageX { get; set; }
+        private double imageY { get; set; }
 
         private double imageXOld;
         private double imageYOld;
-        public bool changeDirection { get; set; } = false;
-        public double indexDirection { get; set; } = 0;
+        private bool changeDirection { get; set; } = false;
+        private double indexDirection { get; set; } = 0;
 
         private int[] dx = { 0, 1, 0, 1, -1, -1 };
         private int[] dy = { -1, 0, 1, -1, 0, -1 };

@@ -8819,5 +8819,8 @@
     <Resource Include="data\image\characters\HMJMPS\HMJMPSRP_sw.gif" />
     <Resource Include="data\image\characters\HMJMPS\HMJMPSRP_w.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\BackgroundMap\pewera.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
