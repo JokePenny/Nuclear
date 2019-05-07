@@ -58,11 +58,9 @@ namespace Nuclear
             InitializeComponent();
             run = 1;
             //InitInventory();
-            User = new PlayerUser(23, 17, 20, 200, 5, GROD, this);
+            User = new PlayerUser(23, 17, 20, 200, 15, GROD, this);
             MapImageGrid();
             MapActiveGrid();
-            MapHeatGrid();
-            MapImgPlayerGrid();
             User.SetNickname("lorne");
             HealthPlayer.Text = User.GetHealth().ToString();
             findPath(User.GetX(), User.GetY(), User.GetX() + 1, User.GetY() + 1);
@@ -126,8 +124,6 @@ namespace Nuclear
             //InitInventory();
             MapImageGrid();
             MapActiveGrid();
-            MapHeatGrid();
-            MapImgPlayerGrid();
             User.SetImageScreen(GROD, this);
             findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
             timerStart();
@@ -306,7 +302,6 @@ namespace Nuclear
                             run = 1;
                             x = 60;
                             User.SetMovePoints(10);
-                            Clean_HeatMap();
                             Clean_TextBlock();
                             findPath(User.GetX(), User.GetY(), User.GetX(), User.GetY());
                             int i = 0;
@@ -463,79 +458,25 @@ namespace Nuclear
             }
         }
 
-        public void MapImgPlayerGrid()
-        {
-            int HeightMap = 74;
-            int WidthMap = 142;
-            double sizeCellWidth = 36;
-            double sizeCellHeight = 18;
-
-            HexGrid hexGrid = new HexGrid();
-            hexGrid.RowCount = HeightMap;
-            hexGrid.ColumnCount = WidthMap;
-            hexGrid.Orientation = Orientation.Vertical;
-            hexGrid.Name = "ImgPlayerGrid";
-
-            for (int i = 0; i < HeightMap; i++)
-            {
-                for (int j = 0; j < WidthMap; j++)
-                {
-                    HexItem sss = new HexItem();
-                    sss.Background = null;
-                    sss.Margin = new Thickness(-3, -1, 0, 0);
-                    sss.BorderBrush = null;
-                    sss.BorderThickness = new Thickness(0);
-                    sss.Width = sizeCellWidth;
-                    sss.Height = sizeCellHeight;
-                    Grid.SetColumn(sss, j);
-                    Grid.SetRow(sss, i);
-                    hexGrid.Children.Add(sss);
-                }
-            }
-            Grid.SetZIndex(hexGrid, 100);
-            this.MapGrid.Children.Add(hexGrid);
-        }
 
 
         public void MapImageGrid()
         {
-            int HeightMap = 74;
-            int WidthMap = 142;
-            double sizeCellWidth = 36;
-            double sizeCellHeight = 18;
-
+            int HeightMap = 142;
+            int WidthMap = 74;
             HexGrid hexGrid = new HexGrid();
             hexGrid.RowCount = HeightMap;
             hexGrid.ColumnCount = WidthMap;
             hexGrid.Orientation = Orientation.Vertical;
             hexGrid.Name = "ImageMap";
-
-            for (int i = 0; i < HeightMap; i++)
-            {
-                for (int j = 0; j < WidthMap; j++)
-                {
-                    HexItem sss = new HexItem();
-                    sss.Background = null;
-                    sss.Margin = new Thickness(-3, -1, 0, 0);
-                    sss.BorderBrush = null;
-                    sss.BorderThickness = new Thickness(0);
-                    sss.Width = sizeCellWidth;
-                    sss.Height = sizeCellHeight;
-                    Grid.SetColumn(sss, j);
-                    Grid.SetRow(sss, i);
-                    hexGrid.Children.Add(sss);
-                }
-            }
             Grid.SetZIndex(hexGrid, 1);
             this.MapGrid.Children.Add(hexGrid);
         }
 
         public void MapActiveGrid()
         {
-            //int HeightMap = 17;
-            //int WidthMap = 27;
-            int HeightMap = 74;
-            int WidthMap = 142;
+            int HeightMap = 142;
+            int WidthMap = 74;
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
 
@@ -555,7 +496,7 @@ namespace Nuclear
                     style.Setters.Add(new Setter { Property = Control.MarginProperty, Value = new Thickness(-2.5, -1, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderThicknessProperty, Value = new Thickness(0, 0, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderBrushProperty, Value = null });
-                    if (field.GetPathArray(j, i) == -1)
+                    if (field.GetPathArray(i, j) == -1)
                     {
                         style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = null });
                     }
@@ -586,40 +527,6 @@ namespace Nuclear
             this.MapGrid.Children.Add(hexGrid);
         }
 
-        public void MapHeatGrid()
-        {
-            //int HeightMap = 17;
-            //int WidthMap = 27;
-            int HeightMap = 74;
-            int WidthMap = 142;
-            double sizeCellWidth = 36;
-            double sizeCellHeight = 18;
-
-            HexGrid hexGrid = new HexGrid();
-            hexGrid.RowCount = HeightMap;
-            hexGrid.ColumnCount = WidthMap;
-            hexGrid.Orientation = Orientation.Vertical;
-            hexGrid.Name = "HeatMap";
-
-            for (int i = 0; i < HeightMap; i++)
-            {
-                for (int j = 0; j < WidthMap; j++)
-                {
-                    HexItem sss = new HexItem();
-                    sss.Background = null;
-                    sss.Margin = new Thickness(-2.5, -1, 0, 0);
-                    sss.BorderBrush = null;
-                    sss.BorderThickness = new Thickness(0);
-                    sss.Width = sizeCellWidth;
-                    sss.Height = sizeCellHeight;
-                    Grid.SetColumn(sss, j);
-                    Grid.SetRow(sss, i);
-                    hexGrid.Children.Add(sss);
-                }
-            }
-            Grid.SetZIndex(hexGrid, 5);
-            this.MapGrid.Children.Add(hexGrid);
-        }
 
         private void but_Click(object sender, MouseButtonEventArgs e)
         {
@@ -633,7 +540,6 @@ namespace Nuclear
                 int column = Convert.ToInt32(buf[1]);
                 DistView.Text = ViewCalculation(User.GetX(), User.GetY(), Convert.ToInt32(buf[0]), Convert.ToInt32(buf[1])).ToString();
                 Clean_TextBlock();
-                Clean_HeatMap();
                 locationEndX = row;
                 locationEndY = column;
                 findPath(User.GetX(), User.GetY(), row, column);
@@ -649,18 +555,6 @@ namespace Nuclear
                     var children = children1.OfType<UIElement>().ToList();
                     foreach (HexItem textblock in children)
                         grid.Children.Remove(textblock);
-                }
-        }
-
-        private void Clean_HeatMap()
-        {
-            foreach (HexGrid gridHeat in MapGrid.Children)
-                if (gridHeat.Name == "HeatMap")
-                {
-                    UIElementCollection children1 = gridHeat.Children;
-                    var children = children1.OfType<UIElement>().ToList();
-                    foreach (HexItem rec in children)
-                        gridHeat.Children.Remove(rec);
                 }
         }
 
@@ -682,7 +576,7 @@ namespace Nuclear
             int[,] DopPathArray;
             int[,] DopClonePathArray;
 
-            if (field.GetPathArray(y, x) == -1 || field.GetPathArray(ny, nx) == -1)
+            if (field.GetPathArray(x, y) == -1 || field.GetPathArray(nx, ny) == -1)
             {
                 // вывод ошибки выбора - недоступная зона (стена)
                 return;
@@ -695,7 +589,7 @@ namespace Nuclear
                 List<Point> DopOldWave = new List<Point>();
                 DopOldWave.Add(new Point(x, y));
                 int nstep = 0;
-                DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
+                DopPathArray[DoplocationUserX, DoplocationUserY] = nstep;
 
                 int[] dx = { 0, 1, 0, 1, -1, -1};
                 int[] dy = { -1, 0, 1, -1, 0, -1};
@@ -723,13 +617,13 @@ namespace Nuclear
                             }
 
 
-                            if (DopPathArray[DoplocationUserY, DoplocationUserX] == 0)
+                            if (DopPathArray[DoplocationUserX, DoplocationUserY] == 0)
                             {
                                 DopWavePath.Add(new Point(DoplocationUserX, DoplocationUserY));
-                                DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
+                                DopPathArray[DoplocationUserX, DoplocationUserY] = nstep;
 
                                 foreach (HexGrid gridHeat in MapGrid.Children)
-                                    if (gridHeat.Name == "HeatMap")
+                                    if (gridHeat.Name == "ImageMap")
                                     {
                                         HexItem myRect = new HexItem();
                                         myRect.Opacity = 0.5;
@@ -763,7 +657,7 @@ namespace Nuclear
                 List<Point> oldWave = new List<Point>();
                 oldWave.Add(new Point(nx, ny));
                 nstep = 0;
-                clonePathArray[ny, nx] = nstep;
+                clonePathArray[nx, ny] = nstep;
                 while (oldWave.Count > 0)
                 {
                     nstep++;
@@ -782,10 +676,10 @@ namespace Nuclear
                                 nx = i.x + dx2[d];
                                 ny = i.y + dy2[d];
                             }
-                            if (clonePathArray[ny, nx] == 0)
+                            if (clonePathArray[nx, ny] == 0)
                             {
                                 wave.Add(new Point(nx, ny));
-                                clonePathArray[ny, nx] = nstep;
+                                clonePathArray[nx, ny] = nstep;
                             }
                         }
                     }
@@ -793,7 +687,7 @@ namespace Nuclear
                 }
 
                 foreach (HexGrid gridHeat in MapGrid.Children)
-                    if (gridHeat.Name == "HeatMap")
+                    if (gridHeat.Name == "ImageMap")
                     {
                         HexItem myRect = new HexItem();
                         myRect.Opacity = 0.5;
@@ -815,7 +709,7 @@ namespace Nuclear
                 wave.Add(new Point(locationEndXDUB, locationEndYDUB));
                 int stepX = 0;
                 int stepY = 0;
-                while (field.GetPathArray(y, x) != 99)
+                while (field.GetPathArray(x, y) != 99)
                 {
                     flag = true;
                     for (int d = 0; d < 6; d++)
@@ -832,7 +726,7 @@ namespace Nuclear
                         }
                         if (stepX == x && stepY == y)
                             break;
-                        if (DopPathArray[locationEndYDUB, locationEndXDUB] - 1 == DopPathArray[stepY, stepX])
+                        if (DopPathArray[locationEndXDUB, locationEndYDUB] - 1 == DopPathArray[stepX, stepY])
                         {
                             locationEndXDUB = stepX;
                             locationEndYDUB = stepY;
@@ -841,7 +735,7 @@ namespace Nuclear
                             if (!(locationEndX == User.GetX() && locationEndY == User.GetY()))
                             {
                                 foreach (HexGrid gridHeat in MapGrid.Children)
-                                    if (gridHeat.Name == "HeatMap")
+                                    if (gridHeat.Name == "ImageMap")
                                     {
                                         HexItem myRect = new HexItem();
                                         myRect.Opacity = 0.5;
@@ -877,7 +771,6 @@ namespace Nuclear
                 {
                     await Task.Delay(472);
                     Clean_TextBlock();
-                    Clean_HeatMap();
                     List<Point> step = new List<Point>();
                     step.Add(new Point(User.GetX(), User.GetY()));
 
