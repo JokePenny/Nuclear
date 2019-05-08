@@ -37,6 +37,8 @@ namespace Nuclear
         private int locationEndX;
         private int locationEndY;
 
+        bool debagdoor = true;
+
         Thread receiveThread;
         Thread sendThread;
 
@@ -562,7 +564,6 @@ namespace Nuclear
         {
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
-            bool debagdoor = true;
 
             locationEndX = nx;
             locationEndY = ny;
@@ -581,190 +582,242 @@ namespace Nuclear
                 // вывод ошибки выбора - недоступная зона (стена)
                 return;
             }
-            while (true)
+            //волновой алгоритм поиска пути (заполнение значений достижимости) начиная от конца пути
+            
+            DopPathArray = (int[,])field.GetClonePathArray();
+            DopClonePathArray = (int[,])DopPathArray.Clone();
+            List<Point> DopOldWave = new List<Point>();
+            DopOldWave.Add(new Point(x, y));
+            int nstep = 0;
+            DopPathArray[DoplocationUserX, DoplocationUserY] = nstep;
+            
+
+            int[] dx = { 0, 1, 0, 1, -1, -1};
+            int[] dy = { -1, 0, 1, -1, 0, -1};
+            int[] dx2 = { 0, 1, 0, -1, 1, -1};
+            int[] dy2 = { -1, 0, 1, 0, 1, 1};
+
+            // окраска пути
+            while (DopOldWave.Count > 0)
             {
-                //волновой алгоритм поиска пути (заполнение значений достижимости) начиная от конца пути
-                DopPathArray = (int[,])field.GetClonePathArray();
-                DopClonePathArray = (int[,])DopPathArray.Clone();
-                List<Point> DopOldWave = new List<Point>();
-                DopOldWave.Add(new Point(x, y));
-                int nstep = 0;
-                DopPathArray[DoplocationUserX, DoplocationUserY] = nstep;
-
-                int[] dx = { 0, 1, 0, 1, -1, -1};
-                int[] dy = { -1, 0, 1, -1, 0, -1};
-                int[] dx2 = { 0, 1, 0, -1, 1, -1};
-                int[] dy2 = { -1, 0, 1, 0, 1, 1};
-
-                // окраска пути
-                while (DopOldWave.Count > 0)
-                {
-                    nstep++;
-                    DopWavePath.Clear();
-                    foreach (Point i in DopOldWave)
-                    {
-                        for (int d = 0; d < 6; d++)
-                        {
-                            if(i.x % 2 == 0)
-                            {
-                                DoplocationUserX = i.x + dx[d];
-                                DoplocationUserY = i.y + dy[d];
-                            }
-                            else
-                            {
-                                DoplocationUserX = i.x + dx2[d];
-                                DoplocationUserY = i.y + dy2[d];
-                            }
-
-
-                            if (DopPathArray[DoplocationUserX, DoplocationUserY] == 0)
-                            {
-                                DopWavePath.Add(new Point(DoplocationUserX, DoplocationUserY));
-                                DopPathArray[DoplocationUserX, DoplocationUserY] = nstep;
-
-                                foreach (HexGrid gridHeat in MapGrid.Children)
-                                    if (gridHeat.Name == "ImageMap")
-                                    {
-                                        HexItem myRect = new HexItem();
-                                        myRect.Opacity = 0.5;
-                                        myRect.Height = sizeCellHeight;
-                                        myRect.Width = sizeCellWidth;
-                                        myRect.Margin = new Thickness(-2.5, -1, 0, 0);
-                                        myRect.BorderBrush = null;
-                                        myRect.BorderThickness = new Thickness(0);
-                                        if (User.GetMovePoints() > nstep && User.GetMovePoints() - 3 > nstep)
-                                            myRect.Background = Brushes.Green;
-                                        else if (User.GetMovePoints() >= nstep)
-                                            myRect.Background = Brushes.Yellow;
-                                        else if (User.GetMovePoints() < nstep)
-                                            myRect.Background = Brushes.Red;
-                                        Grid.SetColumn(myRect, DoplocationUserY);
-                                        Grid.SetRow(myRect, DoplocationUserX);
-                                        gridHeat.Children.Add(myRect);
-                                        break;
-                                    }
-                            }
-                        }
-                    }
-                    DopOldWave = new List<Point>(DopWavePath);
-                    if (nstep == User.GetAreaVisibility()) // поле зрения
-                        break;
-                }
+                nstep++;
                 DopWavePath.Clear();
-                DopOldWave.Clear();
-
-                clonePathArray = (int[,])field.GetClonePathArray();
-                List<Point> oldWave = new List<Point>();
-                oldWave.Add(new Point(nx, ny));
-                nstep = 0;
-                clonePathArray[nx, ny] = nstep;
-                while (oldWave.Count > 0)
+                foreach (Point i in DopOldWave)
                 {
-                    nstep++;
-                    wave.Clear();
-                    foreach (Point i in oldWave)
-                    {
-                        for (int d = 0; d < 6; d++)
-                        {
-                            if (i.x % 2 == 0)
-                            {
-                                nx = i.x + dx[d];
-                                ny = i.y + dy[d];
-                            }
-                            else
-                            {
-                                nx = i.x + dx2[d];
-                                ny = i.y + dy2[d];
-                            }
-                            if (clonePathArray[nx, ny] == 0)
-                            {
-                                wave.Add(new Point(nx, ny));
-                                clonePathArray[nx, ny] = nstep;
-                            }
-                        }
-                    }
-                    oldWave = new List<Point>(wave);
-                }
-
-                foreach (HexGrid gridHeat in MapGrid.Children)
-                    if (gridHeat.Name == "ImageMap")
-                    {
-                        HexItem myRect = new HexItem();
-                        myRect.Opacity = 0.5;
-                        myRect.Height = sizeCellHeight;
-                        myRect.Width = sizeCellWidth;
-                        myRect.Margin = new Thickness(-2.5, -1, 0, 0);
-                        myRect.BorderBrush = null;
-                        myRect.BorderThickness = new Thickness(0);
-                        myRect.Background = Brushes.Blue;
-                        Grid.SetColumn(myRect, User.GetY());
-                        Grid.SetRow(myRect, User.GetX());
-                        gridHeat.Children.Add(myRect);
-                        break;
-                    }
-
-                //волновой алгоритм поиска пути начиная от начала
-                bool flag = true;
-                wave.Clear();
-                wave.Add(new Point(locationEndXDUB, locationEndYDUB));
-                int stepX = 0;
-                int stepY = 0;
-                while (field.GetPathArray(x, y) != 99)
-                {
-                    flag = true;
                     for (int d = 0; d < 6; d++)
                     {
-                        if (locationEndXDUB % 2 == 0)
+                        if(i.x % 2 == 0)
                         {
-                            stepX = locationEndXDUB + dx[d];
-                            stepY = locationEndYDUB + dy[d];
+                            DoplocationUserX = i.x + dx[d];
+                            DoplocationUserY = i.y + dy[d];
                         }
                         else
                         {
-                            stepX = locationEndXDUB + dx2[d];
-                            stepY = locationEndYDUB + dy2[d];
+                            DoplocationUserX = i.x + dx2[d];
+                            DoplocationUserY = i.y + dy2[d];
                         }
-                        if (stepX == x && stepY == y)
-                            break;
-                        if (DopPathArray[locationEndXDUB, locationEndYDUB] - 1 == DopPathArray[stepX, stepY])
+                        if (DopPathArray[DoplocationUserX, DoplocationUserY] == 0)
                         {
-                            locationEndXDUB = stepX;
-                            locationEndYDUB = stepY;
-                            wave.Add(new Point(locationEndXDUB, locationEndYDUB));
-                            flag = false;
-                            if (!(locationEndX == User.GetX() && locationEndY == User.GetY()))
-                            {
-                                foreach (HexGrid gridHeat in MapGrid.Children)
-                                    if (gridHeat.Name == "ImageMap")
-                                    {
-                                        HexItem myRect = new HexItem();
-                                        myRect.Opacity = 0.5;
-                                        myRect.Background = Brushes.Red;
-                                        Grid.SetColumn(myRect, locationEndYDUB);
-                                        Grid.SetRow(myRect, locationEndXDUB);
-                                        gridHeat.Children.Add(myRect);
-                                        break;
-                                    }
-                            }
-                            break;
+                            DopWavePath.Add(new Point(DoplocationUserX, DoplocationUserY));
+                            DopPathArray[DoplocationUserX, DoplocationUserY] = nstep;
                         }
+                    }
+                }
+                DopOldWave = new List<Point>(DopWavePath);
+                if (nstep == User.GetAreaVisibility()) // поле зрения
+                    break;
+            }
+            DopWavePath.Clear();
+            DopOldWave.Clear();
+
+            clonePathArray = (int[,])field.GetClonePathArray();
+            List<Point> oldWave = new List<Point>();
+            oldWave.Add(new Point(nx, ny));
+            nstep = 0;
+            clonePathArray[nx, ny] = nstep;
+            while (oldWave.Count > 0)
+            {
+                nstep++;
+                wave.Clear();
+                foreach (Point i in oldWave)
+                {
+                    for (int d = 0; d < 6; d++)
+                    {
+                        if (i.x % 2 == 0)
+                        {
+                            nx = i.x + dx[d];
+                            ny = i.y + dy[d];
+                        }
+                        else
+                        {
+                            nx = i.x + dx2[d];
+                            ny = i.y + dy2[d];
+                        }
+                        if (clonePathArray[nx, ny] == 0)
+                        {
+                            wave.Add(new Point(nx, ny));
+                            clonePathArray[nx, ny] = nstep;
+                        }
+                    }
+                }
+                oldWave = new List<Point>(wave);
+            }
+
+            //волновой алгоритм поиска пути начиная от начала
+            bool flag = true;
+            wave.Clear();
+            wave.Add(new Point(locationEndXDUB, locationEndYDUB));
+            int stepX = 0;
+            int stepY = 0;
+            while (stepX != x && stepY != y)
+            {
+                flag = true;
+                for (int d = 0; d < 6; d++)
+                {
+                    if (locationEndXDUB % 2 == 0)
+                    {
+                        stepX = locationEndXDUB + dx[d];
+                        stepY = locationEndYDUB + dy[d];
+                    }
+                    else
+                    {
+                        stepX = locationEndXDUB + dx2[d];
+                        stepY = locationEndYDUB + dy2[d];
                     }
                     if (stepX == x && stepY == y)
                         break;
-                    if (flag)
+                    if (DopPathArray[locationEndXDUB, locationEndYDUB] - 1 == DopPathArray[stepX, stepY])
                     {
-                        // вывод ошибки, пути нет
+                        locationEndXDUB = stepX;
+                        locationEndYDUB = stepY;
+                        wave.Add(new Point(locationEndXDUB, locationEndYDUB));
+                        flag = false;
+                        /*
+                        if (!(locationEndX == User.GetX() && locationEndY == User.GetY()))
+                        {
+                            foreach (HexGrid gridHeat in MapGrid.Children)
+                                if (gridHeat.Name == "ImageMap")
+                                {
+                                    HexItem myRect = new HexItem();
+                                    myRect.Opacity = 0.5;
+                                    myRect.Background = Brushes.Red;
+                                    Grid.SetColumn(myRect, locationEndYDUB);
+                                    Grid.SetRow(myRect, locationEndXDUB);
+                                    gridHeat.Children.Add(myRect);
+                                    break;
+                                }
+                        }
+                        */
                         break;
                     }
                 }
-                wave.Reverse();
-                DopPathArray = DopClonePathArray;
-                //waveOut();
-
+                if (stepX == x && stepY == y)
+                    break;
+                if (flag)
+                {
+                    // вывод ошибки, пути нет
+                    break;
+                }
+            }
+            wave.Reverse();
+            DopPathArray = DopClonePathArray;
+            //waveOut();
+            
+            while (true)
+            {
                 if (debagdoor)
                 {
-                    Dist.Text = wave.Count.ToString();
-                    debagdoor = false;
+                    DopPathArray = (int[,])field.GetClonePathArray();
+                    // окраска пути
+                    //DopClonePathArray = (int[,])DopPathArray.Clone();
+                    DopWavePath.Clear();
+                    DopOldWave.Clear();
+                    DopOldWave.Add(new Point(x, y));
+                    nstep = 0;
+                    while (DopOldWave.Count > 0)
+                    {
+                        nstep++;
+                        DopWavePath.Clear();
+                        foreach (Point i in DopOldWave)
+                        {
+                            for (int d = 0; d < 6; d++)
+                            {
+                                if (i.x % 2 == 0)
+                                {
+                                    DoplocationUserX = i.x + dx[d];
+                                    DoplocationUserY = i.y + dy[d];
+                                }
+                                else
+                                {
+                                    DoplocationUserX = i.x + dx2[d];
+                                    DoplocationUserY = i.y + dy2[d];
+                                }
+                                if (DopPathArray[DoplocationUserX, DoplocationUserY] == 0)
+                                {
+                                    DopWavePath.Add(new Point(DoplocationUserX, DoplocationUserY));
+                                    DopPathArray[DoplocationUserX, DoplocationUserY] = nstep;
+                                    foreach (HexGrid gridHeat in MapGrid.Children)
+                                        if (gridHeat.Name == "ImageMap")
+                                        {
+                                            HexItem myRect = new HexItem();
+                                            myRect.Opacity = 0.5;
+                                            myRect.Height = sizeCellHeight;
+                                            myRect.Width = sizeCellWidth;
+                                            myRect.Margin = new Thickness(-2.5, -1, 0, 0);
+                                            myRect.BorderBrush = null;
+                                            myRect.BorderThickness = new Thickness(0);
+                                            if (User.GetMovePoints() > nstep && User.GetMovePoints() - 3 > nstep)
+                                                myRect.Background = Brushes.Green;
+                                            else if (User.GetMovePoints() >= nstep)
+                                                myRect.Background = Brushes.Yellow;
+                                            else if (User.GetMovePoints() < nstep)
+                                                myRect.Background = Brushes.Red;
+                                            Grid.SetColumn(myRect, DoplocationUserY);
+                                            Grid.SetRow(myRect, DoplocationUserX);
+                                            gridHeat.Children.Add(myRect);
+                                            break;
+                                        }
+                                }
+                            }
+                        }
+                        DopOldWave = new List<Point>(DopWavePath);
+                        if (nstep == User.GetAreaVisibility()) // поле зрения
+                            break;
+                    }
+
+                    foreach (Point i in wave)
+                    {
+                        foreach (HexGrid gridHeat in MapGrid.Children)
+                            if (gridHeat.Name == "ImageMap")
+                            {
+                                HexItem myRect = new HexItem();
+                                myRect.Opacity = 0.5;
+                                myRect.Background = Brushes.Red;
+                                Grid.SetColumn(myRect, i.y);
+                                Grid.SetRow(myRect, i.x);
+                                gridHeat.Children.Add(myRect);
+                                break;
+                            }
+                    }
+
+                    foreach (HexGrid gridHeat in MapGrid.Children)
+                        if (gridHeat.Name == "ImageMap")
+                        {
+                            HexItem myRect = new HexItem();
+                            myRect.Opacity = 0.5;
+                            myRect.Height = sizeCellHeight;
+                            myRect.Width = sizeCellWidth;
+                            myRect.Margin = new Thickness(-2.5, -1, 0, 0);
+                            myRect.BorderBrush = null;
+                            myRect.BorderThickness = new Thickness(0);
+                            myRect.Background = Brushes.Blue;
+                            Grid.SetColumn(myRect, User.GetY());
+                            Grid.SetRow(myRect, User.GetX());
+                            gridHeat.Children.Add(myRect);
+                            break;
+                        }
+
+                        Dist.Text = wave.Count.ToString();
                 }
 
                 if (User.GetMovePoints() > 0 && (User.GetX() != locationEndX || User.GetY() != locationEndY))
@@ -786,9 +839,9 @@ namespace Nuclear
                             PositionX.Text = User.GetX().ToString();
                             PositionY.Text = User.GetY().ToString();
 
-                            foreach(Ellipse health in HealthPanel.Children)
+                            foreach (Ellipse health in HealthPanel.Children)
                             {
-                                if(health.Name == "Ar" + User.GetMovePoints())
+                                if (health.Name == "Ar" + User.GetMovePoints())
                                 {
                                     health.Opacity = 0;
                                     break;
@@ -796,9 +849,7 @@ namespace Nuclear
                             }
                             User.SetMovePoints(Convert.ToByte(User.GetMovePoints() - 1));
 
-                            //MessageBox.Show(string.Format(wave.Count.ToString()));
-
-                            if(User.animationCharacter.SpeedMove)
+                            if (User.animationCharacter.SpeedMove)
                                 User.animationCharacter.SetAnimation(wave.Count, User.TypeOfArmor, 0, 19);
                             else
                                 User.animationCharacter.SetAnimation(wave.Count, User.TypeOfArmor, 0, 1);
@@ -818,13 +869,10 @@ namespace Nuclear
                     }
                 }
                 else
-                {
                     break;
-                }
 
-                if (wavePath.Count == 0) {
+                if (wavePath.Count == 0)
                     break;
-                }
                 else
                 {
                     nx = locationEndX;
@@ -842,8 +890,6 @@ namespace Nuclear
                 User.SetMovePoints(0);
                 MessageBox.Show(string.Format("Очки действия кончились"));
             }
-
-            debagdoor = true;
             userMoving = false;
         }
 
@@ -1492,8 +1538,15 @@ namespace Nuclear
                     break;
                 case Key.D: // debug pnale
                     if (DebugPanel.IsVisible)
+                    {
                         DebugPanel.Visibility = Visibility.Collapsed;
-                    else DebugPanel.Visibility = Visibility.Visible;
+                        debagdoor = false;
+                    }
+                    else
+                    {
+                        DebugPanel.Visibility = Visibility.Visible;
+                        debagdoor = true;
+                    }
                     break;
                 case Key.R: // смена бега/ходьбы
                     if (User.animationCharacter.SpeedMove)

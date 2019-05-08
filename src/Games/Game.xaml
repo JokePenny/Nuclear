@@ -34,7 +34,7 @@
         <!-- прокрутка скролвьювера -->
 
         <!-- дебаг -->
-        <StackPanel Name="DebugPanel" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <StackPanel Name="DebugPanel" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1">
             <WrapPanel>
                 <TextBlock Height="19" Width="70" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="x:"/>
                 <TextBlock Name="PositionX" Height="19" Width="50" Foreground="Lime" TextAlignment="Center" FontFamily="/Nuclear;component/data/fonts/#Fallout Display" FontSize="14" Text="0"/>
