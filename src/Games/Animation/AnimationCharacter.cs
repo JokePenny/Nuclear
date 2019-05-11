@@ -11,6 +11,7 @@ namespace Nuclear.src
     public class AnimationCharacter
     {
         private Image image { get; set; }
+        private Image imageLight { get; set; }
         private string PathImage { get; set; }
         public string FullPathImage { get; set; }
         private string Direction { get; set; }
@@ -101,7 +102,13 @@ namespace Nuclear.src
         {
             SetImageXImageY(X, Y);
             image = new Image();
+            image.IsHitTestVisible = false;
+            imageLight = new Image();
+            imageLight.Opacity = 0.3;
+            imageLight.IsEnabled = false;
+            imageLight.IsHitTestVisible = false;
             image.Source = new BitmapImage(new Uri("/data/image/characters/HMJMPS/HMJMPSAA_e.gif", UriKind.Relative));
+            imageLight.Source = new BitmapImage(new Uri("/data/image/characters/lightPlayer.png", UriKind.Relative));
             FullPathImage = "pack://application:,,,/data/image/characters/HMJMPS/HMJMPSAA_e.gif";
             image.MouseLeftButtonDown += game.ActionWithPlayer_Click;
             image.MouseMove += game.ActionWithPlayer_Move;
@@ -110,6 +117,9 @@ namespace Nuclear.src
             image.Name = nickname;
             Canvas.SetLeft(image, imageY);
             Canvas.SetTop(image, imageX);
+            Canvas.SetLeft(imageLight, imageY - 50);
+            Canvas.SetTop(imageLight, imageX + 50);
+            GROD.Children.Add(imageLight);
             GROD.Children.Add(image);
         }
 
@@ -296,6 +306,7 @@ namespace Nuclear.src
         public void ChangeImage(Canvas GROD)
         {
             GROD.Children.Remove(image);
+            GROD.Children.Remove(imageLight);
             while (true)
             {
                 if (!ChangeAnimation)
@@ -369,6 +380,10 @@ namespace Nuclear.src
                     Canvas.SetLeft(image, imageY - 10);
                     Canvas.SetTop(image, imageX);
                     Canvas.SetZIndex(image, ZIndexImage);
+                    Canvas.SetLeft(imageLight, imageY - 10 - 130);
+                    Canvas.SetTop(imageLight, imageX - 10);
+                    Canvas.SetZIndex(imageLight, ZIndexImage);
+                    GROD.Children.Add(imageLight);
                     GROD.Children.Add(image);
                     break;
                 }
@@ -379,6 +394,7 @@ namespace Nuclear.src
         public string AttackAnimation(Canvas GROD)
         {
             GROD.Children.Remove(image);
+            GROD.Children.Remove(imageLight);
             while (true)
             {
                 if (!ChangeAnimation)
@@ -444,6 +460,10 @@ namespace Nuclear.src
                     Canvas.SetLeft(image, imageY - 10);
                     Canvas.SetTop(image, imageX);
                     Canvas.SetZIndex(image, ZIndexImage);
+                    Canvas.SetLeft(imageLight, imageY - 10 - 50);
+                    Canvas.SetTop(imageLight, imageX + 50);
+                    Canvas.SetZIndex(imageLight, ZIndexImage);
+                    GROD.Children.Add(imageLight);
                     GROD.Children.Add(image);
                     break;
                 }
@@ -472,6 +492,7 @@ namespace Nuclear.src
         public void SetAnimation(string animation, Canvas GROD)
         {
             GROD.Children.Remove(image);
+            GROD.Children.Remove(imageLight);
             var imageAnimation = new BitmapImage();
             imageAnimation.BeginInit();
             imageAnimation.UriSource = new Uri(animation, UriKind.RelativeOrAbsolute);
@@ -483,13 +504,25 @@ namespace Nuclear.src
             Canvas.SetLeft(image, imageY - 10);
             Canvas.SetTop(image, imageX);
             Canvas.SetZIndex(image, ZIndexImage);
+            Canvas.SetLeft(imageLight, imageY - 10 - 50);
+            Canvas.SetTop(imageLight, imageX + 50);
+            Canvas.SetZIndex(imageLight, ZIndexImage);
+            GROD.Children.Add(imageLight);
             GROD.Children.Add(image);
             ChangeAnimation = true;
+        }
+
+        public void SetHitTestVisible()
+        {
+            if (image.IsHitTestVisible)
+                image.IsHitTestVisible = false;
+            else image.IsHitTestVisible = true;
         }
 
         public void Disconect(Canvas GROD)
         {
             GROD.Children.Remove(image);
+            GROD.Children.Remove(imageLight);
         }
     }
 }

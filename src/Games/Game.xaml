@@ -24,13 +24,13 @@
         <!-- прокрутка скролвьювера -->
 
         <!-- вверх -->
-        <Border Height="7" Grid.Row="0" Background="Gray" Opacity="0" VerticalAlignment="Top"  Grid.Column="0" Grid.ColumnSpan="3" MouseMove="MoveMouse_Scroll" Tag="Top" Panel.ZIndex="10"/>
+        <Border Height="7" Grid.Row="0" Background="Gray" Opacity="0" VerticalAlignment="Top"  Grid.Column="0" Grid.ColumnSpan="3" MouseMove="MoveMouse_Scroll" MouseLeave="LeaveMouse_Scroll" Tag="NORTH" Panel.ZIndex="10"/>
         <!-- вниз -->
-        <Border Height="7" Grid.Row="3" Background="Gray" Opacity="0" VerticalAlignment="Bottom"  Grid.Column="0" Grid.ColumnSpan="3" MouseMove="MoveMouse_Scroll" Tag="Down" Panel.ZIndex="10"/>
+        <Border Height="7" Grid.Row="3" Background="Gray" Opacity="0" VerticalAlignment="Bottom"  Grid.Column="0" Grid.ColumnSpan="3" MouseMove="MoveMouse_Scroll" MouseLeave="LeaveMouse_Scroll" Tag="SOUTH" Panel.ZIndex="10"/>
         <!-- вправо -->
-        <Border Width="7" Grid.Row="0" Background="Gray" Opacity="0" Grid.RowSpan="3" HorizontalAlignment="Right"  Grid.Column="3" MouseMove="MoveMouse_Scroll" Tag="Right" Panel.ZIndex="10"/>
+        <Border Width="7" Grid.Row="0" Background="Gray" Opacity="0" Grid.RowSpan="3" HorizontalAlignment="Right"  Grid.Column="3" MouseMove="MoveMouse_Scroll" MouseLeave="LeaveMouse_Scroll" Tag="EAST" Panel.ZIndex="10"/>
         <!-- влево -->
-        <Border Width="7" Grid.Row="0" Background="Gray" Opacity="0" Grid.RowSpan="3" HorizontalAlignment="Left"  Grid.Column="0" MouseMove="MoveMouse_Scroll" Tag="Left" Panel.ZIndex="10"/>
+        <Border Width="7" Grid.Row="0" Background="Gray" Opacity="0" Grid.RowSpan="3" HorizontalAlignment="Left"  Grid.Column="0" MouseMove="MoveMouse_Scroll" MouseLeave="LeaveMouse_Scroll" Tag="WEST" Panel.ZIndex="10"/>
         <!-- прокрутка скролвьювера -->
 
         <!-- дебаг -->

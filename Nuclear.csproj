@@ -8822,5 +8822,17 @@
   <ItemGroup>
     <Resource Include="data\image\mainui\BackgroundMap\pewera.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\interface\mouse\msef003.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\interface\mouse\SCREAST.cur" />
+    <Resource Include="data\image\interface\mouse\SCRNORTH.cur" />
+    <Resource Include="data\image\interface\mouse\SCRSOUTH.cur" />
+    <Resource Include="data\image\interface\mouse\SCRWEST.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\characters\lightPlayer.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Resources;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -37,7 +38,7 @@ namespace Nuclear
         private int locationEndX;
         private int locationEndY;
 
-        bool debagdoor = true;
+        bool debagdoor = false;
 
         Thread receiveThread;
         Thread sendThread;
@@ -473,6 +474,13 @@ namespace Nuclear
             hexGrid.Name = "ImageMap";
             Grid.SetZIndex(hexGrid, 1);
             this.MapGrid.Children.Add(hexGrid);
+            HexGrid mouseHexGrid = new HexGrid();
+            mouseHexGrid.RowCount = HeightMap;
+            mouseHexGrid.ColumnCount = WidthMap;
+            mouseHexGrid.Orientation = Orientation.Vertical;
+            mouseHexGrid.Name = "MouseMoveHex";
+            Grid.SetZIndex(mouseHexGrid, 2);
+            this.MapGrid.Children.Add(mouseHexGrid);
         }
 
         public void MapActiveGrid()
@@ -512,6 +520,8 @@ namespace Nuclear
                         factory.SetValue(TextBlock.OpacityProperty, 0.0);
                         factory.SetValue(TextBlock.TextProperty, (i.ToString() + " " + j.ToString()) as string);
                         factory.AddHandler(TextBlock.MouseLeftButtonDownEvent, new MouseButtonEventHandler(but_Click));
+                        factory.AddHandler(TextBlock.MouseEnterEvent, new MouseEventHandler(but_Enter));
+                        factory.AddHandler(TextBlock.MouseLeaveEvent, new MouseEventHandler(but_Leave));
                         factory.AddHandler(TextBlock.MouseRightButtonDownEvent, new MouseButtonEventHandler(ChoosAction_RightClick));
                         dat.VisualTree = factory;
                         style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = null });
@@ -528,6 +538,40 @@ namespace Nuclear
             Grid.SetZIndex(hexGrid, 50);
             this.MapGrid.Children.Add(hexGrid);
         }
+
+        private void but_Enter(object sender, MouseEventArgs e)
+        {
+            if (!changeCursor)
+            {
+                TextBlock btn = sender as TextBlock;
+                string[] buf = btn.Text.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                double sizeCellWidth = 36;
+                double sizeCellHeight = 18;
+                foreach (HexGrid MouseMoveHex in MapGrid.Children)
+                    if (MouseMoveHex.Name == "MouseMoveHex")
+                    {
+                        HexItem myRect = new HexItem();
+                        myRect.Opacity = 0.5;
+                        myRect.Height = sizeCellHeight;
+                        myRect.Width = sizeCellWidth;
+                        myRect.Margin = new Thickness(-2.5, -1, 0, 0);
+                        myRect.BorderBrush = null;
+                        myRect.BorderThickness = new Thickness(0);
+                        myRect.Background = new ImageBrush(new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/image/interface/mouse/msef003.gif")));
+                        Grid.SetColumn(myRect, Convert.ToInt32(buf[1]));
+                        Grid.SetRow(myRect, Convert.ToInt32(buf[0]));
+                        MouseMoveHex.Children.Add(myRect);
+                        break;
+                    }
+            }
+        }
+
+        private void but_Leave(object sender, MouseEventArgs e)
+        {
+            Clean_MoveMouseHex();
+        }
+
+
 
 
         private void but_Click(object sender, MouseButtonEventArgs e)
@@ -548,6 +592,19 @@ namespace Nuclear
             }
         }
 
+        private void Clean_MoveMouseHex()
+        {
+            foreach (HexGrid grid in MapGrid.Children)
+                if (grid.Name == "MouseMoveHex")
+                {
+                    UIElementCollection children1 = grid.Children;
+                    var children = children1.OfType<UIElement>().ToList();
+                    foreach (HexItem textblock in children)
+                        grid.Children.Remove(textblock);
+                    break;
+                }
+        }
+
         private void Clean_TextBlock()
         {
             foreach (HexGrid grid in MapGrid.Children)
@@ -557,6 +614,7 @@ namespace Nuclear
                     var children = children1.OfType<UIElement>().ToList();
                     foreach (HexItem textblock in children)
                         grid.Children.Remove(textblock);
+                    break;
                 }
         }
 
@@ -624,8 +682,6 @@ namespace Nuclear
                     }
                 }
                 DopOldWave = new List<Point>(DopWavePath);
-                if (nstep == User.GetAreaVisibility()) // поле зрения
-                    break;
             }
             DopWavePath.Clear();
             DopOldWave.Clear();
@@ -692,22 +748,6 @@ namespace Nuclear
                         locationEndYDUB = stepY;
                         wave.Add(new Point(locationEndXDUB, locationEndYDUB));
                         flag = false;
-                        /*
-                        if (!(locationEndX == User.GetX() && locationEndY == User.GetY()))
-                        {
-                            foreach (HexGrid gridHeat in MapGrid.Children)
-                                if (gridHeat.Name == "ImageMap")
-                                {
-                                    HexItem myRect = new HexItem();
-                                    myRect.Opacity = 0.5;
-                                    myRect.Background = Brushes.Red;
-                                    Grid.SetColumn(myRect, locationEndYDUB);
-                                    Grid.SetRow(myRect, locationEndXDUB);
-                                    gridHeat.Children.Add(myRect);
-                                    break;
-                                }
-                        }
-                        */
                         break;
                     }
                 }
@@ -721,7 +761,6 @@ namespace Nuclear
             }
             wave.Reverse();
             DopPathArray = DopClonePathArray;
-            //waveOut();
             
             while (true)
             {
@@ -729,7 +768,6 @@ namespace Nuclear
                 {
                     DopPathArray = (int[,])field.GetClonePathArray();
                     // окраска пути
-                    //DopClonePathArray = (int[,])DopPathArray.Clone();
                     DopWavePath.Clear();
                     DopOldWave.Clear();
                     DopOldWave.Add(new Point(x, y));
@@ -1126,6 +1164,12 @@ namespace Nuclear
                         new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
                 Cursor customCursors = new Cursor(sris.Stream);
                 Mouse.OverrideCursor = customCursors;
+                if(client != null)
+                    foreach(PlayerUser player in Players)
+                    {
+                        if(player != User)
+                            player.animationCharacter.SetHitTestVisible();
+                    }
                 changeCursor = false;
             }
             else
@@ -1134,7 +1178,14 @@ namespace Nuclear
                         new Uri("data/image/mainui/cursor/ACTTAHIT.cur", UriKind.Relative));
                 Cursor customCursors = new Cursor(sris.Stream);
                 Mouse.OverrideCursor = customCursors;
+                if (client != null)
+                    foreach (PlayerUser player in Players)
+                    {
+                        if (player != User)
+                            player.animationCharacter.SetHitTestVisible();
+                    }
                 changeCursor = true;
+                Clean_MoveMouseHex();
             }
         }
 
@@ -1568,19 +1619,31 @@ namespace Nuclear
             object tag = ((Border)e.OriginalSource).Tag;
             switch (tag.ToString())
             {
-                case "Top":
+                case "NORTH":
                     Camera.LineUp();
                     break;
-                case "Down":
+                case "SOUTH":
                     Camera.LineDown();
                     break;
-                case "Right":
+                case "EAST":
                     Camera.LineRight();
                     break;
-                case "Left":
+                case "WEST":
                     Camera.LineLeft();
                     break;
             }
+            StreamResourceInfo sri = Application.GetResourceStream(
+                           new Uri("data/image/interface/mouse/SCR" + tag.ToString() + ".cur", UriKind.Relative));
+            Cursor customCursor = new Cursor(sri.Stream);
+            Mouse.OverrideCursor = customCursor;
+        }
+
+        public void LeaveMouse_Scroll(object sender, MouseEventArgs e)
+        {
+            StreamResourceInfo sri = Application.GetResourceStream(
+                           new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
+            Cursor customCursor = new Cursor(sri.Stream);
+            Mouse.OverrideCursor = customCursor;
         }
     }
 }
