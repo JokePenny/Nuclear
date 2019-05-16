@@ -8823,9 +8823,6 @@
     <Resource Include="data\image\mainui\BackgroundMap\pewera.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="data\image\interface\mouse\msef003.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="data\image\interface\mouse\SCREAST.cur" />
     <Resource Include="data\image\interface\mouse\SCRNORTH.cur" />
     <Resource Include="data\image\interface\mouse\SCRSOUTH.cur" />
@@ -8833,6 +8830,58 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="data\image\characters\lightPlayer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\BackgroundMap\rock1\1.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\rock1\2.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\rock1\3.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\rock1\4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\BackgroundMap\rock2\1.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\rock2\2.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\rock2\3.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\rock2\4.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\rock2\5.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\rock2\6.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\rock2\7.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\rock2\8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\BackgroundMap\border\1.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\border\10.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\border\11.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\border\12.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\border\2.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\border\3.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\border\4.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\border\5.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\border\6.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\border\7.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\border\8.png" />
+    <Resource Include="data\image\mainui\BackgroundMap\border\9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\BackgroundMap\backwall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\BackgroundMap\facewall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\BackgroundMap\peweraBorder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\BackgroundMap\tileface.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\BackgroundMap\tileback.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\mainui\BackgroundMap\cell.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\image\interface\mouse\msef0032.gif" />
+    <Resource Include="data\image\interface\mouse\msef0033.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

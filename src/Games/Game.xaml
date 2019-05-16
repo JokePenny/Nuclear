@@ -22,7 +22,6 @@
         </Grid.ColumnDefinitions>
 
         <!-- прокрутка скролвьювера -->
-
         <!-- вверх -->
         <Border Height="7" Grid.Row="0" Background="Gray" Opacity="0" VerticalAlignment="Top"  Grid.Column="0" Grid.ColumnSpan="3" MouseMove="MoveMouse_Scroll" MouseLeave="LeaveMouse_Scroll" Tag="NORTH" Panel.ZIndex="10"/>
         <!-- вниз -->
@@ -128,14 +127,45 @@
         <!-- игровое поле -->
         <ScrollViewer Name="Camera" KeyDown="Hotkey_KeyDown"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden"  Visibility="Visible">
             <Canvas Name="Map" Width="2500" Height="1800">
-
                 <Canvas.Background>
-                    <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/BackgroundMap/pewera.png"/>
+                    <ImageBrush ImageSource="/Nuclear;component/data/image/mainui/BackgroundMap/tileback.png"/>
                 </Canvas.Background>
-                 
+
+                <Image Width="2500" Height="1800" Source="/Nuclear;component/data/image/mainui/BackgroundMap/tileface.png" Visibility="Visible" Panel.ZIndex="1" IsEnabled="false" IsHitTestVisible="False"/>
+                <Image Width="2500" Height="1800" Source="/Nuclear;component/data/image/mainui/BackgroundMap/backwall.png" Visibility="Visible" Panel.ZIndex="12" IsEnabled="false" IsHitTestVisible="False"/>
+                <Image Width="2500" Height="1800" Source="/Nuclear;component/data/image/mainui/BackgroundMap/facewall.png" Visibility="Visible" Panel.ZIndex="13" IsEnabled="false" IsHitTestVisible="False"/>
+                
+                <!-- rock1 -->
+                <Image Height="163" Width="145"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock1/1.png" Canvas.Left="839" Canvas.Top="202" Visibility="Visible" IsEnabled="false" Panel.ZIndex="127" IsHitTestVisible="False"/>
+                <Image Height="163" Width="145"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock1/2.png" Canvas.Left="839" Canvas.Top="202" Visibility="Visible" IsEnabled="false" Panel.ZIndex="127" IsHitTestVisible="False"/>
+                <Image Height="163" Width="145"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock1/3.png" Canvas.Left="839" Canvas.Top="202" Visibility="Visible" IsEnabled="false" Panel.ZIndex="127" IsHitTestVisible="False"/>
+                <Image Height="163" Width="145"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock1/4.png" Canvas.Left="839" Canvas.Top="202" Visibility="Visible" IsEnabled="false" Panel.ZIndex="127" IsHitTestVisible="False"/>
+                <!-- rock2 -->
+                <Image Height="356" Width="739"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock2/1.png" Canvas.Left="583" Canvas.Top="248" Visibility="Visible" IsEnabled="false" Panel.ZIndex="133" IsHitTestVisible="False"/>
+                <Image Height="356" Width="739"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock2/2.png" Canvas.Left="583" Canvas.Top="248" Visibility="Visible" IsEnabled="false" Panel.ZIndex="133" IsHitTestVisible="False"/>
+                <Image Height="356" Width="739"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock2/3.png" Canvas.Left="583" Canvas.Top="248" Visibility="Visible" IsEnabled="false" Panel.ZIndex="128" IsHitTestVisible="False"/>
+                <Image Height="356" Width="739"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock2/4.png" Canvas.Left="583" Canvas.Top="248" Visibility="Visible" IsEnabled="false" Panel.ZIndex="133" IsHitTestVisible="False"/>
+                <Image Height="356" Width="739"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock2/5.png" Canvas.Left="583" Canvas.Top="248" Visibility="Visible" IsEnabled="false" Panel.ZIndex="127" IsHitTestVisible="False"/>
+                <Image Height="356" Width="739"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock2/6.png" Canvas.Left="583" Canvas.Top="248" Visibility="Visible" IsEnabled="false" Panel.ZIndex="160" IsHitTestVisible="False"/>
+                <Image Height="356" Width="739"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock2/7.png" Canvas.Left="583" Canvas.Top="248" Visibility="Visible" IsEnabled="false" Panel.ZIndex="129" IsHitTestVisible="False"/>
+                <Image Height="356" Width="739"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/rock2/8.png" Canvas.Left="583" Canvas.Top="248" Visibility="Visible" IsEnabled="false" Panel.ZIndex="145" IsHitTestVisible="False"/>
+                <!-- border -->
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/1.png" Canvas.Left="433" Canvas.Top="289" Visibility="Visible" IsEnabled="false" Panel.ZIndex="133" IsHitTestVisible="False"/>
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/2.png" Canvas.Left="908" Canvas.Top="919" Visibility="Visible" IsEnabled="false" Panel.ZIndex="183" IsHitTestVisible="False"/>
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/3.png" Canvas.Left="1400" Canvas.Top="1002" Visibility="Visible" IsEnabled="false" Panel.ZIndex="189" IsHitTestVisible="False"/>
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/4.png" Canvas.Left="1633" Canvas.Top="788" Visibility="Visible" IsEnabled="false" Panel.ZIndex="172" IsHitTestVisible="False"/>
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/5.png" Canvas.Left="1915" Canvas.Top="534" Visibility="Visible" IsEnabled="false" Panel.ZIndex="151" IsHitTestVisible="False"/>
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/6.png" Canvas.Left="1455" Canvas.Top="455" Visibility="Visible" IsEnabled="false" Panel.ZIndex="145" IsHitTestVisible="False"/>
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/7.png" Canvas.Left="1491" Canvas.Top="277" Visibility="Visible" IsEnabled="false" Panel.ZIndex="129" IsHitTestVisible="False"/>
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/8.png" Canvas.Left="1634" Canvas.Top="1204" Visibility="Visible" IsEnabled="false" Panel.ZIndex="206" IsHitTestVisible="False"/>
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/9.png" Canvas.Left="1369" Canvas.Top="1362" Visibility="Visible" IsEnabled="false" Panel.ZIndex="218" IsHitTestVisible="False"/>
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/10.png" Canvas.Left="738" Canvas.Top="1133" Visibility="Visible" IsEnabled="false" Panel.ZIndex="200" IsHitTestVisible="False"/>
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/11.png" Canvas.Left="616" Canvas.Top="1012" Visibility="Visible" IsEnabled="false" Panel.ZIndex="190" IsHitTestVisible="False"/>
+                <Image Height="133" Width="115"  Source="/Nuclear;component/data/image/mainui/BackgroundMap/border/12.png" Canvas.Left="822" Canvas.Top="684" Visibility="Visible" IsEnabled="false" Panel.ZIndex="163" IsHitTestVisible="False"/>
+                <!-- border -->
                 <Canvas Name="GROD" Width="2500" Height="1800" Panel.ZIndex="10">
                 </Canvas>
-                <Canvas Name="MapGrid" Width="2500" Height="1800">
+                <Canvas Name="MapGrid" Width="2500" Height="1800" Panel.ZIndex="400">
                 </Canvas>
             </Canvas>
         </ScrollViewer>

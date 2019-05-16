@@ -56,7 +56,7 @@ namespace Nuclear
                 Mouse.OverrideCursor = customCursor;
                 this.NavigationService.Navigate(new Registration(user));
             }
-            catch (Exception ex)
+            catch
             {
                 StreamResourceInfo sria = Application.GetResourceStream(
                         new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));
@@ -112,7 +112,7 @@ namespace Nuclear
                         Mouse.OverrideCursor = customCursorr;
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     StreamResourceInfo sria = Application.GetResourceStream(
                            new Uri("data/image/mainui/cursor/ACTARROW.cur", UriKind.Relative));

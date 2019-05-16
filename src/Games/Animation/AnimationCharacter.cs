@@ -115,10 +115,13 @@ namespace Nuclear.src
             image.MouseLeave += game.ActionWithPlayer_MouseLeave;
             image.MouseEnter += game.ActionWithPlayer_Focusable;
             image.Name = nickname;
+            ZIndexImage = X + 100;
             Canvas.SetLeft(image, imageY);
             Canvas.SetTop(image, imageX);
+            Canvas.SetZIndex(image, ZIndexImage);
             Canvas.SetLeft(imageLight, imageY - 50);
             Canvas.SetTop(imageLight, imageX + 50);
+            Canvas.SetZIndex(imageLight, ZIndexImage);
             GROD.Children.Add(imageLight);
             GROD.Children.Add(image);
         }
@@ -303,8 +306,9 @@ namespace Nuclear.src
          *
          */
 
-        public void ChangeImage(Canvas GROD)
+        public void ChangeImage(Canvas GROD, int zindex)
         {
+            ZIndexImage = zindex + 100;
             GROD.Children.Remove(image);
             GROD.Children.Remove(imageLight);
             while (true)

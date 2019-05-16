@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Resources;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -25,6 +24,7 @@ namespace Nuclear
 {
     public partial class Game : Page
     {
+        //768" d:DesignWidth="1368"
         private bool changeCursor = false;
         private Field field = new Field();
         private List<Point> wave = new List<Point>();
@@ -38,10 +38,10 @@ namespace Nuclear
         private int locationEndX;
         private int locationEndY;
 
-        bool debagdoor = false;
+        bool debagdoor = true;
 
-        Thread receiveThread;
-        Thread sendThread;
+        private Thread receiveThread;
+        private Thread sendThread;
 
         private int run = 0;
         private bool userMoving = false;
@@ -60,7 +60,6 @@ namespace Nuclear
         {
             InitializeComponent();
             run = 1;
-            //InitInventory();
             User = new PlayerUser(23, 17, 20, 200, 15, GROD, this);
             MapImageGrid();
             MapActiveGrid();
@@ -74,10 +73,10 @@ namespace Nuclear
             InitializeComponent();
             port = 2888;
             byte[] data;
-            int x;
-            int y;  
+            int x, y;  
             User = connect;
             Random point = new Random();
+
             while (true)
             {
                 client = new TcpClient(address, port);
@@ -99,14 +98,15 @@ namespace Nuclear
                 if (builders.ToString() != "0")
                     break;
             }
+
             User.SetXY(x, y);
             User.animationCharacter.SetImageXImageY(x, y);
             User.SetMovePoints(12);
             User.SetAreaVisibility(16);
             User.SetHealth(20);
             HealthPlayer.Text = User.GetHealth().ToString();
-
             client = new TcpClient();
+
             try
             {
                 client.Connect(address, port);
@@ -124,7 +124,7 @@ namespace Nuclear
             {
                 ChatTextBlock.Text += ex.Message + "\r\n";
             }
-            //InitInventory();
+
             MapImageGrid();
             MapActiveGrid();
             User.SetImageScreen(GROD, this);
@@ -196,7 +196,7 @@ namespace Nuclear
                             if (connectedUser.GetNickname() == command[1])
                             {
                                 connectedUser.SetXY(Convert.ToInt32(command[2]), Convert.ToInt32(command[3]));
-                                connectedUser.animationCharacter.ChangeImage(GROD);
+                                connectedUser.animationCharacter.ChangeImage(GROD, Convert.ToInt32(command[2]));
                                 break;
                             }
                         }
@@ -219,7 +219,7 @@ namespace Nuclear
                             if (User.GetHealth() <= 0)
                             {
                                 User.animationCharacter.SetAnimation(User.TypeOfArmor, 1, 3);
-                                User.animationCharacter.ChangeImage(GROD);
+                                User.animationCharacter.ChangeImage(GROD, User.GetX());
                                 ChatTextBlock.Text += "Вас убил " + command[2] + "!\r\n";
                                 message = "14 " + "d" + " " + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
                                 // смерть игрока
@@ -227,7 +227,7 @@ namespace Nuclear
                             else
                             {
                                 User.animationCharacter.SetAnimation(User.TypeOfArmor, 0, 14);
-                                User.animationCharacter.ChangeImage(GROD);
+                                User.animationCharacter.ChangeImage(GROD, User.GetX());
                                 User.animationCharacter.SetAnimation(User.TypeOfArmor, 0, 0);
                                 ChatTextBlock.Text += "Вас ранил " + command[2] + "! Потеряно " + command[3] + " здоровья\r\n";
                                 message = "14 " + User.GetNickname() + " " + User.animationCharacter.FullPathImage;
@@ -479,7 +479,7 @@ namespace Nuclear
             mouseHexGrid.ColumnCount = WidthMap;
             mouseHexGrid.Orientation = Orientation.Vertical;
             mouseHexGrid.Name = "MouseMoveHex";
-            Grid.SetZIndex(mouseHexGrid, 2);
+            Grid.SetZIndex(mouseHexGrid, 3);
             this.MapGrid.Children.Add(mouseHexGrid);
         }
 
@@ -506,12 +506,14 @@ namespace Nuclear
                     style.Setters.Add(new Setter { Property = Control.MarginProperty, Value = new Thickness(-2.5, -1, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderThicknessProperty, Value = new Thickness(0, 0, 0, 0) });
                     style.Setters.Add(new Setter { Property = Control.BorderBrushProperty, Value = null });
+                    /*
                     if (field.GetPathArray(i, j) == -1)
                     {
                         style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = null });
                     }
                     else
                     {
+                    */
                         DataTemplate dat = new DataTemplate();
                         dat.DataType = typeof(TextBlock);
                         FrameworkElementFactory factory = new FrameworkElementFactory(typeof(TextBlock));
@@ -526,7 +528,7 @@ namespace Nuclear
                         dat.VisualTree = factory;
                         style.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = null });
                         style.Setters.Add(new Setter { Property = ContentControl.ContentTemplateProperty, Value = dat });
-                    }
+                   // }
                     HexItem sss = new HexItem();
                     sss.Style = style;
                     Grid.SetColumn(sss, j);
@@ -535,7 +537,7 @@ namespace Nuclear
                 }
             }
 
-            Grid.SetZIndex(hexGrid, 50);
+            Grid.SetZIndex(hexGrid, 2);
             this.MapGrid.Children.Add(hexGrid);
         }
 
@@ -557,7 +559,10 @@ namespace Nuclear
                         myRect.Margin = new Thickness(-2.5, -1, 0, 0);
                         myRect.BorderBrush = null;
                         myRect.BorderThickness = new Thickness(0);
-                        myRect.Background = new ImageBrush(new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/image/interface/mouse/msef003.gif")));
+                        if(field.GetPathArray(Convert.ToInt32(buf[0]), Convert.ToInt32(buf[1])) != -1)
+                            myRect.Background = new ImageBrush(new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/image/interface/mouse/msef0032.gif")));
+                        else
+                            myRect.Background = new ImageBrush(new BitmapImage(new Uri(Environment.CurrentDirectory + "/data/image/interface/mouse/msef0033.gif")));
                         Grid.SetColumn(myRect, Convert.ToInt32(buf[1]));
                         Grid.SetRow(myRect, Convert.ToInt32(buf[0]));
                         MouseMoveHex.Children.Add(myRect);
@@ -571,24 +576,24 @@ namespace Nuclear
             Clean_MoveMouseHex();
         }
 
-
-
-
         private void but_Click(object sender, MouseButtonEventArgs e)
         {
             if (User.GetMovePoints() > 0 && run == 1 && !changeCursor && !userMoving)
             {
-                userMoving = true;
                 TextBlock btn = sender as TextBlock;
                 string[] buf = btn.Text.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
                 int row = Convert.ToInt32(buf[0]);
                 int column = Convert.ToInt32(buf[1]);
-                DistView.Text = ViewCalculation(User.GetX(), User.GetY(), Convert.ToInt32(buf[0]), Convert.ToInt32(buf[1])).ToString();
-                Clean_TextBlock();
-                locationEndX = row;
-                locationEndY = column;
-                findPath(User.GetX(), User.GetY(), row, column);
+                if(field.GetPathArray(row, column) != -1)
+                {
+                    userMoving = true;
+                    DistView.Text = ViewCalculation(User.GetX(), User.GetY(), row, column).ToString();
+                    Clean_TextBlock();
+                    locationEndX = row;
+                    locationEndY = column;
+                    findPath(User.GetX(), User.GetY(), row, column);
+                }
             }
         }
 
@@ -622,7 +627,6 @@ namespace Nuclear
         {
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
-
             locationEndX = nx;
             locationEndY = ny;
             int locationEndXDUB = nx;
@@ -648,14 +652,13 @@ namespace Nuclear
             DopOldWave.Add(new Point(x, y));
             int nstep = 0;
             DopPathArray[DoplocationUserX, DoplocationUserY] = nstep;
-            
 
             int[] dx = { 0, 1, 0, 1, -1, -1};
             int[] dy = { -1, 0, 1, -1, 0, -1};
             int[] dx2 = { 0, 1, 0, -1, 1, -1};
             int[] dy2 = { -1, 0, 1, 0, 1, 1};
-
             // окраска пути
+            
             while (DopOldWave.Count > 0)
             {
                 nstep++;
@@ -683,14 +686,15 @@ namespace Nuclear
                 }
                 DopOldWave = new List<Point>(DopWavePath);
             }
+
             DopWavePath.Clear();
             DopOldWave.Clear();
-
             clonePathArray = (int[,])field.GetClonePathArray();
             List<Point> oldWave = new List<Point>();
             oldWave.Add(new Point(nx, ny));
             nstep = 0;
             clonePathArray[nx, ny] = nstep;
+
             while (oldWave.Count > 0)
             {
                 nstep++;
@@ -725,6 +729,7 @@ namespace Nuclear
             wave.Add(new Point(locationEndXDUB, locationEndYDUB));
             int stepX = 0;
             int stepY = 0;
+
             while (stepX != x && stepY != y)
             {
                 flag = true;
@@ -759,6 +764,7 @@ namespace Nuclear
                     break;
                 }
             }
+
             wave.Reverse();
             DopPathArray = DopClonePathArray;
             
@@ -892,7 +898,7 @@ namespace Nuclear
                             else
                                 User.animationCharacter.SetAnimation(wave.Count, User.TypeOfArmor, 0, 1);
 
-                            User.animationCharacter.ChangeImage(GROD);
+                            User.animationCharacter.ChangeImage(GROD, User.GetX());
 
                             if (Players.Count != 0)
                             {
