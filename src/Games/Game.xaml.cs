@@ -33,10 +33,6 @@ namespace Nuclear
         private List<PlayerUser> Players = new List<PlayerUser>();
         private PlayerUser User = null;
         private Inventory inventory = new Inventory();
-        private int locationUserX;
-        private int locationUserY;
-        private int locationEndX;
-        private int locationEndY;
 
         bool debagdoor = true;
 
@@ -590,8 +586,6 @@ namespace Nuclear
                     userMoving = true;
                     DistView.Text = ViewCalculation(User.GetX(), User.GetY(), row, column).ToString();
                     Clean_TextBlock();
-                    locationEndX = row;
-                    locationEndY = column;
                     findPath(User.GetX(), User.GetY(), row, column);
                 }
             }
@@ -627,17 +621,15 @@ namespace Nuclear
         {
             double sizeCellWidth = 36;
             double sizeCellHeight = 18;
-            locationEndX = nx;
-            locationEndY = ny;
+            int locationEndX = nx;
+            int locationEndY = ny;
             int locationEndXDUB = nx;
             int locationEndYDUB = ny;
-            locationUserX = x;
-            locationUserY = y;
+            int locationUserX = x;
+            int locationUserY = y;
             int DoplocationUserX = x;
             int DoplocationUserY = y;
-            int[,] clonePathArray;
             int[,] DopPathArray;
-            int[,] DopClonePathArray;
 
             if (field.GetPathArray(x, y) == -1 || field.GetPathArray(nx, ny) == -1)
             {
@@ -647,7 +639,6 @@ namespace Nuclear
             //волновой алгоритм поиска пути (заполнение значений достижимости) начиная от конца пути
             
             DopPathArray = (int[,])field.GetClonePathArray();
-            DopClonePathArray = (int[,])DopPathArray.Clone();
             List<Point> DopOldWave = new List<Point>();
             DopOldWave.Add(new Point(x, y));
             int nstep = 0;
@@ -686,43 +677,9 @@ namespace Nuclear
                 }
                 DopOldWave = new List<Point>(DopWavePath);
             }
-
+    
             DopWavePath.Clear();
             DopOldWave.Clear();
-            clonePathArray = (int[,])field.GetClonePathArray();
-            List<Point> oldWave = new List<Point>();
-            oldWave.Add(new Point(nx, ny));
-            nstep = 0;
-            clonePathArray[nx, ny] = nstep;
-
-            while (oldWave.Count > 0)
-            {
-                nstep++;
-                wave.Clear();
-                foreach (Point i in oldWave)
-                {
-                    for (int d = 0; d < 6; d++)
-                    {
-                        if (i.x % 2 == 0)
-                        {
-                            nx = i.x + dx[d];
-                            ny = i.y + dy[d];
-                        }
-                        else
-                        {
-                            nx = i.x + dx2[d];
-                            ny = i.y + dy2[d];
-                        }
-                        if (clonePathArray[nx, ny] == 0)
-                        {
-                            wave.Add(new Point(nx, ny));
-                            clonePathArray[nx, ny] = nstep;
-                        }
-                    }
-                }
-                oldWave = new List<Point>(wave);
-            }
-
             //волновой алгоритм поиска пути начиная от начала
             bool flag = true;
             wave.Clear();
@@ -730,7 +687,7 @@ namespace Nuclear
             int stepX = 0;
             int stepY = 0;
 
-            while (stepX != x && stepY != y)
+            while (stepX != x || stepY != y)
             {
                 flag = true;
                 for (int d = 0; d < 6; d++)
@@ -766,12 +723,12 @@ namespace Nuclear
             }
 
             wave.Reverse();
-            DopPathArray = DopClonePathArray;
             
             while (true)
             {
                 if (debagdoor)
                 {
+                    /*
                     DopPathArray = (int[,])field.GetClonePathArray();
                     // окраска пути
                     DopWavePath.Clear();
@@ -828,6 +785,7 @@ namespace Nuclear
                         if (nstep == User.GetAreaVisibility()) // поле зрения
                             break;
                     }
+                    */
 
                     foreach (Point i in wave)
                     {
@@ -1304,7 +1262,6 @@ namespace Nuclear
             int locationEndYDUB = ny;
             int DoplocationUserX = x;
             int DoplocationUserY = y;
-            int[,] clonePathArray;
             int[,] DopPathArray;
 
             //волновой алгоритм поиска пути (заполнение значений достижимости) начиная от конца пути
@@ -1312,7 +1269,7 @@ namespace Nuclear
             List<Point> DopOldWave = new List<Point>();
             DopOldWave.Add(new Point(x, y));
             int nstep = 0;
-            DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
+            DopPathArray[DoplocationUserX, DoplocationUserY] = nstep;
 
             int[] dx = { 0, 1, 0, 1, -1, -1 };
             int[] dy = { -1, 0, 1, -1, 0, -1 };
@@ -1338,10 +1295,10 @@ namespace Nuclear
                             DoplocationUserY = i.y + dy2[d];
                         }
 
-                        if (DopPathArray[DoplocationUserY, DoplocationUserX] == 0)
+                        if (DopPathArray[DoplocationUserX, DoplocationUserY] == 0)
                         {
                             DopWavePath.Add(new Point(DoplocationUserX, DoplocationUserY));
-                            DopPathArray[DoplocationUserY, DoplocationUserX] = nstep;
+                            DopPathArray[DoplocationUserX, DoplocationUserY] = nstep;
                         }
 
                         if (DoplocationUserY == ny && DoplocationUserX == nx)
@@ -1356,44 +1313,12 @@ namespace Nuclear
                 DopOldWave = new List<Point>(DopWavePath);
             }
 
-            clonePathArray = (int[,])field.GetClonePathArray();
-            List<Point> oldWave = new List<Point>();
-            oldWave.Add(new Point(nx, ny));
-            nstep = 0;
-            clonePathArray[ny, nx] = nstep;
-            while (oldWave.Count > 0)
-            {
-                nstep++;
-                wave.Clear();
-                foreach (Point i in oldWave)
-                {
-                    for (int d = 0; d < 6; d++)
-                    {
-                        if (i.x % 2 == 0)
-                        {
-                            nx = i.x + dx[d];
-                            ny = i.y + dy[d];
-                        }
-                        else
-                        {
-                            nx = i.x + dx2[d];
-                            ny = i.y + dy2[d];
-                        }
-                        if (clonePathArray[ny, nx] == 0)
-                        {
-                            wave.Add(new Point(nx, ny));
-                            clonePathArray[ny, nx] = nstep;
-                        }
-                    }
-                }
-                oldWave = new List<Point>(wave);
-            }
             bool flag = true;
             wave.Clear();
             wave.Add(new Point(locationEndXDUB, locationEndYDUB));
             int stepX = 0;
             int stepY = 0;
-            while (field.GetPathArray(y, x) != 99)
+            while (stepX != x || stepY != y)
             {
                 flag = true;
                 for (int d = 0; d < 6; d++)
@@ -1410,7 +1335,7 @@ namespace Nuclear
                     }
                     if (stepX == x && stepY == y)
                         break;
-                    if (DopPathArray[locationEndYDUB, locationEndXDUB] - 1 == DopPathArray[stepY, stepX])
+                    if (DopPathArray[locationEndXDUB, locationEndYDUB] - 1 == DopPathArray[stepX, stepY])
                     {
                         locationEndXDUB = stepX;
                         locationEndYDUB = stepY;
